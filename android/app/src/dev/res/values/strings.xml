@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HICO - Provider</string>
+    <string name="facebook_app_id">2689544024523134</string>
+    <string name="fb_login_protocol_scheme">fb2689544024523134</string>
+
+</resources>
