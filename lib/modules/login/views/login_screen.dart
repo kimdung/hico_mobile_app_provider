@@ -37,7 +37,7 @@ class LoginScreen extends GetView<LoginController> {
         elevation: 1,
         backgroundColor: Colors.white,
       ),
-      body: SafeArea(
+      body: Obx(() => SafeArea(
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -182,7 +182,7 @@ class LoginScreen extends GetView<LoginController> {
             ),
           ),
         ),
-      ),
+      ),),
     );
   }
 }

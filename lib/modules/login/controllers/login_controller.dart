@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
@@ -27,7 +28,7 @@ class LoginController extends BaseController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool showPassword = false;
+  final showPassword = false.obs;
   final _loginSocialServices = LoginSocialServices();
 
   UserProfile? _userProfile;
@@ -37,10 +38,15 @@ class LoginController extends BaseController {
 
   @override
   Future<void> onInit() {
-    usernameController.text = '';
-    passwordController.text = '';
     EasyLoading.dismiss();
     return super.onInit();
+  }
+
+  @override
+  Future<void> onReady() {
+    usernameController.text = storage.getString(StorageConstants.username)!;
+    passwordController.text = '';
+    return super.onReady();
   }
 
   @override
@@ -291,5 +297,10 @@ class LoginController extends BaseController {
 
   Future<void> forgorPassword() async {
     await Get.toNamed(Routes.FORGOT_PASSWORD);
+  }
+
+  void hideShowPassword() {
+    showPassword.value = !showPassword.value;
+    log('Value: ${showPassword.value}');
   }
 }

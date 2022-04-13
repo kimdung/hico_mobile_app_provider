@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
+import '../constants/colors.dart';
+import '../styles/text_style/text_style.dart';
 
 class TextFieldDecoration {
   TextFieldDecoration._();
@@ -11,7 +11,7 @@ class TextFieldDecoration {
       TextStyle? hintStype,
       Color? backgroundColor,
       Color borderColor = Colors.grey,
-      Widget? prefixIcon}) {
+      Widget? prefixIcon, Widget? suffixIcon}) {
     return InputDecoration(
       hintText: hintText,
       filled: backgroundColor != null,
