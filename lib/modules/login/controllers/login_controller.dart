@@ -36,11 +36,14 @@ class LoginController extends BaseController {
   final storage = Get.find<SharedPreferences>();
 
   @override
-  Future<void> onInit() {
+  Future<void> onInit() async {
+    await super.onInit();
+
     usernameController.text = '';
     passwordController.text = '';
-    EasyLoading.dismiss();
-    return super.onInit();
+
+    usernameController.text = 'thuy.doan@blueboltsoftware.com';
+    passwordController.text = '12345678';
   }
 
   @override
@@ -274,7 +277,7 @@ class LoginController extends BaseController {
     }
 
     AppDataGlobal.client =
-        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
+        StreamChatClient('2utk87k45e87', logLevel: Level.INFO);
     await AppDataGlobal.client?.connectUser(
       AppDataGlobal.userInfo!.getChatUser(),
       AppDataGlobal.userInfo?.conversationInfo?.token ?? '',

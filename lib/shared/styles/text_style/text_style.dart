@@ -329,6 +329,16 @@ class TextAppStyle {
     );
   }
 
+  //medium text
+  TextStyle mediumTextStype() {
+    return const TextStyle(
+      color: Colors.black,
+      fontSize: CommonConstants.normalText,
+      fontWeight: FontWeight.w500,
+      fontFamily: appFont,
+    );
+  }
+
   //large text
   TextStyle largeTextStype() {
     /// headline1 Color: primaryTextColor -> Black Gray (#333333)

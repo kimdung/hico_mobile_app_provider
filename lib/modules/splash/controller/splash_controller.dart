@@ -96,13 +96,11 @@ class SplashController extends GetxController {
     }
 
     AppDataGlobal.client =
-        StreamChatClient('qrjjtnn5hv29', logLevel: Level.INFO);
+        StreamChatClient('2utk87k45e87', logLevel: Level.INFO);
     await AppDataGlobal.client?.connectUser(
       AppDataGlobal.userInfo!.getChatUser(),
       AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
     );
-
-    
 
     await Get.offAllNamed(Routes.MAIN);
   }
