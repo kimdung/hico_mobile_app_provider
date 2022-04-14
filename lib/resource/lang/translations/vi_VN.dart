@@ -25,6 +25,7 @@ const Map<String, String> vi_VN = {
   'all': 'Tất cả',
   'service': 'Dịch vụ',
   'done': 'Xong',
+  'calling': 'Đang gọi...',
 
 //onboard
   'onboard.title1': 'Welcome to Hico',

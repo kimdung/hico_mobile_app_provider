@@ -41,4 +41,6 @@ abstract class Routes {
   static const TIME_SERVICE = '/time_service';
   static const RATING = '/rating';
   static const CHAT = '/chat';
+  static const VOICE_CALL = '/voice-call';
+  static const VIDEO_CALL = '/video-call';
 }

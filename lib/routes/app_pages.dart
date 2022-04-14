@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 
+import '../modules/call/video_call/bindings/video_call_binding.dart';
+import '../modules/call/video_call/views/video_call_view.dart';
+import '../modules/call/voice_call/bindings/voice_call_binding.dart';
+import '../modules/call/voice_call/views/voice_call_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_screen.dart';
 import '../modules/config/bindings/config_binding.dart';
@@ -218,5 +222,15 @@ final routePages = [
     name: Routes.CHAT,
     page: () => ChatScreen(),
     binding: ChatBinding(),
+  ),
+  GetPage(
+    name: Routes.VOICE_CALL,
+    page: () => VoiceCallView(),
+    binding: VoiceCallBinding(),
+  ),
+  GetPage(
+    name: Routes.VIDEO_CALL,
+    page: () => VideoCallView(),
+    binding: VideoCallBinding(),
   ),
 ];

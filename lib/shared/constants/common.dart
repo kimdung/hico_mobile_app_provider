@@ -28,6 +28,9 @@ class CommonConstants {
   // Arguments key
   static const String CHANNEL = 'CHANNEL';
   static const String CHAT_USER = 'CHAT_USER';
+  static const String IS_CALLER = 'IS_CALLER';
+  static const String CALL_MODEL = 'CALL_MODEL';
+  static const String CALL_TOKEN = 'CALL_TOKEN';
 }
 
 const APP_NAME = 'Hico Supplier';
