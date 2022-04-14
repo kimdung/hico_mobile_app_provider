@@ -277,7 +277,7 @@ class LoginController extends BaseController {
     }
 
     AppDataGlobal.client =
-        StreamChatClient('2utk87k45e87', logLevel: Level.INFO);
+        StreamChatClient('mfjwbudb6sky', logLevel: Level.INFO);
     await AppDataGlobal.client?.connectUser(
       AppDataGlobal.userInfo!.getChatUser(),
       AppDataGlobal.userInfo?.conversationInfo?.token ?? '',

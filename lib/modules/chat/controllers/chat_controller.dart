@@ -10,7 +10,7 @@ import '../../../shared/constants/common.dart';
 class ChatController extends BaseController {
   // final InvoiceModel invoiceModel;
 
-  // final client = StreamChatClient('2utk87k45e87', logLevel: Level.INFO);
+  // final client = StreamChatClient('mfjwbudb6sky', logLevel: Level.INFO);
   late Channel channel;
   late User user;
 
