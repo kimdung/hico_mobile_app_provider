@@ -22,7 +22,7 @@ import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class OrderListController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
-  final Channel adminChatChannel;
+  final Channel? adminChatChannel;
 
   final Rx<int> totalNotif = Rx(0);
 
@@ -176,6 +176,7 @@ class OrderListController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? AppDataGlobal.userInfo?.conversationInfo?.getAdmin()
           : _usersResponse!.users.first,
+      CommonConstants.IS_NOT_CALL: true,
     });
   }
 
@@ -194,6 +195,7 @@ class OrderListController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.getCustomer()
           : _usersResponse!.users.first,
+      CommonConstants.IS_NOT_CALL: false,
     });
   }
 

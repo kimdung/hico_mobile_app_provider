@@ -18,6 +18,7 @@ import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/services/login_social_services.dart';
+import '../../../shared/utils/chat_util.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
@@ -60,7 +61,7 @@ class LoginController extends BaseController {
           .login(LoginRequest(
               email: usernameController.text,
               password: passwordController.text,
-              deviceIdentifier: ''))
+              deviceIdentifier: AppDataGlobal.firebaseToken))
           .then(
         (response) {
           if (response.status == CommonConstants.statusOk &&
@@ -281,13 +282,8 @@ class LoginController extends BaseController {
       });
     }
 
-    AppDataGlobal.client =
-        StreamChatClient('mfjwbudb6sky', logLevel: Level.INFO);
-    await AppDataGlobal.client?.connectUser(
-      AppDataGlobal.userInfo!.getChatUser(),
-      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
-    );
-
+    await ChatUtil.initChat(
+        AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
     await EasyLoading.dismiss();
 
     await Get.offAllNamed(Routes.MAIN);

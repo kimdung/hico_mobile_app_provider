@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:hico/data/app_data_global.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+
+import '../../data/app_data_global.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -26,7 +29,7 @@ class FirebaseMessageConfig {
       FlutterLocalNotificationsPlugin();
 
   final AndroidNotificationChannel _androidNotificationChannel =
-      AndroidNotificationChannel(
+      const AndroidNotificationChannel(
     'high_importance_channel',
     'High Importance Notifications',
     importance: Importance.max,
@@ -55,6 +58,8 @@ class FirebaseMessageConfig {
         provisional: true,
         sound: true,
       );
+
+      // Hiển thị notification khi bật app cho ios
       if (Platform.isIOS) {
         await _firebaseMessaging.setForegroundNotificationPresentationOptions(
           alert: true,
@@ -63,21 +68,18 @@ class FirebaseMessageConfig {
         );
       }
       await _firebaseMessaging.setAutoInitEnabled(true);
-      _firebaseMessaging.getToken().then((String? token) async {
-        print("Push Messaging Token: $token");
-        AppDataGlobal.firebaseToken = token!;
-      });
+
+      await _handleTokenFirebase();
     } catch (e) {
-      debugPrint("$e");
+      debugPrint('$e');
     }
   }
 
   Future<void> _initLocalNotification() async {
     try {
-      AndroidInitializationSettings initialzationSettingsAndroid =
-          AndroidInitializationSettings('ic_logo');
-      IOSInitializationSettings initializationSettingsIOS =
-          IOSInitializationSettings(
+      const initialzationSettingsAndroid =
+          AndroidInitializationSettings('app_icon');
+      final initializationSettingsIOS = IOSInitializationSettings(
         requestAlertPermission: true,
         requestBadgePermission: true,
         requestSoundPermission: true,
@@ -87,19 +89,20 @@ class FirebaseMessageConfig {
         onDidReceiveLocalNotification:
             (int? id, String? title, String? body, String? payload) async {
           if (payload?.isNotEmpty ?? false) {
-            /// ["id"]: Key json chứa ID của thông báo server trả về.
+            /// ['id']: Key json chứa ID của thông báo server trả về.
             /// Dùng để điều hướng vào màn chi tiết thông báo
-            /// Mặc định đang là ["id"]
+            /// Mặc định đang là ['id']
             // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
             //   DetailNotificationScreen.routeName,
             //   arguments: int.tryParse(
-            //     json.decode(payload)["id"]?.toString(),
+            //     json.decode(payload)['id']?.toString(),
             //   ),
             // );
           }
         },
       );
-      InitializationSettings initializationSettings = InitializationSettings(
+
+      final initializationSettings = InitializationSettings(
         android: initialzationSettingsAndroid,
         iOS: initializationSettingsIOS,
       );
@@ -124,7 +127,7 @@ class FirebaseMessageConfig {
             ?.createNotificationChannel(_androidNotificationChannel);
       }
     } catch (e) {
-      debugPrint("$e");
+      debugPrint('$e');
     }
   }
 
@@ -133,17 +136,16 @@ class FirebaseMessageConfig {
       /// Lấy tất cả thông báo khiến ứng dụng mở từ terminated state
       /// Một khi lấy ra thông báo để điều hướng, nó sẽ bị remove
       /// Tương tác với thông báo khi ứng dụng đang ở terminated
-      RemoteMessage? initialMessage =
-          await _firebaseMessaging.getInitialMessage();
+      final initialMessage = await _firebaseMessaging.getInitialMessage();
       if (initialMessage != null) {
         if (initialMessage.data.isNotEmpty) {
-          /// ["id"]: Key json chứa ID của thông báo server trả về.
+          /// ['id']: Key json chứa ID của thông báo server trả về.
           /// Dùng để điều hướng vào màn chi tiết thông báo
-          /// Mặc định đang là ["id"]
+          /// Mặc định đang là ['id']
           // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
           //   DetailNotificationScreen.routeName,
           //   arguments: int.tryParse(
-          //     initialMessage?.data["id"]?.toString(),
+          //     initialMessage?.data['id']?.toString(),
           //   ),
           // );
         }
@@ -152,35 +154,39 @@ class FirebaseMessageConfig {
       /// Khi đang mở ứng dụng, thông báo Firebase sẽ vào hàm onMessage
       /// Android sẽ block toàn bộ thông báo đẩy, cần cấu hình thêm thư viện flutter_local_notifications để hiển thị thông báo cũng như tương tác thông báo
       /// IOS cần call hàm setForegroundNotificationPresentationOptions để nhận thông báo khi đang mở ứng dụng
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        _showNotification(message);
-      });
+      FirebaseMessaging.onMessage.listen(_showNotification);
 
       /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
       FirebaseMessaging.onMessageOpenedApp.listen(
         (RemoteMessage message) {
-          /// ["id"]: Key json chứa ID của thông báo server trả về.
+          /// ['id']: Key json chứa ID của thông báo server trả về.
           /// Dùng để điều hướng vào màn chi tiết thông báo
-          /// Mặc định đang là ["id"]
+          /// Mặc định đang là ['id']
           if (message.data.isNotEmpty) {
             // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
             //   DetailNotificationScreen.routeName,
             //   arguments: int.tryParse(
-            //     message?.data["id"]?.toString(),
+            //     message?.data['id']?.toString(),
             //   ),
             // );
           }
         },
       );
     } catch (e) {
-      debugPrint("$e");
+      debugPrint('$e');
     }
   }
 
   void _showNotification(RemoteMessage message) {
+    debugPrint('Got a message whilst in the foreground!');
+    debugPrint('Message data: ${message.data}');
+
     try {
-      RemoteNotification? remoteNotification = message.notification;
-      if (remoteNotification != null) {
+      debugPrint('FirebaseMessageConfig RemoteMessage $message');
+      final remoteNotification = message.notification;
+      final android = message.notification?.android;
+
+      if (remoteNotification != null && android != null) {
         _flutterLocalNotificationsPlugin.show(
           remoteNotification.hashCode,
           remoteNotification.title,
@@ -189,9 +195,9 @@ class FirebaseMessageConfig {
             android: AndroidNotificationDetails(
               _androidNotificationChannel.id,
               _androidNotificationChannel.name,
-              importance: Importance.max,
+              importance: Importance.high,
               visibility: NotificationVisibility.public,
-              priority: Priority.max,
+              priority: Priority.high,
               playSound: true,
               enableLights: true,
               enableVibration: true,
@@ -207,20 +213,20 @@ class FirebaseMessageConfig {
         );
       }
     } catch (e) {
-      debugPrint("$e");
+      debugPrint('FirebaseMessageConfig $e');
     }
   }
 
   Future<void> _onSelectNotifcation(String? payload) async {
-    print("ONTAP NOTIFICATION: $payload");
+    debugPrint('ONTAP NOTIFICATION: $payload');
     if (payload?.isNotEmpty ?? false) {
-      /// ["id"]: Key json chứa ID của thông báo server trả về.
+      /// ['id']: Key json chứa ID của thông báo server trả về.
       /// Dùng để điều hướng vào màn chi tiết thông báo
-      /// Mặc định đang là ["id"]
+      /// Mặc định đang là ['id']
       // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
       //   DetailNotificationScreen.routeName,
       //   arguments: int.tryParse(
-      //     json.decode(payload)["id"]?.toString(),
+      //     json.decode(payload)['id']?.toString(),
       //   ),
       // );
     }
@@ -230,12 +236,20 @@ class FirebaseMessageConfig {
     await _firebaseMessaging.deleteToken();
   }
 
-  Future<void> handleTokenFirebase() async {
-    _firebaseMessaging.getToken().then((String? token) {
-      print("FIREBASE TOKEN: $token");
+  Future<void> _handleTokenFirebase() async {
+    await _firebaseMessaging.getToken().then((String? token) async {
+      debugPrint('FIREBASE TOKEN: $token');
+      if (token != null) {
+        AppDataGlobal.firebaseToken = token;
+        await AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
+      }
     });
     _firebaseMessaging.onTokenRefresh.listen((token) {
-      print("TOKEN FIREBASE CHANGE: $token");
+      debugPrint('TOKEN FIREBASE CHANGE: $token');
+      if (token != null) {
+        AppDataGlobal.firebaseToken = token;
+        AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
+      }
     });
   }
 }

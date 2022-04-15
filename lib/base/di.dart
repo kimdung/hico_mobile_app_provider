@@ -29,7 +29,7 @@ class DependencyInjection {
 
     _dioUIAPI.interceptors.add(TokenInterceptor(
       errorUnauthorized: () {
-        Get.offAndToNamed(Routes.LOGIN, arguments: 'error');
+        Get.offAndToNamed(Routes.ONBOARDING, arguments: 'error.expires');
       },
     ));
 

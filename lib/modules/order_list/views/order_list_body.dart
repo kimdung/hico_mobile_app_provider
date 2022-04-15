@@ -12,22 +12,31 @@ extension OrderListBody on OrderListScreen {
             height: 50,
             child: Row(
               children: [
-                CachedNetworkImage(
-                  width: 42,
-                  height: 42,
-                  imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(21),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.fill,
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.PROFILE);
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(21),
+                    child: CachedNetworkImage(
+                      width: 42,
+                      height: 42,
+                      imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(21),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 14),

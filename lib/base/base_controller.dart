@@ -10,6 +10,7 @@ import '../shared/methods/call_methods.dart';
 import '../shared/network/constants/constants.dart';
 import '../shared/network/controllers/network_controller.dart';
 import '../shared/network/managers/network_manager.dart';
+import '../shared/services/firebase_cloud_messaging.dart';
 
 class BaseController extends GetxController
     with NetworkManager, ListenErrorGraphQL {
@@ -17,8 +18,7 @@ class BaseController extends GetxController
 
   final _networkController = Get.find<NetworkController>();
 
-  final isBadge = RxBool(false);
-
+  FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
   final CallMethods callMethods = CallMethods();
 
   @override
@@ -28,43 +28,7 @@ class BaseController extends GetxController
     // check network
     await checkConnectNetwork();
 
-    AppDataGlobal.client
-        ?.on(EventType.messageNew, EventType.notificationMessageNew)
-        .listen((event) async {
-      if (event.message?.user?.id ==
-          AppDataGlobal.client?.state.currentUser?.id) {
-        return;
-      }
-
-      if (event.message == null) {
-        return;
-      }
-      final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-      const initializationSettings = InitializationSettings(
-        android: AndroidInitializationSettings('app_icon'),
-        iOS: IOSInitializationSettings(),
-      );
-      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-      final id = event.message?.id.hashCode;
-      if (id == null) {
-        return;
-      }
-      await flutterLocalNotificationsPlugin.show(
-        id,
-        event.message?.user?.name,
-        event.message?.text,
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'message channel',
-            'Message channel',
-            channelDescription: 'Channel used for showing messages',
-            priority: Priority.high,
-            importance: Importance.high,
-          ),
-          iOS: IOSNotificationDetails(),
-        ),
-      );
-    });
+    await firebaseMessageConfig.handleMessage(); 
   }
 
   @override
