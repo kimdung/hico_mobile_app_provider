@@ -41,6 +41,10 @@ class UserInfoModel {
   List<DocumentsCertificateModel>? documentsCertificate;
   String? level;
   String? experience;
+  @JsonKey(name: 'number_of_years_in_japan')
+  int? numberOfYearsInJapan;
+  @JsonKey(name: 'translation_experience')
+  int? translationExperience;
   List<UserServicesCategoryModel>? services;
   List<WorkplacesModel>? workplaces;
   @JsonKey(name: 'user_time')
@@ -72,10 +76,13 @@ class UserInfoModel {
       this.documentsCertificate,
       this.level,
       this.experience,
+      this.numberOfYearsInJapan,
+      this.translationExperience,
       this.services,
       this.workplaces,
       this.userTime,
       this.kycStatus,
+      this.isUpdate,
       this.conversationInfo});
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
@@ -89,5 +96,5 @@ class UserInfoModel {
       name: name,
       image: avatarImage,
     );
-  } 
+  }
 }

@@ -210,7 +210,9 @@ abstract class HicoUIAPI {
     @Query('education') String education,
     @Part(value: 'documents_certificate') List<File> documentsCertificate,
     @Query('level') String level,
-    @Query('experience') String experience, {
+    @Query('experience') String experience, 
+    @Query('number_of_years_in_japan') int numberOfYearsInJapan, 
+    @Query('translation_experience') int translationExperience, {
     @Part(value: 'avatar_image') File? avatarImage,
     @Part(value: 'document_front_side') File? documentFrontSide,
     @Part(value: 'document_back_side') File? documentBackSide,

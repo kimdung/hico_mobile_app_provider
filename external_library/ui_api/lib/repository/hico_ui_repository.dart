@@ -163,6 +163,8 @@ abstract class HicoUIRepository {
     List<File> documentsCertificate,
     String level,
     String experience,
+    int numberOfYearsInJapan,
+    int translationExperience,
   );
 
   //Service categories

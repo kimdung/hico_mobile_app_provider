@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
@@ -27,7 +28,7 @@ class LoginController extends BaseController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool showPassword = false;
+  RxBool showPassword = false.obs;
   final _loginSocialServices = LoginSocialServices();
 
   UserProfile? _userProfile;
@@ -36,14 +37,16 @@ class LoginController extends BaseController {
   final storage = Get.find<SharedPreferences>();
 
   @override
-  Future<void> onInit() async {
-    await super.onInit();
+  Future<void> onInit() {
+    EasyLoading.dismiss();
+    return super.onInit();
+  }
 
-    usernameController.text = '';
+  @override
+  Future<void> onReady() {
+    usernameController.text = storage.getString(StorageConstants.username)!;
     passwordController.text = '';
-
-    usernameController.text = 'thuy.doan@blueboltsoftware.com';
-    passwordController.text = '12345678';
+    return super.onReady();
   }
 
   @override
@@ -73,7 +76,7 @@ class LoginController extends BaseController {
               _loadData(response.loginModel!);
             }
           } else if (response.loginModel != null &&
-              response.loginModel!.isResend == 1) {
+              response.loginModel!.info!.isUpdate == 1) {
             EasyLoading.dismiss();
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
@@ -294,5 +297,10 @@ class LoginController extends BaseController {
 
   Future<void> forgorPassword() async {
     await Get.toNamed(Routes.FORGOT_PASSWORD);
+  }
+
+  void hideShowPassword() {
+    showPassword.value = !showPassword.value;
+    log('Value: ${showPassword.value}');
   }
 }

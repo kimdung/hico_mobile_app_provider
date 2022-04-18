@@ -139,7 +139,7 @@ const Map<String, String> vi_VN = {
   'profile.address': 'Địa chỉ',
   'profile.station': 'Ga gần nhất',
   'profile.education': 'Học vấn',
-  'profile.experience': 'Kinh nghiệp',
+  'profile.experience': 'Kinh nghiệm',
   'profile.degree': 'Bằng cấp',
   'profile.image_card': 'Ảnh thẻ ngoại kiều (2 mặt)',
   'profile.image_before': 'Mặt trước',

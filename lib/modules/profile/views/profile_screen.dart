@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hico/routes/app_pages.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
 
 import '../../../shared/widget_hico/button/general_button.dart';
@@ -214,7 +215,9 @@ class ProfileScreen extends GetView<ProfileController> {
               padding: const EdgeInsets.symmetric(
                   horizontal: CommonConstants.paddingDefault),
               child: GeneralButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Routes.PROFILE_UPDATE);
+                },
                 borderRadius: BorderRadius.circular(24),
                 borderColor: AppColor.primaryColorLight,
                 borderWidth: 2,

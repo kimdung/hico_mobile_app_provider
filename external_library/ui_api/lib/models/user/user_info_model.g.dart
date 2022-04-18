@@ -32,6 +32,8 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       level: json['level'] as String?,
       experience: json['experience'] as String?,
+      numberOfYearsInJapan: json['number_of_years_in_japan'] as int?,
+      translationExperience: json['translation_experience'] as int?,
       services: (json['services'] as List<dynamic>?)
           ?.map((e) =>
               UserServicesCategoryModel.fromJson(e as Map<String, dynamic>))
@@ -70,6 +72,8 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'documents_certificate': instance.documentsCertificate,
       'level': instance.level,
       'experience': instance.experience,
+      'number_of_years_in_japan': instance.numberOfYearsInJapan,
+      'translation_experience': instance.translationExperience,
       'services': instance.services,
       'workplaces': instance.workplaces,
       'user_time': instance.userTime,

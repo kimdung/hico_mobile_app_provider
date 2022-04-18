@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
@@ -118,6 +119,7 @@ class ProfileUpDateController extends BaseController {
     station.text = info.value.nearestStation ?? '';
     education.text = info.value.education ?? '';
     experience.text = info.value.experience ?? '';
+    log('${info.value.numberOfYearsInJapan} - ${info.value.translationExperience}');
   }
 
   Future pickAvatar(BuildContext context) async {
@@ -343,6 +345,8 @@ class ProfileUpDateController extends BaseController {
           degree.isNotEmpty ? degree : [],
           level.text,
           experience.text,
+          4,
+          4,
         )
             .then((response) {
           EasyLoading.dismiss();
