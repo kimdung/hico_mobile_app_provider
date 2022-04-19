@@ -230,6 +230,8 @@ const Map<String, String> vi_VN = {
   'profile.update.back_side_required': 'Vui lòng chọn ảnh thẻ mặt sau',
   'profile.update.image': 'Hình ảnh',
   'profile.update.number_years_in_japan' : 'Số năm ở Nhật',
+  'profile.update.translatation_experience.hint' : 'Vui lòng ghi rõ những nội dung bạn đã từng phiên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch cho bệnh nhân ở bệnh viện 〇〇 (Bệnh 〇〇)',
+  'profile.update.subtitle' : '(Vui lòng up ảnh thẳng góc, không quá tối, không nhòe)',
 
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',

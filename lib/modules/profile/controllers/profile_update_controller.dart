@@ -70,18 +70,32 @@ class ProfileUpDateController extends BaseController {
   final TextEditingController experience = TextEditingController();
 
   Rx<String> bankName = Rx('');
-  String interpretationExperience = '';
-  String translationExperience = '';
-  String numberYearsInJapan = '';
+  RxString interpretationExperience = ''.obs;
+  RxString translationExperience = ''.obs;
+  RxString numberYearsInJapan = ''.obs;
   int? bankId;
   List<BankLocalModel> lstBanks = [];
-  RxList<String> numberYearsInJapanList = <String>[
+  List<String> numberYearsInJapanList = <String>[
     'Chưa đến Nhật',
     '1-3 năm',
     '4-6 năm',
     '7-10 năm',
     'Trên 10 năm',
-  ].obs;
+  ];
+  List<String> translatationExperienceList = <String>[
+    'Chưa có',
+    '1-3 năm',
+    '4-6 năm',
+    '7-10 năm',
+    'Trên 10 năm',
+  ];
+  List<String> interpretationExperienceList = <String>[
+    'Chưa có',
+    '1-3 năm',
+    '4-6 năm',
+    '7-10 năm',
+    'Trên 10 năm',
+  ];
   RxBool isEnabled = false.obs;
 
   ProfileUpDateController() {
@@ -140,9 +154,10 @@ class ProfileUpDateController extends BaseController {
         info.value.interpretationExperienceDetail ?? '';
     translationExperienceDetail.text =
         info.value.translationExperienDetail ?? '';
-    interpretationExperience = getValue(info.value.interpretationExperience!);
-    translationExperience = getValue(info.value.translationExperience!);
-    numberYearsInJapan = getValue(info.value.numberOfYearsInJapan!);
+    interpretationExperience.value =
+        getValue(info.value.interpretationExperience!);
+    translationExperience.value = getValue(info.value.translationExperience!);
+    numberYearsInJapan.value = getValue(info.value.numberOfYearsInJapan!);
   }
 
   Future pickAvatar(BuildContext context) async {
@@ -342,7 +357,44 @@ class ProfileUpDateController extends BaseController {
         child: Container(
           width: double.infinity,
           height: Get.height / 2,
-          child: const NumberYearsInJapanWidget(),
+          child: DataFormWidget(
+            dataList: numberYearsInJapanList,
+            title: 'profile.update.number_years_in_japan'.tr,
+            onTap: (index) {
+              log('Value : ${numberYearsInJapanList[index]}');
+              // numberYearsInJapan.value = numberYearsInJapanList[index];
+            },
+          ),
+        ),
+        context: context,
+        onValue: (value) {});
+  }
+
+  Future<void> getTranslationExperience(BuildContext context) async {
+    await ShowBottomSheet().showBottomSheet(
+        child: Container(
+          width: double.infinity,
+          height: Get.height / 2,
+          child: DataFormWidget(
+            dataList: translatationExperienceList,
+            title: 'profile.update.translation_experience'.tr,
+            onTap: (index) {},
+          ),
+        ),
+        context: context,
+        onValue: (value) {});
+  }
+
+  Future<void> getInterpretationExperience(BuildContext context) async {
+    await ShowBottomSheet().showBottomSheet(
+        child: Container(
+          width: double.infinity,
+          height: Get.height / 2,
+          child: DataFormWidget(
+            dataList: interpretationExperienceList,
+            title: 'profile.update.interpreting_experience'.tr,
+            onTap: (index) {},
+          ),
         ),
         context: context,
         onValue: (value) {});

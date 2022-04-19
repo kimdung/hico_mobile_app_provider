@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/components/border/gf_border.dart';
 import 'package:getwidget/types/gf_border_type.dart';
 
+import '../../../shared/widgets/experience_widget/experience_widget.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -268,15 +269,19 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     'profile.update.number_years_in_japan'.tr,
                                 required: 1),
                             const SizedBox(height: 8),
-                            buildSelectComponent(
-                              title: controller.numberYearsInJapanList[1],
-                              textColor: TextAppStyle().smallTextGrey(),
-                              prefixIcon: true,
-                              prefixImage:
-                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-                              onPress: () =>
-                                  controller.getNumberYearsInJapan(context),
-                            ),
+                            controller.numberYearsInJapan.value == ''
+                                ? buildSelectComponent(
+                                    title: controller.numberYearsInJapan.value,
+                                    textColor: TextAppStyle().smallTextGrey(),
+                                    prefixIcon: true,
+                                    prefixImage:
+                                        'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                                    onPress: () => controller
+                                        .getNumberYearsInJapan(context),
+                                  )
+                                : ExperienceWidget(
+                                    content:
+                                        controller.numberYearsInJapan.value),
                             //education
                             const SizedBox(height: 14),
                             _buildLabel(
@@ -288,7 +293,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
 
                             //degree
                             const SizedBox(height: 14),
-                            buildForm(title: 'profile.degree'.tr),
+                            buildHeader(title: 'profile.degree'.tr),
                             const SizedBox(height: 8.0),
                             Container(
                               child: (controller.degree.isNotEmpty)
@@ -451,10 +456,10 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             ),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
-                                textEditng: controller.experience,
+                                textEditng: controller.level,
                                 title: 'profile.update.level'.tr),
                             const SizedBox(height: 14),
-                            buildForm(
+                            buildHeader(
                                 title: 'profile.update.curriculum_vitae'.tr),
                             const SizedBox(height: 8.0),
                             Container(
@@ -617,7 +622,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     ),
                             ),
                             const SizedBox(height: 14),
-                            buildForm(
+                            buildHeader(
                                 title: 'profile.update.experience_title'.tr),
                             const SizedBox(height: 8),
                             Container(
@@ -788,35 +793,52 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 title:
                                     'profile.update.interpreting_experience'.tr,
                                 required: 1),
-                            buildSelectComponent(
-                              title: '1-3 năm',
-                              prefixIcon: true,
-                              prefixImage:
-                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-                            ),
+                            controller.interpretationExperience.value == ''
+                                ? buildSelectComponent(
+                                    title: controller
+                                        .interpretationExperience.value,
+                                    prefixIcon: true,
+                                    prefixImage:
+                                        'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                                    onPress: () => controller
+                                        .getInterpretationExperience(context),
+                                  )
+                                : ExperienceWidget(
+                                    content: controller
+                                        .interpretationExperience.value),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
-                                textEditng:
-                                    controller.interpretingExperienceDetail,
-                                title:
-                                    'Vui lòng ghi rõ những nội dung bạn đã từng phiên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch cho bệnh nhân ở bệnh viện 〇〇 (Bệnh 〇〇)'),
+                              textEditng:
+                                  controller.interpretingExperienceDetail,
+                              title:
+                                  'profile.update.translatation_experience.hint'
+                                      .tr,
+                            ),
                             const SizedBox(height: 20),
                             _buildLabel(
                                 title:
                                     'profile.update.translation_experience'.tr,
                                 required: 1),
-                            buildSelectComponent(
-                              title: '1-3 năm',
-                              prefixIcon: true,
-                              prefixImage:
-                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-                            ),
+                            controller.translationExperience.value == ''
+                                ? buildSelectComponent(
+                                    title:
+                                        controller.translationExperience.value,
+                                    prefixIcon: true,
+                                    prefixImage:
+                                        'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                                    onPress: () => controller
+                                        .getTranslationExperience(context),
+                                  )
+                                : ExperienceWidget(
+                                    content:
+                                        controller.translationExperience.value),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
                                 textEditng:
                                     controller.translationExperienceDetail,
                                 title:
-                                    'Vui lòng ghi rõ những nội dung bạn đã từng biên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch hợp đồng thương mại cho công ty 〇〇'),
+                                    'profile.update.translatation_experience.hint'
+                                        .tr),
                             //button
                             const SizedBox(height: 30),
                             GeneralButton(
