@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hico/routes/app_pages.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
 
 import '../../../shared/widget_hico/button/general_button.dart';
@@ -210,19 +211,24 @@ class ProfileScreen extends GetView<ProfileController> {
               list: AppDataGlobal.userInfo!.documentsCertificate!,
             ),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: CommonConstants.paddingDefault),
-              child: GeneralButton(
-                onPressed: () {},
-                borderRadius: BorderRadius.circular(24),
-                borderColor: AppColor.primaryColorLight,
-                borderWidth: 2,
-                child: Text(
-                  'profile.change_info'.tr,
-                  style: TextAppStyle()
-                      .largeTextPink()
-                      .copyWith(fontWeight: FontWeight.bold),
+            Visibility(
+              visible: controller.info.value.kycStatus == 1 ? true : false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: CommonConstants.paddingDefault),
+                child: GeneralButton(
+                  onPressed: () {
+                    controller.requestUpdateUserInfor();
+                  },
+                  borderRadius: BorderRadius.circular(24),
+                  borderColor: AppColor.primaryColorLight,
+                  borderWidth: 2,
+                  child: Text(
+                    'profile.change_info'.tr,
+                    style: TextAppStyle()
+                        .largeTextPink()
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),

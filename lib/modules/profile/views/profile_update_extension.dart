@@ -172,6 +172,25 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
     );
   }
 
+  Widget buildForm({String? title}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildLabel(title: title!, required: 1),
+        const Text(
+          '(Vui lòng up ảnh thẳng góc, không quá tối, không nhòe)',
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.w400,
+            color: AppColor.textBlack,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    );
+  }
+
   // Widget _buildInputBankName() {
   //   return TextFormField(
   //     //controller: controller.bankName,

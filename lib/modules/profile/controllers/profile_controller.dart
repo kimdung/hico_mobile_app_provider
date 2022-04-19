@@ -15,6 +15,7 @@ import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widget_hico/dialog/notification_widget.dart';
 import '../../../shared/widgets/image_widget/image_widget.dart';
 
 class ProfileController extends BaseController {
@@ -95,5 +96,29 @@ class ProfileController extends BaseController {
 
   Future<void> next() async {
     await Get.toNamed(Routes.SERVICE);
+  }
+
+  void requestUpdateUserInfor() {
+    if(info.value.kycStatus == 0){
+      Get.toNamed(Routes.PROFILE_UPDATE);
+    } else if (info.value.kycStatus == 2) {
+      DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        title: 'Tài khoản đã được xác thực.',
+        onVaLue: (value) {},
+        child: const NotificationWidget(content: 'Thông tin của bạn đang chờ được xử lý.',),
+      );
+    } else if (info.value.kycStatus == 1) {
+      DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        title: 'Tài khoản đã được xác thực.',
+        onVaLue: (value) {},
+        child: const NotificationWidget(content: 'Tài khoản đã được xác thực. Bạn không thể thay đổi dữ liệu.'),
+      );
+    }
   }
 }

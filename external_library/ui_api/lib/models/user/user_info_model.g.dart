@@ -32,6 +32,13 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       level: json['level'] as String?,
       experience: json['experience'] as String?,
+      numberOfYearsInJapan: json['number_of_years_in_japan'] as int?,
+      interpretationExperience: json['interpretation_experience'] as int?,
+      translationExperience: json['translation_experience'] as int?,
+      interpretationExperienceDetail:
+          json['interpretation_experience_detail'] as String?,
+      translationExperienDetail:
+          json['translation_experience_detail'] as String?,
       services: (json['services'] as List<dynamic>?)
           ?.map((e) =>
               UserServicesCategoryModel.fromJson(e as Map<String, dynamic>))
@@ -43,11 +50,12 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           ?.map((e) => UserTimeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       kycStatus: json['kyc_status'] as int?,
+      isUpdate: json['is_update'] as int?,
       conversationInfo: json['conversation_info'] == null
           ? null
           : ConversationInfoModel.fromJson(
               json['conversation_info'] as Map<String, dynamic>),
-    )..isUpdate = json['is_update'] as int?;
+    );
 
 Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
     <String, dynamic>{
@@ -70,6 +78,12 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'documents_certificate': instance.documentsCertificate,
       'level': instance.level,
       'experience': instance.experience,
+      'number_of_years_in_japan': instance.numberOfYearsInJapan,
+      'interpretation_experience': instance.interpretationExperience,
+      'translation_experience': instance.translationExperience,
+      'interpretation_experience_detail':
+          instance.interpretationExperienceDetail,
+      'translation_experience_detail': instance.translationExperienDetail,
       'services': instance.services,
       'workplaces': instance.workplaces,
       'user_time': instance.userTime,

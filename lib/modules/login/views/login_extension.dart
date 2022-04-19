@@ -51,6 +51,16 @@ extension _LoginExtension on LoginScreen {
             IconConstants.icLock,
           ),
         ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowPassword();
+          },
+          icon: Icon(
+            controller.showPassword.value
+                ? Icons.visibility
+                : Icons.visibility_off,
+          ),
+        ),
       ),
       validator: (value) =>
           (value == null || value.isEmpty) ? 'data_requied'.tr : null,

@@ -527,6 +527,11 @@ class _HicoUIAPI implements HicoUIAPI {
       documentsCertificate,
       level,
       experience,
+      numberOfYearsInJapan,
+      interpretationExperience,
+      translationExperience,
+      interpretationExperienceDetail,
+      translationExperienceDetail,
       {avatarImage,
       documentFrontSide,
       documentBackSide}) async {
@@ -546,7 +551,12 @@ class _HicoUIAPI implements HicoUIAPI {
       r'nearest_station': nearestStation,
       r'education': education,
       r'level': level,
-      r'experience': experience
+      r'experience': experience,
+      r'number_of_years_in_japan': numberOfYearsInJapan,
+      r'interpretation_experience': interpretationExperience,
+      r'translation_experience': translationExperience,
+      r'interpretation_experience_detail': interpretationExperienceDetail,
+      r'translation_experience_detail': translationExperienceDetail
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:ui_api/datasource/remote/hico_ui_api.dart';
 import 'package:ui_api/request/general/bank_response.dart';
 import 'package:ui_api/request/general/contact_request.dart';
-import 'package:ui_api/request/general/filter_request.dart';
 import 'package:ui_api/request/invoice/booking_request.dart';
 import 'package:ui_api/request/login/login_request.dart';
 import 'package:ui_api/request/register/register_otp_request.dart';
@@ -226,6 +225,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     List<File> documentsCertificate,
     String level,
     String experience,
+    int numberOfYearsInJapan,
+    int interpretationExperience,
+    int translationExperience,
+    String interpretationExperienceDetail,
+    String translationExperienceDetail,
   ) {
     return _api.updateProfile(
       name,
@@ -244,6 +248,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
       documentsCertificate,
       level,
       experience,
+      numberOfYearsInJapan,
+      interpretationExperience,
+      translationExperience,
+      interpretationExperienceDetail,
+      translationExperienceDetail,
       avatarImage: avatarImage,
       documentFrontSide: documentFrontSide,
       documentBackSide: documentBackSide,

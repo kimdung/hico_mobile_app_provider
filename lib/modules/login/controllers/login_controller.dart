@@ -38,11 +38,9 @@ class LoginController extends BaseController {
   final storage = Get.find<SharedPreferences>();
 
   @override
-  Future<void> onInit() async {
-    await super.onInit();
-
-    // usernameController.text = 'thuy.doan@blueboltsoftware.com';
-    // passwordController.text = '12345678';
+  Future<void> onInit() {
+    EasyLoading.dismiss();
+    return super.onInit();
   }
 
   @override
@@ -79,7 +77,7 @@ class LoginController extends BaseController {
               _loadData(response.loginModel!);
             }
           } else if (response.loginModel != null &&
-              response.loginModel!.isResend == 1) {
+              response.loginModel!.info!.isUpdate == 1) {
             EasyLoading.dismiss();
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,

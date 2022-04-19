@@ -34,7 +34,8 @@ class GeneralButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border.all(
-            color: borderColor ?? Colors.black, width: borderWidth ?? 1),
+            color: borderColor ?? Colors.black,
+            width: borderWidth ?? 1),
         borderRadius: borderRadius ?? BorderRadius.circular(8),
         boxShadow: shadow
             ? [

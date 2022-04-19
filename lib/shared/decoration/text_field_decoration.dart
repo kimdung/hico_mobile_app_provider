@@ -47,6 +47,8 @@ class TextFieldDecoration {
       ),
       prefixIcon: prefixIcon,
       prefixIconConstraints: const BoxConstraints(minHeight: 18, minWidth: 18),
+      suffixIcon: suffixIcon,
+      suffixIconConstraints: const BoxConstraints(minHeight: 18, minWidth: 18),
     );
   }
 
