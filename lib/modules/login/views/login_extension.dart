@@ -38,13 +38,6 @@ extension _LoginExtension on LoginScreen {
         borderColor: AppColor.dividerColorLight,
         hintText: ' ${'password'.tr}',
         hintStype: TextAppStyle().genaralTextStyle(),
-        suffixIcon: InkWell(
-            child: Icon(controller.showPassword.value
-                ? Icons.visibility
-                : Icons.visibility_off),
-            onTap: () {
-              controller.hideShowPassword();
-            }),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(15),
           child: FCoreImage(
