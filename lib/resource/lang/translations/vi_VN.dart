@@ -27,7 +27,7 @@ const Map<String, String> vi_VN = {
   'done': 'Xong',
   'calling': 'Đang gọi...',
 
-//onboard
+  // onboard
   'onboard.title1': 'Welcome to Hico',
   'onboard.title2': 'Dịch vụ tận tình - chu đáo',
   'onboard.title3': 'Kết nối đa phương tiện',
@@ -38,11 +38,15 @@ const Map<String, String> vi_VN = {
   'onboard.description3':
       'Chat, gọi trực tiếp với thông dịch viên của bạn. An toàn trải nghiệm dù ở bất cứ đâu.',
 
-//general trans
+  // general trans
   'data_requied': 'Dữ liệu bắt buộc',
   'data_not_match': 'Nhập lại không khớp',
 
-//register
+  // error
+  'error': 'Có lỗi xẩy ra',
+  'error.expires': 'Phiên làm việc hết hạn!',
+
+  //register
   'register.comfirm': 'Xác thực tài khoản',
   'register.comfirm_email': 'Mã xác thực được gửi đến địa chỉ email',
   'register.miss_otp': 'Không nhận được mã',

@@ -9,12 +9,12 @@ android {
         }
         dev {
             dimension "app"
-//            applicationIdSuffix ".dev"
+            applicationIdSuffix ""
             versionNameSuffix "-dev"
         }
         uat {
             dimension "app"
-            applicationIdSuffix ".uat"
+            applicationIdSuffix ""
             versionNameSuffix "-uat"
         }
     }

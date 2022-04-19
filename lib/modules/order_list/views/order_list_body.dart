@@ -13,25 +13,29 @@ extension OrderListBody on OrderListScreen {
             child: Row(
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Get.toNamed(Routes.PROFILE);
                   },
-                  child: CachedNetworkImage(
-                    width: 42,
-                    height: 42,
-                    imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(21),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.fill,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(21),
+                    child: CachedNetworkImage(
+                      width: 42,
+                      height: 42,
+                      imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(21),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ), 
                   ),
                 ),
                 Padding(

@@ -1,37 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/data/app_data_global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-import 'package:ui_api/models/user/login_model.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/login/login_request.dart';
 
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
+import '../../../shared/services/firebase_cloud_messaging.dart';
+import '../../../shared/utils/chat_util.dart';
 
 class SplashController extends GetxController {
-  late HicoUIRepository _uiRepository;
+  final HicoUIRepository _uiRepository = Get.find<HicoUIRepository>();
+  final config = FirebaseMessageConfig();
   final storage = Get.find<SharedPreferences>();
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    await config.initFirebaseMessageConfig();
     await loadInitSplashScreen();
   }
 
-  @override
-  Future<void> onReady() async {
-    super.onReady();
-  }
-
   Future<void> loadInitSplashScreen() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
     _loadTheme(storage);
-    _loadMasterData();
+    await _loadMasterData();
     _loadLanguage(storage);
 
     final isLogin = storage.getBool(StorageConstants.isLogin);
@@ -95,12 +91,8 @@ class SplashController extends GetxController {
       });
     }
 
-    AppDataGlobal.client =
-        StreamChatClient('mfjwbudb6sky', logLevel: Level.INFO);
-    await AppDataGlobal.client?.connectUser(
-      AppDataGlobal.userInfo!.getChatUser(),
-      AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
-    );
+    await ChatUtil.initChat(
+        AppDataGlobal.userInfo?.conversationInfo?.apiKey ?? '');
 
     await Get.offAllNamed(Routes.MAIN);
   }
@@ -142,9 +134,8 @@ class SplashController extends GetxController {
     storage.setString(StorageConstants.theme, DARK_THEME);
   }
 
-  void _loadMasterData() {
-    _uiRepository = Get.find<HicoUIRepository>();
-    _uiRepository.masterData().then((response) {
+  Future<void> _loadMasterData() async {
+    await _uiRepository.masterData().then((response) {
       if (response.status == CommonConstants.statusOk &&
           response.masterDataModel != null) {
         AppDataGlobal.masterData = response.masterDataModel!;
