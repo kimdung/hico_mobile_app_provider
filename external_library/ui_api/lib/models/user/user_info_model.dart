@@ -43,8 +43,14 @@ class UserInfoModel {
   String? experience;
   @JsonKey(name: 'number_of_years_in_japan')
   int? numberOfYearsInJapan;
+  @JsonKey(name: 'interpretation_experience')
+  int? interpretationExperience;
   @JsonKey(name: 'translation_experience')
   int? translationExperience;
+  @JsonKey(name: 'interpretation_experience_detail')
+  String? interpretationExperienceDetail;
+  @JsonKey(name: 'translation_experience_detail')
+  String? translationExperienDetail;
   List<UserServicesCategoryModel>? services;
   List<WorkplacesModel>? workplaces;
   @JsonKey(name: 'user_time')
@@ -77,13 +83,16 @@ class UserInfoModel {
       this.level,
       this.experience,
       this.numberOfYearsInJapan,
+      this.interpretationExperience,
       this.translationExperience,
+      this.interpretationExperienceDetail,
+      this.translationExperienDetail,
       this.services,
       this.workplaces,
       this.userTime,
       this.kycStatus,
       this.isUpdate,
-      this.conversationInfo});
+      this.conversationInfo,});
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);

@@ -10,6 +10,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hico/shared/constants/colors.dart';
+import 'package:hico/shared/styles/text_style/text_style.dart';
 import 'package:hico/shared/widget_hico/data_general/banks.dart';
 import 'package:hico/shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +27,7 @@ import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/data_general/number_years_in_japan_widget.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widgets/image_widget/image_widget.dart';
 
@@ -60,12 +63,26 @@ class ProfileUpDateController extends BaseController {
   final TextEditingController station = TextEditingController();
   final TextEditingController education = TextEditingController();
   final TextEditingController level = TextEditingController();
-
+  final TextEditingController interpretingExperienceDetail =
+      TextEditingController();
+  final TextEditingController translationExperienceDetail =
+      TextEditingController();
   final TextEditingController experience = TextEditingController();
 
   Rx<String> bankName = Rx('');
+  String interpretationExperience = '';
+  String translationExperience = '';
+  String numberYearsInJapan = '';
   int? bankId;
   List<BankLocalModel> lstBanks = [];
+  RxList<String> numberYearsInJapanList = <String>[
+    'Chưa đến Nhật',
+    '1-3 năm',
+    '4-6 năm',
+    '7-10 năm',
+    'Trên 10 năm',
+  ].obs;
+  RxBool isEnabled = false.obs;
 
   ProfileUpDateController() {
     _loadData();
@@ -119,7 +136,13 @@ class ProfileUpDateController extends BaseController {
     station.text = info.value.nearestStation ?? '';
     education.text = info.value.education ?? '';
     experience.text = info.value.experience ?? '';
-    log('${info.value.numberOfYearsInJapan} - ${info.value.translationExperience}');
+    interpretingExperienceDetail.text =
+        info.value.interpretationExperienceDetail ?? '';
+    translationExperienceDetail.text =
+        info.value.translationExperienDetail ?? '';
+    interpretationExperience = getValue(info.value.interpretationExperience!);
+    translationExperience = getValue(info.value.translationExperience!);
+    numberYearsInJapan = getValue(info.value.numberOfYearsInJapan!);
   }
 
   Future pickAvatar(BuildContext context) async {
@@ -186,6 +209,23 @@ class ProfileUpDateController extends BaseController {
       degree.add(imageTmp);
     } on PlatformException catch (e) {
       print(e);
+    }
+  }
+
+  String getValue(int result) {
+    switch (result) {
+      case 1:
+        return 'Chưa có';
+      case 2:
+        return '1 -3 năm';
+      case 3:
+        return '4 - 6 năm';
+      case 4:
+        return '7 - 10 năm';
+      case 5:
+        return 'Trên 10 năm';
+      default:
+        return '';
     }
   }
 
@@ -297,6 +337,17 @@ class ProfileUpDateController extends BaseController {
     showSuggest.value = 0;
   }
 
+  Future<void> getNumberYearsInJapan(BuildContext context) async {
+    await ShowBottomSheet().showBottomSheet(
+        child: Container(
+          width: double.infinity,
+          height: Get.height / 2,
+          child: const NumberYearsInJapanWidget(),
+        ),
+        context: context,
+        onValue: (value) {});
+  }
+
   Future<void> updated() async {
     try {
       await EasyLoading.show();
@@ -347,6 +398,9 @@ class ProfileUpDateController extends BaseController {
           experience.text,
           4,
           4,
+          4,
+          translationExperienceDetail.text,
+          interpretingExperienceDetail.text,
         )
             .then((response) {
           EasyLoading.dismiss();

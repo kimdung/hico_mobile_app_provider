@@ -140,7 +140,7 @@ const Map<String, String> vi_VN = {
   'profile.station': 'Ga gần nhất',
   'profile.education': 'Học vấn',
   'profile.experience': 'Kinh nghiệm',
-  'profile.degree': 'Bằng cấp',
+  'profile.degree': 'Chứng chỉ',
   'profile.image_card': 'Ảnh thẻ ngoại kiều (2 mặt)',
   'profile.image_before': 'Mặt trước',
   'profile.image_after': 'Mặt sau',
@@ -152,6 +152,10 @@ const Map<String, String> vi_VN = {
   'profile.rating': 'Đánh Giá Của Khách Hàng',
   'profile.search_bank': 'Tìm kiếm ngân hàng',
   'profile.change_info': 'Yêu cầu thay đổi thông tin',
+  'profile.update.curriculum_vitae' : 'Sơ yếu lí lịch (履歴書)',
+  'profile.update.interpreting_experience' : 'Kinh nghiệm phiên dịch',
+  'profile.update.translation_experience' : 'Kinh nghiệm biên dịch',
+  'profile.update.experience_title' : 'Kinh nghiệm làm việc (職務経歴書)',
 
   //account screen
   'account': 'Tài khoản',
@@ -221,6 +225,7 @@ const Map<String, String> vi_VN = {
   'profile.update.front_side_required': 'Vui lòng chọn ảnh thẻ mặt trước',
   'profile.update.back_side_required': 'Vui lòng chọn ảnh thẻ mặt sau',
   'profile.update.image': 'Hình ảnh',
+  'profile.update.number_years_in_japan' : 'Số năm ở Nhật',
 
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',

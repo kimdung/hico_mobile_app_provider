@@ -35,7 +35,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'profile.update'.tr,
+          'Thông tin tài khoản'.tr,
           style: TextAppStyle().titleAppBarStyle(),
         ),
         elevation: 1,
@@ -261,7 +261,22 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 ],
                               ),
                             ),
-
+                            //number years in japan
+                            const SizedBox(height: 14),
+                            _buildLabel(
+                                title:
+                                    'profile.update.number_years_in_japan'.tr,
+                                required: 1),
+                            const SizedBox(height: 8),
+                            buildSelectComponent(
+                              title: controller.numberYearsInJapanList[1],
+                              textColor: TextAppStyle().smallTextGrey(),
+                              prefixIcon: true,
+                              prefixImage:
+                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                              onPress: () =>
+                                  controller.getNumberYearsInJapan(context),
+                            ),
                             //education
                             const SizedBox(height: 14),
                             _buildLabel(
@@ -273,9 +288,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
 
                             //degree
                             const SizedBox(height: 14),
-                            _buildLabel(
-                                title: 'profile.degree'.tr, required: 1),
-                            const SizedBox(height: 12),
+                            buildForm(title: 'profile.degree'.tr),
+                            const SizedBox(height: 8.0),
                             Container(
                               child: (controller.degree.isNotEmpty)
                                   ? GridView.count(
@@ -435,34 +449,389 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                       ),
                                     ),
                             ),
-
-                            const SizedBox(height: 14),
+                            const SizedBox(height: 8),
                             _buildInputTextArea(
-                                textEditng: controller.level,
+                                textEditng: controller.experience,
                                 title: 'profile.update.level'.tr),
-                            //experience
                             const SizedBox(height: 14),
-                            _buildLabel(
-                                title: 'profile.experience'.tr, required: 1),
+                            buildForm(
+                                title: 'profile.update.curriculum_vitae'.tr),
+                            const SizedBox(height: 8.0),
+                            Container(
+                              child: (controller.degree.isNotEmpty)
+                                  ? GridView.count(
+                                      crossAxisCount: 4,
+                                      shrinkWrap: true,
+                                      crossAxisSpacing: 16,
+                                      mainAxisSpacing: 8,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      children: <Widget>[
+                                        ...List.generate(
+                                          controller.degree.length,
+                                          (int index) => Stack(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.file(
+                                                  controller.degree[index],
+                                                  width: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              Positioned(
+                                                  right: 3,
+                                                  top: 3,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      controller
+                                                          .removeFileDegree(
+                                                              index);
+                                                    },
+                                                    child: Container(
+                                                      width: 14,
+                                                      height: 14,
+                                                      decoration: BoxDecoration(
+                                                        color: AppColor
+                                                            .secondBackgroundColorLight
+                                                            .withOpacity(0.8),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: FCoreImage(
+                                                          IconConstants
+                                                              .icClose),
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            controller.pickDegree(context);
+                                          },
+                                          child: GFBorder(
+                                            dashedLine: const [4, 6],
+                                            radius: const Radius.circular(6),
+                                            strokeWidth: 1,
+                                            type: GFBorderType.rect,
+                                            color: AppColor.primaryColorLight,
+                                            child: FCoreImage(
+                                              'lib/resource/assets_resources/icons/camera.png',
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            controller.pickDegreePdf(context);
+                                          },
+                                          child: GFBorder(
+                                            dashedLine: const [4, 6],
+                                            radius: const Radius.circular(6),
+                                            strokeWidth: 1,
+                                            type: GFBorderType.rect,
+                                            color: AppColor.primaryColorLight,
+                                            child: FCoreImage(
+                                              'lib/resource/assets_resources/icons/pin.png',
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : Container(
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                controller.pickDegree(context);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 7),
+                                                decoration: BoxDecoration(
+                                                  color: AppColor
+                                                      .secondBackgroundColorLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    FCoreImage(
+                                                      'lib/resource/assets_resources/icons/camera.png',
+                                                      width: 20,
+                                                      height: 20,
+                                                    ),
+                                                    Text(
+                                                      'profile.update.image'.tr,
+                                                      style: TextAppStyle()
+                                                          .smallTextPink(),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                controller
+                                                    .pickDegreePdf(context);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 7),
+                                                decoration: BoxDecoration(
+                                                  color: AppColor
+                                                      .secondBackgroundColorLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    FCoreImage(
+                                                      'lib/resource/assets_resources/icons/pin.png',
+                                                      width: 20,
+                                                      height: 20,
+                                                    ),
+                                                    Text(
+                                                      'File PDF',
+                                                      style: TextAppStyle()
+                                                          .smallTextPink(),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            ),
+                            const SizedBox(height: 14),
+                            buildForm(
+                                title: 'profile.update.experience_title'.tr),
+                            const SizedBox(height: 8),
+                            Container(
+                              child: (controller.degree.isNotEmpty)
+                                  ? GridView.count(
+                                      crossAxisCount: 4,
+                                      shrinkWrap: true,
+                                      crossAxisSpacing: 16,
+                                      mainAxisSpacing: 8,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      children: <Widget>[
+                                        ...List.generate(
+                                          controller.degree.length,
+                                          (int index) => Stack(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.file(
+                                                  controller.degree[index],
+                                                  width: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              Positioned(
+                                                  right: 3,
+                                                  top: 3,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      controller
+                                                          .removeFileDegree(
+                                                              index);
+                                                    },
+                                                    child: Container(
+                                                      width: 14,
+                                                      height: 14,
+                                                      decoration: BoxDecoration(
+                                                        color: AppColor
+                                                            .secondBackgroundColorLight
+                                                            .withOpacity(0.8),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: FCoreImage(
+                                                          IconConstants
+                                                              .icClose),
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            controller.pickDegree(context);
+                                          },
+                                          child: GFBorder(
+                                            dashedLine: const [4, 6],
+                                            radius: const Radius.circular(6),
+                                            strokeWidth: 1,
+                                            type: GFBorderType.rect,
+                                            color: AppColor.primaryColorLight,
+                                            child: FCoreImage(
+                                              'lib/resource/assets_resources/icons/camera.png',
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            controller.pickDegreePdf(context);
+                                          },
+                                          child: GFBorder(
+                                            dashedLine: const [4, 6],
+                                            radius: const Radius.circular(6),
+                                            strokeWidth: 1,
+                                            type: GFBorderType.rect,
+                                            color: AppColor.primaryColorLight,
+                                            child: FCoreImage(
+                                              'lib/resource/assets_resources/icons/pin.png',
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : Container(
+                                      width: double.infinity,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                controller.pickDegree(context);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 7),
+                                                decoration: BoxDecoration(
+                                                  color: AppColor
+                                                      .secondBackgroundColorLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    FCoreImage(
+                                                      'lib/resource/assets_resources/icons/camera.png',
+                                                      width: 20,
+                                                      height: 20,
+                                                    ),
+                                                    Text(
+                                                      'profile.update.image'.tr,
+                                                      style: TextAppStyle()
+                                                          .smallTextPink(),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 16),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                controller
+                                                    .pickDegreePdf(context);
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 7),
+                                                decoration: BoxDecoration(
+                                                  color: AppColor
+                                                      .secondBackgroundColorLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    FCoreImage(
+                                                      'lib/resource/assets_resources/icons/pin.png',
+                                                      width: 20,
+                                                      height: 20,
+                                                    ),
+                                                    Text(
+                                                      'File PDF',
+                                                      style: TextAppStyle()
+                                                          .smallTextPink(),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                            ),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
                                 textEditng: controller.experience,
                                 title: 'profile.update.experience'.tr),
-
+                            const SizedBox(height: 14.0),
+                            _buildLabel(
+                                title:
+                                    'profile.update.interpreting_experience'.tr,
+                                required: 1),
+                            buildSelectComponent(
+                              title: '1-3 năm',
+                              prefixIcon: true,
+                              prefixImage:
+                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                            ),
+                            const SizedBox(height: 8),
+                            _buildInputTextArea(
+                                textEditng:
+                                    controller.interpretingExperienceDetail,
+                                title:
+                                    'Vui lòng ghi rõ những nội dung bạn đã từng phiên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch cho bệnh nhân ở bệnh viện 〇〇 (Bệnh 〇〇)'),
+                            const SizedBox(height: 20),
+                            _buildLabel(
+                                title:
+                                    'profile.update.translation_experience'.tr,
+                                required: 1),
+                            buildSelectComponent(
+                              title: '1-3 năm',
+                              prefixIcon: true,
+                              prefixImage:
+                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                            ),
+                            const SizedBox(height: 8),
+                            _buildInputTextArea(
+                                textEditng:
+                                    controller.translationExperienceDetail,
+                                title:
+                                    'Vui lòng ghi rõ những nội dung bạn đã từng biên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch hợp đồng thương mại cho công ty 〇〇'),
                             //button
                             const SizedBox(height: 30),
                             GeneralButton(
-                              onPressed: () {
-                                controller.updated();
-                              },
-                              borderRadius: BorderRadius.circular(24),
-                              borderColor: AppColor.primaryColorLight,
-                              backgroundColor: AppColor.primaryColorLight,
-                              child: Text(
-                                'continue'.tr,
-                                style: TextAppStyle().titleButtonStyle(),
-                              ),
-                            )
+                                onPressed: () {
+                                  controller.updated();
+                                },
+                                borderRadius: BorderRadius.circular(24),
+                                borderColor: AppColor.primaryColorLight,
+                                backgroundColor: AppColor.primaryColorLight,
+                                child: Text(
+                                  'continue'.tr,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )),
                           ],
                         ),
                       ),
