@@ -323,9 +323,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                                   top: 3,
                                                   child: InkWell(
                                                     onTap: () {
-                                                      controller
-                                                          .removeFileDegree(
-                                                              index);
+                                                      controller.removeFile(
+                                                          index,
+                                                          controller.degree);
                                                     },
                                                     child: Container(
                                                       width: 14,
@@ -346,7 +346,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegree(context);
+                                            controller.pickImageList(
+                                                context, controller.degree);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -387,7 +388,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller.pickDegree(context);
+                                                controller.pickImageList(
+                                                    context, controller.degree);
                                               },
                                               child: Container(
                                                 padding:
@@ -463,7 +465,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 title: 'profile.update.curriculum_vitae'.tr),
                             const SizedBox(height: 8.0),
                             Container(
-                              child: (controller.degree.isNotEmpty)
+                              child: (controller.curriculumVitae.isNotEmpty)
                                   ? GridView.count(
                                       crossAxisCount: 4,
                                       shrinkWrap: true,
@@ -473,14 +475,15 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           const NeverScrollableScrollPhysics(),
                                       children: <Widget>[
                                         ...List.generate(
-                                          controller.degree.length,
+                                          controller.curriculumVitae.length,
                                           (int index) => Stack(
                                             children: [
                                               ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                                 child: Image.file(
-                                                  controller.degree[index],
+                                                  controller
+                                                      .curriculumVitae[index],
                                                   width: double.infinity,
                                                   fit: BoxFit.cover,
                                                 ),
@@ -490,9 +493,10 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                                   top: 3,
                                                   child: InkWell(
                                                     onTap: () {
-                                                      controller
-                                                          .removeFileDegree(
-                                                              index);
+                                                      controller.removeFile(
+                                                          index,
+                                                          controller
+                                                              .curriculumVitae);
                                                     },
                                                     child: Container(
                                                       width: 14,
@@ -513,7 +517,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegree(context);
+                                            controller.pickImageList(context,
+                                                controller.curriculumVitae);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -554,7 +559,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller.pickDegree(context);
+                                                controller.pickImageList(
+                                                    context,
+                                                    controller.curriculumVitae);
                                               },
                                               child: Container(
                                                 padding:
@@ -626,7 +633,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 title: 'profile.update.experience_title'.tr),
                             const SizedBox(height: 8),
                             Container(
-                              child: (controller.degree.isNotEmpty)
+                              child: (controller.workExperiences.isNotEmpty)
                                   ? GridView.count(
                                       crossAxisCount: 4,
                                       shrinkWrap: true,
@@ -636,14 +643,15 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           const NeverScrollableScrollPhysics(),
                                       children: <Widget>[
                                         ...List.generate(
-                                          controller.degree.length,
+                                          controller.workExperiences.length,
                                           (int index) => Stack(
                                             children: [
                                               ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                                 child: Image.file(
-                                                  controller.degree[index],
+                                                  controller
+                                                      .workExperiences[index],
                                                   width: double.infinity,
                                                   fit: BoxFit.cover,
                                                 ),
@@ -653,9 +661,10 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                                   top: 3,
                                                   child: InkWell(
                                                     onTap: () {
-                                                      controller
-                                                          .removeFileDegree(
-                                                              index);
+                                                      controller.removeFile(
+                                                          index,
+                                                          controller
+                                                              .workExperiences);
                                                     },
                                                     child: Container(
                                                       width: 14,
@@ -676,7 +685,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegree(context);
+                                            controller.pickImageList(context,
+                                                controller.workExperiences);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -717,7 +727,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller.pickDegree(context);
+                                                controller.pickImageList(
+                                                    context,
+                                                    controller.workExperiences);
                                               },
                                               child: Container(
                                                 padding:
@@ -798,7 +810,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     content: controller
                                         .interpretationExperience.value)
                                 : buildSelectComponent(
-                                    title: controller.interpretationExperience.value,
+                                    title: controller
+                                        .interpretationExperience.value,
                                     prefixIcon: true,
                                     prefixImage:
                                         'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
@@ -823,7 +836,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     content:
                                         controller.translationExperience.value)
                                 : buildSelectComponent(
-                                    title: controller.translationExperience.value,
+                                    title:
+                                        controller.translationExperience.value,
                                     prefixIcon: true,
                                     prefixImage:
                                         'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',

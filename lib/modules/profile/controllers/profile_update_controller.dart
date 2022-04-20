@@ -46,6 +46,8 @@ class ProfileUpDateController extends BaseController {
   final documentFrontSide = Rxn<File>();
   final documentBackSide = Rxn<File>();
   RxList<File> degree = RxList<File>();
+  RxList<File> curriculumVitae = RxList<File>();
+  RxList<File> workExperiences = RxList<File>();
 
   final updateForm = GlobalKey<FormState>();
   final TextEditingController zipCode = TextEditingController();
@@ -187,6 +189,7 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
+  //Chọn mặt trước của tài liệu
   Future pickDocumentFrontSide(BuildContext context) async {
     try {
       final source = await imageWidget.showImageSource(context);
@@ -201,6 +204,7 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
+  //Chọn mặt sau của tài liệu
   Future pickDocumentBackSide(BuildContext context) async {
     try {
       final source = await imageWidget.showImageSource(context);
@@ -219,7 +223,8 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-  Future pickDegree(BuildContext context) async {
+
+  Future pickImageList(BuildContext context, List<File> files) async {
     try {
       final source = await imageWidget.showImageSource(context);
       if (source == null) {
@@ -232,7 +237,7 @@ class ProfileUpDateController extends BaseController {
       }
 
       final imageTmp = File(image.path);
-      degree.add(imageTmp);
+      files.add(imageTmp);
     } on PlatformException catch (e) {
       print(e);
     }
@@ -253,10 +258,9 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-  Future<void> removeFileDegree(int index) async {
+  Future<void> removeFile(int index, List<File> files) async {
     try {
-      degree.removeAt(index);
-      degree.refresh();
+      files.removeAt(index);
     } catch (e) {
       await EasyLoading.dismiss();
     }
