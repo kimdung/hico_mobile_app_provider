@@ -102,3 +102,59 @@ extension PaymentMethodName on PaymentMethod {
     }
   }
 }
+
+enum NumberYearsInJapan {
+  None,
+  NoJapan,
+  OneToThreeYear,
+  FourToSixYear,
+  SevenToTenYear,
+  MoreThanTenYear
+}
+
+extension NumberYearsInJapanValue on NumberYearsInJapan {
+  String get numberYearsInJapan {
+    switch (this) {
+      case NumberYearsInJapan.None:
+        return 'Chọn số năm của bạn';
+      case NumberYearsInJapan.NoJapan:
+        return 'Chưa đến Nhật';
+      case NumberYearsInJapan.OneToThreeYear:
+        return '1 - 3 năm';
+      case NumberYearsInJapan.FourToSixYear:
+        return '4 - 6 năm';
+      case NumberYearsInJapan.SevenToTenYear:
+        return '7 - 10 năm';
+      case NumberYearsInJapan.MoreThanTenYear:
+        return 'Trên 10 năm';
+    }
+  }
+}
+
+enum WorkExperience {
+  None,
+  NoExperience,
+  OneToThreeYear,
+  FourToSixYear,
+  SevenToTenYear,
+  MoreThanTenYear
+}
+
+extension WorkExperienceValue on WorkExperience {
+  String get value {
+    switch (this) {
+      case WorkExperience.None:
+        return 'Chọn kinh nghiệm của bạn';
+      case WorkExperience.NoExperience:
+        return 'Chưa có kinh nghiệm';
+      case WorkExperience.OneToThreeYear:
+        return '1 -3 năm';
+      case WorkExperience.FourToSixYear:
+        return '4 - 6 năm';
+      case WorkExperience.SevenToTenYear:
+        return '7 - 10 năm';
+      case WorkExperience.MoreThanTenYear:
+        return 'Trên 10 năm';
+    }
+  }
+}

@@ -158,12 +158,17 @@ class ProfileUpDateController extends BaseController {
         info.value.interpretationExperienceDetail ?? '';
     translationExperienceDetail.text =
         info.value.translationExperienDetail ?? '';
-    numberYearsInJapan.value =
-        getValueNumberYearsInJapan(info.value.numberOfYearsInJapan!);
-    interpretationExperience.value =
-        getValueExperience(info.value.interpretationExperience!);
-    translationExperience.value =
-        getValueExperience(info.value.translationExperience!);
+    numberYearsInJapan.value = NumberYearsInJapan
+        .values[
+            info.value.numberOfYearsInJapan ?? NumberYearsInJapan.None.index]
+        .numberYearsInJapan;
+    interpretationExperience.value = WorkExperience
+        .values[
+            info.value.interpretationExperience ?? WorkExperience.None.index]
+        .value;
+    translationExperience.value = WorkExperience
+        .values[info.value.translationExperience ?? WorkExperience.None.index]
+        .value;
   }
 
   Future pickAvatar(BuildContext context) async {
@@ -230,40 +235,6 @@ class ProfileUpDateController extends BaseController {
       degree.add(imageTmp);
     } on PlatformException catch (e) {
       print(e);
-    }
-  }
-
-  String getValueNumberYearsInJapan(int result) {
-    switch (result) {
-      case 1:
-        return 'Chưa đến Nhật';
-      case 2:
-        return '1 -3 năm';
-      case 3:
-        return '4 - 6 năm';
-      case 4:
-        return '7 - 10 năm';
-      case 5:
-        return 'Trên 10 năm';
-      default:
-        return '';
-    }
-  }
-
-  String getValueExperience(int result) {
-    switch (result) {
-      case 1:
-        return 'Chưa có kinh nghiệm';
-      case 2:
-        return '1 -3 năm';
-      case 3:
-        return '4 - 6 năm';
-      case 4:
-        return '7 - 10 năm';
-      case 5:
-        return 'Trên 10 năm';
-      default:
-        return '';
     }
   }
 
