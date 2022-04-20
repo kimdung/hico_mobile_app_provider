@@ -27,7 +27,7 @@ import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 import '../../../shared/utils/dialog_util.dart';
-import '../../../shared/widget_hico/data_general/number_years_in_japan_widget.dart';
+import '../../../shared/widget_hico/data_general/data_form_widget.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widgets/image_widget/image_widget.dart';
 
@@ -70,9 +70,10 @@ class ProfileUpDateController extends BaseController {
   final TextEditingController experience = TextEditingController();
 
   Rx<String> bankName = Rx('');
-  RxString interpretationExperience = ''.obs;
-  RxString translationExperience = ''.obs;
-  RxString numberYearsInJapan = ''.obs;
+  RxBool isNumberYearsInJapanClicked = false.obs;
+  RxBool isInterpretationExperienceClicked = false.obs;
+  RxBool isTranslatationExperienceClicked = false.obs;
+
   int? bankId;
   List<BankLocalModel> lstBanks = [];
   List<String> numberYearsInJapanList = <String>[
@@ -83,20 +84,23 @@ class ProfileUpDateController extends BaseController {
     'Trên 10 năm',
   ];
   List<String> translatationExperienceList = <String>[
-    'Chưa có',
+    'Chưa có kinh nghiệm',
     '1-3 năm',
     '4-6 năm',
     '7-10 năm',
     'Trên 10 năm',
   ];
   List<String> interpretationExperienceList = <String>[
-    'Chưa có',
+    'Chưa có kinh nghiệm',
     '1-3 năm',
     '4-6 năm',
     '7-10 năm',
     'Trên 10 năm',
   ];
-  RxBool isEnabled = false.obs;
+  Rx<String> resultValue = Rx('');
+  Rx<String> numberYearsInJapan = Rx('');
+  Rx<String> interpretationExperience = Rx('');
+  Rx<String> translationExperience = Rx('');
 
   ProfileUpDateController() {
     _loadData();
@@ -154,10 +158,12 @@ class ProfileUpDateController extends BaseController {
         info.value.interpretationExperienceDetail ?? '';
     translationExperienceDetail.text =
         info.value.translationExperienDetail ?? '';
+    numberYearsInJapan.value =
+        getValueNumberYearsInJapan(info.value.numberOfYearsInJapan!);
     interpretationExperience.value =
-        getValue(info.value.interpretationExperience!);
-    translationExperience.value = getValue(info.value.translationExperience!);
-    numberYearsInJapan.value = getValue(info.value.numberOfYearsInJapan!);
+        getValueExperience(info.value.interpretationExperience!);
+    translationExperience.value =
+        getValueExperience(info.value.translationExperience!);
   }
 
   Future pickAvatar(BuildContext context) async {
@@ -227,10 +233,27 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-  String getValue(int result) {
+  String getValueNumberYearsInJapan(int result) {
     switch (result) {
       case 1:
-        return 'Chưa có';
+        return 'Chưa đến Nhật';
+      case 2:
+        return '1 -3 năm';
+      case 3:
+        return '4 - 6 năm';
+      case 4:
+        return '7 - 10 năm';
+      case 5:
+        return 'Trên 10 năm';
+      default:
+        return '';
+    }
+  }
+
+  String getValueExperience(int result) {
+    switch (result) {
+      case 1:
+        return 'Chưa có kinh nghiệm';
       case 2:
         return '1 -3 năm';
       case 3:
@@ -360,14 +383,14 @@ class ProfileUpDateController extends BaseController {
           child: DataFormWidget(
             dataList: numberYearsInJapanList,
             title: 'profile.update.number_years_in_japan'.tr,
-            onTap: (index) {
-              log('Value : ${numberYearsInJapanList[index]}');
-              // numberYearsInJapan.value = numberYearsInJapanList[index];
-            },
           ),
         ),
         context: context,
-        onValue: (value) {});
+        onValue: (value) {
+          isNumberYearsInJapanClicked.value = true;
+          numberYearsInJapan.value = value;
+          log('Number is japan: ${isNumberYearsInJapanClicked.value} - $value');
+        });
   }
 
   Future<void> getTranslationExperience(BuildContext context) async {
@@ -378,11 +401,14 @@ class ProfileUpDateController extends BaseController {
           child: DataFormWidget(
             dataList: translatationExperienceList,
             title: 'profile.update.translation_experience'.tr,
-            onTap: (index) {},
           ),
         ),
         context: context,
-        onValue: (value) {});
+        onValue: (value) {
+          isTranslatationExperienceClicked.value = true;
+          translationExperience.value = value;
+          log('Translation experience: ${isTranslatationExperienceClicked.value} - $value');
+        });
   }
 
   Future<void> getInterpretationExperience(BuildContext context) async {
@@ -393,11 +419,14 @@ class ProfileUpDateController extends BaseController {
           child: DataFormWidget(
             dataList: interpretationExperienceList,
             title: 'profile.update.interpreting_experience'.tr,
-            onTap: (index) {},
           ),
         ),
         context: context,
-        onValue: (value) {});
+        onValue: (value) {
+          isInterpretationExperienceClicked.value = true;
+          interpretationExperience.value = value;
+          log('Interpretation experience: ${isInterpretationExperienceClicked.value} - $value');
+        });
   }
 
   Future<void> updated() async {

@@ -269,8 +269,11 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     'profile.update.number_years_in_japan'.tr,
                                 required: 1),
                             const SizedBox(height: 8),
-                            controller.numberYearsInJapan.value == ''
-                                ? buildSelectComponent(
+                            controller.isNumberYearsInJapanClicked.value
+                                ? ExperienceWidget(
+                                    content:
+                                        controller.numberYearsInJapan.value)
+                                : buildSelectComponent(
                                     title: controller.numberYearsInJapan.value,
                                     textColor: TextAppStyle().smallTextGrey(),
                                     prefixIcon: true,
@@ -278,10 +281,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
                                     onPress: () => controller
                                         .getNumberYearsInJapan(context),
-                                  )
-                                : ExperienceWidget(
-                                    content:
-                                        controller.numberYearsInJapan.value),
+                                  ),
                             //education
                             const SizedBox(height: 14),
                             _buildLabel(
@@ -793,19 +793,18 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 title:
                                     'profile.update.interpreting_experience'.tr,
                                 required: 1),
-                            controller.interpretationExperience.value == ''
-                                ? buildSelectComponent(
-                                    title: controller
-                                        .interpretationExperience.value,
+                            controller.isInterpretationExperienceClicked.value
+                                ? ExperienceWidget(
+                                    content: controller
+                                        .interpretationExperience.value)
+                                : buildSelectComponent(
+                                    title: controller.interpretationExperience.value,
                                     prefixIcon: true,
                                     prefixImage:
                                         'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
                                     onPress: () => controller
                                         .getInterpretationExperience(context),
-                                  )
-                                : ExperienceWidget(
-                                    content: controller
-                                        .interpretationExperience.value),
+                                  ),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
                               textEditng:
@@ -819,19 +818,18 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 title:
                                     'profile.update.translation_experience'.tr,
                                 required: 1),
-                            controller.translationExperience.value == ''
-                                ? buildSelectComponent(
-                                    title:
-                                        controller.translationExperience.value,
+                            controller.isTranslatationExperienceClicked.value
+                                ? ExperienceWidget(
+                                    content:
+                                        controller.translationExperience.value)
+                                : buildSelectComponent(
+                                    title: controller.translationExperience.value,
                                     prefixIcon: true,
                                     prefixImage:
                                         'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
                                     onPress: () => controller
                                         .getTranslationExperience(context),
-                                  )
-                                : ExperienceWidget(
-                                    content:
-                                        controller.translationExperience.value),
+                                  ),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
                                 textEditng:

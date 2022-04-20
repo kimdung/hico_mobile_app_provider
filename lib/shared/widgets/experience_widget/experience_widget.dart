@@ -9,6 +9,7 @@ class ExperienceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.only(left: 6.0, top: 11.0, bottom: 11.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6.0),
@@ -16,11 +17,11 @@ class ExperienceWidget extends StatelessWidget {
       ),
       child: Text(
         content,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12.0,
           fontFamily: 'SVN-Jeko',
           fontWeight: FontWeight.w400,
-          color: AppColor.grayF2F2F2,
+          color: AppColor.eightTextColorLight,
         ),
       ),
     );
