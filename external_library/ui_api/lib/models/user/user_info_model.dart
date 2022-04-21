@@ -53,14 +53,6 @@ class UserInfoModel {
   String? interpretationExperienceDetail;
   @JsonKey(name: 'translation_experience_detail')
   String? translationExperienDetail;
-  @JsonKey(name: 'curriculum_vitae_files')
-  List<String>? curriculumVitaeFiles;
-  @JsonKey(name: 'curriculum_vitae_images')
-  List<String>? curriculumVitaeImages;
-  @JsonKey(name: 'work_experience_files')
-  List<String>? workExperienceFiles;
-  @JsonKey(name: 'work_experience_images')
-  List<String>? workExperienceImages;
   List<UserServicesCategoryModel>? services;
   List<WorkplacesModel>? workplaces;
   @JsonKey(name: 'user_time')
@@ -97,10 +89,6 @@ class UserInfoModel {
     this.translationExperience,
     this.interpretationExperienceDetail,
     this.translationExperienDetail,
-    // this.curriculumVitaeFiles,
-    // this.curriculumVitaeImages,
-    // this.workExperienceFiles,
-    // this.workExperienceImages,
     this.services,
     this.workplaces,
     this.userTime,

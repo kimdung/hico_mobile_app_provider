@@ -191,7 +191,7 @@ abstract class HicoUIAPI {
     @Query('code') String code,
   );
 
-  //update avatar
+  //update infor
   @MultiPart()
   @POST('/v1/user/update')
   Future<UserResponse> updateProfile(

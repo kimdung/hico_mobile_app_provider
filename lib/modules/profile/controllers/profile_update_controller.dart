@@ -48,7 +48,7 @@ class ProfileUpDateController extends BaseController {
   RxList<File> degree = RxList<File>();
   RxList<File> curriculumVitae = RxList<File>();
   RxList<File> workExperiences = RxList<File>();
-  final documentListFiles = Rxn<List<File>>();
+  final documentListFiles = Rx<List<File>>([]);
 
   final updateForm = GlobalKey<FormState>();
   final TextEditingController zipCode = TextEditingController();
@@ -237,8 +237,9 @@ class ProfileUpDateController extends BaseController {
       }
 
       final imageTmp = File(image.path);
+      log(imageTmp.path);
       files.add(imageTmp);
-      documentListFiles.value!.addAll(files);
+      documentListFiles.value.addAll(files);
     } on PlatformException catch (e) {
       print(e);
     }
@@ -247,11 +248,10 @@ class ProfileUpDateController extends BaseController {
   Future pickListFilePdf(BuildContext context, List<File> files) async {
     try {
       final result = await FilePicker.platform.pickFiles();
-
       if (result != null) {
         final file = File(result.files.single.path!);
         files.add(file);
-        documentListFiles.value!.addAll(files);
+        documentListFiles.value.addAll(files);
       } else {
         // User canceled the picker
       }
@@ -458,7 +458,7 @@ class ProfileUpDateController extends BaseController {
           documentFrontSide.value,
           documentBackSide.value,
           education.text,
-          documentListFiles.value!,
+          documentListFiles.value,
           level.text,
           experience.text,
           setValueConvert(numberYearsInJapan.value),
@@ -510,6 +510,10 @@ class ProfileUpDateController extends BaseController {
     } else {
       return 1;
     }
+  }
+
+  String getFileName(String filePath) {
+    return filePath.split('/').last;
   }
 
   @override
