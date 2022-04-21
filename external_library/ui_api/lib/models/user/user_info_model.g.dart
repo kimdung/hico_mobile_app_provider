@@ -55,7 +55,22 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           ? null
           : ConversationInfoModel.fromJson(
               json['conversation_info'] as Map<String, dynamic>),
-    );
+    )
+      ..curriculumVitaeFiles =
+          (json['curriculum_vitae_files'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList()
+      ..curriculumVitaeImages =
+          (json['curriculum_vitae_images'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList()
+      ..workExperienceFiles = (json['work_experience_files'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList()
+      ..workExperienceImages =
+          (json['work_experience_images'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList();
 
 Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
     <String, dynamic>{
@@ -84,6 +99,10 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'interpretation_experience_detail':
           instance.interpretationExperienceDetail,
       'translation_experience_detail': instance.translationExperienDetail,
+      'curriculum_vitae_files': instance.curriculumVitaeFiles,
+      'curriculum_vitae_images': instance.curriculumVitaeImages,
+      'work_experience_files': instance.workExperienceFiles,
+      'work_experience_images': instance.workExperienceImages,
       'services': instance.services,
       'workplaces': instance.workplaces,
       'user_time': instance.userTime,

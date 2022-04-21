@@ -48,6 +48,7 @@ class ProfileUpDateController extends BaseController {
   RxList<File> degree = RxList<File>();
   RxList<File> curriculumVitae = RxList<File>();
   RxList<File> workExperiences = RxList<File>();
+  final documentListFiles = Rxn<List<File>>();
 
   final updateForm = GlobalKey<FormState>();
   final TextEditingController zipCode = TextEditingController();
@@ -223,7 +224,6 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-
   Future pickImageList(BuildContext context, List<File> files) async {
     try {
       final source = await imageWidget.showImageSource(context);
@@ -238,18 +238,20 @@ class ProfileUpDateController extends BaseController {
 
       final imageTmp = File(image.path);
       files.add(imageTmp);
+      documentListFiles.value!.addAll(files);
     } on PlatformException catch (e) {
       print(e);
     }
   }
 
-  Future pickDegreePdf(BuildContext context) async {
+  Future pickListFilePdf(BuildContext context, List<File> files) async {
     try {
       final result = await FilePicker.platform.pickFiles();
 
       if (result != null) {
         final file = File(result.files.single.path!);
-        degree.add(file);
+        files.add(file);
+        documentListFiles.value!.addAll(files);
       } else {
         // User canceled the picker
       }
@@ -405,6 +407,7 @@ class ProfileUpDateController extends BaseController {
   }
 
   Future<void> updated() async {
+    log(documentListFiles.string.toString());
     try {
       await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
@@ -415,6 +418,12 @@ class ProfileUpDateController extends BaseController {
           msg = 'profile.update.front_side_required'.tr;
         } else if (documentBackSide.value == null) {
           msg = 'profile.update.back_side_required'.tr;
+        } else if (numberYearsInJapan.value == '') {
+          msg = 'profile.update.number_years_in_japan_required'.tr;
+        } else if (interpretationExperience.value == '') {
+          msg = 'profile.update.interpretation_experience_required'.tr;
+        } else if (translationExperience.value == '') {
+          msg = 'profile.update.translation_experience_required'.tr;
         }
         if (msg != '') {
           await EasyLoading.dismiss();
@@ -449,14 +458,18 @@ class ProfileUpDateController extends BaseController {
           documentFrontSide.value,
           documentBackSide.value,
           education.text,
-          degree.isNotEmpty ? degree : [],
+          documentListFiles.value!,
           level.text,
           experience.text,
-          4,
-          4,
-          4,
-          translationExperienceDetail.text,
-          interpretingExperienceDetail.text,
+          setValueConvert(numberYearsInJapan.value),
+          setValueConvert(translationExperience.value),
+          setValueConvert(interpretationExperience.value),
+          translationExperienceDetail.text.isNotEmpty
+              ? translationExperienceDetail.text
+              : '',
+          interpretingExperienceDetail.text.isNotEmpty
+              ? interpretingExperienceDetail.text
+              : '',
         )
             .then((response) {
           EasyLoading.dismiss();
@@ -482,6 +495,20 @@ class ProfileUpDateController extends BaseController {
       }
     } catch (e) {
       await EasyLoading.dismiss();
+    }
+  }
+
+  int setValueConvert(String content) {
+    if (content.compareTo('1-3 năm') == 0) {
+      return 2;
+    } else if (content.compareTo('4-6 năm') == 0) {
+      return 3;
+    } else if (content.compareTo('7-10 năm') == 0) {
+      return 4;
+    } else if (content.compareTo('Trên 10 năm') == 0) {
+      return 5;
+    } else {
+      return 1;
     }
   }
 

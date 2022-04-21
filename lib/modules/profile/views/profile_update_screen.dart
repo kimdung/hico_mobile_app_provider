@@ -364,7 +364,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegreePdf(context);
+                                            controller.pickListFilePdf(
+                                                context, controller.degree);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -422,8 +423,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller
-                                                    .pickDegreePdf(context);
+                                                controller.pickListFilePdf(
+                                                    context, controller.degree);
                                               },
                                               child: Container(
                                                 padding:
@@ -535,7 +536,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegreePdf(context);
+                                            controller.pickListFilePdf(context,
+                                                controller.curriculumVitae);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -594,8 +596,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller
-                                                    .pickDegreePdf(context);
+                                                controller.pickListFilePdf(
+                                                    context,
+                                                    controller.curriculumVitae);
                                               },
                                               child: Container(
                                                 padding:
@@ -703,7 +706,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegreePdf(context);
+                                            controller.pickListFilePdf(context,
+                                                controller.workExperiences);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -762,8 +766,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller
-                                                    .pickDegreePdf(context);
+                                                controller.pickListFilePdf(
+                                                    context,
+                                                    controller.workExperiences);
                                               },
                                               child: Container(
                                                 padding:
