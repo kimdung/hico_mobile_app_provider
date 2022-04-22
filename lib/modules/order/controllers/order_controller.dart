@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -19,6 +21,7 @@ import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/dialog_confirm_widget.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widget_hico/dialog/rating_widget.dart';
+import '../../../shared/widget_hico/dialog/summary_working_widget.dart';
 import '../../../shared/widget_hico/dialog/text_field_widget.dart';
 import '../../../shared/widget_hico/invoice/cancel_invoice_widget.dart';
 
@@ -318,16 +321,14 @@ class OrderController extends BaseController {
       await EasyLoading.show();
       await _uiRepository.invoiceCompleted(id).then((response) {
         EasyLoading.dismiss();
+        if (id == 7) {
+          Get.toNamed(Routes.MEDICAL);
+        }
         DialogUtil.showPopup(
           dialogSize: DialogSize.Popup,
           barrierDismissible: false,
           backgroundColor: Colors.transparent,
-          child: NormalWidget(
-            icon: response.status == CommonConstants.statusOk
-                ? IconConstants.icSuccess
-                : IconConstants.icFail,
-            title: response.message,
-          ),
+          child: const SummaryWorkingWidget(),
           onVaLue: (value) {},
         ).then((value) => loadData());
         return;

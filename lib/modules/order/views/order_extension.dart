@@ -516,6 +516,7 @@ extension OrderExtension on OrderScreen {
                 controller.invoice.value.supplierStart != '')
             ? GeneralButton(
                 onPressed: () {
+                  log(controller.invoice.value.toString());
                   controller.completed(controller.invoice.value.id!);
                 },
                 borderRadius: BorderRadius.circular(24),

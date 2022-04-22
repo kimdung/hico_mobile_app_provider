@@ -156,10 +156,10 @@ const Map<String, String> vi_VN = {
   'profile.rating': 'Đánh Giá Của Khách Hàng',
   'profile.search_bank': 'Tìm kiếm ngân hàng',
   'profile.change_info': 'Yêu cầu thay đổi thông tin',
-  'profile.update.curriculum_vitae' : 'Sơ yếu lí lịch (履歴書)',
-  'profile.update.interpreting_experience' : 'Kinh nghiệm phiên dịch',
-  'profile.update.translation_experience' : 'Kinh nghiệm biên dịch',
-  'profile.update.experience_title' : 'Kinh nghiệm làm việc (職務経歴書)',
+  'profile.update.curriculum_vitae': 'Sơ yếu lí lịch (履歴書)',
+  'profile.update.interpreting_experience': 'Kinh nghiệm phiên dịch',
+  'profile.update.translation_experience': 'Kinh nghiệm biên dịch',
+  'profile.update.experience_title': 'Kinh nghiệm làm việc (職務経歴書)',
 
   //account screen
   'account': 'Tài khoản',
@@ -229,12 +229,17 @@ const Map<String, String> vi_VN = {
   'profile.update.front_side_required': 'Vui lòng chọn ảnh thẻ mặt trước',
   'profile.update.back_side_required': 'Vui lòng chọn ảnh thẻ mặt sau',
   'profile.update.image': 'Hình ảnh',
-  'profile.update.number_years_in_japan' : 'Số năm ở Nhật',
-  'profile.update.translatation_experience.hint' : 'Vui lòng ghi rõ những nội dung bạn đã từng phiên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch cho bệnh nhân ở bệnh viện 〇〇 (Bệnh 〇〇)',
-  'profile.update.subtitle' : '(Vui lòng up ảnh thẳng góc, không quá tối, không nhòe)',
-  'profile.update.number_years_in_japan_required' : 'Vui lòng chọn số năm ở Nhật',
-  'profile.update.interpretation_experience_required' : 'Vui lòng chọn kinh nghiệm phiên dịch',
-  'profile.update.translation_experience_required' : 'Vui lòng chọn kinh nghiệm biên dịch',
+  'profile.update.number_years_in_japan': 'Số năm ở Nhật',
+  'profile.update.translatation_experience.hint':
+      'Vui lòng ghi rõ những nội dung bạn đã từng phiên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch cho bệnh nhân ở bệnh viện 〇〇 (Bệnh 〇〇)',
+  'profile.update.subtitle':
+      '(Vui lòng up ảnh thẳng góc, không quá tối, không nhòe)',
+  'profile.update.number_years_in_japan_required':
+      'Vui lòng chọn số năm ở Nhật',
+  'profile.update.interpretation_experience_required':
+      'Vui lòng chọn kinh nghiệm phiên dịch',
+  'profile.update.translation_experience_required':
+      'Vui lòng chọn kinh nghiệm biên dịch',
 
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
@@ -334,4 +339,24 @@ const Map<String, String> vi_VN = {
       'Bạn sẽ phải trả phí đi lại 2 chiều cho phiên dịch viên. Chi phí được tính toán theo ga gần địa điểm làm việc nhất và nơi ở của phiên dịch viên.',
   'booking.bank_update_title':
       'Cung cấp thông tin tài khoản ngân hàng của bạn để quá trình sử dụng dịch vụ thuận tiện hơn.',
+
+  //medical screen
+  'medical.title': 'Nội dung phiên dịch',
+  'medical.header': 'Điền đầy đủ nội dung phiên dịch hôm nay của bạn.',
+  'medical.symptom.title': 'Triệu chứng',
+  'medical.symptom.description': 'Triệu chứng của khách hàng',
+  'medical.test_method.title': 'Phương pháp kiểm tra',
+  'medical.test_method.description': 'Phương pháp kiểm tra',
+  'medical.name_disease.title': 'Tên bệnh',
+  'medical.name_disease.description': 'Tên bệnh',
+  'medical.treatments.title' : 'Phương pháp điều trị',
+  'medical.treatments.description' : 'Phương pháp điều trị',
+  'medical.book.title' : 'Đặt lịch từ lần 2 trở đi',
+  'medical.book_description' : 'Đặt lịch từ lần 2 trở đi',
+  'medical.doctor_comments.title' : 'Nhận xét của bác sĩ',
+  'medical.doctor_commnets.description' : 'Nhận xét của bác sĩ',
+  'medical.send' : 'Gửi',
+  'dialog.summary' : 'Tóm tắt nội dung buổi làm việc',
+  'dialog.summary.hint' : 'Hãy ghi tóm tắt nội dung buổi phiên dịch hôm nay của bạn',
+  
 };
