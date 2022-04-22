@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:stream_chat/stream_chat.dart';
 import 'package:ui_api/models/user/address_model.dart';
@@ -62,37 +64,38 @@ class UserInfoModel {
   @JsonKey(name: 'conversation_info')
   ConversationInfoModel? conversationInfo;
 
-  UserInfoModel(
-      {this.id,
-      this.avatarImage,
-      this.name,
-      this.gender,
-      this.dateOfBirth,
-      this.email,
-      this.phoneNumber,
-      this.bankName,
-      this.bankBranchName,
-      this.bankAccountHolder,
-      this.bankAccountNumber,
-      this.address,
-      this.nearestStation,
-      this.documentFrontSide,
-      this.documentBackSide,
-      this.education,
-      this.documentsCertificate,
-      this.level,
-      this.experience,
-      this.numberOfYearsInJapan,
-      this.interpretationExperience,
-      this.translationExperience,
-      this.interpretationExperienceDetail,
-      this.translationExperienDetail,
-      this.services,
-      this.workplaces,
-      this.userTime,
-      this.kycStatus,
-      this.isUpdate,
-      this.conversationInfo,});
+  UserInfoModel({
+    this.id,
+    this.avatarImage,
+    this.name,
+    this.gender,
+    this.dateOfBirth,
+    this.email,
+    this.phoneNumber,
+    this.bankName,
+    this.bankBranchName,
+    this.bankAccountHolder,
+    this.bankAccountNumber,
+    this.address,
+    this.nearestStation,
+    this.documentFrontSide,
+    this.documentBackSide,
+    this.education,
+    this.documentsCertificate,
+    this.level,
+    this.experience,
+    this.numberOfYearsInJapan,
+    this.interpretationExperience,
+    this.translationExperience,
+    this.interpretationExperienceDetail,
+    this.translationExperienDetail,
+    this.services,
+    this.workplaces,
+    this.userTime,
+    this.kycStatus,
+    this.isUpdate,
+    this.conversationInfo,
+  });
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);

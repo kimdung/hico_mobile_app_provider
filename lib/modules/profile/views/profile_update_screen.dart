@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/components/border/gf_border.dart';
 import 'package:getwidget/types/gf_border_type.dart';
 
+import '../../../shared/widgets/experience_widget/experience_widget.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -268,15 +269,19 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     'profile.update.number_years_in_japan'.tr,
                                 required: 1),
                             const SizedBox(height: 8),
-                            buildSelectComponent(
-                              title: controller.numberYearsInJapanList[1],
-                              textColor: TextAppStyle().smallTextGrey(),
-                              prefixIcon: true,
-                              prefixImage:
-                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-                              onPress: () =>
-                                  controller.getNumberYearsInJapan(context),
-                            ),
+                            controller.isNumberYearsInJapanClicked.value
+                                ? ExperienceWidget(
+                                    content:
+                                        controller.numberYearsInJapan.value)
+                                : buildSelectComponent(
+                                    title: controller.numberYearsInJapan.value,
+                                    textColor: TextAppStyle().smallTextGrey(),
+                                    prefixIcon: true,
+                                    prefixImage:
+                                        'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                                    onPress: () => controller
+                                        .getNumberYearsInJapan(context),
+                                  ),
                             //education
                             const SizedBox(height: 14),
                             _buildLabel(
@@ -288,7 +293,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
 
                             //degree
                             const SizedBox(height: 14),
-                            buildForm(title: 'profile.degree'.tr),
+                            buildHeader(title: 'profile.degree'.tr),
                             const SizedBox(height: 8.0),
                             Container(
                               child: (controller.degree.isNotEmpty)
@@ -318,9 +323,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                                   top: 3,
                                                   child: InkWell(
                                                     onTap: () {
-                                                      controller
-                                                          .removeFileDegree(
-                                                              index);
+                                                      controller.removeFile(
+                                                          index,
+                                                          controller.degree);
                                                     },
                                                     child: Container(
                                                       width: 14,
@@ -341,7 +346,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegree(context);
+                                            controller.pickImageList(
+                                                context, controller.degree);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -358,7 +364,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegreePdf(context);
+                                            controller.pickListFilePdf(
+                                                context, controller.degree);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -382,7 +389,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller.pickDegree(context);
+                                                controller.pickImageList(
+                                                    context, controller.degree);
                                               },
                                               child: Container(
                                                 padding:
@@ -415,8 +423,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller
-                                                    .pickDegreePdf(context);
+                                                controller.pickListFilePdf(
+                                                    context, controller.degree);
                                               },
                                               child: Container(
                                                 padding:
@@ -451,14 +459,14 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             ),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
-                                textEditng: controller.experience,
+                                textEditng: controller.level,
                                 title: 'profile.update.level'.tr),
                             const SizedBox(height: 14),
-                            buildForm(
+                            buildHeader(
                                 title: 'profile.update.curriculum_vitae'.tr),
                             const SizedBox(height: 8.0),
                             Container(
-                              child: (controller.degree.isNotEmpty)
+                              child: (controller.curriculumVitae.isNotEmpty)
                                   ? GridView.count(
                                       crossAxisCount: 4,
                                       shrinkWrap: true,
@@ -468,14 +476,15 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           const NeverScrollableScrollPhysics(),
                                       children: <Widget>[
                                         ...List.generate(
-                                          controller.degree.length,
+                                          controller.curriculumVitae.length,
                                           (int index) => Stack(
                                             children: [
                                               ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                                 child: Image.file(
-                                                  controller.degree[index],
+                                                  controller
+                                                      .curriculumVitae[index],
                                                   width: double.infinity,
                                                   fit: BoxFit.cover,
                                                 ),
@@ -485,9 +494,10 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                                   top: 3,
                                                   child: InkWell(
                                                     onTap: () {
-                                                      controller
-                                                          .removeFileDegree(
-                                                              index);
+                                                      controller.removeFile(
+                                                          index,
+                                                          controller
+                                                              .curriculumVitae);
                                                     },
                                                     child: Container(
                                                       width: 14,
@@ -508,7 +518,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegree(context);
+                                            controller.pickImageList(context,
+                                                controller.curriculumVitae);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -525,7 +536,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegreePdf(context);
+                                            controller.pickListFilePdf(context,
+                                                controller.curriculumVitae);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -549,7 +561,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller.pickDegree(context);
+                                                controller.pickImageList(
+                                                    context,
+                                                    controller.curriculumVitae);
                                               },
                                               child: Container(
                                                 padding:
@@ -582,8 +596,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller
-                                                    .pickDegreePdf(context);
+                                                controller.pickListFilePdf(
+                                                    context,
+                                                    controller.curriculumVitae);
                                               },
                                               child: Container(
                                                 padding:
@@ -617,11 +632,11 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     ),
                             ),
                             const SizedBox(height: 14),
-                            buildForm(
+                            buildHeader(
                                 title: 'profile.update.experience_title'.tr),
                             const SizedBox(height: 8),
                             Container(
-                              child: (controller.degree.isNotEmpty)
+                              child: (controller.workExperiences.isNotEmpty)
                                   ? GridView.count(
                                       crossAxisCount: 4,
                                       shrinkWrap: true,
@@ -631,14 +646,15 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           const NeverScrollableScrollPhysics(),
                                       children: <Widget>[
                                         ...List.generate(
-                                          controller.degree.length,
+                                          controller.workExperiences.length,
                                           (int index) => Stack(
                                             children: [
                                               ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                                 child: Image.file(
-                                                  controller.degree[index],
+                                                  controller
+                                                      .workExperiences[index],
                                                   width: double.infinity,
                                                   fit: BoxFit.cover,
                                                 ),
@@ -648,9 +664,10 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                                   top: 3,
                                                   child: InkWell(
                                                     onTap: () {
-                                                      controller
-                                                          .removeFileDegree(
-                                                              index);
+                                                      controller.removeFile(
+                                                          index,
+                                                          controller
+                                                              .workExperiences);
                                                     },
                                                     child: Container(
                                                       width: 14,
@@ -671,7 +688,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegree(context);
+                                            controller.pickImageList(context,
+                                                controller.workExperiences);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -688,7 +706,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickDegreePdf(context);
+                                            controller.pickListFilePdf(context,
+                                                controller.workExperiences);
                                           },
                                           child: GFBorder(
                                             dashedLine: const [4, 6],
@@ -712,7 +731,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller.pickDegree(context);
+                                                controller.pickImageList(
+                                                    context,
+                                                    controller.workExperiences);
                                               },
                                               child: Container(
                                                 padding:
@@ -745,8 +766,9 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           Expanded(
                                             child: InkWell(
                                               onTap: () {
-                                                controller
-                                                    .pickDegreePdf(context);
+                                                controller.pickListFilePdf(
+                                                    context,
+                                                    controller.workExperiences);
                                               },
                                               child: Container(
                                                 padding:
@@ -788,35 +810,52 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 title:
                                     'profile.update.interpreting_experience'.tr,
                                 required: 1),
-                            buildSelectComponent(
-                              title: '1-3 năm',
-                              prefixIcon: true,
-                              prefixImage:
-                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-                            ),
+                            controller.isInterpretationExperienceClicked.value
+                                ? ExperienceWidget(
+                                    content: controller
+                                        .interpretationExperience.value)
+                                : buildSelectComponent(
+                                    title: controller
+                                        .interpretationExperience.value,
+                                    prefixIcon: true,
+                                    prefixImage:
+                                        'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                                    onPress: () => controller
+                                        .getInterpretationExperience(context),
+                                  ),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
-                                textEditng:
-                                    controller.interpretingExperienceDetail,
-                                title:
-                                    'Vui lòng ghi rõ những nội dung bạn đã từng phiên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch cho bệnh nhân ở bệnh viện 〇〇 (Bệnh 〇〇)'),
+                              textEditng:
+                                  controller.interpretingExperienceDetail,
+                              title:
+                                  'profile.update.translatation_experience.hint'
+                                      .tr,
+                            ),
                             const SizedBox(height: 20),
                             _buildLabel(
                                 title:
                                     'profile.update.translation_experience'.tr,
                                 required: 1),
-                            buildSelectComponent(
-                              title: '1-3 năm',
-                              prefixIcon: true,
-                              prefixImage:
-                                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-                            ),
+                            controller.isTranslatationExperienceClicked.value
+                                ? ExperienceWidget(
+                                    content:
+                                        controller.translationExperience.value)
+                                : buildSelectComponent(
+                                    title:
+                                        controller.translationExperience.value,
+                                    prefixIcon: true,
+                                    prefixImage:
+                                        'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+                                    onPress: () => controller
+                                        .getTranslationExperience(context),
+                                  ),
                             const SizedBox(height: 8),
                             _buildInputTextArea(
                                 textEditng:
                                     controller.translationExperienceDetail,
                                 title:
-                                    'Vui lòng ghi rõ những nội dung bạn đã từng biên dịch (Càng chi tiết càng tốt)\nVí dụ: Dịch hợp đồng thương mại cho công ty 〇〇'),
+                                    'profile.update.translatation_experience.hint'
+                                        .tr),
                             //button
                             const SizedBox(height: 30),
                             GeneralButton(

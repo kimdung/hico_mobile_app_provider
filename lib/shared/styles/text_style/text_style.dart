@@ -361,4 +361,14 @@ class TextAppStyle {
       color: AppColor.primaryTextColorLight,
     );
   }
+
+  TextStyle subTitleTextStyle() {
+    return TextStyle(
+      fontSize: 12.0,
+      fontFamily: 'SVN-Jeko',
+      fontWeight: FontWeight.w400,
+      fontStyle: FontStyle.italic,
+      color: AppColor.niceTextColorLight,
+    );
+  }
 }

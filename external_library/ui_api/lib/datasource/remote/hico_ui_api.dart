@@ -191,7 +191,7 @@ abstract class HicoUIAPI {
     @Query('code') String code,
   );
 
-  //update avatar
+  //update infor
   @MultiPart()
   @POST('/v1/user/update')
   Future<UserResponse> updateProfile(
@@ -216,7 +216,7 @@ abstract class HicoUIAPI {
     @Query('translation_experience') int translationExperience, 
     @Query('interpretation_experience_detail') String interpretationExperienceDetail,
     @Query('translation_experience_detail') String translationExperienceDetail,
-     {
+    {
     @Part(value: 'avatar_image') File? avatarImage,
     @Part(value: 'document_front_side') File? documentFrontSide,
     @Part(value: 'document_back_side') File? documentBackSide,

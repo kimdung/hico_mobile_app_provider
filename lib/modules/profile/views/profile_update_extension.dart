@@ -172,20 +172,15 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
     );
   }
 
-  Widget buildForm({String? title}) {
+  Widget buildHeader({String? title}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLabel(title: title!, required: 1),
-        const Text(
-          '(Vui lòng up ảnh thẳng góc, không quá tối, không nhòe)',
+        Text(
+          'profile.update.subtitle'.tr,
           textAlign: TextAlign.left,
-          style: TextStyle(
-            fontSize: 12.0,
-            fontWeight: FontWeight.w400,
-            color: AppColor.textBlack,
-            fontStyle: FontStyle.italic,
-          ),
+          style: TextAppStyle().subTitleTextStyle(),
         ),
       ],
     );
@@ -395,7 +390,6 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
           ),
           const SizedBox(width: 10),
           Expanded(
-            // ignore: unrelated_type_equality_checks
             child: GeneralButton(
               onPressed: () {
                 if (controller.genderId.value != CommonConstants.female) {

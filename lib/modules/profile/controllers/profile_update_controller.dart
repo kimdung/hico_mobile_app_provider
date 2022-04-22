@@ -27,7 +27,7 @@ import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 import '../../../shared/utils/dialog_util.dart';
-import '../../../shared/widget_hico/data_general/number_years_in_japan_widget.dart';
+import '../../../shared/widget_hico/data_general/data_form_widget.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widgets/image_widget/image_widget.dart';
 
@@ -46,6 +46,9 @@ class ProfileUpDateController extends BaseController {
   final documentFrontSide = Rxn<File>();
   final documentBackSide = Rxn<File>();
   RxList<File> degree = RxList<File>();
+  RxList<File> curriculumVitae = RxList<File>();
+  RxList<File> workExperiences = RxList<File>();
+  final documentListFiles = Rx<List<File>>([]);
 
   final updateForm = GlobalKey<FormState>();
   final TextEditingController zipCode = TextEditingController();
@@ -70,19 +73,37 @@ class ProfileUpDateController extends BaseController {
   final TextEditingController experience = TextEditingController();
 
   Rx<String> bankName = Rx('');
-  String interpretationExperience = '';
-  String translationExperience = '';
-  String numberYearsInJapan = '';
+  RxBool isNumberYearsInJapanClicked = false.obs;
+  RxBool isInterpretationExperienceClicked = false.obs;
+  RxBool isTranslatationExperienceClicked = false.obs;
+
   int? bankId;
   List<BankLocalModel> lstBanks = [];
-  RxList<String> numberYearsInJapanList = <String>[
+  List<String> numberYearsInJapanList = <String>[
     'Chưa đến Nhật',
     '1-3 năm',
     '4-6 năm',
     '7-10 năm',
     'Trên 10 năm',
-  ].obs;
-  RxBool isEnabled = false.obs;
+  ];
+  List<String> translatationExperienceList = <String>[
+    'Chưa có kinh nghiệm',
+    '1-3 năm',
+    '4-6 năm',
+    '7-10 năm',
+    'Trên 10 năm',
+  ];
+  List<String> interpretationExperienceList = <String>[
+    'Chưa có kinh nghiệm',
+    '1-3 năm',
+    '4-6 năm',
+    '7-10 năm',
+    'Trên 10 năm',
+  ];
+  Rx<String> resultValue = Rx('');
+  Rx<String> numberYearsInJapan = Rx('');
+  Rx<String> interpretationExperience = Rx('');
+  Rx<String> translationExperience = Rx('');
 
   ProfileUpDateController() {
     _loadData();
@@ -140,9 +161,17 @@ class ProfileUpDateController extends BaseController {
         info.value.interpretationExperienceDetail ?? '';
     translationExperienceDetail.text =
         info.value.translationExperienDetail ?? '';
-    interpretationExperience = getValue(info.value.interpretationExperience!);
-    translationExperience = getValue(info.value.translationExperience!);
-    numberYearsInJapan = getValue(info.value.numberOfYearsInJapan!);
+    numberYearsInJapan.value = NumberYearsInJapan
+        .values[
+            info.value.numberOfYearsInJapan ?? NumberYearsInJapan.None.index]
+        .numberYearsInJapan;
+    interpretationExperience.value = WorkExperience
+        .values[
+            info.value.interpretationExperience ?? WorkExperience.None.index]
+        .value;
+    translationExperience.value = WorkExperience
+        .values[info.value.translationExperience ?? WorkExperience.None.index]
+        .value;
   }
 
   Future pickAvatar(BuildContext context) async {
@@ -161,6 +190,7 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
+  //Chọn mặt trước của tài liệu
   Future pickDocumentFrontSide(BuildContext context) async {
     try {
       final source = await imageWidget.showImageSource(context);
@@ -175,6 +205,7 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
+  //Chọn mặt sau của tài liệu
   Future pickDocumentBackSide(BuildContext context) async {
     try {
       final source = await imageWidget.showImageSource(context);
@@ -193,7 +224,7 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-  Future pickDegree(BuildContext context) async {
+  Future pickImageList(BuildContext context, List<File> files) async {
     try {
       final source = await imageWidget.showImageSource(context);
       if (source == null) {
@@ -206,36 +237,21 @@ class ProfileUpDateController extends BaseController {
       }
 
       final imageTmp = File(image.path);
-      degree.add(imageTmp);
+      log(imageTmp.path);
+      files.add(imageTmp);
+      documentListFiles.value.addAll(files);
     } on PlatformException catch (e) {
       print(e);
     }
   }
 
-  String getValue(int result) {
-    switch (result) {
-      case 1:
-        return 'Chưa có';
-      case 2:
-        return '1 -3 năm';
-      case 3:
-        return '4 - 6 năm';
-      case 4:
-        return '7 - 10 năm';
-      case 5:
-        return 'Trên 10 năm';
-      default:
-        return '';
-    }
-  }
-
-  Future pickDegreePdf(BuildContext context) async {
+  Future pickListFilePdf(BuildContext context, List<File> files) async {
     try {
       final result = await FilePicker.platform.pickFiles();
-
       if (result != null) {
         final file = File(result.files.single.path!);
-        degree.add(file);
+        files.add(file);
+        documentListFiles.value.addAll(files);
       } else {
         // User canceled the picker
       }
@@ -244,10 +260,9 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-  Future<void> removeFileDegree(int index) async {
+  Future<void> removeFile(int index, List<File> files) async {
     try {
-      degree.removeAt(index);
-      degree.refresh();
+      files.removeAt(index);
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -342,13 +357,57 @@ class ProfileUpDateController extends BaseController {
         child: Container(
           width: double.infinity,
           height: Get.height / 2,
-          child: const NumberYearsInJapanWidget(),
+          child: DataFormWidget(
+            dataList: numberYearsInJapanList,
+            title: 'profile.update.number_years_in_japan'.tr,
+          ),
         ),
         context: context,
-        onValue: (value) {});
+        onValue: (value) {
+          isNumberYearsInJapanClicked.value = true;
+          numberYearsInJapan.value = value;
+          log('Number is japan: ${isNumberYearsInJapanClicked.value} - $value');
+        });
+  }
+
+  Future<void> getTranslationExperience(BuildContext context) async {
+    await ShowBottomSheet().showBottomSheet(
+        child: Container(
+          width: double.infinity,
+          height: Get.height / 2,
+          child: DataFormWidget(
+            dataList: translatationExperienceList,
+            title: 'profile.update.translation_experience'.tr,
+          ),
+        ),
+        context: context,
+        onValue: (value) {
+          isTranslatationExperienceClicked.value = true;
+          translationExperience.value = value;
+          log('Translation experience: ${isTranslatationExperienceClicked.value} - $value');
+        });
+  }
+
+  Future<void> getInterpretationExperience(BuildContext context) async {
+    await ShowBottomSheet().showBottomSheet(
+        child: Container(
+          width: double.infinity,
+          height: Get.height / 2,
+          child: DataFormWidget(
+            dataList: interpretationExperienceList,
+            title: 'profile.update.interpreting_experience'.tr,
+          ),
+        ),
+        context: context,
+        onValue: (value) {
+          isInterpretationExperienceClicked.value = true;
+          interpretationExperience.value = value;
+          log('Interpretation experience: ${isInterpretationExperienceClicked.value} - $value');
+        });
   }
 
   Future<void> updated() async {
+    log(documentListFiles.string.toString());
     try {
       await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
@@ -359,6 +418,12 @@ class ProfileUpDateController extends BaseController {
           msg = 'profile.update.front_side_required'.tr;
         } else if (documentBackSide.value == null) {
           msg = 'profile.update.back_side_required'.tr;
+        } else if (numberYearsInJapan.value == '') {
+          msg = 'profile.update.number_years_in_japan_required'.tr;
+        } else if (interpretationExperience.value == '') {
+          msg = 'profile.update.interpretation_experience_required'.tr;
+        } else if (translationExperience.value == '') {
+          msg = 'profile.update.translation_experience_required'.tr;
         }
         if (msg != '') {
           await EasyLoading.dismiss();
@@ -393,14 +458,18 @@ class ProfileUpDateController extends BaseController {
           documentFrontSide.value,
           documentBackSide.value,
           education.text,
-          degree.isNotEmpty ? degree : [],
+          documentListFiles.value,
           level.text,
           experience.text,
-          4,
-          4,
-          4,
-          translationExperienceDetail.text,
-          interpretingExperienceDetail.text,
+          setValueConvert(numberYearsInJapan.value),
+          setValueConvert(translationExperience.value),
+          setValueConvert(interpretationExperience.value),
+          translationExperienceDetail.text.isNotEmpty
+              ? translationExperienceDetail.text
+              : '',
+          interpretingExperienceDetail.text.isNotEmpty
+              ? interpretingExperienceDetail.text
+              : '',
         )
             .then((response) {
           EasyLoading.dismiss();
@@ -427,6 +496,24 @@ class ProfileUpDateController extends BaseController {
     } catch (e) {
       await EasyLoading.dismiss();
     }
+  }
+
+  int setValueConvert(String content) {
+    if (content.compareTo('1-3 năm') == 0) {
+      return 2;
+    } else if (content.compareTo('4-6 năm') == 0) {
+      return 3;
+    } else if (content.compareTo('7-10 năm') == 0) {
+      return 4;
+    } else if (content.compareTo('Trên 10 năm') == 0) {
+      return 5;
+    } else {
+      return 1;
+    }
+  }
+
+  String getFileName(String filePath) {
+    return filePath.split('/').last;
   }
 
   @override
