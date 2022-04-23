@@ -323,14 +323,15 @@ class OrderController extends BaseController {
         EasyLoading.dismiss();
         if (id == 7) {
           Get.toNamed(Routes.MEDICAL);
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: const SummaryWorkingWidget(),
+            onVaLue: (value) {},
+          ).then((value) => loadData());
         }
-        DialogUtil.showPopup(
-          dialogSize: DialogSize.Popup,
-          barrierDismissible: false,
-          backgroundColor: Colors.transparent,
-          child: const SummaryWorkingWidget(),
-          onVaLue: (value) {},
-        ).then((value) => loadData());
         return;
       });
       // return;

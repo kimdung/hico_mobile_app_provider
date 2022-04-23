@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/border/gf_border.dart';
 import 'package:getwidget/types/gf_border_type.dart';
-import 'package:hico/shared/constants/colors.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
+import '../../constants/colors.dart';
 import '../../styles/text_style/text_style.dart';
+import '../button/general_button.dart';
 
 class SummaryWorkingWidget extends StatelessWidget {
   const SummaryWorkingWidget({Key? key}) : super(key: key);
@@ -46,6 +47,18 @@ class SummaryWorkingWidget extends StatelessWidget {
                 validator: (value) =>
                     (value == null || value.isEmpty) ? 'data_requied'.tr : null,
               ),
+            ),
+          ),
+          GeneralButton(
+            onPressed: () {
+              
+            },
+            borderRadius: BorderRadius.circular(24),
+            borderColor: AppColor.primaryColorLight,
+            backgroundColor: AppColor.primaryColorLight,
+            child: Text(
+              'medical.send'.tr,
+              style: TextAppStyle().titleButtonStyle(),
             ),
           )
         ],
