@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:getwidget/components/border/gf_border.dart';
 import 'package:getwidget/types/gf_border_type.dart';
 
+import '../../../modules/order/controllers/order_controller.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../constants/colors.dart';
 import '../../styles/text_style/text_style.dart';
@@ -14,10 +15,17 @@ class SummaryWorkingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<OrderController>();
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14.0),
+      ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(height: 9.0),
           SvgPicture.asset(IconConstants.icDocumentEdit),
           const SizedBox(height: 8.0),
           Text(
@@ -26,6 +34,11 @@ class SummaryWorkingWidget extends StatelessWidget {
           ),
           const SizedBox(height: 9.0),
           Container(
+            margin: const EdgeInsets.only(
+              bottom: 19.0,
+              left: 10.0,
+              right: 10.0,
+            ),
             child: GFBorder(
               dashedLine: const [4, 6],
               radius: const Radius.circular(6),
@@ -33,7 +46,7 @@ class SummaryWorkingWidget extends StatelessWidget {
               type: GFBorderType.rect,
               color: AppColor.borderGrayColorLight,
               child: TextFormField(
-                controller: TextEditingController(text: ''),
+                controller: controller.summaryControler,
                 keyboardType: TextInputType.text,
                 cursorColor: AppColor.fifthTextColorLight,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -51,9 +64,12 @@ class SummaryWorkingWidget extends StatelessWidget {
           ),
           GeneralButton(
             onPressed: () {
-              
+              Navigator.of(context)
+                  .pop<String>(controller.summaryControler.text);
             },
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(14.0),
+                bottomRight: Radius.circular(14.0)),
             borderColor: AppColor.primaryColorLight,
             backgroundColor: AppColor.primaryColorLight,
             child: Text(

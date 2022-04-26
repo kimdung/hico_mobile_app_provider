@@ -8,6 +8,7 @@ import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/invoice/invoice_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/request/invoice/confirm_sub_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
 
 import '../../../base/base_controller.dart';
@@ -32,6 +33,8 @@ class OrderController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final invoice = Rx(InvoiceModel());
   int id = 0;
+  TextEditingController summaryControler = TextEditingController();
+  Rx<ConfirmSubRequest> request = Rx(ConfirmSubRequest());
 
   @override
   Future<void> onInit() async {
@@ -319,26 +322,83 @@ class OrderController extends BaseController {
   Future<void> completed(int id) async {
     try {
       await EasyLoading.show();
-      await _uiRepository.invoiceCompleted(id).then((response) {
-        EasyLoading.dismiss();
-        if (id == 7) {
-          Get.toNamed(Routes.MEDICAL);
-        } else {
-          DialogUtil.showPopup(
-            dialogSize: DialogSize.Popup,
-            barrierDismissible: false,
-            backgroundColor: Colors.transparent,
-            child: const SummaryWorkingWidget(),
-            onVaLue: (value) {},
-          ).then((value) => loadData());
+      await _uiRepository.invoiceCompleted(id).then((response) async {
+        if (response.status == CommonConstants.statusOk) {
+          await _uiRepository.invoiceDetail(id).then((response) {
+            EasyLoading.dismiss();
+            if (response.status == CommonConstants.statusOk &&
+                response.data != null) {
+              invoice.value = response.data!;
+              if (invoice.value.service!.isMedical == 1) {
+                Get.toNamed(Routes.MEDICAL, arguments: id);
+              } else {
+                DialogUtil.showPopup(
+                  dialogSize: DialogSize.Popup,
+                  barrierDismissible: false,
+                  backgroundColor: Colors.transparent,
+                  child: const SummaryWorkingWidget(),
+                  onVaLue: (value) {
+                    log('Value: ${value.toString()}');
+                    if (value != null && value != '') {
+                      request.value.invoiceId = id;
+                      request.value.summary = summaryControler.text;
+                      confirmSub(request.value);
+                    }
+                  },
+                );
+              }
+              return;
+            } else {
+              DialogUtil.showPopup(
+                dialogSize: DialogSize.Popup,
+                barrierDismissible: false,
+                backgroundColor: Colors.transparent,
+                child: NormalWidget(
+                  icon: response.status == CommonConstants.statusOk
+                      ? IconConstants.icUserTag
+                      : IconConstants.icFail,
+                  title: response.message,
+                ),
+                onVaLue: (value) {
+                  Get.back();
+                },
+              );
+            }
+          });
         }
         return;
       });
-      // return;
     } catch (e) {
       await EasyLoading.dismiss();
     }
   }
+
+  Future<void> confirmSub(ConfirmSubRequest confirmSubRequest) async {
+    try {
+      await EasyLoading.show();
+      await _uiRepository.confirmSub(confirmSubRequest).then((response) {
+        EasyLoading.dismiss();
+        DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: response.status == CommonConstants.statusOk
+                ? IconConstants.icSuccess
+                : IconConstants.icFail,
+            title: response.message,
+          ),
+          onVaLue: (value) {},
+        ).then((value) {
+          Get.back();
+        });
+        return;
+      });
+    } catch (error) {
+      log(error.toString());
+      await EasyLoading.dismiss();
+    }
+  } 
 
   @override
   void onClose() {}

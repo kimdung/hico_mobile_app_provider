@@ -8,10 +8,11 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
+import '../controller/medical_controller.dart';
 
 part 'medical_screen_extension.dart';
 
-class MeidcalScreen extends StatelessWidget {
+class MeidcalScreen extends GetView<MedicalController> {
   const MeidcalScreen({Key? key}) : super(key: key);
 
   @override
@@ -33,7 +34,7 @@ class MeidcalScreen extends StatelessWidget {
               child: Column(
                 children: [
                   _buildInputTextArea(
-                    textEditng: TextEditingController(),
+                    textEditng: controller.symptomController,
                     title: 'medical.symptom.title'.tr,
                     description: 'medical.symptom.description'.tr,
                   ),
@@ -41,7 +42,7 @@ class MeidcalScreen extends StatelessWidget {
                     height: 12.0,
                   ),
                   _buildInputTextArea(
-                    textEditng: TextEditingController(),
+                    textEditng: controller.testMethodController,
                     title: 'medical.test_method.title'.tr,
                     description: 'medical.test_method.description'.tr,
                   ),
@@ -49,7 +50,7 @@ class MeidcalScreen extends StatelessWidget {
                     height: 12.0,
                   ),
                   _buildInputTextArea(
-                    textEditng: TextEditingController(),
+                    textEditng: controller.diseaseNameController,
                     title: 'medical.name_disease.title'.tr,
                     description: 'medical.name_disease.description'.tr,
                   ),
@@ -57,7 +58,7 @@ class MeidcalScreen extends StatelessWidget {
                     height: 12.0,
                   ),
                   _buildInputTextArea(
-                    textEditng: TextEditingController(),
+                    textEditng: controller.treatmentsController,
                     title: 'medical.treatments.title'.tr,
                     description: 'medical.treatments.description'.tr,
                   ),
@@ -65,7 +66,7 @@ class MeidcalScreen extends StatelessWidget {
                     height: 12.0,
                   ),
                   _buildInputTextArea(
-                    textEditng: TextEditingController(),
+                    textEditng: controller.appointmentNextTimeController,
                     title: 'medical.book.title'.tr,
                     description: 'medical.book_description'.tr,
                   ),
@@ -73,7 +74,7 @@ class MeidcalScreen extends StatelessWidget {
                     height: 12.0,
                   ),
                   _buildInputTextArea(
-                    textEditng: TextEditingController(),
+                    textEditng: controller.commentController,
                     title: 'medical.doctor_comments.title'.tr,
                     description: 'medical.doctor_commnets.description'.tr,
                   ),
@@ -81,7 +82,9 @@ class MeidcalScreen extends StatelessWidget {
                     height: 30.0,
                   ),
                   GeneralButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.confirmSub();
+                      },
                       borderRadius: BorderRadius.circular(24),
                       borderColor: AppColor.primaryColorLight,
                       backgroundColor: AppColor.primaryColorLight,

@@ -304,7 +304,7 @@ const Map<String, String> vi_VN = {
   'invoice.requested': 'Đã yêu cầu',
   'invoice.accepted': 'PDV đồng ý',
   'invoice.successed': 'Hoàn thành',
-  'invoice.canceled': 'Hoàn thành',
+  'invoice.canceled': 'Hoàn thành', //'Đã huỷ',
 
   //invoice detail
   'invoice.detail.supplier': 'Phiên dịch viên',
