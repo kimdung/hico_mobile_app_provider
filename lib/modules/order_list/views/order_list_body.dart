@@ -105,7 +105,6 @@ extension OrderListBody on OrderListScreen {
     return Container(
       color: AppColor.secondBackgroundColorLight,
       child: Stack(
-        overflow: Overflow.visible,
         children: [
           Container(
             height: 46,

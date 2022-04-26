@@ -214,16 +214,34 @@ extension OrderExtension on OrderScreen {
           style: TextAppStyle().normalTextGrey(),
         );
       case OrderInfoViewType.Button:
-        return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-            decoration: BoxDecoration(
-                color:
-                    value == '1' ? AppColor.onlineColor : AppColor.offlineColor,
-                borderRadius: BorderRadius.circular(18)),
-            child: Text(
-              value == '1' ? 'Online' : 'Offline',
-              style: TextAppStyle().normalTextWhite(),
-            ));
+        return InkWell(
+          onTap: (){
+            DialogUtil.showPopup(
+                  dialogSize: DialogSize.Popup,
+                  barrierDismissible: false,
+                  backgroundColor: Colors.transparent,
+                  child: const SummaryWorkingWidget(),
+                  onVaLue: (value) {
+                    log('Value: ${value.toString()}');
+                    if (value != null && value != '') {
+                      controller.request.value.invoiceId = 32;
+                      controller.request.value.summary = value;
+                     controller.confirmSub(controller.request.value);
+                    }
+                  },
+                );
+          },
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+              decoration: BoxDecoration(
+                  color:
+                      value == '1' ? AppColor.onlineColor : AppColor.offlineColor,
+                  borderRadius: BorderRadius.circular(18)),
+              child: Text(
+                value == '1' ? 'Online' : 'Offline',
+                style: TextAppStyle().normalTextWhite(),
+              )),
+        );
       case OrderInfoViewType.Status:
         return Text(
           value,
@@ -516,6 +534,7 @@ extension OrderExtension on OrderScreen {
                 controller.invoice.value.supplierStart != '')
             ? GeneralButton(
                 onPressed: () {
+                  log(controller.invoice.value.toString());
                   controller.completed(controller.invoice.value.id!);
                 },
                 borderRadius: BorderRadius.circular(24),

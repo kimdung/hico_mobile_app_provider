@@ -24,6 +24,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_screen.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_screen.dart';
+import '../modules/medical/binding/medical_binding.dart';
+import '../modules/medical/view/medical_screen.dart';
 import '../modules/news_detail/bindings/news_detail_binding.dart';
 import '../modules/news_detail/views/news_detail_screen.dart';
 import '../modules/notification_detail/bindings/notification_detail_binding.dart';
@@ -232,5 +234,10 @@ final routePages = [
     name: Routes.VIDEO_CALL,
     page: () => VideoCallView(),
     binding: VideoCallBinding(),
+  ),
+  GetPage(
+    name: Routes.MEDICAL,
+    page: () => const MeidcalScreen(),
+    binding: MedicalBinding(),
   ),
 ];

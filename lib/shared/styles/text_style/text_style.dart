@@ -371,4 +371,22 @@ class TextAppStyle {
       color: AppColor.niceTextColorLight,
     );
   }
+
+  TextStyle headerTextStyle() {
+    return const TextStyle(
+      fontSize: 12.0,
+      color: AppColor.textBlack,
+      fontFamily: 'SVN-Jeko',
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  TextStyle titleTextStyle() {
+    return const TextStyle(
+      fontSize: 16.0,
+      fontFamily: 'SVN-Jeko',
+      fontWeight: FontWeight.w400,
+      color: AppColor.textBlack,
+    );
+  }
 }

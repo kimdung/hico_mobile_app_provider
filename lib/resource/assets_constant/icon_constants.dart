@@ -357,4 +357,6 @@ class IconConstants {
       'lib/resource/assets_resources/icons/add.png';
   static const String icChecked =
       'lib/resource/assets_resources/icons/check.png';
+  static const String icDocumentEdit =
+      'lib/resource/assets_resources/icons/document_edit.svg';
 }

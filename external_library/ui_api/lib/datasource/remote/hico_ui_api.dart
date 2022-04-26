@@ -27,6 +27,7 @@ import 'package:ui_api/response/statistic/statistic_response.dart';
 import 'package:ui_api/response/user/login_response.dart';
 import 'package:ui_api/response/user/user_response.dart';
 
+import '../../request/invoice/confirm_sub_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
 
@@ -210,13 +211,14 @@ abstract class HicoUIAPI {
     @Query('education') String education,
     @Part(value: 'documents_certificate') List<File> documentsCertificate,
     @Query('level') String level,
-    @Query('experience') String experience, 
+    @Query('experience') String experience,
     @Query('number_of_years_in_japan') int numberOfYearsInJapan,
     @Query('interpretation_experience') int interpretationExperience,
-    @Query('translation_experience') int translationExperience, 
-    @Query('interpretation_experience_detail') String interpretationExperienceDetail,
-    @Query('translation_experience_detail') String translationExperienceDetail,
-    {
+    @Query('translation_experience') int translationExperience,
+    @Query('interpretation_experience_detail')
+        String interpretationExperienceDetail,
+    @Query('translation_experience_detail')
+        String translationExperienceDetail, {
     @Part(value: 'avatar_image') File? avatarImage,
     @Part(value: 'document_front_side') File? documentFrontSide,
     @Part(value: 'document_back_side') File? documentBackSide,
@@ -281,5 +283,9 @@ abstract class HicoUIAPI {
 
   //Get call token
   @POST('/v1/agoraCall/createToken')
-  Future<CallTokenResponse> getCallToken(@Query('channel') String channel); 
+  Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
+
+  //invoice confirm sub 
+  @POST('/v1/supplier/invoice/confirmSub')
+  Future<BaseResponse> confirmSub(@Body() ConfirmSubRequest request);
 }

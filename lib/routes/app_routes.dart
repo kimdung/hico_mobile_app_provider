@@ -43,4 +43,5 @@ abstract class Routes {
   static const CHAT = '/chat';
   static const VOICE_CALL = '/voice-call';
   static const VIDEO_CALL = '/video-call';
+  static const MEDICAL = '/medical';
 }
