@@ -43,7 +43,7 @@ class OrderListScreen extends GetView<OrderListController> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 40,
+                              height: 5,
                               child: Container(
                                 color: AppColor.secondBackgroundColorLight,
                               ),

@@ -318,4 +318,8 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   Future<BaseResponse> confirmSub(ConfirmSubRequest request) {
     return _api.confirmSub(request);
   }
+  @override
+  Future<BaseResponse> requestUpdate() {
+    return _api.requestUpdate();
+  }
 }

@@ -107,6 +107,7 @@ extension OrderListBody on OrderListScreen {
       child: Stack(
         children: [
           Container(
+            margin: const EdgeInsets.only(top: 22),
             height: 46,
             decoration: const BoxDecoration(
                 color: Colors.white,
@@ -116,7 +117,7 @@ extension OrderListBody on OrderListScreen {
                 )),
           ),
           Positioned(
-            top: -22,
+            //top: -22,
             left: 0,
             right: 0,
             child: Container(

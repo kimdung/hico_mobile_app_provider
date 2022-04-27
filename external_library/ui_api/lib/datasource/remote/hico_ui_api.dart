@@ -288,4 +288,9 @@ abstract class HicoUIAPI {
   //invoice confirm sub 
   @POST('/v1/supplier/invoice/confirmSub')
   Future<BaseResponse> confirmSub(@Body() ConfirmSubRequest request);
+
+  //invoice confirm sub 
+  @POST('/v1/user/requestUpdate')
+  Future<BaseResponse> requestUpdate();
+
 }

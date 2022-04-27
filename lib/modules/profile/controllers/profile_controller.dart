@@ -111,14 +111,27 @@ class ProfileController extends BaseController {
         child: const NotificationWidget(content: 'Thông tin của bạn đang chờ được xử lý.',),
       );
     } else if (info.value.kycStatus == 1) {
-      DialogUtil.showPopup(
-        dialogSize: DialogSize.Popup,
-        barrierDismissible: false,
-        backgroundColor: Colors.transparent,
-        title: 'Tài khoản đã được xác thực.',
-        onVaLue: (value) {},
-        child: const NotificationWidget(content: 'Tài khoản đã được xác thực. Bạn không thể thay đổi dữ liệu.'),
-      );
+      try {
+        EasyLoading.show();
+        _uiRepository.requestUpdate().then((response) {
+          EasyLoading.dismiss();
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: response.status == CommonConstants.statusOk
+                  ? IconConstants.icSuccess
+                  : IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {},
+          );
+          return;
+        });
+      } catch (e) {
+        EasyLoading.dismiss();
+      }
     }
   }
 }

@@ -216,8 +216,8 @@ class ProfileScreen extends GetView<ProfileController> {
                   horizontal: CommonConstants.paddingDefault),
               child: GeneralButton(
                 onPressed: () {
-                  // controller.requestUpdateUserInfor();
-                  Get.toNamed(Routes.PROFILE_UPDATE);
+                  controller.requestUpdateUserInfor();
+                  //Get.toNamed(Routes.PROFILE_UPDATE);
                 },
                 borderRadius: BorderRadius.circular(24),
                 borderColor: AppColor.primaryColorLight,

@@ -205,4 +205,6 @@ abstract class HicoUIRepository {
   Future<CallTokenResponse> getCallToken(String channel);
 
   Future<BaseResponse> confirmSub(ConfirmSubRequest request);
+  Future<BaseResponse> requestUpdate();
+
 }
