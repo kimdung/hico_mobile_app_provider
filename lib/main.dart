@@ -11,10 +11,7 @@ import 'shared/constants/common.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await DependencyInjection.init(DEV_ENVIRONMENT);
-  await LineSDK.instance.setup('1656904339').then((_) {
-    log('LineSDK Prepared');
-  });
+  await DependencyInjection.init(DEV_ENVIRONMENT); 
   runApp(App());
   configLoading();
 }

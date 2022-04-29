@@ -235,6 +235,8 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_arrow_forward.svg';
   static const String icCopy =
       'lib/resource/assets_resources/icons/ic_copy.svg';
+  static const String icCopy1 =
+      'lib/resource/assets_resources/icons/ic_copy1.svg';
   static const String icSend =
       'lib/resource/assets_resources/icons/ic_send.svg';
   static const String icImage =
@@ -293,6 +295,14 @@ class IconConstants {
       'lib/resource/assets_resources/icons/star.png';
   static const String icStarRadius =
       'lib/resource/assets_resources/icons/star_radius.png';
+  static const String icWallet1 =
+      'lib/resource/assets_resources/icons/ic_wallet.svg';
+  static const String icTopupWallet =
+      'lib/resource/assets_resources/icons/ic_topup_wallet.svg';
+  static const String icKomaju =
+      'lib/resource/assets_resources/icons/ic_komaju.png';
+  static const String icStripe =
+      'lib/resource/assets_resources/icons/ic_stripe.png';
   //contact icon
   static const String icCtHotline =
       'lib/resource/assets_resources/icons/ic_hotline.svg';
@@ -359,4 +369,6 @@ class IconConstants {
       'lib/resource/assets_resources/icons/check.png';
   static const String icDocumentEdit =
       'lib/resource/assets_resources/icons/document_edit.svg';
+  static const String icCamera =
+      'lib/resource/assets_resources/icons/ic_camera.svg';
 }

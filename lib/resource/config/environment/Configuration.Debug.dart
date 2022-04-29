@@ -6,6 +6,8 @@ final Map<String, String> debugAppSettings = {
   WebSocketGraphQLUrl: 'wss://hasura.io/learn/graphql',
   MediaApiEnvironment: 'DEV',
   DefaultLanguageCode: 'vi-VN',
-  ClientAPIDomain: '',
   UIAPIDomain: 'https://hico.dev.bluebolt.software/api/',
+  LineChannelId: '1656904339',
+  StripePublishableKey:
+      'pk_test_51KXiEpLepUHLp8PmntSg4hW8F1GUz8me3Sz3x7VX4wt4WleJhBmSDfqO3JTYhP1mfjKEKsWJ97axUVx2sAW77q9J006Y4kM1D3',
 };

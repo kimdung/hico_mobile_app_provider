@@ -49,6 +49,9 @@ dependencies:
 
   # firebase data
   cloud_firestore: ^3.1.11
+
+  # Payment
+  flutter_stripe: ^2.4.0
   
   #login
   flutter_line_sdk: ^2.1.0
@@ -68,6 +71,7 @@ dependencies:
   url_launcher: ^6.0.9
   cached_network_image: ^3.2.0
   flutter_html: ^3.0.0-alpha.2 
+  webview_flutter: ^3.0.2
 
   wakelock: ^0.6.1+2
   open_file: ^3.2.1
@@ -77,6 +81,7 @@ dependencies:
   file_picker: ^4.3.2
   flutter_rating_bar: ^4.0.0 
   pin_code_fields: ^7.3.0
+  keyboard_dismisser: ^2.0.1
 
   # Border dotted
   getwidget: ^2.0.4

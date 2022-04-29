@@ -220,6 +220,15 @@ class TextAppStyle {
     );
   }
 
+  TextStyle titleStyle() {
+    return TextStyle(
+      color: AppColor.thirdTextColorLight,
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+      fontFamily: appFont,
+    );
+  }
+
   TextStyle genaralTextStyle() {
     /// headline1 Color: primaryTextColor -> Black Gray (#333333)
     return TextStyle(
