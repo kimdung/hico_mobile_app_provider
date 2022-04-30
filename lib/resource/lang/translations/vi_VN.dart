@@ -26,6 +26,10 @@ const Map<String, String> vi_VN = {
   'service': 'Dịch vụ',
   'done': 'Xong',
   'calling': 'Đang gọi...',
+  'copied': 'Đã sao chép',
+  'comment': 'Ghi chú',
+  'camera': 'Hình ảnh',
+  'year': 'năm',
 
   // onboard
   'onboard.title1': 'Welcome to Hico',
@@ -167,6 +171,7 @@ const Map<String, String> vi_VN = {
   'services': 'Dịch vụ đang cung cấp',
   'statistic': 'Thống kê',
   'setting': 'Cài đặt',
+  'topup': 'Nạp tiền',
   'change_password': 'Đổi mật khẩu',
   'contact': 'Liên hệ',
   'bank_info': 'Thông tin ngân hàng',
@@ -176,6 +181,57 @@ const Map<String, String> vi_VN = {
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
   'account_number': 'Số tải khoản:',
+
+  // topup
+  'topup.title': 'Thông tin nạp tiền',
+  'topup.history': 'Lịch sử nạp tiền',
+  'topup.confirm': 'Xác Nhận Nạp Tiền',
+  'topup.waitting': 'Chờ xác nhận',
+  'topup.confirmed': 'Đã xác nhận',
+  'topup.balance': 'Số dư ví: ',
+  'topup.amount': 'Số tiền cần nạp (JPY)',
+  'topup.amount.hint': 'Nhập số tiền cần nạp',
+  'topup.method.title': 'Hình thức nạp tiền',
+  'topup.bank': 'Chuyển khoản ngân hàng',
+  'topup.bank.description': 'Chuyển khoản ngân hàng TK Hico',
+  'topup.komoju': 'Thanh toán Komoju',
+  'topup.komoju1': 'コンビニ決済 - KOMOJU',
+  'topup.komoju2': 'スマホ決済 - KOMOJU',
+  'topup.komoju.description1': 'Thanh toán tại Mini Stop,...',
+  'topup.komoju.description2': 'Thanh toán bằng Line Pay,...',
+  'topup.stripe': 'Thanh toán Stripe',
+  'topup.stripe.description': 'Chuyển thanh toán cho cổng thanh toán Stripe',
+
+  'topup.bank.info': 'Thông tin chuyển khoản',
+  'topup.bank.number': 'STK - %s',
+  'topup.bank.content.title': 'Nội dung chuyển khoản',
+  'topup.bank.content.cap':
+      'Vui lòng sao chép hoặc ghi chính xác nội dung chuyển khoản phía dưới',
+  'topup.bank.content': 'HICO %s',
+  'topup.bank.content.note':
+      'Sau khi chuyển khoản thành công, vui lòng ghi chú và update ảnh chuyển tiền lên hệ thống',
+  'topup.bank.bill': 'Ảnh chuyển tiền',
+
+  'topup.stripe.title': 'Thông tin thẻ',
+
+  'topup.detail.title': 'Chi Tiết Nạp Tiền',
+  'topup.card.name': 'Chủ tài khoản',
+  'topup.card.number': 'Số thẻ',
+  'topup.card.date': 'Ngày hết hạn (MM/YY)',
+  'topup.card.cvv': 'CVV',
+
+  'topup.wallet': 'Nạp tiền vào ví',
+  'topup.code': 'Mã giao dịch: ',
+  'topup.image.bill.valid': 'Ảnh chuyển tiền là bắt buộc',
+
+  'topup.money': 'Số tiền',
+  'topup.date': 'Thời gian',
+  'topup.method': 'Hình thức nạp tiền',
+  'topup.note': 'Ghi chú',
+  'topup.recharge': 'Nạp thêm',
+
+  'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
+  'topup.failure': 'Nạp tiền thất bại!',
 
   //statistic screen
   'statistic.order_finish': 'Đơn hàng đã hoàn thành',
@@ -349,14 +405,14 @@ const Map<String, String> vi_VN = {
   'medical.test_method.description': 'Phương pháp kiểm tra',
   'medical.name_disease.title': 'Tên bệnh',
   'medical.name_disease.description': 'Tên bệnh',
-  'medical.treatments.title' : 'Phương pháp điều trị',
-  'medical.treatments.description' : 'Phương pháp điều trị',
-  'medical.book.title' : 'Đặt lịch từ lần 2 trở đi',
-  'medical.book_description' : 'Đặt lịch từ lần 2 trở đi',
-  'medical.doctor_comments.title' : 'Nhận xét của bác sĩ',
-  'medical.doctor_commnets.description' : 'Nhận xét của bác sĩ',
-  'medical.send' : 'Gửi',
-  'dialog.summary' : 'Tóm tắt nội dung buổi làm việc',
-  'dialog.summary.hint' : 'Hãy ghi tóm tắt nội dung buổi phiên dịch hôm nay của bạn',
-  
+  'medical.treatments.title': 'Phương pháp điều trị',
+  'medical.treatments.description': 'Phương pháp điều trị',
+  'medical.book.title': 'Đặt lịch từ lần 2 trở đi',
+  'medical.book_description': 'Đặt lịch từ lần 2 trở đi',
+  'medical.doctor_comments.title': 'Nhận xét của bác sĩ',
+  'medical.doctor_commnets.description': 'Nhận xét của bác sĩ',
+  'medical.send': 'Gửi',
+  'dialog.summary': 'Tóm tắt nội dung buổi làm việc',
+  'dialog.summary.hint':
+      'Hãy ghi tóm tắt nội dung buổi phiên dịch hôm nay của bạn',
 };

@@ -295,6 +295,8 @@ class IconConstants {
       'lib/resource/assets_resources/icons/star.png';
   static const String icStarRadius =
       'lib/resource/assets_resources/icons/star_radius.png';
+  static const String icWallet =
+      'lib/resource/assets_resources/icons/ic_profile_wallet.svg';
   static const String icWallet1 =
       'lib/resource/assets_resources/icons/ic_wallet.svg';
   static const String icTopupWallet =

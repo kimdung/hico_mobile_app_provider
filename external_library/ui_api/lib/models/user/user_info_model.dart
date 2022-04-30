@@ -23,6 +23,8 @@ class UserInfoModel {
   String? email;
   @JsonKey(name: 'phone_number', defaultValue: '')
   String? phoneNumber;
+  @JsonKey(name: 'bank_id')
+  int? bankId;
   @JsonKey(name: 'bank_name', defaultValue: '')
   String? bankName;
   @JsonKey(name: 'bank_branch_name', defaultValue: '')
@@ -63,6 +65,8 @@ class UserInfoModel {
   int? isUpdate;
   @JsonKey(name: 'conversation_info')
   ConversationInfoModel? conversationInfo;
+  @JsonKey(name: 'account_balance')
+  int? accountBalance;
 
   UserInfoModel({
     this.id,
@@ -72,6 +76,7 @@ class UserInfoModel {
     this.dateOfBirth,
     this.email,
     this.phoneNumber,
+    this.bankId,
     this.bankName,
     this.bankBranchName,
     this.bankAccountHolder,
@@ -95,6 +100,7 @@ class UserInfoModel {
     this.kycStatus,
     this.isUpdate,
     this.conversationInfo,
+    this.accountBalance,
   });
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
