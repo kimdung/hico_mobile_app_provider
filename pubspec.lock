@@ -1474,7 +1474,7 @@ packages:
       name: stripe_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.0+1"
   substring_highlight:
     dependency: transitive
     description:
