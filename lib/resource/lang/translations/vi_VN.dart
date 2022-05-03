@@ -142,6 +142,7 @@ const Map<String, String> vi_VN = {
   'profile.name': 'Họ và tên',
   'profile.gender': 'Giới tính',
   'profile.birthday': 'Ngày sinh',
+  'profile.email': 'Email',
   'profile.phone': 'Số điện thoại',
   'profile.bank_info': 'Tài khoản ngân hàng',
   'profile.address': 'Địa chỉ',
@@ -153,7 +154,8 @@ const Map<String, String> vi_VN = {
   'profile.image_before': 'Mặt trước',
   'profile.image_after': 'Mặt sau',
   'profile.image_degree': 'Ảnh/File bằng cấp',
-  'profile.title':
+  'profile.title': 'Thông Tin Tài Khoản',
+  'profile.cap':
       'Điền thông tin tại form dưới đây để trải nghiệm công việc thuận lợi nhất!',
   'profile.male': 'Nam',
   'profile.female': 'Nữ',

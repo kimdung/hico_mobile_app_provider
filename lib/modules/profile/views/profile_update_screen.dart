@@ -6,9 +6,8 @@ import 'package:get/get.dart';
 import 'package:getwidget/components/border/gf_border.dart';
 import 'package:getwidget/types/gf_border_type.dart';
 
-import '../../../shared/widgets/experience_widget/experience_widget.dart';
-import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../resource/assets_constant/images_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/decoration/text_field_decoration.dart';
@@ -16,6 +15,7 @@ import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
+import '../../../shared/widgets/experience_widget/experience_widget.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../controllers/profile_update_controller.dart';
 
@@ -36,7 +36,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Thông tin tài khoản'.tr,
+          'profile.title'.tr,
           style: TextAppStyle().titleAppBarStyle(),
         ),
         elevation: 1,
@@ -57,7 +57,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                               child: FCoreImage(IconConstants.icProfileEdit)),
                           Expanded(
                             child: Text(
-                              'profile.title'.tr,
+                              'profile.cap'.tr,
                               style: TextAppStyle().secondTextStyle().copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w400,
@@ -144,12 +144,12 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             ),
                             //birthday
                             const SizedBox(height: 14),
-                            _buildLabel(title: 'Ngày sinh', required: 1),
+                            _buildLabel(title: 'profile.birthday', required: 1),
                             const SizedBox(height: 8),
                             _buildInputBirthDay(context),
                             //email
                             const SizedBox(height: 14),
-                            _buildLabel(title: 'Email', required: 1),
+                            _buildLabel(title: 'profile.email'.tr, required: 1),
                             const SizedBox(height: 8),
                             _buildInputEmail(),
                             //phone
