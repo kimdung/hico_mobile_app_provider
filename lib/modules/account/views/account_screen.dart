@@ -121,16 +121,6 @@ class AccountScreen extends GetView<AccountController> {
             ),
             const SizedBox(height: 14),
             buildItem(
-              icon: IconConstants.icProfileLogout,
-              title: 'logout'.tr,
-              titleColor: AppColor.primaryTextColorLight,
-              allowArrow: 0,
-              onPress: () {
-                controller.onLogout();
-              },
-            ),
-            const SizedBox(height: 14),
-            buildItem(
               icon: IconConstants.icProfilePolicy,
               title: 'payment_policy'.tr,
               onPress: () => Get.toNamed(Routes.PAYMENT_POLICY),
@@ -146,6 +136,16 @@ class AccountScreen extends GetView<AccountController> {
               icon: IconConstants.icRatingStar,
               title: 'account.rating'.tr,
               onPress: () => Get.toNamed(Routes.RATING),
+            ),
+            const SizedBox(height: 14),
+            buildItem(
+              icon: IconConstants.icProfileLogout,
+              title: 'logout'.tr,
+              titleColor: AppColor.primaryTextColorLight,
+              allowArrow: 0,
+              onPress: () {
+                controller.onLogout();
+              },
             ),
             const SizedBox(height: 14),
           ],

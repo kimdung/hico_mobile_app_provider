@@ -29,7 +29,7 @@ class LoginController extends BaseController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  final showPassword = false.obs;
+  final hidePassword = true.obs;
   final _loginSocialServices = LoginSocialServices();
 
   UserProfile? _userProfile;
@@ -54,6 +54,7 @@ class LoginController extends BaseController {
   void onClose() {}
 
   Future<void> onLogin() async {
+    hideKeyboard(Get.overlayContext!);
     try {
       await _uiRepository
           .login(LoginRequest(
@@ -62,7 +63,18 @@ class LoginController extends BaseController {
               deviceIdentifier: AppDataGlobal.firebaseToken))
           .then(
         (response) {
-          if (response.status == CommonConstants.statusOk &&
+          if (response.status == CommonConstants.statusFailed) {
+            DialogUtil.showPopup(
+              dialogSize: DialogSize.Popup,
+              barrierDismissible: false,
+              backgroundColor: AppColor.primaryBackgroundColorLight,
+              child: NormalWidget(
+                icon: IconConstants.icFail,
+                title: response.message,
+              ),
+              onVaLue: (value) {},
+            );
+          } else if (response.status == CommonConstants.statusOk &&
               response.loginModel != null &&
               response.loginModel!.info != null) {
             if (response.loginModel!.info!.isUpdate == 0) {
@@ -296,7 +308,14 @@ class LoginController extends BaseController {
   }
 
   void hideShowPassword() {
-    showPassword.value = !showPassword.value;
-    log('Value: ${showPassword.value}');
+    hidePassword.value = !hidePassword.value;
+    log('Value: ${hidePassword.value}');
+  }
+
+  void hideKeyboard(BuildContext context) {
+    final currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
 }
