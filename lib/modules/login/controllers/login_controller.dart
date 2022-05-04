@@ -69,7 +69,7 @@ class LoginController extends BaseController {
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,
-              backgroundColor: AppColor.primaryBackgroundColorLight,g
+              backgroundColor: AppColor.primaryBackgroundColorLight,
               child: NormalWidget(
                 icon: IconConstants.icFail,
                 title: response.message,
