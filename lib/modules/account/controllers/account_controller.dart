@@ -20,8 +20,8 @@ class AccountController extends BaseController {
     loadData();
   }
   @override
-  Future<void> onInit() {
-    return super.onInit();
+  Future<void> onInit() async {
+    await super.onInit();
   }
 
   Future<void> loadData() async {

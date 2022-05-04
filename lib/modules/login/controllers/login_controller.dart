@@ -63,6 +63,8 @@ class LoginController extends BaseController {
               deviceIdentifier: AppDataGlobal.firebaseToken))
           .then(
         (response) {
+          EasyLoading.dismiss();
+
           if (response.status == CommonConstants.statusFailed) {
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
@@ -78,8 +80,9 @@ class LoginController extends BaseController {
               response.loginModel != null &&
               response.loginModel!.info != null) {
             if (response.loginModel!.info!.isUpdate == 0) {
-              Get.toNamed(Routes.PROFILE_UPDATE,
-                  arguments: response.loginModel!.info!.isUpdate);
+              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
+              AppDataGlobal.userInfo = response.loginModel!.info!;
+              Get.toNamed(Routes.PROFILE_UPDATE);
             } else {
               storage.setString(
                   StorageConstants.username, usernameController.text);
@@ -91,7 +94,6 @@ class LoginController extends BaseController {
             }
           } else if (response.loginModel != null &&
               response.loginModel!.info!.isUpdate == 1) {
-            EasyLoading.dismiss();
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,
@@ -130,7 +132,6 @@ class LoginController extends BaseController {
               },
             );
           } else {
-            EasyLoading.dismiss();
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,

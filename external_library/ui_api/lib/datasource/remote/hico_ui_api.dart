@@ -30,6 +30,9 @@ import 'package:ui_api/response/user/user_response.dart';
 import '../../request/invoice/confirm_sub_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/wallet/topup_history_response.dart';
+import '../../response/wallet/topup_komaju_response.dart';
+import '../../response/wallet/topup_response.dart';
 
 part 'hico_ui_api.g.dart';
 
@@ -288,4 +291,42 @@ abstract class HicoUIAPI {
   //invoice confirm sub 
   @POST('/v1/supplier/invoice/confirmSub')
   Future<BaseResponse> confirmSub(@Body() ConfirmSubRequest request);
+
+  //invoice confirm sub 
+  @POST('/v1/user/requestUpdate')
+  Future<BaseResponse> requestUpdate();
+
+   /* Wallet */
+  @GET('/v1/payIn/list')
+  Future<TopupHistoryResponse> topupHistory(
+    @Query('limit') int limit,
+    @Query('offset') int offset,
+  );
+
+  @POST('/v1/payIn/createPayInCode')
+  Future<TopupResponse> topupBank(@Query('amount') double amount);
+
+  @MultiPart()
+  @POST('/v1/payIn/createPayInBank')
+  Future<TopupResponse> topupBankConfirm(
+    @Part(name: 'image') File imageBill,
+    @Query('pay_in_code') String payInCode,
+    @Query('note') String note,
+  );
+
+  @POST('/v1/payIn/createPayInKomoju')
+  Future<TopupKomajuResponse> topupKomaju(
+    @Query('amount') double amount,
+    @Query('type') int type,
+  );
+
+  @GET('/v1/ipnKomoju')
+  Future<TopupResponse> topupKomojuResult(
+      @Query('session_id') String sessionId);
+
+  @POST('/v1/createPayInStripe')
+  Future<TopupResponse> createPayInStripe(
+      @Query('payment_method_id') String paymentMethodId,
+      @Query('name') String name,
+      @Query('amount') double amount);
 }

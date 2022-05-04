@@ -30,6 +30,7 @@ class AppColor {
   static Color menuTextColorLight = const Color(0xFFB8B8B8);
   static Color blueTextColor = const Color(0xFF007AFF);
   static Color redTextColor = const Color(0xFFFF2323);
+  static Color greenTextColor = const Color(0xFF34C759);
 
   static Color primaryHintColorLight = const Color(0xFF888888); // gray
 
