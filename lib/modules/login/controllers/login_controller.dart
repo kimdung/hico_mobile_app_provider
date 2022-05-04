@@ -65,19 +65,18 @@ class LoginController extends BaseController {
         (response) {
           EasyLoading.dismiss();
 
-          // if (response.status == CommonConstants.statusFailed) {
-          //   DialogUtil.showPopup(
-          //     dialogSize: DialogSize.Popup,
-          //     barrierDismissible: false,
-          //     backgroundColor: AppColor.primaryBackgroundColorLight,
-          //     child: NormalWidget(
-          //       icon: IconConstants.icFail,
-          //       title: response.message,
-          //     ),
-          //     onVaLue: (value) {},
-          //   );
-          // } else
-          if (response.status == CommonConstants.statusOk &&
+          if (response.status == CommonConstants.statusFailed) {
+            DialogUtil.showPopup(
+              dialogSize: DialogSize.Popup,
+              barrierDismissible: false,
+              backgroundColor: AppColor.primaryBackgroundColorLight,g
+              child: NormalWidget(
+                icon: IconConstants.icFail,
+                title: response.message,
+              ),
+              onVaLue: (value) {},
+            );
+          } else if (response.status == CommonConstants.statusOk &&
               response.loginModel != null &&
               response.loginModel!.info != null) {
             if (response.loginModel!.info!.isUpdate == 0) {
