@@ -36,7 +36,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Thông tin tài khoản'.tr,
+          'profile.update.info'.tr,
           style: TextAppStyle().titleAppBarStyle(),
         ),
         elevation: 1,

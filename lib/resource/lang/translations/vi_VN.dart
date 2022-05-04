@@ -160,6 +160,7 @@ const Map<String, String> vi_VN = {
   'profile.update.interpreting_experience': 'Kinh nghiệm phiên dịch',
   'profile.update.translation_experience': 'Kinh nghiệm biên dịch',
   'profile.update.experience_title': 'Kinh nghiệm làm việc (職務経歴書)',
+  'profile.update.info' : 'Thông tin tài khoản',
 
   //account screen
   'account': 'Tài khoản',

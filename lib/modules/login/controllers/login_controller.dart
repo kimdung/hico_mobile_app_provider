@@ -78,7 +78,8 @@ class LoginController extends BaseController {
               response.loginModel != null &&
               response.loginModel!.info != null) {
             if (response.loginModel!.info!.isUpdate == 0) {
-              Get.toNamed(Routes.PROFILE_UPDATE);
+              Get.toNamed(Routes.PROFILE_UPDATE,
+                  arguments: response.loginModel!.info!.isUpdate);
             } else {
               storage.setString(
                   StorageConstants.username, usernameController.text);

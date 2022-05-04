@@ -105,8 +105,14 @@ class ProfileUpDateController extends BaseController {
   Rx<String> interpretationExperience = Rx('');
   Rx<String> translationExperience = Rx('');
 
+  int result = Get.arguments;
+
   ProfileUpDateController() {
-    _loadData();
+    if (result == 0) {
+      return;
+    } else {
+      _loadData();
+    }
   }
 
   @override
