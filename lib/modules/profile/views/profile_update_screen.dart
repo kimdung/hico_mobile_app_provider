@@ -144,7 +144,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             ),
                             //birthday
                             const SizedBox(height: 14),
-                            _buildLabel(title: 'profile.birthday', required: 1),
+                            _buildLabel(title: 'profile.birthday'.tr, required: 1),
                             const SizedBox(height: 8),
                             _buildInputBirthDay(context),
                             //email

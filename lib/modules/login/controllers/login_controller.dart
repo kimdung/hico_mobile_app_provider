@@ -64,7 +64,6 @@ class LoginController extends BaseController {
           .then(
         (response) {
           EasyLoading.dismiss();
-
           if (response.status == CommonConstants.statusFailed) {
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
