@@ -144,7 +144,8 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             ),
                             //birthday
                             const SizedBox(height: 14),
-                            _buildLabel(title: 'profile.birthday', required: 1),
+                            _buildLabel(
+                                title: 'profile.birthday'.tr, required: 1),
                             const SizedBox(height: 8),
                             _buildInputBirthDay(context),
                             //email
@@ -270,11 +271,17 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 required: 1),
                             const SizedBox(height: 8),
                             controller.isNumberYearsInJapanClicked.value
-                                ? ExperienceWidget(
-                                    content:
-                                        controller.numberYearsInJapan.value)
+                                ? InkWell(
+                                    onTap: () {
+                                      controller.getNumberYearsInJapan(context);
+                                    },
+                                    child: ExperienceWidget(
+                                        content: controller
+                                            .numberYearsInJapan.value.content),
+                                  )
                                 : buildSelectComponent(
-                                    title: controller.numberYearsInJapan.value,
+                                    title: controller
+                                        .numberYearsInJapan.value.content,
                                     textColor: TextAppStyle().smallTextGrey(),
                                     prefixIcon: true,
                                     prefixImage:
@@ -290,7 +297,6 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             _buildInputTemplate(
                                 textEditng: controller.education,
                                 title: 'profile.update.education'.tr),
-
                             //degree
                             const SizedBox(height: 14),
                             buildHeader(title: 'profile.degree'.tr),
@@ -458,12 +464,15 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     ),
                             ),
                             const SizedBox(height: 8),
+                            //level
                             _buildInputTextArea(
                                 textEditng: controller.level,
                                 title: 'profile.update.level'.tr),
                             const SizedBox(height: 14),
-                            buildHeader(
-                                title: 'profile.update.curriculum_vitae'.tr),
+                            //curriculum vitae
+                            _buildLabel(
+                                title: 'profile.update.curriculum_vitae'.tr,
+                                required: 1),
                             const SizedBox(height: 8.0),
                             Container(
                               child: (controller.curriculumVitae.isNotEmpty)
@@ -518,24 +527,6 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickImageList(context,
-                                                controller.curriculumVitae);
-                                          },
-                                          child: GFBorder(
-                                            dashedLine: const [4, 6],
-                                            radius: const Radius.circular(6),
-                                            strokeWidth: 1,
-                                            type: GFBorderType.rect,
-                                            color: AppColor.primaryColorLight,
-                                            child: FCoreImage(
-                                              'lib/resource/assets_resources/icons/camera.png',
-                                              width: 20,
-                                              height: 20,
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
                                             controller.pickListFilePdf(context,
                                                 controller.curriculumVitae);
                                           },
@@ -556,84 +547,43 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     )
                                   : Container(
                                       width: double.infinity,
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: () {
-                                                controller.pickImageList(
-                                                    context,
-                                                    controller.curriculumVitae);
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 7),
-                                                decoration: BoxDecoration(
-                                                  color: AppColor
-                                                      .secondBackgroundColorLight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    FCoreImage(
-                                                      'lib/resource/assets_resources/icons/camera.png',
-                                                      width: 20,
-                                                      height: 20,
-                                                    ),
-                                                    Text(
-                                                      'profile.update.image'.tr,
-                                                      style: TextAppStyle()
-                                                          .smallTextPink(),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
+                                      child: InkWell(
+                                        onTap: () {
+                                          controller.pickListFilePdf(context,
+                                              controller.curriculumVitae);
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 7),
+                                          decoration: BoxDecoration(
+                                            color: AppColor
+                                                .secondBackgroundColorLight,
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
-                                          const SizedBox(width: 16),
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: () {
-                                                controller.pickListFilePdf(
-                                                    context,
-                                                    controller.curriculumVitae);
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 7),
-                                                decoration: BoxDecoration(
-                                                  color: AppColor
-                                                      .secondBackgroundColorLight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    FCoreImage(
-                                                      'lib/resource/assets_resources/icons/pin.png',
-                                                      width: 20,
-                                                      height: 20,
-                                                    ),
-                                                    Text(
-                                                      'File PDF',
-                                                      style: TextAppStyle()
-                                                          .smallTextPink(),
-                                                    )
-                                                  ],
-                                                ),
+                                          child: Column(
+                                            children: [
+                                              FCoreImage(
+                                                'lib/resource/assets_resources/icons/pin.png',
+                                                width: 20,
+                                                height: 20,
                                               ),
-                                            ),
+                                              Text(
+                                                'File PDF',
+                                                style: TextAppStyle()
+                                                    .smallTextPink(),
+                                              )
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                             ),
                             const SizedBox(height: 14),
-                            buildHeader(
-                                title: 'profile.update.experience_title'.tr),
+                            //experience
+                            _buildLabel(
+                                title: 'profile.update.experience_title'.tr,
+                                required: 1),
                             const SizedBox(height: 8),
                             Container(
                               child: (controller.workExperiences.isNotEmpty)
@@ -688,24 +638,6 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.pickImageList(context,
-                                                controller.workExperiences);
-                                          },
-                                          child: GFBorder(
-                                            dashedLine: const [4, 6],
-                                            radius: const Radius.circular(6),
-                                            strokeWidth: 1,
-                                            type: GFBorderType.rect,
-                                            color: AppColor.primaryColorLight,
-                                            child: FCoreImage(
-                                              'lib/resource/assets_resources/icons/camera.png',
-                                              width: 20,
-                                              height: 20,
-                                            ),
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
                                             controller.pickListFilePdf(context,
                                                 controller.workExperiences);
                                           },
@@ -726,78 +658,35 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                     )
                                   : Container(
                                       width: double.infinity,
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: () {
-                                                controller.pickImageList(
-                                                    context,
-                                                    controller.workExperiences);
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 7),
-                                                decoration: BoxDecoration(
-                                                  color: AppColor
-                                                      .secondBackgroundColorLight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    FCoreImage(
-                                                      'lib/resource/assets_resources/icons/camera.png',
-                                                      width: 20,
-                                                      height: 20,
-                                                    ),
-                                                    Text(
-                                                      'profile.update.image'.tr,
-                                                      style: TextAppStyle()
-                                                          .smallTextPink(),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
+                                      child: InkWell(
+                                        onTap: () {
+                                          controller.pickListFilePdf(context,
+                                              controller.workExperiences);
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 7),
+                                          decoration: BoxDecoration(
+                                            color: AppColor
+                                                .secondBackgroundColorLight,
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                           ),
-                                          const SizedBox(width: 16),
-                                          Expanded(
-                                            child: InkWell(
-                                              onTap: () {
-                                                controller.pickListFilePdf(
-                                                    context,
-                                                    controller.workExperiences);
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 7),
-                                                decoration: BoxDecoration(
-                                                  color: AppColor
-                                                      .secondBackgroundColorLight,
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    FCoreImage(
-                                                      'lib/resource/assets_resources/icons/pin.png',
-                                                      width: 20,
-                                                      height: 20,
-                                                    ),
-                                                    Text(
-                                                      'File PDF',
-                                                      style: TextAppStyle()
-                                                          .smallTextPink(),
-                                                    )
-                                                  ],
-                                                ),
+                                          child: Column(
+                                            children: [
+                                              FCoreImage(
+                                                'lib/resource/assets_resources/icons/pin.png',
+                                                width: 20,
+                                                height: 20,
                                               ),
-                                            ),
+                                              Text(
+                                                'File PDF',
+                                                style: TextAppStyle()
+                                                    .smallTextPink(),
+                                              )
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                             ),
@@ -806,17 +695,26 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 textEditng: controller.experience,
                                 title: 'profile.update.experience'.tr),
                             const SizedBox(height: 14.0),
+                            // interpreting experience
                             _buildLabel(
                                 title:
                                     'profile.update.interpreting_experience'.tr,
                                 required: 1),
                             controller.isInterpretationExperienceClicked.value
-                                ? ExperienceWidget(
-                                    content: controller
-                                        .interpretationExperience.value)
+                                ? InkWell(
+                                    onTap: () {
+                                      controller
+                                          .getInterpretationExperience(context);
+                                    },
+                                    child: ExperienceWidget(
+                                        content: controller
+                                            .interpretationExperience
+                                            .value
+                                            .content),
+                                  )
                                 : buildSelectComponent(
                                     title: controller
-                                        .interpretationExperience.value,
+                                        .interpretationExperience.value.content,
                                     prefixIcon: true,
                                     prefixImage:
                                         'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
@@ -832,17 +730,26 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                       .tr,
                             ),
                             const SizedBox(height: 20),
+                            //translation experience
                             _buildLabel(
                                 title:
                                     'profile.update.translation_experience'.tr,
                                 required: 1),
                             controller.isTranslatationExperienceClicked.value
-                                ? ExperienceWidget(
-                                    content:
-                                        controller.translationExperience.value)
+                                ? InkWell(
+                                    onTap: () {
+                                      controller
+                                          .getTranslationExperience(context);
+                                    },
+                                    child: ExperienceWidget(
+                                        content: controller
+                                            .translationExperience
+                                            .value
+                                            .content),
+                                  )
                                 : buildSelectComponent(
-                                    title:
-                                        controller.translationExperience.value,
+                                    title: controller
+                                        .translationExperience.value.content,
                                     prefixIcon: true,
                                     prefixImage:
                                         'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',

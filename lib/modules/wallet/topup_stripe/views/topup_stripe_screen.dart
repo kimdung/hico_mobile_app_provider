@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:hico/shared/widget_hico/widget_touch_hide_keyboard.dart';
+import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
 
 import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../shared/constants/colors.dart';
 import '../../../../shared/styles/text_style/text_style.dart';
 import '../../../../shared/widget_hico/button/general_button.dart';
-import '../../../../shared/widget_hico/widget_touch_hide_keyboard.dart'; 
+//import '../../../../shared/widget_hico/widget_touch_hide_keyboard.dart'; 
 import '../../../call/pickup/picker_layout.dart';
 import '../controllers/topup_stripe_controller.dart';
 
@@ -58,67 +60,67 @@ class TopupStripeScreen extends GetView<TopupStripeController> {
   }
 
   Widget _buildBodyContent() {
-    // return WidgetTouchHideKeyBoard(
-    //   child: SingleChildScrollView(
-    //     child: Column(
-    //       children: [
-    //         Column(
-    //           children: [
-    //             Container(
-    //               color: AppColor.greyBackgroundColor,
-    //               padding:
-    //                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    //               child: Row(
-    //                 children: [
-    //                   Container(
-    //                       margin: const EdgeInsets.only(right: 15),
-    //                       child: FCoreImage(IconConstants.icProfileBank)),
-    //                   Expanded(
-    //                     child: Text(
-    //                       'booking.bank_update_title'.tr,
-    //                       style: TextAppStyle().smallTextBlack(),
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //             ),
-    //             Form(
-    //               key: controller.formState,
-    //               child: Container(
-    //                 padding: const EdgeInsets.symmetric(horizontal: 20),
-    //                 child: Column(
-    //                   children: [
-    //                     _buildInputAccountHolder(),
-    //                     _buildInputBankNumber(),
-    //                     Row(
-    //                       children: [
-    //                         Expanded(
-    //                           flex: 3,
-    //                           child: _buildInputValidDate(),
-    //                         ),
-    //                         const SizedBox(width: 20),
-    //                         Expanded(
-    //                           flex: 1,
-    //                           child: _buildInputCVV(),
-    //                         )
-    //                       ],
-    //                     ),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
-    return CardFormField(
-      controller: controller.cardEditController,
-      onCardChanged: (card) {
-        controller.card = card;
-      },
+    return WidgetTouchHideKeyBoard(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Container(
+                  color: AppColor.greyBackgroundColor,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.only(right: 15),
+                          child: FCoreImage(IconConstants.icProfileBank)),
+                      Expanded(
+                        child: Text(
+                          'booking.bank_update_title'.tr,
+                          style: TextAppStyle().smallTextBlack(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Form(
+                  key: controller.formState,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        _buildInputAccountHolder(),
+                        _buildInputBankNumber(),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: _buildInputValidDate(),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              flex: 1,
+                              child: _buildInputCVV(),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
+    // return CardFormField(
+    //   controller: controller.cardEditController,
+    //   onCardChanged: (card) {
+    //     controller.card = card;
+    //   },
+    // );
   }
 
   Widget _buildInputAccountHolder() {
