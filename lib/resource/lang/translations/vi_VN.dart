@@ -299,6 +299,18 @@ const Map<String, String> vi_VN = {
   'profile.update.translation_experience_required':
       'Vui lòng chọn kinh nghiệm biên dịch',
 
+  'profile.update.number_years_in_japan.none' : 'Chưa đến Nhật',
+  'profile.update.number_years_in_japan.one_to_three_year' : '1-3 năm',
+  'profile.update.number_years_in_japan.four_to_six_year' : '4-6 năm',
+  'profile.update.number_years_in_japan.seven_to_ten_year' : '7-10 năm',
+  'profile.update.number_years_in_japan.more_than_ten_year' : 'Trên 10 năm',
+
+  'profile.update.experience.none' : 'Chưa có kinh nghiệm',
+  'profile.update.experience.one_to_three_year' : '1-3 năm',
+  'profile.update.experience.four_to_six_year' : '4-6 năm',
+  'profile.update.experience.seven_to_ten_year' : '7-10 năm',
+  'profile.update.experience.more_than_ten_year' : 'Trên 10 năm',
+
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
   'service.add': 'Thêm/Sửa Dịch Vụ',

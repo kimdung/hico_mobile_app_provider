@@ -500,11 +500,12 @@ class ProfileUpDateController extends BaseController {
     return filePath.split('/').last;
   }
 
-  void chooseTime(int currentIndex, List<Time> list) {
-    list[currentIndex].isFeatured = true;
-    list[preIndex].isFeatured = !list[currentIndex].isFeatured;
-    resultValue.value = list[currentIndex];
+  void chooseTime(int currentIndex, List<Time> timeDataList) {
+    timeDataList[currentIndex].isFeatured = true;
+    timeDataList[preIndex].isFeatured = false;
     preIndex = currentIndex;
+    resultValue.value = timeDataList[currentIndex];
+    update();
   }
 
   @override
