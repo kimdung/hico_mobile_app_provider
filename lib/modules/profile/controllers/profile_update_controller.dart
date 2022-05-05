@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:hico/models/time.dart';
 import 'package:hico/shared/constants/colors.dart';
 import 'package:hico/shared/styles/text_style/text_style.dart';
 import 'package:hico/shared/widget_hico/data_general/banks.dart';
@@ -79,31 +80,21 @@ class ProfileUpDateController extends BaseController {
 
   int? bankId;
   List<BankLocalModel> lstBanks = [];
-  List<String> numberYearsInJapanList = <String>[
-    'Chưa đến Nhật',
-    '1-3 năm',
-    '4-6 năm',
-    '7-10 năm',
-    'Trên 10 năm',
-  ];
-  List<String> translatationExperienceList = <String>[
-    'Chưa có kinh nghiệm',
-    '1-3 năm',
-    '4-6 năm',
-    '7-10 năm',
-    'Trên 10 năm',
-  ];
-  List<String> interpretationExperienceList = <String>[
-    'Chưa có kinh nghiệm',
-    '1-3 năm',
-    '4-6 năm',
-    '7-10 năm',
-    'Trên 10 năm',
-  ];
-  Rx<String> resultValue = Rx('');
-  Rx<String> numberYearsInJapan = Rx('');
-  Rx<String> interpretationExperience = Rx('');
-  Rx<String> translationExperience = Rx('');
+  Rx<Time> resultValue =
+      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
+  Rx<Time> numberYearsInJapan =
+      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
+  Rx<Time> interpretationExperience =
+      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
+  Rx<Time> translationExperience =
+      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
+
+  RxList<Time> numberYearJapanDataList = RxList(numberYearsInJapanList);
+  RxList<Time> interpretationExperienceDataList =
+      RxList(interpretationExperiences);
+  RxList<Time> translationExperienceDataList = RxList(translatationExperiences);
+
+  int preIndex = 0;
 
   ProfileUpDateController() {
     _loadData();
@@ -161,15 +152,15 @@ class ProfileUpDateController extends BaseController {
         info.value.interpretationExperienceDetail ?? '';
     translationExperienceDetail.text =
         info.value.translationExperienDetail ?? '';
-    numberYearsInJapan.value = NumberYearsInJapan
+    numberYearsInJapan.value.content = NumberYearsInJapan
         .values[
             info.value.numberOfYearsInJapan ?? NumberYearsInJapan.None.index]
         .numberYearsInJapan;
-    interpretationExperience.value = WorkExperience
+    interpretationExperience.value.content = WorkExperience
         .values[
             info.value.interpretationExperience ?? WorkExperience.None.index]
         .value;
-    translationExperience.value = WorkExperience
+    translationExperience.value.content = WorkExperience
         .values[info.value.translationExperience ?? WorkExperience.None.index]
         .value;
   }
@@ -342,6 +333,7 @@ class ProfileUpDateController extends BaseController {
       province.text = item.provinceName!;
       district.text = item.districtName!;
       addressId = item.id!;
+      address.text = item.address!;
       showSuggest.value = 0;
     } catch (e) {
       await EasyLoading.dismiss();
@@ -358,15 +350,17 @@ class ProfileUpDateController extends BaseController {
           width: double.infinity,
           height: Get.height / 2,
           child: DataFormWidget(
-            dataList: numberYearsInJapanList,
+            dataList: numberYearJapanDataList,
             title: 'profile.update.number_years_in_japan'.tr,
           ),
         ),
         context: context,
         onValue: (value) {
-          isNumberYearsInJapanClicked.value = true;
-          numberYearsInJapan.value = value;
-          log('Number is japan: ${isNumberYearsInJapanClicked.value} - $value');
+          if (value != null && value is Time) {
+            isNumberYearsInJapanClicked.value = true;
+            numberYearsInJapan.value = value;
+            log('Number is japan: ${isNumberYearsInJapanClicked.value} - ${value.experienceCode}  ${value.content}');
+          }
         });
   }
 
@@ -376,15 +370,17 @@ class ProfileUpDateController extends BaseController {
           width: double.infinity,
           height: Get.height / 2,
           child: DataFormWidget(
-            dataList: translatationExperienceList,
+            dataList: translationExperienceDataList,
             title: 'profile.update.translation_experience'.tr,
           ),
         ),
         context: context,
         onValue: (value) {
-          isTranslatationExperienceClicked.value = true;
-          translationExperience.value = value;
-          log('Translation experience: ${isTranslatationExperienceClicked.value} - $value');
+          if (value != null && value is Time) {
+            isTranslatationExperienceClicked.value = true;
+            translationExperience.value = value;
+            log('Translation experience: ${isTranslatationExperienceClicked.value} - ${value.experienceCode}  ${value.content}');
+          }
         });
   }
 
@@ -394,15 +390,17 @@ class ProfileUpDateController extends BaseController {
           width: double.infinity,
           height: Get.height / 2,
           child: DataFormWidget(
-            dataList: interpretationExperienceList,
+            dataList: interpretationExperienceDataList,
             title: 'profile.update.interpreting_experience'.tr,
           ),
         ),
         context: context,
         onValue: (value) {
-          isInterpretationExperienceClicked.value = true;
-          interpretationExperience.value = value;
-          log('Interpretation experience: ${isInterpretationExperienceClicked.value} - $value');
+          if (value != null && value is Time) {
+            isInterpretationExperienceClicked.value = true;
+            interpretationExperience.value = value;
+            log('Interpretation experience: ${isInterpretationExperienceClicked.value} - ${value.experienceCode}  ${value.content}');
+          }
         });
   }
 
@@ -418,11 +416,11 @@ class ProfileUpDateController extends BaseController {
           msg = 'profile.update.front_side_required'.tr;
         } else if (documentBackSide.value == null) {
           msg = 'profile.update.back_side_required'.tr;
-        } else if (numberYearsInJapan.value == '') {
+        } else if (numberYearsInJapan.value.content == '') {
           msg = 'profile.update.number_years_in_japan_required'.tr;
-        } else if (interpretationExperience.value == '') {
+        } else if (interpretationExperience.value.content == '') {
           msg = 'profile.update.interpretation_experience_required'.tr;
-        } else if (translationExperience.value == '') {
+        } else if (translationExperience.value.content == '') {
           msg = 'profile.update.translation_experience_required'.tr;
         }
         if (msg != '') {
@@ -461,9 +459,9 @@ class ProfileUpDateController extends BaseController {
           documentListFiles.value,
           level.text,
           experience.text,
-          setValueConvert(numberYearsInJapan.value),
-          setValueConvert(translationExperience.value),
-          setValueConvert(interpretationExperience.value),
+          numberYearsInJapan.value.experienceCode,
+          translationExperience.value.experienceCode,
+          interpretationExperience.value.experienceCode,
           translationExperienceDetail.text.isNotEmpty
               ? translationExperienceDetail.text
               : '',
@@ -498,24 +496,21 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-  int setValueConvert(String content) {
-    if (content.compareTo('1-3 năm') == 0) {
-      return 2;
-    } else if (content.compareTo('4-6 năm') == 0) {
-      return 3;
-    } else if (content.compareTo('7-10 năm') == 0) {
-      return 4;
-    } else if (content.compareTo('Trên 10 năm') == 0) {
-      return 5;
-    } else {
-      return 1;
-    }
-  }
-
   String getFileName(String filePath) {
     return filePath.split('/').last;
   }
 
+  void chooseTime(int currentIndex, List<Time> list) {
+    list[currentIndex].isFeatured = true;
+    list[preIndex].isFeatured = !list[currentIndex].isFeatured;
+    resultValue.value = list[currentIndex];
+    preIndex = currentIndex;
+  }
+
   @override
-  void onClose() {}
+  void onClose() {
+    numberYearJapanDataList.close();
+    interpretationExperienceDataList.close();
+    translationExperienceDataList.close();
+  }
 }

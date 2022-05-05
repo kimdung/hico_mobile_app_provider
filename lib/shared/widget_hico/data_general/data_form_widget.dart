@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../models/time.dart';
 import '../../../modules/profile/controllers/profile_update_controller.dart';
 import '../../constants/colors.dart';
 import '../../styles/text_style/text_style.dart';
-import '../../widgets/item/item_experience.dart';
+import '../../widgets/item/item_time.dart';
 import '../button/general_button.dart';
 
 class DataFormWidget extends StatelessWidget {
@@ -12,7 +13,8 @@ class DataFormWidget extends StatelessWidget {
       : super(key: key);
 
   final String title;
-  final List<String> dataList;
+  final List<Time> dataList;
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProfileUpDateController>();
@@ -52,7 +54,12 @@ class DataFormWidget extends StatelessWidget {
           ListView.separated(
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return ItemExperience(content: dataList[index]);
+              return InkWell(
+                  onTap: () {
+                    controller.chooseTime(
+                        index, dataList);
+                  },
+                  child: ItemTime(time: dataList[index]));
             },
             separatorBuilder: (_, index) => const Divider(
               color: Color(0xFFC4C4C4),
