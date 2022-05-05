@@ -49,7 +49,7 @@ class ProfileUpDateController extends BaseController {
   RxList<File> degree = RxList<File>();
   RxList<File> curriculumVitae = RxList<File>();
   RxList<File> workExperiences = RxList<File>();
-  final documentListFiles = Rx<List<File>>([]);
+  final documentListFiles = RxList<File>();
 
   final updateForm = GlobalKey<FormState>();
   final TextEditingController zipCode = TextEditingController();
@@ -125,6 +125,7 @@ class ProfileUpDateController extends BaseController {
   }
 
   Future _prepareData() async {
+    log('List ocument centificate: ${info.value.documentsCertificate!.last.url}');
     name.text = info.value.name ?? '';
     genderId.value = info.value.gender ?? CommonConstants.male;
     email.text = info.value.email ?? '';
@@ -228,9 +229,7 @@ class ProfileUpDateController extends BaseController {
       }
 
       final imageTmp = File(image.path);
-      log(imageTmp.path);
       files.add(imageTmp);
-      documentListFiles.value.addAll(files);
     } on PlatformException catch (e) {
       print(e);
     }
@@ -242,7 +241,6 @@ class ProfileUpDateController extends BaseController {
       if (result != null) {
         final file = File(result.files.single.path!);
         files.add(file);
-        documentListFiles.value.addAll(files);
       } else {
         // User canceled the picker
       }
@@ -405,7 +403,8 @@ class ProfileUpDateController extends BaseController {
   }
 
   Future<void> updated() async {
-    log(documentListFiles.string.toString());
+    documentListFiles.addAll(curriculumVitae);
+    documentListFiles.addAll(degree);
     try {
       await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
@@ -456,7 +455,7 @@ class ProfileUpDateController extends BaseController {
           documentFrontSide.value,
           documentBackSide.value,
           education.text,
-          documentListFiles.value,
+          documentListFiles,
           level.text,
           experience.text,
           numberYearsInJapan.value.experienceCode,
@@ -510,6 +509,10 @@ class ProfileUpDateController extends BaseController {
 
   @override
   void onClose() {
+    numberYearJapanDataList.clear();
+    interpretationExperienceDataList.clear();
+    translationExperienceDataList.clear();
+
     numberYearJapanDataList.close();
     interpretationExperienceDataList.close();
     translationExperienceDataList.close();

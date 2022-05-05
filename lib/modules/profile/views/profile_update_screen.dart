@@ -315,15 +315,42 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                           controller.degree.length,
                                           (int index) => Stack(
                                             children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Image.file(
-                                                  controller.degree[index],
-                                                  width: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                              controller.degree[index].absolute
+                                                          .toString()
+                                                          .contains('jpg') ||
+                                                      controller.degree[index]
+                                                          .absolute
+                                                          .toString()
+                                                          .contains('png')
+                                                  ? ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      child: Image.file(
+                                                        controller
+                                                            .degree[index],
+                                                        width: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    )
+                                                  : GFBorder(
+                                                      dashedLine: const [4, 6],
+                                                      radius:
+                                                          const Radius.circular(
+                                                              6),
+                                                      strokeWidth: 1,
+                                                      type: GFBorderType.rect,
+                                                      color: AppColor
+                                                          .primaryColorLight,
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.upload_file,
+                                                          color: AppColor
+                                                              .primaryColorLight,
+                                                          size: 32.0,
+                                                        ),
+                                                      ),
+                                                    ),
                                               Positioned(
                                                   right: 3,
                                                   top: 3,
@@ -475,7 +502,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 required: 1),
                             const SizedBox(height: 8.0),
                             Container(
-                              child: (controller.curriculumVitae.isNotEmpty)
+                              child: controller.curriculumVitae.isNotEmpty
                                   ? GridView.count(
                                       crossAxisCount: 4,
                                       shrinkWrap: true,
@@ -487,17 +514,49 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ...List.generate(
                                           controller.curriculumVitae.length,
                                           (int index) => Stack(
+                                            alignment: Alignment.center,
+                                            fit: StackFit.expand,
                                             children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Image.file(
-                                                  controller
-                                                      .curriculumVitae[index],
-                                                  width: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                              controller.curriculumVitae[index]
+                                                          .absolute
+                                                          .toString()
+                                                          .contains('jpg') ||
+                                                      controller
+                                                          .curriculumVitae[
+                                                              index]
+                                                          .absolute
+                                                          .toString()
+                                                          .contains('png')
+                                                  ? ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      child: Image.file(
+                                                        controller
+                                                                .curriculumVitae[
+                                                            index],
+                                                        width: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    )
+                                                  : GFBorder(
+                                                      dashedLine: const [4, 6],
+                                                      radius:
+                                                          const Radius.circular(
+                                                              6),
+                                                      strokeWidth: 1,
+                                                      type: GFBorderType.rect,
+                                                      color: AppColor
+                                                          .primaryColorLight,
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.upload_file,
+                                                          color: AppColor
+                                                              .primaryColorLight,
+                                                          size: 32.0,
+                                                        ),
+                                                      ),
+                                                    ),
                                               Positioned(
                                                   right: 3,
                                                   top: 3,
@@ -598,17 +657,49 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                         ...List.generate(
                                           controller.workExperiences.length,
                                           (int index) => Stack(
+                                            alignment: Alignment.center,
+                                            fit: StackFit.expand,
                                             children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: Image.file(
-                                                  controller
-                                                      .workExperiences[index],
-                                                  width: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                              controller.workExperiences[index]
+                                                          .absolute
+                                                          .toString()
+                                                          .contains('jpg') ||
+                                                      controller
+                                                          .workExperiences[
+                                                              index]
+                                                          .absolute
+                                                          .toString()
+                                                          .contains('png')
+                                                  ? ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      child: Image.file(
+                                                        controller
+                                                                .workExperiences[
+                                                            index],
+                                                        width: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    )
+                                                  : GFBorder(
+                                                      dashedLine: const [4, 6],
+                                                      radius:
+                                                          const Radius.circular(
+                                                              6),
+                                                      strokeWidth: 1,
+                                                      type: GFBorderType.rect,
+                                                      color: AppColor
+                                                          .primaryColorLight,
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.upload_file,
+                                                          color: AppColor
+                                                              .primaryColorLight,
+                                                          size: 32.0,
+                                                        ),
+                                                      ),
+                                                    ),
                                               Positioned(
                                                   right: 3,
                                                   top: 3,
