@@ -30,6 +30,7 @@ const Map<String, String> vi_VN = {
   'comment': 'Ghi chú',
   'camera': 'Hình ảnh',
   'year': 'năm',
+  'bank' : 'Ngân hàng',
 
   // onboard
   'onboard.title1': 'Welcome to Hico',
