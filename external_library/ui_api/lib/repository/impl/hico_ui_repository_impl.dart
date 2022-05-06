@@ -226,7 +226,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     File? documentFrontSide,
     File? documentBackSide,
     String education,
-    List<File> documentsCertificate,
+    List<File>? documentsCertificate,
     String level,
     String experience,
     int numberOfYearsInJapan,
@@ -234,6 +234,8 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     int translationExperience,
     String interpretationExperienceDetail,
     String translationExperienceDetail,
+    List<File>? curriculumVitaeFiles,
+    List<File>? workExperienceFiles,
   ) {
     return _api.updateProfile(
       name,
@@ -257,7 +259,9 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
       translationExperience,
       interpretationExperienceDetail,
       translationExperienceDetail,
-      avatarImage: avatarImage,
+      curriculumVitaeFiles,
+      workExperienceFiles,
+      avatarImage: avatarImage!,
       documentFrontSide: documentFrontSide,
       documentBackSide: documentBackSide,
     );

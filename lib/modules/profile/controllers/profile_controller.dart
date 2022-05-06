@@ -20,11 +20,19 @@ import '../../../shared/widgets/image_widget/image_widget.dart';
 
 class ProfileController extends BaseController {
   late Rx<String> images;
-  Rx<UserInfoModel> info = Rx(UserInfoModel());
+  Rx<UserInfoModel> info = Rx(UserInfoModel(
+      avatarImage: '',
+      documentBackSide: '',
+      documentFrontSide: '',
+      documentsCertificate: []));
   final _uiRepository = Get.find<HicoUIRepository>();
+  TextEditingController interpretingExperienceController =
+      TextEditingController();
+  TextEditingController translationExperienceController =
+      TextEditingController();
 
   final imageWidget = ImageWidgetController();
-  
+
   ProfileController() {
     _loadData();
   }
@@ -44,6 +52,10 @@ class ProfileController extends BaseController {
             response.data!.info != null) {
           info.value = response.data!.info!;
           AppDataGlobal.userInfo = response.data!.info!;
+          interpretingExperienceController.text =
+              AppDataGlobal.userInfo!.interpretationExperienceDetail.toString();
+          translationExperienceController.text =
+              AppDataGlobal.userInfo!.translationExperienDetail.toString();
           return;
         }
       });
@@ -55,7 +67,6 @@ class ProfileController extends BaseController {
   Future pickAvatar(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
-      // ignore: always_put_control_body_on_new_line
       if (image == null) return;
 
       final imageTemporary = File(image.path);
@@ -100,7 +111,7 @@ class ProfileController extends BaseController {
   }
 
   void requestUpdateUserInfor() {
-    if(info.value.kycStatus == 0){
+    if (info.value.kycStatus == 0) {
       Get.toNamed(Routes.PROFILE_UPDATE);
     } else if (info.value.kycStatus == 2) {
       DialogUtil.showPopup(
@@ -109,7 +120,9 @@ class ProfileController extends BaseController {
         backgroundColor: Colors.transparent,
         title: 'Tài khoản đã được xác thực.',
         onVaLue: (value) {},
-        child: const NotificationWidget(content: 'Thông tin của bạn đang chờ được xử lý.',),
+        child: const NotificationWidget(
+          content: 'Thông tin của bạn đang chờ được xử lý.',
+        ),
       );
     } else if (info.value.kycStatus == 1) {
       try {
@@ -133,6 +146,23 @@ class ProfileController extends BaseController {
       } catch (e) {
         EasyLoading.dismiss();
       }
+    }
+  }
+
+  String convertStr(int code, int type) {
+    switch (code) {
+      case 2:
+        return 'profile.update.number_years_in_japan.one_to_three_year'.tr;
+      case 3:
+        return 'profile.update.number_years_in_japan.four_to_six_year'.tr;
+      case 4:
+        return 'profile.update.number_years_in_japan.seven_to_ten_year'.tr;
+      case 5:
+        return 'profile.update.number_years_in_japan.more_than_ten_year'.tr;
+      default:
+        return type == 0
+            ? 'profile.update.number_years_in_japan.none'.tr
+            : 'profile.update.experience.none'.tr;
     }
   }
 }

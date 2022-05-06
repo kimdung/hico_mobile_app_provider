@@ -43,7 +43,7 @@ class AccountScreen extends GetView<AccountController> {
                     child: CachedNetworkImage(
                       width: 140,
                       height: 140,
-                      imageUrl: controller.info.value.avatarImage!,
+                      imageUrl: controller.info.value.avatarImage,
                       imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(21),

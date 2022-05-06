@@ -161,10 +161,10 @@ abstract class HicoUIRepository {
     int addressId,
     String address,
     String nearestStation,
-    File? documentFrontSide,
-    File? documentBackSide,
+    File documentFrontSide,
+    File documentBackSide,
     String education,
-    List<File> documentsCertificate,
+    List<File>? documentsCertificate,
     String level,
     String experience,
     int numberOfYearsInJapan,
@@ -172,6 +172,8 @@ abstract class HicoUIRepository {
     int interpretationExperience,
     String tranlationExpericenDetail,
     String interpretationExperienceDetail,
+    List<File>? curriculumVitaeFiles,
+    List<File>? workExperienceFiles,
   );
 
   //Service categories
@@ -208,7 +210,7 @@ abstract class HicoUIRepository {
   Future<CallTokenResponse> getCallToken(String channel);
 
   Future<BaseResponse> confirmSub(ConfirmSubRequest request);
-  
+
   Future<BaseResponse> requestUpdate();
 
   /* Wallet */

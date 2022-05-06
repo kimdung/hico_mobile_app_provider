@@ -77,25 +77,23 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                           child: ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(120)),
-                            child: controller.avatar.value != null
+                            child: controller.avatar.value.absolute.isBlank!
                                 ? Image.file(
-                                    controller.avatar.value!,
+                                    controller.avatar.value,
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.cover,
                                   )
-                                : (controller.info.value.avatarImage != null &&
-                                        controller.info.value.avatarImage != ''
-                                    ? NetWorkImage(
-                                        image:
-                                            controller.info.value.avatarImage ??
-                                                '',
+                                : (controller.info.value.avatarImage.isEmpty
+                                    ? FCoreImage(
+                                        ImageConstants.avatar,
                                         height: 80,
                                         width: 80,
                                         fit: BoxFit.cover,
                                       )
-                                    : FCoreImage(
-                                        ImageConstants.avatar,
+                                    : NetWorkImage(
+                                        image:
+                                            controller.info.value.avatarImage,
                                         height: 80,
                                         width: 80,
                                         fit: BoxFit.cover,
@@ -236,8 +234,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                       image: ImageConstants.imageCardBefore,
                                       title: 'profile.image_before'.tr,
                                       current_image: controller
-                                              .info.value.documentFrontSide ??
-                                          '',
+                                          .info.value.documentFrontSide,
                                       file: controller.documentFrontSide.value,
                                       onPress: () {
                                         controller
@@ -251,8 +248,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                       image: ImageConstants.imageCardAfter,
                                       title: 'profile.image_after'.tr,
                                       current_image: controller
-                                              .info.value.documentBackSide ??
-                                          '',
+                                          .info.value.documentBackSide,
                                       file: controller.documentBackSide.value,
                                       onPress: () {
                                         controller

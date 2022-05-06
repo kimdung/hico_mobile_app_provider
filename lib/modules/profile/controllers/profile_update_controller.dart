@@ -36,16 +36,21 @@ class ProfileUpDateController extends BaseController {
   final imageWidget = ImageWidgetController();
 
   late Rx<String> images;
-  Rx<UserInfoModel> info = Rx(UserInfoModel());
+  Rx<UserInfoModel> info = Rx(UserInfoModel(
+    avatarImage: '',
+    documentBackSide: '',
+    documentFrontSide: '',
+    documentsCertificate: [],
+  ));
   final _uiRepository = Get.find<HicoUIRepository>();
   Rx<int> genderId = Rx(CommonConstants.male);
   Rx<String> birthDay = Rx('');
   Rx<int> showSuggest = Rx<int>(0);
   RxList<AddressModel> addressList = RxList<AddressModel>();
   int addressId = 0;
-  final avatar = Rxn<File>();
-  final documentFrontSide = Rxn<File>();
-  final documentBackSide = Rxn<File>();
+  final avatar = Rx<File>(File(''));
+  final documentFrontSide = Rx<File>(File(''));
+  final documentBackSide = Rx<File>(File(''));
   RxList<File> degree = RxList<File>();
   RxList<File> curriculumVitae = RxList<File>();
   RxList<File> workExperiences = RxList<File>();
@@ -125,7 +130,6 @@ class ProfileUpDateController extends BaseController {
   }
 
   Future _prepareData() async {
-    log('List ocument centificate: ${info.value.documentsCertificate!.last.url}');
     name.text = info.value.name ?? '';
     genderId.value = info.value.gender ?? CommonConstants.male;
     email.text = info.value.email ?? '';
@@ -175,8 +179,6 @@ class ProfileUpDateController extends BaseController {
       if (image == null) return;
 
       avatar.value = File(image.path);
-      //call api
-      //await updateAvatar(imageTemporary);
     } on PlatformException catch (e) {
       print(e);
     }
@@ -405,6 +407,8 @@ class ProfileUpDateController extends BaseController {
   Future<void> updated() async {
     documentListFiles.addAll(curriculumVitae);
     documentListFiles.addAll(degree);
+    documentListFiles.addAll(workExperiences);
+    log('List file: $documentListFiles');
     try {
       await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
@@ -467,6 +471,8 @@ class ProfileUpDateController extends BaseController {
           interpretingExperienceDetail.text.isNotEmpty
               ? interpretingExperienceDetail.text
               : '',
+          curriculumVitae,
+          workExperiences,
         )
             .then((response) {
           EasyLoading.dismiss();

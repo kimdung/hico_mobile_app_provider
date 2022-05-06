@@ -532,6 +532,8 @@ class _HicoUIAPI implements HicoUIAPI {
       translationExperience,
       interpretationExperienceDetail,
       translationExperienceDetail,
+      curriculumVitaeFiles,
+      workExperienceFiles,
       {avatarImage,
       documentFrontSide,
       documentBackSide}) async {
@@ -561,12 +563,30 @@ class _HicoUIAPI implements HicoUIAPI {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
-    _data.files.addAll(documentsCertificate.map((i) => MapEntry(
-        'documents_certificate',
-        MultipartFile.fromFileSync(
-          i.path,
-          filename: i.path.split(Platform.pathSeparator).last,
-        ))));
+    if (documentsCertificate != null) {
+      _data.files.addAll(documentsCertificate.map((i) => MapEntry(
+          'documents_certificate',
+          MultipartFile.fromFileSync(
+            i.path,
+            filename: i.path.split(Platform.pathSeparator).last,
+          ))));
+    }
+    if (curriculumVitaeFiles != null) {
+      _data.files.addAll(curriculumVitaeFiles.map((i) => MapEntry(
+          'curriculum_vitae_files',
+          MultipartFile.fromFileSync(
+            i.path,
+            filename: i.path.split(Platform.pathSeparator).last,
+          ))));
+    }
+    if (workExperienceFiles != null) {
+      _data.files.addAll(workExperienceFiles.map((i) => MapEntry(
+          'work_experience_files',
+          MultipartFile.fromFileSync(
+            i.path,
+            filename: i.path.split(Platform.pathSeparator).last,
+          ))));
+    }
     if (avatarImage != null) {
       _data.files.add(MapEntry(
           'avatar_image',
