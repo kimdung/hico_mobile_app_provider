@@ -36,20 +36,25 @@ class ProfileUpDateController extends BaseController {
   final imageWidget = ImageWidgetController();
 
   late Rx<String> images;
-  Rx<UserInfoModel> info = Rx(UserInfoModel());
+  Rx<UserInfoModel> info = Rx(UserInfoModel(
+    avatarImage: '',
+    documentBackSide: '',
+    documentFrontSide: '',
+    documentsCertificate: [],
+  ));
   final _uiRepository = Get.find<HicoUIRepository>();
   Rx<int> genderId = Rx(CommonConstants.male);
   Rx<String> birthDay = Rx('');
   Rx<int> showSuggest = Rx<int>(0);
   RxList<AddressModel> addressList = RxList<AddressModel>();
   int addressId = 0;
-  final avatar = Rxn<File>();
-  final documentFrontSide = Rxn<File>();
-  final documentBackSide = Rxn<File>();
+  final avatar = Rx<File>(File(''));
+  final documentFrontSide = Rx<File>(File(''));
+  final documentBackSide = Rx<File>(File(''));
   RxList<File> degree = RxList<File>();
   RxList<File> curriculumVitae = RxList<File>();
   RxList<File> workExperiences = RxList<File>();
-  final documentListFiles = Rx<List<File>>([]);
+  final documentListFiles = RxList<File>();
 
   final updateForm = GlobalKey<FormState>();
   final TextEditingController zipCode = TextEditingController();
@@ -174,8 +179,6 @@ class ProfileUpDateController extends BaseController {
       if (image == null) return;
 
       avatar.value = File(image.path);
-      //call api
-      //await updateAvatar(imageTemporary);
     } on PlatformException catch (e) {
       print(e);
     }
@@ -228,9 +231,7 @@ class ProfileUpDateController extends BaseController {
       }
 
       final imageTmp = File(image.path);
-      log(imageTmp.path);
       files.add(imageTmp);
-      documentListFiles.value.addAll(files);
     } on PlatformException catch (e) {
       print(e);
     }
@@ -242,7 +243,6 @@ class ProfileUpDateController extends BaseController {
       if (result != null) {
         final file = File(result.files.single.path!);
         files.add(file);
-        documentListFiles.value.addAll(files);
       } else {
         // User canceled the picker
       }
@@ -405,7 +405,10 @@ class ProfileUpDateController extends BaseController {
   }
 
   Future<void> updated() async {
-    log(documentListFiles.string.toString());
+    documentListFiles.addAll(curriculumVitae);
+    documentListFiles.addAll(degree);
+    documentListFiles.addAll(workExperiences);
+    log('List file: $documentListFiles');
     try {
       await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
@@ -456,7 +459,7 @@ class ProfileUpDateController extends BaseController {
           documentFrontSide.value,
           documentBackSide.value,
           education.text,
-          documentListFiles.value,
+          documentListFiles,
           level.text,
           experience.text,
           numberYearsInJapan.value.experienceCode,
@@ -468,6 +471,8 @@ class ProfileUpDateController extends BaseController {
           interpretingExperienceDetail.text.isNotEmpty
               ? interpretingExperienceDetail.text
               : '',
+          curriculumVitae,
+          workExperiences,
         )
             .then((response) {
           EasyLoading.dismiss();
@@ -500,15 +505,20 @@ class ProfileUpDateController extends BaseController {
     return filePath.split('/').last;
   }
 
-  void chooseTime(int currentIndex, List<Time> list) {
-    list[currentIndex].isFeatured = true;
-    list[preIndex].isFeatured = !list[currentIndex].isFeatured;
-    resultValue.value = list[currentIndex];
+  void chooseTime(int currentIndex, List<Time> timeDataList) {
+    timeDataList[currentIndex].isFeatured = true;
+    timeDataList[preIndex].isFeatured = false;
     preIndex = currentIndex;
+    resultValue.value = timeDataList[currentIndex];
+    update();
   }
 
   @override
   void onClose() {
+    numberYearJapanDataList.clear();
+    interpretationExperienceDataList.clear();
+    translationExperienceDataList.clear();
+
     numberYearJapanDataList.close();
     interpretationExperienceDataList.close();
     translationExperienceDataList.close();

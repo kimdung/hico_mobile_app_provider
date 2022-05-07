@@ -30,6 +30,7 @@ const Map<String, String> vi_VN = {
   'comment': 'Ghi chú',
   'camera': 'Hình ảnh',
   'year': 'năm',
+  'bank' : 'Ngân hàng',
 
   // onboard
   'onboard.title1': 'Welcome to Hico',
@@ -238,10 +239,12 @@ const Map<String, String> vi_VN = {
   //statistic screen
   'statistic.order_finish': 'Đơn hàng đã hoàn thành',
   'statistic.finish': 'Đã hoàn thành',
-  'statistic.cancel': 'Đã hủy',
+  'statistic.cancel': 'Bạn hủy',
+  'statistic.synthetic' : 'Tổng hợp',
+  'statistic.customer.cancel' : 'Khách hàng huỷ',
   'statistic.total_amount': 'Tổng tiền kiếm được',
-  'statistic.system_pay': 'Hệ thống trả',
-  'statistic.system_debt': 'Hệ thống chưa trả',
+  'statistic.system_pay': 'Hệ thống đã trả',
+  'statistic.system_debt': 'Hệ thống còn nợ',
   'statistic.system_fine': 'Tổng số tiền bị phạt',
   'statistic.payed_system': 'Đã trả hệ thống',
   'statistic.debt_system': 'Nợ hệ thống',
@@ -251,6 +254,9 @@ const Map<String, String> vi_VN = {
   'statistic.to_date': 'Ngày kết thúc:',
   'statistic.order_code': 'Mã đơn hàng',
   'statistic.amount': 'Số tiền',
+  'statistic.wallet': 'Số dư ví',
+  'statistic.bonus' : 'Số tiền được thưởng khi khách hàng huỷ',
+
 
   //support screen
   'support.title':
@@ -298,6 +304,18 @@ const Map<String, String> vi_VN = {
       'Vui lòng chọn kinh nghiệm phiên dịch',
   'profile.update.translation_experience_required':
       'Vui lòng chọn kinh nghiệm biên dịch',
+
+  'profile.update.number_years_in_japan.none' : 'Chưa đến Nhật',
+  'profile.update.number_years_in_japan.one_to_three_year' : '1-3 năm',
+  'profile.update.number_years_in_japan.four_to_six_year' : '4-6 năm',
+  'profile.update.number_years_in_japan.seven_to_ten_year' : '7-10 năm',
+  'profile.update.number_years_in_japan.more_than_ten_year' : 'Trên 10 năm',
+
+  'profile.update.experience.none' : 'Chưa có kinh nghiệm',
+  'profile.update.experience.one_to_three_year' : '1-3 năm',
+  'profile.update.experience.four_to_six_year' : '4-6 năm',
+  'profile.update.experience.seven_to_ten_year' : '7-10 năm',
+  'profile.update.experience.more_than_ten_year' : 'Trên 10 năm',
 
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',

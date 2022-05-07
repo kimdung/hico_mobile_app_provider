@@ -34,7 +34,7 @@ class StatisticScreen extends GetView<StatisticController> {
           title: Text(
             'statistic'.tr,
             style: TextAppStyle().titleAppBarStyle().copyWith(
-                  color: AppColor.primaryTextColorLight,
+                  color: AppColor.textBlack,
                 ),
           ),
           elevation: 4,
@@ -52,20 +52,33 @@ class StatisticScreen extends GetView<StatisticController> {
                 buildStatusNavBar(),
                 buildTotalWithStatus(),
                 const SizedBox(height: 20),
-                buildSearchField(),
-                const SizedBox(height: 20),
-                buildSearchDate(context),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'statistic.order_finish'.tr,
-                    style: TextAppStyle().genaralTextStyle().copyWith(
-                        color: Colors.black, fontWeight: FontWeight.w500),
-                  ),
+                Obx(
+                  () => controller.indexStatus.value == 0
+                      ? const SizedBox()
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildSearchField(),
+                            const SizedBox(height: 20),
+                            buildSearchDate(context),
+                            const SizedBox(height: 20),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                'statistic.order_finish'.tr,
+                                style: TextAppStyle()
+                                    .genaralTextStyle()
+                                    .copyWith(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            buildOrderList(),
+                          ],
+                        ),
                 ),
-                const SizedBox(height: 16),
-                buildOrderList(),
               ],
             ),
           ),

@@ -13,6 +13,7 @@ import '../../../../base/base_controller.dart';
 import '../../../../data/app_data_global.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
+import '../../../../shared/utils/dialog_util.dart';
 import '../../../../shared/widgets/image_widget/image_widget.dart';
 
 class TopupBankController extends BaseController {
@@ -30,9 +31,9 @@ class TopupBankController extends BaseController {
 
   /* Action */
 
-  void onCopy(BankModel bank) {
-    Clipboard.setData(ClipboardData(text: bank.accountNumber ?? ''));
-    EasyLoading.showToast('copied'.tr);
+  Future<void> onCopy(BankModel bank) async {
+    await Clipboard.setData(ClipboardData(text: bank.accountNumber ?? ''));
+    await DialogUtil.showMenu();
   }
 
   void onCopyTransferContent() {

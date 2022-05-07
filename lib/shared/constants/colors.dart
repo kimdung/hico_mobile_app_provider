@@ -102,6 +102,7 @@ class AppColor {
   static const Color textBlack = Color(0xff333333);
   static const Color colorFF7AA3 = Color(0xFFFF7AA3);
   static const Color colorFF4880 = Color(0xFFFF4880);
+  static const Color primaryPink50 = Color(0xFFFCEEF1);
 
   //red
   static const Color redPrimary = Color(0xffFF6B00);

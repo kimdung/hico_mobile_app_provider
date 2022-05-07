@@ -27,8 +27,8 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
       documentFrontSide: json['document_front_side'] as String? ?? '',
       documentBackSide: json['document_back_side'] as String? ?? '',
       education: json['education'] as String?,
-      documentsCertificate: (json['documents_certificate'] as List<dynamic>?)
-          ?.map((e) =>
+      documentsCertificate: (json['documents_certificate'] as List<dynamic>)
+          .map((e) =>
               DocumentsCertificateModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       level: json['level'] as String?,

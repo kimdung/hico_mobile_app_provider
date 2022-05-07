@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class Time {
   String content = '';
   int experienceCode = 0;
@@ -11,28 +13,69 @@ class Time {
 
 final translatationExperiences = [
   Time(
-    content: 'Chưa có kinh nghiệm',
-    experienceCode: 1,
-    isFeatured: false,
-  ),
-  Time(content: '1-3 năm', experienceCode: 2, isFeatured: false),
-  Time(content: '4-6 năm', experienceCode: 3, isFeatured: false),
-  Time(content: '7-10 năm', experienceCode: 4, isFeatured: false),
-  Time(content: 'Trên 10 năm', experienceCode: 5, isFeatured: false),
+      content: 'profile.update.experience.none'.tr,
+      experienceCode: 1,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.one_to_three_year'.tr,
+      experienceCode: 2,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.four_to_six_year'.tr,
+      experienceCode: 3,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.seven_to_ten_year'.tr,
+      experienceCode: 4,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.more_than_ten_year'.tr,
+      experienceCode: 5,
+      isFeatured: false),
 ];
 
 final interpretationExperiences = [
-  Time(content: 'Chưa có kinh nghiệm', experienceCode: 1, isFeatured: false),
-  Time(content: '1-3 năm', experienceCode: 2, isFeatured: false),
-  Time(content: '4-6 năm', experienceCode: 3, isFeatured: false),
-  Time(content: '7-10 năm', experienceCode: 4, isFeatured: false),
-  Time(content: 'Trên 10 năm', experienceCode: 5, isFeatured: false),
+  Time(
+      content: 'profile.update.experience.none'.tr,
+      experienceCode: 1,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.one_to_three_year'.tr,
+      experienceCode: 2,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.four_to_six_year'.tr,
+      experienceCode: 3,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.seven_to_ten_year'.tr,
+      experienceCode: 4,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.experience.more_than_ten_year'.tr,
+      experienceCode: 5,
+      isFeatured: false),
 ];
 
 final numberYearsInJapanList = [
-  Time(content: 'Chưa đến Nhật', experienceCode: 1, isFeatured: false),
-  Time(content: '1-3 năm', experienceCode: 2, isFeatured: false),
-  Time(content: '4-6 năm', experienceCode: 3, isFeatured: false),
-  Time(content: '7-10 năm', experienceCode: 4, isFeatured: false),
-  Time(content: 'Trên 10 năm', experienceCode: 5, isFeatured: false),
+  Time(
+      content: 'profile.update.number_years_in_japan.none'.tr,
+      experienceCode: 1,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.number_years_in_japan.one_to_three_year'.tr,
+      experienceCode: 2,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.number_years_in_japan.four_to_six_year'.tr,
+      experienceCode: 3,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.number_years_in_japan.seven_to_ten_year'.tr,
+      experienceCode: 4,
+      isFeatured: false),
+  Time(
+      content: 'profile.update.number_years_in_japan.more_than_ten_year'.tr,
+      experienceCode: 5,
+      isFeatured: false),
 ];

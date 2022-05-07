@@ -15,7 +15,7 @@ part 'user_info_model.g.dart';
 class UserInfoModel {
   int? id;
   @JsonKey(name: 'avatar_image', defaultValue: '')
-  String? avatarImage;
+  String avatarImage;
   String? name;
   int? gender;
   @JsonKey(name: 'date_of_birth', defaultValue: '')
@@ -37,12 +37,12 @@ class UserInfoModel {
   @JsonKey(name: 'nearest_station', defaultValue: '')
   String? nearestStation;
   @JsonKey(name: 'document_front_side', defaultValue: '')
-  String? documentFrontSide;
+  String documentFrontSide;
   @JsonKey(name: 'document_back_side', defaultValue: '')
-  String? documentBackSide;
+  String documentBackSide;
   String? education;
   @JsonKey(name: 'documents_certificate')
-  List<DocumentsCertificateModel>? documentsCertificate;
+  List<DocumentsCertificateModel> documentsCertificate;
   String? level;
   String? experience;
   @JsonKey(name: 'number_of_years_in_japan')
@@ -70,7 +70,7 @@ class UserInfoModel {
 
   UserInfoModel({
     this.id,
-    this.avatarImage,
+    required this.avatarImage,
     this.name,
     this.gender,
     this.dateOfBirth,
@@ -83,10 +83,10 @@ class UserInfoModel {
     this.bankAccountNumber,
     this.address,
     this.nearestStation,
-    this.documentFrontSide,
-    this.documentBackSide,
+    required this.documentFrontSide,
+    required this.documentBackSide,
     this.education,
-    this.documentsCertificate,
+    required this.documentsCertificate,
     this.level,
     this.experience,
     this.numberOfYearsInJapan,

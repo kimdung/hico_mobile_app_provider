@@ -13,7 +13,11 @@ import '../../../shared/widget_hico/dialog/logout_widget.dart';
 
 class AccountController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
-  Rx<UserInfoModel> info = Rx(UserInfoModel());
+  Rx<UserInfoModel> info = Rx(UserInfoModel(
+      avatarImage: '',
+      documentBackSide: '',
+      documentFrontSide: '',
+      documentsCertificate: []));
   final storage = Get.find<SharedPreferences>();
 
   AccountController() {

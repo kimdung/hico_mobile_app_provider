@@ -2,7 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:hico/routes/app_pages.dart';
+import 'package:hico/shared/widget_hico/box_decoration/box_decoration.dart';
+import 'package:hico/shared/widgets/experience_widget/experience_widget.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
 
 import '../../../shared/widget_hico/button/general_button.dart';
@@ -65,7 +68,7 @@ class ProfileScreen extends GetView<ProfileController> {
                             ? CachedNetworkImage(
                                 width: 140,
                                 height: 140,
-                                imageUrl: controller.info.value.avatarImage!,
+                                imageUrl: controller.info.value.avatarImage,
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(
@@ -200,16 +203,58 @@ class ProfileScreen extends GetView<ProfileController> {
             const SizedBox(height: 12),
             buildImageList(
               title: 'profile.image_card'.tr,
-              firstImage: AppDataGlobal.userInfo!.documentFrontSide!,
+              firstImage: AppDataGlobal.userInfo!.documentFrontSide,
               firstImageTitle: 'profile.image_before'.tr,
-              secondImage: AppDataGlobal.userInfo!.documentBackSide!,
+              secondImage: AppDataGlobal.userInfo!.documentBackSide,
               secondImageTitle: 'profile.image_after'.tr,
             ),
             const SizedBox(height: 12),
             buildImageGrid(
               title: 'profile.image_degree'.tr,
-              list: AppDataGlobal.userInfo!.documentsCertificate!,
+              list: AppDataGlobal.userInfo!.documentsCertificate,
             ),
+            const SizedBox(height: 12),
+            _buildLabel(
+                title: 'profile.update.number_years_in_japan'.tr, required: 1),
+            const SizedBox(height: 8),
+            ExperienceWidget(
+              content: controller.convertStr(
+                  AppDataGlobal.userInfo!.numberOfYearsInJapan!, 0),
+            ),
+            const SizedBox(height: 12),
+            _buildLabel(
+                title: 'profile.update.interpreting_experience'.tr,
+                required: 1),
+            const SizedBox(height: 8),
+            buildSelectComponent(
+              title: controller.convertStr(
+                  AppDataGlobal.userInfo!.interpretationExperience!, 1),
+              textColor: TextAppStyle().smallTextGrey(),
+              prefixIcon: true,
+              prefixImage:
+                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+              onPress: () {},
+            ),
+            const SizedBox(height: 8),
+            _buildInputTextArea(
+                textEditng: controller.interpretingExperienceController),
+
+            const SizedBox(height: 12),
+            _buildLabel(
+                title: 'profile.update.translation_experience'.tr, required: 1),
+            const SizedBox(height: 8),
+            buildSelectComponent(
+              title: controller.convertStr(
+                  AppDataGlobal.userInfo!.translationExperience!, 1),
+              textColor: TextAppStyle().smallTextGrey(),
+              prefixIcon: true,
+              prefixImage:
+                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
+              onPress: () {},
+            ),
+            const SizedBox(height: 8),
+            _buildInputTextArea(
+                textEditng: controller.translationExperienceController),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -217,7 +262,6 @@ class ProfileScreen extends GetView<ProfileController> {
               child: GeneralButton(
                 onPressed: () {
                   controller.requestUpdateUserInfor();
-                  //Get.toNamed(Routes.PROFILE_UPDATE);
                 },
                 borderRadius: BorderRadius.circular(24),
                 borderColor: AppColor.primaryColorLight,

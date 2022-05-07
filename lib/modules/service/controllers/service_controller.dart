@@ -13,7 +13,11 @@ class ServiceController extends BaseController {
 
   List<int> listRecord = new List<int>.generate(20, (i) => i + 1);
 
-  Rx<UserInfoModel> info = Rx(UserInfoModel());
+  Rx<UserInfoModel> info = Rx(UserInfoModel(
+      avatarImage: '',
+      documentBackSide: '',
+      documentsCertificate: [],
+      documentFrontSide: ''));
   final _uiRepository = Get.find<HicoUIRepository>();
 
   ServiceController() {

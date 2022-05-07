@@ -196,8 +196,8 @@ abstract class HicoUIAPI {
   );
 
   //update infor
-  @MultiPart()
   @POST('/v1/user/update')
+  @MultiPart()
   Future<UserResponse> updateProfile(
     @Query('name') String name,
     @Query('gender') int gender,
@@ -212,7 +212,7 @@ abstract class HicoUIAPI {
     @Query('address') String address,
     @Query('nearest_station') String nearestStation,
     @Query('education') String education,
-    @Part(value: 'documents_certificate') List<File> documentsCertificate,
+    @Part(value: 'documents_certificate') List<File>? documentsCertificate,
     @Query('level') String level,
     @Query('experience') String experience,
     @Query('number_of_years_in_japan') int numberOfYearsInJapan,
@@ -220,8 +220,9 @@ abstract class HicoUIAPI {
     @Query('translation_experience') int translationExperience,
     @Query('interpretation_experience_detail')
         String interpretationExperienceDetail,
-    @Query('translation_experience_detail')
-        String translationExperienceDetail, {
+    @Query('translation_experience_detail') String translationExperienceDetail,
+    @Part(value: 'curriculum_vitae_files') List<File>? curriculumVitaeFiles,
+    @Part(value: 'work_experience_files') List<File>? workExperienceFiles, {
     @Part(value: 'avatar_image') File? avatarImage,
     @Part(value: 'document_front_side') File? documentFrontSide,
     @Part(value: 'document_back_side') File? documentBackSide,
@@ -288,15 +289,15 @@ abstract class HicoUIAPI {
   @POST('/v1/agoraCall/createToken')
   Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
 
-  //invoice confirm sub 
+  //invoice confirm sub
   @POST('/v1/supplier/invoice/confirmSub')
   Future<BaseResponse> confirmSub(@Body() ConfirmSubRequest request);
 
-  //invoice confirm sub 
+  //invoice confirm sub
   @POST('/v1/user/requestUpdate')
   Future<BaseResponse> requestUpdate();
 
-   /* Wallet */
+  /* Wallet */
   @GET('/v1/payIn/list')
   Future<TopupHistoryResponse> topupHistory(
     @Query('limit') int limit,
