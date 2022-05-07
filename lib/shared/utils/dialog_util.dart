@@ -126,8 +126,8 @@ class DialogUtil {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
-          alignment: Alignment.topRight,
-          insetPadding: const EdgeInsets.only(right: 24, top: 160),
+          alignment: Alignment.center,
+        //  insetPadding: const EdgeInsets.only(top: 160),
           child: Container(
             width: 50,
             child: ListTile(

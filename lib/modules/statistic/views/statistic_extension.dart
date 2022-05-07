@@ -2,71 +2,142 @@ part of 'statistic_screen.dart';
 
 extension StatisticExtension on StatisticScreen {
   Widget buildStatusNavBar() {
-    return Container(
-      height: 44,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        color: AppColor.secondBackgroundColorLight,
-        borderRadius: const BorderRadius.all(Radius.circular(48)),
-      ),
-      child: Obx(() => Row(
+    return Obx(() => SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    controller.indexStatus.value = 0;
-                  },
-                  child: Container(
-                    // height: 44,
-                    padding: const EdgeInsets.symmetric(vertical: 9),
-                    decoration: controller.indexStatus.value == 0
-                        ? BoxDecoration(
-                            color: AppColor.primaryColorLight,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(48)),
-                          )
-                        : null,
-                    child: Text(
-                      'statistic.finish'.tr,
-                      textAlign: TextAlign.center,
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            color: controller.indexStatus.value == 0
-                                ? AppColor.secondTextColorLight
-                                : AppColor.primaryTextColorLight,
-                          ),
-                    ),
+              const SizedBox(
+                width: 20.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 0;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: controller.indexStatus.value == 0
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.synthetic'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 0
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
                   ),
                 ),
               ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    controller.indexStatus.value = 1;
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 9),
-                    decoration: controller.indexStatus.value == 1
-                        ? BoxDecoration(
-                            color: AppColor.primaryColorLight,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(48)),
-                          )
-                        : null,
-                    child: Text(
-                      'statistic.cancel'.tr,
-                      textAlign: TextAlign.center,
-                      style: TextAppStyle().genaralTextStyle().copyWith(
-                            color: controller.indexStatus.value == 1
-                                ? AppColor.secondTextColorLight
-                                : AppColor.primaryTextColorLight,
-                          ),
-                    ),
+              const SizedBox(
+                width: 8.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 1;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: controller.indexStatus.value == 1
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.customer.cancel'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 1
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(
+                width: 8.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 2;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: controller.indexStatus.value == 2
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.finish'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 2
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 8.0,
+              ),
+              InkWell(
+                onTap: () {
+                  controller.indexStatus.value = 3;
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  decoration: controller.indexStatus.value == 3
+                      ? BoxDecoration(
+                          color: AppColor.primaryColorLight,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(48)),
+                        )
+                      : const BoxDecoration(
+                          color: AppColor.primaryPink50,
+                          borderRadius: BorderRadius.all(Radius.circular(48)),
+                        ),
+                  child: Text(
+                    'statistic.cancel'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().genaralTextStyle().copyWith(
+                          color: controller.indexStatus.value == 3
+                              ? AppColor.secondTextColorLight
+                              : AppColor.primaryTextColorLight,
+                        ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 8.0,
+              ),
             ],
-          )),
-    );
+          ),
+        ));
   }
 
   Widget buildTotalWithStatus() {
@@ -100,53 +171,69 @@ extension StatisticExtension on StatisticScreen {
                       children: [
                         _buildTotalItem(
                             margin: 1,
-                            icon: IconConstants.icMoneyGreen,
+                            icon: IconConstants.icMoneyPink,
                             title: 'statistic.system_debt'.tr,
                             price:
                                 '${controller.completed.value.remain ?? 0} JPY ',
-                            textColor: AppColor.blueTextColor),
+                            textColor: AppColor.redTextColor),
                       ],
                     )
                   ])
-                : Column(children: [
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildTotalItem(
-                            margin: 1,
-                            icon: IconConstants.icMoneyRed,
-                            title: 'statistic.system_fine'.tr,
-                            price:
-                                '${controller.canceled.value.total ?? 0} JPY ',
-                            textColor: AppColor.blueTextColor),
-                        _buildTotalItem(
-                            margin: 2,
-                            icon: IconConstants.icMoneyPink,
-                            title: 'statistic.payed_system'.tr,
-                            price:
-                                '${controller.canceled.value.paid ?? 0} JPY '),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildTotalItem(
-                            margin: 1,
-                            icon: IconConstants.icMoneyRed,
-                            title: 'statistic.debt_system'.tr,
-                            price:
-                                '${controller.canceled.value.remain ?? 0} JPY '),
-                        _buildTotalItem(
-                            margin: 1,
-                            icon: IconConstants.icMoneyGrey,
-                            title: 'statistic.cancel_number'.tr,
-                            price:
-                                '${controller.canceled.value.cancelTimes ?? 0} ${'order.detail.step'.tr} '),
-                      ],
-                    )
-                  ]),
+                : controller.indexStatus.value == 1
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: _buildTotalItem(
+                                  margin: 1,
+                                  icon: IconConstants.icMoneyGreen,
+                                  title: 'statistic.bonus'.tr,
+                                  price:
+                                      '${controller.completed.value.total ?? 0} JPY ',
+                                  textColor: AppColor.blueTextColor),
+                            ),
+                          ),
+                        ],
+                      )
+                    : controller.indexStatus.value == 2
+                        ? Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              _buildTotalItem(
+                                  margin: 1,
+                                  icon: IconConstants.icMoneyGreen,
+                                  title: 'statistic.total_amount'.tr,
+                                  price:
+                                      '${controller.completed.value.total ?? 0} JPY ',
+                                  textColor: AppColor.blueTextColor),
+                            ],
+                          )
+                        : controller.indexStatus.value == 3
+                            ? Column(children: [
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    _buildTotalItem(
+                                        margin: 1,
+                                        icon: IconConstants.icMoneyRed,
+                                        title: 'statistic.system_fine'.tr,
+                                        price:
+                                            '${controller.canceled.value.total ?? 0} JPY ',
+                                        textColor: AppColor.redTextColor),
+                                    _buildTotalItem(
+                                        margin: 1,
+                                        icon: IconConstants.icMoneyGrey,
+                                        title: 'statistic.cancel_number'.tr,
+                                        price:
+                                            '${controller.canceled.value.cancelTimes ?? 0} ${'order.detail.step'.tr} '),
+                                  ],
+                                ),
+                                const SizedBox(height: 14),
+                              ])
+                            : null,
           ),
         ));
   }

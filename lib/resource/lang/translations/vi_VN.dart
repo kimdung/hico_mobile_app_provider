@@ -239,10 +239,12 @@ const Map<String, String> vi_VN = {
   //statistic screen
   'statistic.order_finish': 'Đơn hàng đã hoàn thành',
   'statistic.finish': 'Đã hoàn thành',
-  'statistic.cancel': 'Đã hủy',
+  'statistic.cancel': 'Bạn hủy',
+  'statistic.synthetic' : 'Tổng hợp',
+  'statistic.customer.cancel' : 'Khách hàng huỷ',
   'statistic.total_amount': 'Tổng tiền kiếm được',
-  'statistic.system_pay': 'Hệ thống trả',
-  'statistic.system_debt': 'Hệ thống chưa trả',
+  'statistic.system_pay': 'Hệ thống đã trả',
+  'statistic.system_debt': 'Hệ thống còn nợ',
   'statistic.system_fine': 'Tổng số tiền bị phạt',
   'statistic.payed_system': 'Đã trả hệ thống',
   'statistic.debt_system': 'Nợ hệ thống',
@@ -252,6 +254,9 @@ const Map<String, String> vi_VN = {
   'statistic.to_date': 'Ngày kết thúc:',
   'statistic.order_code': 'Mã đơn hàng',
   'statistic.amount': 'Số tiền',
+  'statistic.wallet': 'Số dư ví',
+  'statistic.bonus' : 'Số tiền được thưởng khi khách hàng huỷ',
+
 
   //support screen
   'support.title':
