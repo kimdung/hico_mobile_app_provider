@@ -51,6 +51,7 @@ void configLoading() {
     ..indicatorColor = AppColor.primaryColorLight
     ..textColor = AppColor.primaryColorLight
     ..maskColor = AppColor.errorColorLight
+    ..toastPosition = EasyLoadingToastPosition.center
     ..userInteractions = false
     ..dismissOnTap = false
     ..animationStyle = EasyLoadingAnimationStyle.scale;

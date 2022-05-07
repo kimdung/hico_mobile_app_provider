@@ -33,7 +33,7 @@ class TopupBankController extends BaseController {
 
   Future<void> onCopy(BankModel bank) async {
     await Clipboard.setData(ClipboardData(text: bank.accountNumber ?? ''));
-    await DialogUtil.showMenu();
+    await EasyLoading.showToast('copied'.tr);
   }
 
   void onCopyTransferContent() {
