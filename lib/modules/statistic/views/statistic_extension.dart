@@ -153,7 +153,7 @@ extension StatisticExtension on StatisticScreen {
                         _buildTotalItem(
                             margin: 1,
                             icon: IconConstants.icMoneyGreen,
-                            title: 'statistic.total_amount'.tr,
+                            title: 'statistic.wallet'.tr,
                             price:
                                 '${controller.completed.value.total ?? 0} JPY ',
                             textColor: AppColor.blueTextColor),
