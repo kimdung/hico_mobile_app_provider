@@ -78,18 +78,18 @@ class LoginController extends BaseController {
           } else if (response.status == CommonConstants.statusOk &&
               response.loginModel != null &&
               response.loginModel!.info != null) {
-            if (response.loginModel!.info!.isUpdate == 0) {
-              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
-              AppDataGlobal.userInfo = response.loginModel!.info!;
-              Get.toNamed(Routes.PROFILE_UPDATE);
-            } else {
-              storage.setString(
+            if (response.loginModel!.info!.kycStatus == 1) {
+               storage.setString(
                   StorageConstants.username, usernameController.text);
               storage.setString(
                   StorageConstants.password, passwordController.text);
               storage.setBool(StorageConstants.isLogin, true);
 
-              _loadData(response.loginModel!);
+              _loadData(response.loginModel!);       
+            } else {
+              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
+              AppDataGlobal.userInfo = response.loginModel!.info!;
+              Get.toNamed(Routes.PROFILE_UPDATE);
             }
           } else if (response.loginModel != null &&
               response.loginModel!.info!.isUpdate == 1) {

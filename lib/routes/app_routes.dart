@@ -36,6 +36,7 @@ abstract class Routes {
   static const PROFILE_UPDATE = '/profile_update';
   static const SERVICE = '/service';
   static const UPDATE_SERVICE = '/update_service';
+  static const UPDATE_SERVICE_SUCCESS = '/update_service_success';
   static const CATEGORY_SERVICE = '/category_service';
   static const ADDRESS_SERVICE = '/address_service';
   static const TIME_SERVICE = '/time_service';

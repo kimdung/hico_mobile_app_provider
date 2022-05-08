@@ -37,11 +37,12 @@ class MainController extends BaseController {
   @override
   Future<void> onInit() async {
     await super.onInit();
-
+    await orderListController.loadList();
     await channel?.watch();
     channel?.state?.unreadCountStream.listen((event) {
       orderListController.totalNotif.value = event;
     });
+    await orderListController.loadList();
   }
 
   Future<void> changeIndex(int _index) async {

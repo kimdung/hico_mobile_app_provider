@@ -305,6 +305,7 @@ const Map<String, String> vi_VN = {
   'profile.update.translation_experience_required':
       'Vui lòng chọn kinh nghiệm biên dịch',
 
+  'profile.update.number_years_in_japan.all' : 'Chọn số năm ở Nhật',
   'profile.update.number_years_in_japan.none' : 'Chưa đến Nhật',
   'profile.update.number_years_in_japan.one_to_three_year' : '1-3 năm',
   'profile.update.number_years_in_japan.four_to_six_year' : '4-6 năm',
@@ -340,6 +341,8 @@ const Map<String, String> vi_VN = {
   'service.address.search_district': 'Tìm kiếm thành phố/quận',
 
   'service.time.title': 'Thông tin thời gian',
+  'service.time.approve': 'Hệ thống đang phê duyệt',
+  'service.time.approve_waiting': 'Vui lòng chờ trong ít phút!',
 
   //supplier filter
   'supplier.filter.title_bar': 'Thiết lập bộ lọc',
@@ -381,6 +384,7 @@ const Map<String, String> vi_VN = {
   'invoice.accepted': 'PDV đồng ý',
   'invoice.successed': 'Hoàn thành',
   'invoice.canceled': 'Đã huỷ',
+  'invoice.incurred': 'Phát sinh',
 
   //invoice detail
   'invoice.detail.supplier': 'Phiên dịch viên',

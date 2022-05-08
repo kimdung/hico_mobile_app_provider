@@ -54,6 +54,7 @@ import '../modules/service/views/category_service_screen.dart';
 import '../modules/service/views/service_screen.dart';
 import '../modules/service/views/time_service_screen.dart';
 import '../modules/service/views/update_service_screen.dart';
+import '../modules/service/views/update_service_success_screen.dart';
 import '../modules/splash/binding/splash_binding.dart';
 import '../modules/splash/view/splash_screen.dart';
 import '../modules/statistic/bindings/statistic_binding.dart';
@@ -213,6 +214,10 @@ final routePages = [
   GetPage(
       name: Routes.UPDATE_SERVICE,
       page: () => UpdateServiceScreen(),
+      binding: UpdateServiceBinding()),
+  GetPage(
+      name: Routes.UPDATE_SERVICE_SUCCESS,
+      page: () => UpdateServiceSuccessScreen(),
       binding: UpdateServiceBinding()),
   GetPage(
       name: Routes.CATEGORY_SERVICE,

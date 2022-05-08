@@ -524,7 +524,6 @@ class _HicoUIAPI implements HicoUIAPI {
       address,
       nearestStation,
       education,
-      documentsCertificate,
       level,
       experience,
       numberOfYearsInJapan,
@@ -532,10 +531,10 @@ class _HicoUIAPI implements HicoUIAPI {
       translationExperience,
       interpretationExperienceDetail,
       translationExperienceDetail,
-      curriculumVitaeFiles,
-      workExperienceFiles,
-      {avatarImage,
-      documentFrontSide,
+      removeCurriculumVitaeFiles,
+      removeWorkExperienceFiles,
+      removeDocumentsCertificate,
+      {documentFrontSide,
       documentBackSide}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -558,41 +557,14 @@ class _HicoUIAPI implements HicoUIAPI {
       r'interpretation_experience': interpretationExperience,
       r'translation_experience': translationExperience,
       r'interpretation_experience_detail': interpretationExperienceDetail,
-      r'translation_experience_detail': translationExperienceDetail
+      r'translation_experience_detail': translationExperienceDetail,
+      r'remove_curriculum_vitae_files': removeCurriculumVitaeFiles,
+      r'remove_work_experience_files': removeWorkExperienceFiles,
+      r'remove_documents_certificate': removeDocumentsCertificate
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = FormData();
-    if (documentsCertificate != null) {
-      _data.files.addAll(documentsCertificate.map((i) => MapEntry(
-          'documents_certificate',
-          MultipartFile.fromFileSync(
-            i.path,
-            filename: i.path.split(Platform.pathSeparator).last,
-          ))));
-    }
-    if (curriculumVitaeFiles != null) {
-      _data.files.addAll(curriculumVitaeFiles.map((i) => MapEntry(
-          'curriculum_vitae_files',
-          MultipartFile.fromFileSync(
-            i.path,
-            filename: i.path.split(Platform.pathSeparator).last,
-          ))));
-    }
-    if (workExperienceFiles != null) {
-      _data.files.addAll(workExperienceFiles.map((i) => MapEntry(
-          'work_experience_files',
-          MultipartFile.fromFileSync(
-            i.path,
-            filename: i.path.split(Platform.pathSeparator).last,
-          ))));
-    }
-    if (avatarImage != null) {
-      _data.files.add(MapEntry(
-          'avatar_image',
-          MultipartFile.fromFileSync(avatarImage.path,
-              filename: avatarImage.path.split(Platform.pathSeparator).last)));
-    }
     if (documentFrontSide != null) {
       _data.files.add(MapEntry(
           'document_front_side',
@@ -939,6 +911,46 @@ class _HicoUIAPI implements HicoUIAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TopupResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UploadResponse> uploadFile(file, type) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'type': type};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry(
+        'file',
+        MultipartFile.fromFileSync(file.path,
+            filename: file.path.split(Platform.pathSeparator).last)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UploadResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/user/uploadFileUser',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UploadResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<UploadCertificateResponse> uploadCetificateFile(file, type) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'type': type};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry(
+        'file',
+        MultipartFile.fromFileSync(file.path,
+            filename: file.path.split(Platform.pathSeparator).last)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UploadCertificateResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/user/uploadCetificateFileUser',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UploadCertificateResponse.fromJson(_result.data!);
     return value;
   }
 

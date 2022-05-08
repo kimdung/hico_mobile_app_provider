@@ -9,23 +9,33 @@ import '../../styles/text_style/text_style.dart';
 import '../../widgets/image_widget/fcore_image.dart';
 import '../button/general_button.dart';
 
-class DataFormWidget extends StatelessWidget {
-  const DataFormWidget({Key? key, required this.dataList, required this.title})
+class DataFormWidget extends StatefulWidget {
+  const DataFormWidget({Key? key, required this.dataList, required this.title, required this.currentSelected, })
       : super(key: key);
 
   final String title;
   final List<Time> dataList;
+  final int currentSelected;
+
+  @override
+  State<DataFormWidget> createState() => _DataFormWidgetState();
+}
+
+class _DataFormWidgetState extends State<DataFormWidget> {
+  int _selected = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = widget.currentSelected;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ProfileUpDateController>(
-      init: ProfileUpDateController(),
-      builder: (controller) => Padding(
-        padding: const EdgeInsets.only(
-          top: 12.0,
-          left: 16.0,
-          right: 16.0,
-          bottom: 12.0,
+    return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +47,7 @@ class DataFormWidget extends StatelessWidget {
               children: [
                 const SizedBox(),
                 Text(
-                  title,
+                  widget.title,
                   textAlign: TextAlign.center,
                   style: TextAppStyle().titleAppBarStyle(),
                 ),
@@ -58,7 +68,7 @@ class DataFormWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    controller.chooseTime(index, dataList);
+                    onSelect(widget.dataList[index].experienceCode);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -70,11 +80,11 @@ class DataFormWidget extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            dataList[index].content,
+                            widget.dataList[index].content,
                             style: TextAppStyle().genaralTextStyle(),
                           ),
                         ),
-                         dataList[index].isFeatured
+                         widget.dataList[index].experienceCode == _selected
                             ? FCoreImage(
                                 IconConstants.icSuccess,
                                 width: 16.0,
@@ -88,14 +98,14 @@ class DataFormWidget extends StatelessWidget {
               separatorBuilder: (_, index) => const Divider(
                 color: Color(0xFFC4C4C4),
               ),
-              itemCount: dataList.length,
+              itemCount: widget.dataList.length,
             ),
             const SizedBox(
               height: 28.0,
             ),
             GeneralButton(
               onPressed: () {
-                Get.back(result: controller.resultValue.value);
+                Navigator.pop(context, _selected);
               },
               borderRadius: BorderRadius.circular(24),
               borderColor: AppColor.primaryColorLight,
@@ -107,7 +117,12 @@ class DataFormWidget extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
+      )
+    ;
+  }
+  void onSelect(int value) {
+    setState(() {
+      _selected = value;
+    });
   }
 }

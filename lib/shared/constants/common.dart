@@ -32,6 +32,11 @@ class CommonConstants {
   static const String IS_CALLER = 'IS_CALLER';
   static const String CALL_MODEL = 'CALL_MODEL';
   static const String CALL_TOKEN = 'CALL_TOKEN';
+
+  //fileType
+  static const int curriculumVitaeFiles = 1;
+  static const int workExperienceFiles = 2;
+
 }
 
 const APP_NAME = 'Hico Supplier';

@@ -13,6 +13,10 @@ class Time {
 
 final translatationExperiences = [
   Time(
+      content: 'profile.update.number_years_in_japan.all'.tr,
+      experienceCode: 0,
+      isFeatured: false),
+  Time(
       content: 'profile.update.experience.none'.tr,
       experienceCode: 1,
       isFeatured: false),
@@ -36,6 +40,10 @@ final translatationExperiences = [
 
 final interpretationExperiences = [
   Time(
+      content: 'profile.update.number_years_in_japan.all'.tr,
+      experienceCode: 0,
+      isFeatured: false),
+  Time(
       content: 'profile.update.experience.none'.tr,
       experienceCode: 1,
       isFeatured: false),
@@ -58,6 +66,10 @@ final interpretationExperiences = [
 ];
 
 final numberYearsInJapanList = [
+  Time(
+      content: 'profile.update.number_years_in_japan.all'.tr,
+      experienceCode: 0,
+      isFeatured: false),
   Time(
       content: 'profile.update.number_years_in_japan.none'.tr,
       experienceCode: 1,

@@ -467,7 +467,7 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: file != null
+              child: file != null && file.path != ''
                   ? Image.file(
                       file,
                       fit: BoxFit.cover,
@@ -556,6 +556,121 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildPickFile(
+    {required List<String>? files,    
+      int type = 1}){
+    return Container(
+      child: files != null && 
+              files.isNotEmpty 
+          ? GridView.count(
+              crossAxisCount: 4,
+              shrinkWrap: true,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 8,
+              physics:
+                  const NeverScrollableScrollPhysics(),
+              children: <Widget>[
+                ...List.generate(
+                  files.length,
+                  (int index) => Stack(
+                    alignment: Alignment.center,
+                    fit: StackFit.expand,
+                    children: [
+                      GFBorder(
+                        dashedLine: const [4, 6],
+                        radius:
+                            const Radius.circular(6),
+                        strokeWidth: 1,
+                        type: GFBorderType.rect,
+                        color: AppColor
+                            .primaryColorLight,
+                        child: Center(
+                          child: Icon(
+                            Icons.upload_file,
+                            color: AppColor
+                                .primaryColorLight,
+                            size: 32.0,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                          right: 3,
+                          top: 3,
+                          child: InkWell(
+                            onTap: () {
+                              controller.onRemoveFile(index, type);
+                            },
+                            child: Container(
+                              width: 14,
+                              height: 14,
+                              decoration: BoxDecoration(
+                                color: AppColor
+                                    .secondBackgroundColorLight
+                                    .withOpacity(0.8),
+                                shape: BoxShape.circle,
+                              ),
+                              child: FCoreImage(
+                                  IconConstants
+                                      .icClose),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    controller.pickFile(type);
+                  },
+                  child: GFBorder(
+                    dashedLine: const [4, 6],
+                    radius: const Radius.circular(6),
+                    strokeWidth: 1,
+                    type: GFBorderType.rect,
+                    color: AppColor.primaryColorLight,
+                    child: FCoreImage(
+                      'lib/resource/assets_resources/icons/pin.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                )
+              ],
+            )
+          : Container(
+              width: double.infinity,
+              child: InkWell(
+                onTap: () {
+                  controller.pickFile(type);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 7),
+                  decoration: BoxDecoration(
+                    color: AppColor
+                        .secondBackgroundColorLight,
+                    borderRadius:
+                        BorderRadius.circular(6),
+                  ),
+                  child: Column(
+                    children: [
+                      FCoreImage(
+                        'lib/resource/assets_resources/icons/pin.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                      Text(
+                        'File PDF',
+                        style: TextAppStyle()
+                            .smallTextPink(),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
     );
   }
 }

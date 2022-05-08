@@ -47,6 +47,7 @@ class ProfileScreen extends GetView<ProfileController> {
           child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 14),
             Obx(() => Container(
@@ -103,13 +104,17 @@ class ProfileScreen extends GetView<ProfileController> {
 
                 await controller.pickAvatar(source);
               },
-              child: Text(
-                'profile.edit_avatar'.tr,
-                style: TextAppStyle().genaralTextStyle().copyWith(
-                      color: AppColor.primaryTextColorLight,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
+              child: Container(
+                width: double.infinity,
+                child: Text(
+                  'profile.edit_avatar'.tr,
+                  textAlign: TextAlign.center,
+                  style: TextAppStyle().genaralTextStyle().copyWith(
+                        color: AppColor.primaryTextColorLight,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
               ),
             ),
             // InkWell(
@@ -226,35 +231,29 @@ class ProfileScreen extends GetView<ProfileController> {
                 title: 'profile.update.interpreting_experience'.tr,
                 required: 1),
             const SizedBox(height: 8),
-            buildSelectComponent(
-              title: controller.convertStr(
-                  AppDataGlobal.userInfo!.interpretationExperience!, 1),
-              textColor: TextAppStyle().smallTextGrey(),
-              prefixIcon: true,
-              prefixImage:
-                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-              onPress: () {},
+            ExperienceWidget(
+              content: controller.convertStr(
+                  AppDataGlobal.userInfo!.interpretationExperience!, 0),
             ),
+           
             const SizedBox(height: 8),
-            _buildInputTextArea(
-                textEditng: controller.interpretingExperienceController),
-
+            Text(
+              AppDataGlobal.userInfo!.interpretationExperienceDetail.toString(), 
+              style: TextAppStyle().normalTextStype(),
+              textAlign: TextAlign.left,),
             const SizedBox(height: 12),
             _buildLabel(
                 title: 'profile.update.translation_experience'.tr, required: 1),
             const SizedBox(height: 8),
-            buildSelectComponent(
-              title: controller.convertStr(
-                  AppDataGlobal.userInfo!.translationExperience!, 1),
-              textColor: TextAppStyle().smallTextGrey(),
-              prefixIcon: true,
-              prefixImage:
-                  'lib/resource/assets_resources/icons/keyboard_arrow_down_grey.png',
-              onPress: () {},
+            ExperienceWidget(
+              content: controller.convertStr(
+                  AppDataGlobal.userInfo!.translationExperience!, 0),
             ),
             const SizedBox(height: 8),
-            _buildInputTextArea(
-                textEditng: controller.translationExperienceController),
+            Text(
+              AppDataGlobal.userInfo!.translationExperienDetail.toString(), 
+              style: TextAppStyle().normalTextStype(),
+              textAlign: TextAlign.left,),
             const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(

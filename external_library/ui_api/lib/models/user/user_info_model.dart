@@ -67,6 +67,10 @@ class UserInfoModel {
   ConversationInfoModel? conversationInfo;
   @JsonKey(name: 'account_balance')
   int? accountBalance;
+  @JsonKey(name: 'curriculum_vitae_files')
+  List<String>? curriculumVitaeFiles;
+  @JsonKey(name: 'work_experience_files')
+  List<String>? workExperienceFiles;
 
   UserInfoModel({
     this.id,
@@ -101,6 +105,8 @@ class UserInfoModel {
     this.isUpdate,
     this.conversationInfo,
     this.accountBalance,
+    this.curriculumVitaeFiles,
+    this.workExperienceFiles,
   });
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>

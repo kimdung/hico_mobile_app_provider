@@ -30,6 +30,8 @@ import 'package:ui_api/response/user/user_response.dart';
 import '../../request/invoice/confirm_sub_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/user/upload_certificate_response.dart';
+import '../../response/user/upload_response.dart';
 import '../../response/wallet/topup_history_response.dart';
 import '../../response/wallet/topup_komaju_response.dart';
 import '../../response/wallet/topup_response.dart';
@@ -212,21 +214,22 @@ abstract class HicoUIAPI {
     @Query('address') String address,
     @Query('nearest_station') String nearestStation,
     @Query('education') String education,
-    @Part(value: 'documents_certificate') List<File>? documentsCertificate,
     @Query('level') String level,
     @Query('experience') String experience,
     @Query('number_of_years_in_japan') int numberOfYearsInJapan,
     @Query('interpretation_experience') int interpretationExperience,
     @Query('translation_experience') int translationExperience,
-    @Query('interpretation_experience_detail')
-        String interpretationExperienceDetail,
+    @Query('interpretation_experience_detail') String interpretationExperienceDetail,
     @Query('translation_experience_detail') String translationExperienceDetail,
-    @Part(value: 'curriculum_vitae_files') List<File>? curriculumVitaeFiles,
-    @Part(value: 'work_experience_files') List<File>? workExperienceFiles, {
-    @Part(value: 'avatar_image') File? avatarImage,
-    @Part(value: 'document_front_side') File? documentFrontSide,
-    @Part(value: 'document_back_side') File? documentBackSide,
-  });
+    @Query('remove_curriculum_vitae_files') List<String> removeCurriculumVitaeFiles,
+    @Query('remove_work_experience_files') List<String> removeWorkExperienceFiles,
+    @Query('remove_documents_certificate') List<int> removeDocumentsCertificate,
+
+    {
+      @Part(value: 'document_front_side') File? documentFrontSide,
+      @Part(value: 'document_back_side') File? documentBackSide,
+    }
+  );
 
   //service categories
   @GET('/v1/customer/category/list')
@@ -330,4 +333,12 @@ abstract class HicoUIAPI {
       @Query('payment_method_id') String paymentMethodId,
       @Query('name') String name,
       @Query('amount') double amount);
+
+  //update file
+  @POST('/v1/user/uploadFileUser')
+  Future<UploadResponse> uploadFile(@Part() File file, @Query('type') int type);
+
+  //update file
+  @POST('/v1/user/uploadCetificateFileUser')
+  Future<UploadCertificateResponse> uploadCetificateFile(@Part() File file, @Query('type') int type);
 }

@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +9,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/models/time.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widget_hico/data_general/banks.dart';
-import 'package:hico/shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ui_api/models/master_data/bank_model.dart';
 import 'package:ui_api/models/user/address_model.dart';
@@ -23,14 +17,17 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../models/time.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/data_general/banks.dart';
 import '../../../shared/widget_hico/data_general/data_form_widget.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../shared/widgets/image_widget/image_widget.dart';
+import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
 class ProfileUpDateController extends BaseController {
   final imageWidget = ImageWidgetController();
@@ -48,14 +45,8 @@ class ProfileUpDateController extends BaseController {
   Rx<int> showSuggest = Rx<int>(0);
   RxList<AddressModel> addressList = RxList<AddressModel>();
   int addressId = 0;
-  final avatar = Rx<File>(File(''));
   final documentFrontSide = Rx<File>(File(''));
   final documentBackSide = Rx<File>(File(''));
-  RxList<File> degree = RxList<File>();
-  RxList<File> curriculumVitae = RxList<File>();
-  RxList<File> workExperiences = RxList<File>();
-  final documentListFiles = RxList<File>();
-
   final updateForm = GlobalKey<FormState>();
   final TextEditingController zipCode = TextEditingController();
   final TextEditingController province = TextEditingController();
@@ -64,7 +55,6 @@ class ProfileUpDateController extends BaseController {
   final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController phone = TextEditingController();
-  //final TextEditingController bankName = TextEditingController();
   final TextEditingController bankBranchName = TextEditingController();
   final TextEditingController bankAccountHolder = TextEditingController();
   final TextEditingController bankAccountNumber = TextEditingController();
@@ -78,26 +68,27 @@ class ProfileUpDateController extends BaseController {
       TextEditingController();
   final TextEditingController experience = TextEditingController();
 
+  //bank
   Rx<String> bankName = Rx('');
-  RxBool isNumberYearsInJapanClicked = false.obs;
-  RxBool isInterpretationExperienceClicked = false.obs;
-  RxBool isTranslatationExperienceClicked = false.obs;
-
   int? bankId;
   List<BankLocalModel> lstBanks = [];
-  Rx<Time> resultValue =
-      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
-  Rx<Time> numberYearsInJapan =
-      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
-  Rx<Time> interpretationExperience =
-      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
-  Rx<Time> translationExperience =
-      Rx(Time(content: '', experienceCode: 0, isFeatured: false));
+  //*******/
+
+  /* year in japan */
+  Rx<int> isNumberYearsInJapan = Rx(0);
+  Rx<int> isInterpretationExperience = Rx(0);
+  Rx<int> isTranslatationExperience = Rx(0);
+  /*end year in japan*/
 
   RxList<Time> numberYearJapanDataList = RxList(numberYearsInJapanList);
   RxList<Time> interpretationExperienceDataList =
       RxList(interpretationExperiences);
   RxList<Time> translationExperienceDataList = RxList(translatationExperiences);
+
+  //remove data
+  List<String> removeCurriculumVitaeFiles = [];
+  List<String> removeWorkExperienceFiles = [];
+  List<int> removeDocumentsCertificate = [];
 
   int preIndex = 0;
 
@@ -140,6 +131,8 @@ class ProfileUpDateController extends BaseController {
     bankAccountHolder.text = info.value.bankAccountHolder ?? '';
     bankAccountNumber.text = info.value.bankAccountNumber ?? '';
     addressId = info.value.address != null ? info.value.address!.id! : 0;
+    level.text = info.value.level ?? '';
+    bankId = info.value.bankId ?? 0;
     zipCode.text =
         info.value.address != null ? info.value.address!.code ?? '' : '';
     province.text = info.value.address != null
@@ -157,19 +150,13 @@ class ProfileUpDateController extends BaseController {
         info.value.interpretationExperienceDetail ?? '';
     translationExperienceDetail.text =
         info.value.translationExperienDetail ?? '';
-    numberYearsInJapan.value.content = NumberYearsInJapan
-        .values[
-            info.value.numberOfYearsInJapan ?? NumberYearsInJapan.None.index]
-        .numberYearsInJapan;
-    interpretationExperience.value.content = WorkExperience
-        .values[
-            info.value.interpretationExperience ?? WorkExperience.None.index]
-        .value;
-    translationExperience.value.content = WorkExperience
-        .values[info.value.translationExperience ?? WorkExperience.None.index]
-        .value;
+
+    isNumberYearsInJapan.value = info.value.numberOfYearsInJapan ?? 0;
+    isInterpretationExperience.value = info.value.interpretationExperience ?? 0;
+    isTranslatationExperience.value = info.value.translationExperience ?? 0;
   }
 
+  /*Change avatar */
   Future pickAvatar(BuildContext context) async {
     try {
       final source = await imageWidget.showImageSource(context);
@@ -178,11 +165,29 @@ class ProfileUpDateController extends BaseController {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
 
-      avatar.value = File(image.path);
+       final imageTemporary = File(image.path);
+       //call api
+      await updateAvatar(imageTemporary);
     } on PlatformException catch (e) {
       print(e);
     }
   }
+  Future updateAvatar(File image) async {
+    try {
+      await EasyLoading.show();
+      await _uiRepository.updateAvatar(image).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk) {
+          info.value = response.data!.info!;
+          info.refresh();
+          AppDataGlobal.userInfo = info.value;
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+  /*End change avatar*/
 
   //Chọn mặt trước của tài liệu
   Future pickDocumentFrontSide(BuildContext context) async {
@@ -217,52 +222,12 @@ class ProfileUpDateController extends BaseController {
       print(e);
     }
   }
-
-  Future pickImageList(BuildContext context, List<File> files) async {
-    try {
-      final source = await imageWidget.showImageSource(context);
-      if (source == null) {
-        return;
-      }
-
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) {
-        return;
-      }
-
-      final imageTmp = File(image.path);
-      files.add(imageTmp);
-    } on PlatformException catch (e) {
-      print(e);
-    }
-  }
-
-  Future pickListFilePdf(BuildContext context, List<File> files) async {
-    try {
-      final result = await FilePicker.platform.pickFiles();
-      if (result != null) {
-        final file = File(result.files.single.path!);
-        files.add(file);
-      } else {
-        // User canceled the picker
-      }
-    } on PlatformException catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> removeFile(int index, List<File> files) async {
-    try {
-      files.removeAt(index);
-    } catch (e) {
-      await EasyLoading.dismiss();
-    }
-  }
-
+  /* Choose gender */
   Future selectGender(int value) async {
     genderId.value = value;
   }
-
+  /* End choose gender */
+  /* Choose birthday */
   Future<void> showDate(BuildContext context) async {
     await DatePicker.showDatePicker(
       context,
@@ -273,7 +238,7 @@ class ProfileUpDateController extends BaseController {
       currentTime: DateTime.now(),
     );
   }
-
+  /* End choose birthday */
   Future<void> loadAddress(String keyword) async {
     try {
       province.text = '';
@@ -289,6 +254,18 @@ class ProfileUpDateController extends BaseController {
           }
         });
       }
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }  
+  Future<void> selectAddress(AddressModel item) async {
+    try {
+      zipCode.text = item.code!;
+      province.text = item.provinceName!;
+      district.text = item.districtName!;
+      addressId = item.id!;
+      address.text = item.address!;
+      showSuggest.value = 0;
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -327,19 +304,6 @@ class ProfileUpDateController extends BaseController {
     }
   }
 
-  Future<void> selectAddress(AddressModel item) async {
-    try {
-      zipCode.text = item.code!;
-      province.text = item.provinceName!;
-      district.text = item.districtName!;
-      addressId = item.id!;
-      address.text = item.address!;
-      showSuggest.value = 0;
-    } catch (e) {
-      await EasyLoading.dismiss();
-    }
-  }
-
   void closeSuggest() {
     showSuggest.value = 0;
   }
@@ -348,18 +312,17 @@ class ProfileUpDateController extends BaseController {
     await ShowBottomSheet().showBottomSheet(
         child: Container(
           width: double.infinity,
-          height: Get.height / 2,
+          height: Get.height / 1.7,
           child: DataFormWidget(
-            dataList: numberYearJapanDataList,
+            dataList: numberYearJapanDataList.where((p0) => p0.experienceCode != 0).toList(),
             title: 'profile.update.number_years_in_japan'.tr,
+            currentSelected: isNumberYearsInJapan.value,
           ),
         ),
         context: context,
         onValue: (value) {
-          if (value != null && value is Time) {
-            isNumberYearsInJapanClicked.value = true;
-            numberYearsInJapan.value = value;
-            log('Number is japan: ${isNumberYearsInJapanClicked.value} - ${value.experienceCode}  ${value.content}');
+          if (value != null && value is int) {
+            isNumberYearsInJapan.value = value;
           }
         });
   }
@@ -368,62 +331,54 @@ class ProfileUpDateController extends BaseController {
     await ShowBottomSheet().showBottomSheet(
         child: Container(
           width: double.infinity,
-          height: Get.height / 2,
+          height: Get.height / 1.7,
           child: DataFormWidget(
-            dataList: translationExperienceDataList,
+            dataList: translationExperienceDataList.where((p0) => p0.experienceCode != 0).toList(),
             title: 'profile.update.translation_experience'.tr,
+            currentSelected: isTranslatationExperience.value,
           ),
         ),
         context: context,
         onValue: (value) {
-          if (value != null && value is Time) {
-            isTranslatationExperienceClicked.value = true;
-            translationExperience.value = value;
-            log('Translation experience: ${isTranslatationExperienceClicked.value} - ${value.experienceCode}  ${value.content}');
+          if (value != null && value is int) {
+            isTranslatationExperience.value = value;
           }
         });
   }
 
   Future<void> getInterpretationExperience(BuildContext context) async {
-    await ShowBottomSheet().showBottomSheet(
+   await ShowBottomSheet().showBottomSheet(
         child: Container(
           width: double.infinity,
-          height: Get.height / 2,
+          height: Get.height / 1.7,
           child: DataFormWidget(
-            dataList: interpretationExperienceDataList,
+            dataList: interpretationExperienceDataList.where((p0) => p0.experienceCode != 0).toList(),
             title: 'profile.update.interpreting_experience'.tr,
+            currentSelected: isInterpretationExperience.value,
           ),
         ),
         context: context,
         onValue: (value) {
-          if (value != null && value is Time) {
-            isInterpretationExperienceClicked.value = true;
-            interpretationExperience.value = value;
-            log('Interpretation experience: ${isInterpretationExperienceClicked.value} - ${value.experienceCode}  ${value.content}');
+          if (value != null && value is int) {
+            isInterpretationExperience.value = value;
           }
         });
   }
 
   Future<void> updated() async {
-    documentListFiles.addAll(curriculumVitae);
-    documentListFiles.addAll(degree);
-    documentListFiles.addAll(workExperiences);
-    log('List file: $documentListFiles');
-    try {
+      try {
       await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
         var msg = '';
-        if (avatar.value == null) {
-          msg = 'profile.update.avatar_required'.tr;
-        } else if (documentFrontSide.value == null) {
+        if (info.value.documentFrontSide.isEmpty && documentFrontSide.value.path == '') {
           msg = 'profile.update.front_side_required'.tr;
-        } else if (documentBackSide.value == null) {
+        } else if (info.value.documentBackSide.isEmpty && documentBackSide.value.path == '') {
           msg = 'profile.update.back_side_required'.tr;
-        } else if (numberYearsInJapan.value.content == '') {
+        } else if (isNumberYearsInJapan.value == 0) {
           msg = 'profile.update.number_years_in_japan_required'.tr;
-        } else if (interpretationExperience.value.content == '') {
+        } else if (isInterpretationExperience.value == 0) {
           msg = 'profile.update.interpretation_experience_required'.tr;
-        } else if (translationExperience.value.content == '') {
+        } else if (isTranslatationExperience.value == 0) {
           msg = 'profile.update.translation_experience_required'.tr;
         }
         if (msg != '') {
@@ -443,7 +398,6 @@ class ProfileUpDateController extends BaseController {
 
         await _uiRepository
             .updateProfile(
-          avatar.value,
           name.text,
           genderId.value,
           birthDay.value,
@@ -456,23 +410,23 @@ class ProfileUpDateController extends BaseController {
           addressId,
           address.text,
           station.text,
-          documentFrontSide.value,
-          documentBackSide.value,
+          documentFrontSide.value.path.isNotEmpty ? documentFrontSide.value : null,
+          documentBackSide.value.path.isNotEmpty ? documentBackSide.value : null,
           education.text,
-          documentListFiles,
           level.text,
           experience.text,
-          numberYearsInJapan.value.experienceCode,
-          translationExperience.value.experienceCode,
-          interpretationExperience.value.experienceCode,
+          isNumberYearsInJapan.value,
+          isTranslatationExperience.value,
+          isInterpretationExperience.value,
           translationExperienceDetail.text.isNotEmpty
               ? translationExperienceDetail.text
               : '',
           interpretingExperienceDetail.text.isNotEmpty
               ? interpretingExperienceDetail.text
               : '',
-          curriculumVitae,
-          workExperiences,
+          removeCurriculumVitaeFiles,
+          removeWorkExperienceFiles,
+          removeDocumentsCertificate,
         )
             .then((response) {
           EasyLoading.dismiss();
@@ -498,19 +452,23 @@ class ProfileUpDateController extends BaseController {
       }
     } catch (e) {
       await EasyLoading.dismiss();
+      await DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: e.toString(),
+            ),
+            onVaLue: (value) {
+              
+            },
+          );
     }
   }
 
   String getFileName(String filePath) {
     return filePath.split('/').last;
-  }
-
-  void chooseTime(int currentIndex, List<Time> timeDataList) {
-    timeDataList[currentIndex].isFeatured = true;
-    timeDataList[preIndex].isFeatured = false;
-    preIndex = currentIndex;
-    resultValue.value = timeDataList[currentIndex];
-    update();
   }
 
   @override
@@ -522,5 +480,141 @@ class ProfileUpDateController extends BaseController {
     numberYearJapanDataList.close();
     interpretationExperienceDataList.close();
     translationExperienceDataList.close();
+  }
+
+  //upload file
+  Future pickFile(int type) async {
+    try {
+      final result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        final file = File(result.files.single.path!);
+        await updateFile(file, type);
+      }
+    } on PlatformException catch (e) {
+      log(e.message.toString());
+    }
+  }
+
+  Future updateFile(File file, int type) async {
+    try {
+      await EasyLoading.show();
+      await _uiRepository.uploadFile(file, type).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk) {
+              if(type == CommonConstants.curriculumVitaeFiles){
+                info.value.curriculumVitaeFiles!.add(response.data!);
+              }else{
+                info.value.workExperienceFiles!.add(response.data!);
+              }
+              info.refresh();
+              AppDataGlobal.userInfo = info.value;
+            }else{
+              DialogUtil.showPopup(
+                dialogSize: DialogSize.Popup,
+                barrierDismissible: false,
+                backgroundColor: Colors.transparent,
+                child: NormalWidget(
+                  icon: response.status == CommonConstants.statusOk
+                      ? IconConstants.icSuccess
+                      : IconConstants.icFail,
+                  title: response.message,
+                ),
+                onVaLue: (value) {
+                  
+                },
+              );
+              return;
+            }
+        
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> onRemoveFile(int index, int type) async {
+    try {
+      if(type == CommonConstants.curriculumVitaeFiles){
+        removeCurriculumVitaeFiles.add(info.value.curriculumVitaeFiles![index]);
+        info.value.curriculumVitaeFiles!.removeAt(index);
+      }else{
+        removeWorkExperienceFiles.add(info.value.workExperienceFiles![index]);
+        info.value.workExperienceFiles!.removeAt(index);
+      }
+      info.refresh();
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  //file cetificate
+  Future pickCetificateImage(BuildContext context) async {
+    try {
+      final source = await imageWidget.showImageSource(context);
+      if (source != null) {
+        final image = await ImagePicker().pickImage(source: source);
+        if (image != null) {
+          final imageTemporary = File(image.path);
+          //call api
+          await updateCetificateFile(imageTemporary, 1);
+        }
+      }
+    } on PlatformException catch (e) {
+      log(e.message.toString());
+    }
+  }
+  Future pickCetificateFile() async {
+    try {
+      final result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        final file = File(result.files.single.path!);
+        await updateCetificateFile(file, 2);
+      }
+    } on PlatformException catch (e) {
+      log(e.message.toString());
+    }
+  }
+
+  Future updateCetificateFile(File file, int type) async {
+    try {
+      await EasyLoading.show();
+      await _uiRepository.uploadCetificateFile(file, type).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk) {
+              info.value.documentsCertificate.add(response.data!);
+              info.refresh();
+              AppDataGlobal.userInfo = info.value;
+            }else{
+              DialogUtil.showPopup(
+                dialogSize: DialogSize.Popup,
+                barrierDismissible: false,
+                backgroundColor: Colors.transparent,
+                child: NormalWidget(
+                  icon: response.status == CommonConstants.statusOk
+                      ? IconConstants.icSuccess
+                      : IconConstants.icFail,
+                  title: response.message,
+                ),
+                onVaLue: (value) {
+                  
+                },
+              );
+              return;
+            }
+        
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> onRemoveCetificateFile(int index) async {
+    try {
+      removeDocumentsCertificate.add(info.value.documentsCertificate[index].id!);
+      info.value.documentsCertificate.removeAt(index);
+      info.refresh();
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
   }
 }

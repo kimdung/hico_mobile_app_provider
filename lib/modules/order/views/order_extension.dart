@@ -307,7 +307,9 @@ extension OrderExtension on OrderScreen {
                                 color: Colors.black,
                               )),
                       Container(
-                        child: Row(
+                        child: 
+                        controller.invoice.value.workingForm == CommonConstants.online ?
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
@@ -325,6 +327,48 @@ extension OrderExtension on OrderScreen {
                                           fontWeight: FontWeight.w500,
                                         )),
                           ],
+                        ) :
+                        Column(
+                          children:[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    '${controller.invoice.value.service!.offlinePriceMin} JPY/ 0,5-${controller.invoice.value.service!.minHours} ${'invoice.hours'.tr}',
+                                    style:
+                                        TextAppStyle().genaralTextStyle().copyWith(
+                                              color: AppColor.blueTextColor,
+                                              fontWeight: FontWeight.w500,
+                                            )),
+                                Text(
+                                    'x 1',
+                                    style:
+                                        TextAppStyle().genaralTextStyle().copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                            )),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    '${controller.invoice.value.service!.price} JPY/${'invoice.hours'.tr}',
+                                    style:
+                                        TextAppStyle().genaralTextStyle().copyWith(
+                                              color: AppColor.blueTextColor,
+                                              fontWeight: FontWeight.w500,
+                                            )),
+                                Text(
+                                    'x ${controller.invoice.value.service!.hours}',
+                                    style:
+                                        TextAppStyle().genaralTextStyle().copyWith(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                            )),
+                              ],
+                            )
+                          ]
                         ),
                       )
                     ],
@@ -353,11 +397,25 @@ extension OrderExtension on OrderScreen {
         _buildOrderInfoItem(
             icon: IconConstants.icOrderCode,
             title:
-                ' ${controller.invoice.value.hours.toString()} ${'invoice.hours'.tr}',
+                ' ${(controller.invoice.value.workingForm == CommonConstants.offline && 
+                      controller.invoice.value.service != null &&
+                      controller.invoice.value.hours! > controller.invoice.value.service!.minHours!) 
+                      ? controller.invoice.value.service!.minHours :
+                       controller.invoice.value.hours
+                    } ${'invoice.hours'.tr}',
             titleColor: AppColor.blueTextColor,
             titleFontWeight: FontWeight.w500,
             type: OrderInfoViewType.Text,
             value: controller.invoice.value.workingTime ?? ''),
+          if(controller.invoice.value.workingForm == CommonConstants.offline && controller.invoice.value.service!.hours! > 0)
+          _buildOrderInfoItem(
+              icon: IconConstants.icOrderCode,
+              title:
+                  '${'invoice.incurred'.tr} ${controller.invoice.value.service!.hours.toString()} ${'invoice.hours'.tr}',
+              titleColor: AppColor.blueTextColor,
+              titleFontWeight: FontWeight.w500,
+              type: OrderInfoViewType.Text,
+              value: controller.invoice.value.extraTime ?? ''),
       ]),
     );
   }

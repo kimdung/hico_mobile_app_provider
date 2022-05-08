@@ -38,7 +38,8 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
       supplierStart: json['supplier_start'] as String? ?? '',
     )
       ..serviceId = json['service_id'] as int? ?? 0
-      ..serviceName = json['service_name'] as String? ?? '';
+      ..serviceName = json['service_name'] as String? ?? ''
+      ..extraTime = json['extra_time'] as String? ?? '';
 
 Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
     <String, dynamic>{
@@ -56,6 +57,7 @@ Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
       'service': instance.service,
       'working_date': instance.workingDate,
       'working_time': instance.workingTime,
+      'extra_time': instance.extraTime,
       'hours': instance.hours,
       'payment_type': instance.paymentType,
       'traveling_costs': instance.travelingCosts,

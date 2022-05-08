@@ -35,6 +35,8 @@ class InvoiceModel {
   String? workingDate;
   @JsonKey(name: 'working_time', defaultValue: '')
   String? workingTime;
+  @JsonKey(name: 'extra_time', defaultValue: '')
+  String? extraTime;
   double? hours;
   @JsonKey(name: 'payment_type', defaultValue: 0)
   int? paymentType;

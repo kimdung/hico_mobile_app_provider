@@ -12,6 +12,7 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/service/update_service_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 
@@ -291,6 +292,7 @@ class UpdateServiceController extends BaseController {
 
   Future save() async {
     try {
+      
       //prepare
       final lstServiceRequest = <UserServicesModel>[];
       for (final item in lstServiceUser) {
@@ -318,7 +320,12 @@ class UpdateServiceController extends BaseController {
           ),
           onVaLue: (value) {
             if (response.status == CommonConstants.statusOk) {
-              Get.back();
+              if(AppDataGlobal.userInfo!.kycStatus == 1){
+                Get.back();
+              }else{
+                Get.offAllNamed(Routes.UPDATE_SERVICE_SUCCESS);
+              }
+              
             }
           },
         );

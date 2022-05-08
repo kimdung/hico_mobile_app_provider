@@ -57,6 +57,12 @@ UserInfoModel _$UserInfoModelFromJson(Map<String, dynamic> json) =>
           : ConversationInfoModel.fromJson(
               json['conversation_info'] as Map<String, dynamic>),
       accountBalance: json['account_balance'] as int?,
+      curriculumVitaeFiles: (json['curriculum_vitae_files'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      workExperienceFiles: (json['work_experience_files'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
@@ -94,4 +100,6 @@ Map<String, dynamic> _$UserInfoModelToJson(UserInfoModel instance) =>
       'is_update': instance.isUpdate,
       'conversation_info': instance.conversationInfo,
       'account_balance': instance.accountBalance,
+      'curriculum_vitae_files': instance.curriculumVitaeFiles,
+      'work_experience_files': instance.workExperienceFiles,
     };

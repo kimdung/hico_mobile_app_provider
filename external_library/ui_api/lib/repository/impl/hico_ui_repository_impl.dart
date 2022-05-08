@@ -41,6 +41,8 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 import '../../request/invoice/confirm_sub_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/user/upload_certificate_response.dart';
+import '../../response/user/upload_response.dart';
 import '../../response/wallet/topup_history_response.dart';
 import '../../response/wallet/topup_komaju_response.dart';
 import '../../response/wallet/topup_response.dart';
@@ -210,7 +212,6 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   //statistics
   @override
   Future<UserResponse> updateProfile(
-    File? avatarImage,
     String name,
     int gender,
     String dateOfBirth,
@@ -226,16 +227,16 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     File? documentFrontSide,
     File? documentBackSide,
     String education,
-    List<File>? documentsCertificate,
     String level,
     String experience,
     int numberOfYearsInJapan,
     int interpretationExperience,
     int translationExperience,
+    String tranlationExpericenDetail,
     String interpretationExperienceDetail,
-    String translationExperienceDetail,
-    List<File>? curriculumVitaeFiles,
-    List<File>? workExperienceFiles,
+    List<String> removeCurriculumVitaeFiles,
+    List<String> removeWorkExperienceFiles,
+    List<int> removeDocumentsCertificate,
   ) {
     return _api.updateProfile(
       name,
@@ -251,19 +252,19 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
       address,
       nearestStation,
       education,
-      documentsCertificate,
       level,
       experience,
       numberOfYearsInJapan,
       interpretationExperience,
       translationExperience,
+      tranlationExpericenDetail,
       interpretationExperienceDetail,
-      translationExperienceDetail,
-      curriculumVitaeFiles,
-      workExperienceFiles,
-      avatarImage: avatarImage!,
+      removeCurriculumVitaeFiles,
+      removeWorkExperienceFiles,
+      removeDocumentsCertificate,
       documentFrontSide: documentFrontSide,
       documentBackSide: documentBackSide,
+
     );
   }
 
@@ -361,5 +362,14 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   Future<TopupResponse> topupStripe(
       String paymentMethodId, String name, double amount) {
     return _api.createPayInStripe(paymentMethodId, name, amount);
+  }
+
+  @override
+  Future<UploadResponse> uploadFile(File file, int type) {
+    return _api.uploadFile(file,type);
+  }
+  @override
+  Future<UploadCertificateResponse> uploadCetificateFile(File file, int type) {
+    return _api.uploadCetificateFile(file,type);
   }
 }

@@ -38,6 +38,8 @@ import 'package:ui_api/response/voucher/voucher_response.dart';
 import '../request/invoice/confirm_sub_request.dart';
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
+import '../response/user/upload_certificate_response.dart';
+import '../response/user/upload_response.dart';
 import '../response/wallet/topup_history_response.dart';
 import '../response/wallet/topup_komaju_response.dart';
 import '../response/wallet/topup_response.dart';
@@ -148,7 +150,6 @@ abstract class HicoUIRepository {
   Future<AddressResponse> addressList(int limit, int offset, String code);
 
   Future<UserResponse> updateProfile(
-    File? avatarImage,
     String name,
     int gender,
     String dateOfBirth,
@@ -161,19 +162,19 @@ abstract class HicoUIRepository {
     int addressId,
     String address,
     String nearestStation,
-    File documentFrontSide,
-    File documentBackSide,
+    File? documentFrontSide,
+    File? documentBackSide,
     String education,
-    List<File>? documentsCertificate,
     String level,
     String experience,
     int numberOfYearsInJapan,
-    int translationExperience,
     int interpretationExperience,
+    int translationExperience,
     String tranlationExpericenDetail,
     String interpretationExperienceDetail,
-    List<File>? curriculumVitaeFiles,
-    List<File>? workExperienceFiles,
+    List<String> removeCurriculumVitaeFiles,
+    List<String> removeWorkExperienceFiles,
+    List<int> removeDocumentsCertificate,
   );
 
   //Service categories
@@ -228,4 +229,8 @@ abstract class HicoUIRepository {
 
   Future<TopupResponse> topupStripe(
       String paymentMethodId, String name, double amount);
+
+  Future<UploadResponse> uploadFile(File file, int type);
+  Future<UploadCertificateResponse> uploadCetificateFile(File file, int type);
+
 }
