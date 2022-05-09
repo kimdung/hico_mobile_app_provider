@@ -53,7 +53,8 @@ class OrderScreen extends GetView<OrderController> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(120)),
-                        child: (controller.invoice.value.customerAvatar != null)
+                        child: (controller.invoice.value.customerAvatar != null && 
+                              controller.invoice.value.customerAvatar!.isNotEmpty)
                             ? NetWorkImage(
                                 image: controller.invoice.value.customerAvatar!,
                                 height: 120,

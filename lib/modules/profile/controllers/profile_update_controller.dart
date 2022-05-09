@@ -367,7 +367,7 @@ class ProfileUpDateController extends BaseController {
 
   Future<void> updated() async {
       try {
-      await EasyLoading.show();
+      //await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
         var msg = '';
         if (info.value.documentFrontSide.isEmpty && documentFrontSide.value.path == '') {
@@ -424,8 +424,8 @@ class ProfileUpDateController extends BaseController {
           interpretingExperienceDetail.text.isNotEmpty
               ? interpretingExperienceDetail.text
               : '',
-          removeCurriculumVitaeFiles,
-          removeWorkExperienceFiles,
+          removeCurriculumVitaeFiles.toString().replaceAll('[', '').replaceAll(']', ''),
+          removeWorkExperienceFiles.toString().replaceAll('[', '').replaceAll(']', ''),
           removeDocumentsCertificate,
         )
             .then((response) {

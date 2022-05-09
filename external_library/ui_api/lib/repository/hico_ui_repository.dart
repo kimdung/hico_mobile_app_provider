@@ -172,8 +172,8 @@ abstract class HicoUIRepository {
     int translationExperience,
     String tranlationExpericenDetail,
     String interpretationExperienceDetail,
-    List<String> removeCurriculumVitaeFiles,
-    List<String> removeWorkExperienceFiles,
+    String removeCurriculumVitaeFiles,
+    String removeWorkExperienceFiles,
     List<int> removeDocumentsCertificate,
   );
 

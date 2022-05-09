@@ -221,10 +221,9 @@ abstract class HicoUIAPI {
     @Query('translation_experience') int translationExperience,
     @Query('interpretation_experience_detail') String interpretationExperienceDetail,
     @Query('translation_experience_detail') String translationExperienceDetail,
-    @Query('remove_curriculum_vitae_files') List<String> removeCurriculumVitaeFiles,
-    @Query('remove_work_experience_files') List<String> removeWorkExperienceFiles,
+    @Query('remove_curriculum_vitae_files') String removeCurriculumVitaeFiles,
+    @Query('remove_work_experience_files') String removeWorkExperienceFiles,
     @Query('remove_documents_certificate') List<int> removeDocumentsCertificate,
-
     {
       @Part(value: 'document_front_side') File? documentFrontSide,
       @Part(value: 'document_back_side') File? documentBackSide,
