@@ -442,6 +442,9 @@ class ProfileUpDateController extends BaseController {
             ),
             onVaLue: (value) {
               if (response.status == CommonConstants.statusOk) {
+                removeCurriculumVitaeFiles = [];
+                removeWorkExperienceFiles = [];
+                removeDocumentsCertificate = [];
                 Get.toNamed(Routes.SERVICE);
               }
             },

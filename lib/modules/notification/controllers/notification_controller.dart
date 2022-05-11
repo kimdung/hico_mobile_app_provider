@@ -78,8 +78,15 @@ class NotificationController extends BaseController {
       await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
           ?.then((value) => loadData());
     } else {
-      await Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+      await _uiRepository.notificationDetail(id).then((response) {
+        EasyLoading.dismiss();
+        if (response.status == CommonConstants.statusOk &&
+            response.detail != null) {
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
           ?.then((value) => loadData());
+        }
+      });
+      
     }
   }
 

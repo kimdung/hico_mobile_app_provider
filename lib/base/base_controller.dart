@@ -37,18 +37,18 @@ class BaseController extends GetxController
   }
 
   Future<void> checkConnectNetwork() async {
-    if (_networkController.connectionStatus.value == 0) {
-      _hasNetwork = false;
-      await callDialogErrorNetwork();
-    }
-    _networkController.connectionStatus.listen((status) {
-      if (status == 0) {
-        _hasNetwork = false;
-        callDialogErrorNetwork();
-      } else {
-        _hasNetwork = true;
-      }
-    });
+    // if (_networkController.connectionStatus.value == 0) {
+    //   _hasNetwork = false;
+    //   await callDialogErrorNetwork();
+    // }
+    // _networkController.connectionStatus.listen((status) {
+    //   if (status == 0) {
+    //     _hasNetwork = false;
+    //     callDialogErrorNetwork();
+    //   } else {
+    //     _hasNetwork = true;
+    //   }
+    // });
   }
 
   Future<void> callDialogErrorNetwork() async {

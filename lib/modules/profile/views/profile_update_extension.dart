@@ -84,6 +84,7 @@ extension ProfileUpdateExtension on ProfileUpdateScreen {
 
   Widget _buildInputEmail() {
     return TextFormField(
+      enabled: false,
       controller: controller.email,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.text,
