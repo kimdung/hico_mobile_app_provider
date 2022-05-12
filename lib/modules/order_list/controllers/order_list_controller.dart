@@ -33,18 +33,12 @@ class OrderListController extends BaseController {
 
   RxList<InvoiceModel> list = RxList<InvoiceModel>();
 
-  final ScrollController scrollController = ScrollController();
+  var scrollController = ScrollController();
   int limit = 4;
   int offset = 0;
 
   OrderListController(this.adminChatChannel) {
     loadList();
-  }
-
-  @override
-  Future<void> onInit() async {
-    await super.onInit();
-
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {
@@ -56,6 +50,11 @@ class OrderListController extends BaseController {
         }
       }
     });
+  }
+
+  @override
+  Future<void> onInit() async {
+    await super.onInit();
   }
 
   Future<void> selectStatus(InvoiceStatus status) async {

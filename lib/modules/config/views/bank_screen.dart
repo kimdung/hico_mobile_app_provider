@@ -131,7 +131,7 @@ class BankScreen extends GetView<ConfigController> {
                         onTap: () {
                           Clipboard.setData(
                               ClipboardData(text: bank.accountNumber!));
-                          EasyLoading.showToast('Copy: ${bank.accountNumber}');
+                          EasyLoading.showToast('${'copied'.tr}');
                         },
                         child: FCoreImage(IconConstants.icCopy),
                       )

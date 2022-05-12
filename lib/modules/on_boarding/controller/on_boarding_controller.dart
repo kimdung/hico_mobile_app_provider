@@ -35,7 +35,7 @@ class OnBoardingController extends BaseController {
       RxList.generate(3, (index) => ImageConstants.sliderDemo);
 
   Future<void> login() async {
-    await Get.toNamed(Routes.LOGIN);
+     await Get.toNamed(Routes.LOGIN);
   }
 
   Future<void> signup() async {
