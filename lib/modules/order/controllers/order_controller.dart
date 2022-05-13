@@ -330,7 +330,7 @@ class OrderController extends BaseController {
                 response.data != null) {
               invoice.value = response.data!;
               if (invoice.value.service!.isMedical == 1) {
-                Get.toNamed(Routes.MEDICAL, arguments: id);
+                Get.toNamed(Routes.MEDICAL, arguments: id); 
               } else {
                 DialogUtil.showPopup(
                   dialogSize: DialogSize.Popup,

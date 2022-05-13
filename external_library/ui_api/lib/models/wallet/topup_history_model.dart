@@ -4,8 +4,9 @@ part 'topup_history_model.g.dart';
 
 @JsonSerializable()
 class TopupHistoryModel {
+  static const int WAITTING = 0;
   static const int CONFIRMED = 1;
-
+  static const int FAILURE = 2;
   int? id;
   String? code;
   double? amount;
@@ -48,12 +49,25 @@ class TopupHistoryModel {
         return '';
     }
   }
+
+  String getStatus() {
+    switch (status) {
+      case WAITTING:
+        return 'topup.waitting'.tr;
+      case CONFIRMED:
+        return 'topup.confirmed'.tr;
+      case FAILURE:
+        return 'topup.failed'.tr;
+      default:
+        return '';
+    }
+  }
 }
 
 @JsonSerializable()
 class TopupHistoryData {
   @JsonKey(name: 'requires_action')
-  bool? requiresAction; 
+  bool? requiresAction;
   TopupHistoryModel? row;
 
   TopupHistoryData({this.requiresAction, this.row});

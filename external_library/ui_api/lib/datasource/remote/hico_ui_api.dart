@@ -292,7 +292,7 @@ abstract class HicoUIAPI {
   Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
 
   //invoice confirm sub
-  @POST('/v1/supplier/invoice/confirmSub')
+  @POST('/v1/supplier/invoice/workContent')
   Future<BaseResponse> confirmSub(@Body() ConfirmSubRequest request);
 
   //invoice confirm sub
@@ -327,7 +327,7 @@ abstract class HicoUIAPI {
   Future<TopupResponse> topupKomojuResult(
       @Query('session_id') String sessionId);
 
-  @POST('/v1/createPayInStripe')
+  @POST('/v1/payIn/createPayInStripe')
   Future<TopupResponse> createPayInStripe(
       @Query('payment_method_id') String paymentMethodId,
       @Query('name') String name,
