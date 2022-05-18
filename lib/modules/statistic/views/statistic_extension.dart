@@ -13,7 +13,7 @@ extension StatisticExtension on StatisticScreen {
               ),
               InkWell(
                 onTap: () {
-                  controller.indexStatus.value = 0;
+                  controller.onChangeStatus(0);
                 },
                 child: Container(
                   padding:
@@ -44,12 +44,12 @@ extension StatisticExtension on StatisticScreen {
               ),
               InkWell(
                 onTap: () {
-                  controller.indexStatus.value = 1;
+                  controller.onChangeStatus(CommonConstants.statisticCustomerCancel);
                 },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  decoration: controller.indexStatus.value == 1
+                  decoration: controller.indexStatus.value == CommonConstants.statisticCustomerCancel
                       ? BoxDecoration(
                           color: AppColor.primaryColorLight,
                           borderRadius:
@@ -63,7 +63,7 @@ extension StatisticExtension on StatisticScreen {
                     'statistic.customer.cancel'.tr,
                     textAlign: TextAlign.center,
                     style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: controller.indexStatus.value == 1
+                          color: controller.indexStatus.value == CommonConstants.statisticCustomerCancel
                               ? AppColor.secondTextColorLight
                               : AppColor.primaryTextColorLight,
                         ),
@@ -75,12 +75,12 @@ extension StatisticExtension on StatisticScreen {
               ),
               InkWell(
                 onTap: () {
-                  controller.indexStatus.value = 2;
+                  controller.onChangeStatus(CommonConstants.statisticComplete);
                 },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  decoration: controller.indexStatus.value == 2
+                  decoration: controller.indexStatus.value == CommonConstants.statisticComplete
                       ? BoxDecoration(
                           color: AppColor.primaryColorLight,
                           borderRadius:
@@ -94,7 +94,7 @@ extension StatisticExtension on StatisticScreen {
                     'statistic.finish'.tr,
                     textAlign: TextAlign.center,
                     style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: controller.indexStatus.value == 2
+                          color: controller.indexStatus.value == CommonConstants.statisticComplete
                               ? AppColor.secondTextColorLight
                               : AppColor.primaryTextColorLight,
                         ),
@@ -106,12 +106,12 @@ extension StatisticExtension on StatisticScreen {
               ),
               InkWell(
                 onTap: () {
-                  controller.indexStatus.value = 3;
+                  controller.onChangeStatus(CommonConstants.statisticSupplierCancel);
                 },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  decoration: controller.indexStatus.value == 3
+                  decoration: controller.indexStatus.value == CommonConstants.statisticSupplierCancel
                       ? BoxDecoration(
                           color: AppColor.primaryColorLight,
                           borderRadius:
@@ -125,7 +125,7 @@ extension StatisticExtension on StatisticScreen {
                     'statistic.cancel'.tr,
                     textAlign: TextAlign.center,
                     style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: controller.indexStatus.value == 3
+                          color: controller.indexStatus.value == CommonConstants.statisticSupplierCancel
                               ? AppColor.secondTextColorLight
                               : AppColor.primaryTextColorLight,
                         ),
@@ -155,14 +155,14 @@ extension StatisticExtension on StatisticScreen {
                             icon: IconConstants.icMoneyGreen,
                             title: 'statistic.wallet'.tr,
                             price:
-                                '${controller.completed.value.total ?? 0} JPY ',
+                                '${controller.statistic.value.balance ?? 0} JPY ',
                             textColor: AppColor.blueTextColor),
                         _buildTotalItem(
                             margin: 2,
                             icon: IconConstants.icMoneyPink,
                             title: 'statistic.system_pay'.tr,
                             price:
-                                '${controller.completed.value.paid ?? 0} JPY ',
+                                '${controller.statistic.value.paid ?? 0} JPY ',
                             textColor: AppColor.blueTextColor),
                       ],
                     ),
@@ -174,12 +174,12 @@ extension StatisticExtension on StatisticScreen {
                             icon: IconConstants.icMoneyPink,
                             title: 'statistic.system_debt'.tr,
                             price:
-                                '${controller.completed.value.remain ?? 0} JPY ',
+                                '${controller.statistic.value.remain ?? 0} JPY ',
                             textColor: AppColor.redTextColor),
                       ],
                     )
                   ])
-                : controller.indexStatus.value == 1
+                : controller.indexStatus.value == 3
                     ? Row(
                         children: [
                           Expanded(
@@ -190,13 +190,13 @@ extension StatisticExtension on StatisticScreen {
                                   icon: IconConstants.icMoneyGreen,
                                   title: 'statistic.bonus'.tr,
                                   price:
-                                      '${controller.completed.value.total ?? 0} JPY ',
+                                      '${controller.statistic.value.invoiceCancelByCustomer ?? 0} JPY ',
                                   textColor: AppColor.blueTextColor),
                             ),
                           ),
                         ],
                       )
-                    : controller.indexStatus.value == 2
+                    : controller.indexStatus.value == 1
                         ? Column(
                             children: [
                               const SizedBox(height: 20),
@@ -205,11 +205,11 @@ extension StatisticExtension on StatisticScreen {
                                   icon: IconConstants.icMoneyGreen,
                                   title: 'statistic.total_amount'.tr,
                                   price:
-                                      '${controller.completed.value.total ?? 0} JPY ',
+                                      '${controller.statistic.value.invoiceComplete ?? 0} JPY ',
                                   textColor: AppColor.blueTextColor),
                             ],
                           )
-                        : controller.indexStatus.value == 3
+                        : controller.indexStatus.value == 2
                             ? Column(children: [
                                 const SizedBox(height: 20),
                                 Row(
@@ -221,14 +221,14 @@ extension StatisticExtension on StatisticScreen {
                                         icon: IconConstants.icMoneyRed,
                                         title: 'statistic.system_fine'.tr,
                                         price:
-                                            '${controller.canceled.value.total ?? 0} JPY ',
+                                            '${controller.statistic.value.finedAmount ?? 0} JPY ',
                                         textColor: AppColor.redTextColor),
                                     _buildTotalItem(
                                         margin: 1,
                                         icon: IconConstants.icMoneyGrey,
                                         title: 'statistic.cancel_number'.tr,
                                         price:
-                                            '${controller.canceled.value.cancelTimes ?? 0} ${'order.detail.step'.tr} '),
+                                            '${controller.statistic.value.cancelTimes ?? 0} ${'order.detail.step'.tr} '),
                                   ],
                                 ),
                                 const SizedBox(height: 14),
@@ -307,6 +307,7 @@ extension StatisticExtension on StatisticScreen {
         onSubmitted: (value) {
           controller.loadInvoiceList();
         },
+        controller: controller.keyword,
         cursorColor: AppColor.primaryColorLight,
         style: TextAppStyle().smallTextPink(),
         decoration: InputDecoration(

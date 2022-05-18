@@ -53,7 +53,7 @@ extension OrderListBody on OrderListScreen {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      '${AppDataGlobal.userInfo?.accountBalance ?? 0} JPY',
+                      '${controller.info.value.accountBalance ?? 0} JPY',
                       style: TextAppStyle().smallTextPink(),
                     ),
                   ],
@@ -63,7 +63,9 @@ extension OrderListBody on OrderListScreen {
           ),
           const SizedBox(width: 14),
           InkWell(
-            onTap: () => Get.toNamed(Routes.WALLET),
+            onTap: (){
+              controller.deposit();
+            },
             child: Container(
               margin: const EdgeInsets.all(5),
               child: FCoreImage(

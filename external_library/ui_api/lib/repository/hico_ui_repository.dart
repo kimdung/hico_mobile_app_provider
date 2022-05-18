@@ -35,9 +35,11 @@ import 'package:ui_api/response/user/user_response.dart';
 import 'package:ui_api/response/voucher/check_voucher_response.dart';
 import 'package:ui_api/response/voucher/voucher_response.dart';
 
+import '../request/invoice/booking_extend_request.dart';
 import '../request/invoice/confirm_sub_request.dart';
 import '../response/call/call_token_response.dart';
 import '../response/chat/chat_token_response.dart';
+import '../response/invoice/booking_extend_response.dart';
 import '../response/user/upload_certificate_response.dart';
 import '../response/user/upload_response.dart';
 import '../response/wallet/topup_history_response.dart';
@@ -144,7 +146,7 @@ abstract class HicoUIRepository {
   Future<StatisticsResponse> statistics();
   //statistics
   Future<StatisticInvoiceResponse> statisticsInvoice(
-      int limit, int offset, String keyWords, String startDate, String endDate);
+      int limit, int offset, String keyWords, String startDate, String endDate, int status);
 
 //address list
   Future<AddressResponse> addressList(int limit, int offset, String code);
@@ -232,5 +234,12 @@ abstract class HicoUIRepository {
 
   Future<UploadResponse> uploadFile(File file, int type);
   Future<UploadCertificateResponse> uploadCetificateFile(File file, int type);
+
+  Future<BookingExtendResponse> subDetail(
+      int invoiceId,
+      int subId);
+
+  Future<BaseResponse> subConfirm(
+      BookingExtendRequest request);
 
 }

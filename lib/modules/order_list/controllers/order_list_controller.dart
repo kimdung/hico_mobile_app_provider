@@ -34,8 +34,15 @@ class OrderListController extends BaseController {
   RxList<InvoiceModel> list = RxList<InvoiceModel>();
 
   var scrollController = ScrollController();
-  int limit = 4;
+  int limit = CommonConstants.limit;
   int offset = 0;
+
+  Rx<UserInfoModel> info = Rx(UserInfoModel(
+    avatarImage: '',
+    documentBackSide: '',
+    documentFrontSide: '',
+    documentsCertificate: [],
+  ));
 
   OrderListController(this.adminChatChannel) {
     loadList();
@@ -70,6 +77,7 @@ class OrderListController extends BaseController {
   Future<void> loadList() async {
     try {
       await EasyLoading.show();
+      info.value = AppDataGlobal.userInfo!;
       offset = 0;
       await _uiRepository
           .invoiceHistory(keyword, currentStatus.value.id, limit, offset)
@@ -106,6 +114,10 @@ class OrderListController extends BaseController {
     } catch (e) {
       await EasyLoading.dismiss();
     }
+  }
+  Future<void> deposit() async {
+    await Get.toNamed(Routes.WALLET)
+        ?.then((value) => info.value = AppDataGlobal.userInfo!);
   }
 
   Future<void> viewDetail(int id) async {

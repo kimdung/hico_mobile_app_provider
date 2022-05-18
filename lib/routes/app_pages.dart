@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/booking_detail/binding/booking_detail_binding.dart';
+import '../modules/booking_detail/view/booking_detail_screen.dart';
 import '../modules/call/video_call/bindings/video_call_binding.dart';
 import '../modules/call/video_call/views/video_call_view.dart';
 import '../modules/call/voice_call/bindings/voice_call_binding.dart';
@@ -143,6 +145,10 @@ final routePages = [
       name: Routes.ORDER_DETAIL,
       page: () => OrderScreen(),
       binding: OrderBinding()),
+  GetPage(
+      name: Routes.BOOKING_DETAIL,
+      page: () => BookingDetailScreen(),
+      binding: BookingDetailBinding()),
 
   //notification
   // GetPage(

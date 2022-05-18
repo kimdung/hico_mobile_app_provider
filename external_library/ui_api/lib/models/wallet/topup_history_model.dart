@@ -57,7 +57,7 @@ class TopupHistoryModel {
       case CONFIRMED:
         return 'topup.confirmed'.tr;
       case FAILURE:
-        return 'topup.failed'.tr;
+        return 'topup.failure'.tr;
       default:
         return '';
     }

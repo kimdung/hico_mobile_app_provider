@@ -469,7 +469,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             //curriculum vitae
                             _buildLabel(
                                 title: 'profile.update.curriculum_vitae'.tr,
-                                required: 1),
+                                required: 0),
                             const SizedBox(height: 8.0),
                             _buildPickFile(files: controller.info.value.curriculumVitaeFiles, type: CommonConstants.curriculumVitaeFiles),
                             const SizedBox(height: 14),

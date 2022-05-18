@@ -163,11 +163,19 @@ class LoginController extends BaseController {
           if (response.status == CommonConstants.statusOk &&
               response.loginModel != null &&
               response.loginModel!.info != null) {
-            storage.setString(
-                StorageConstants.token, response.loginModel!.accessToken!);
-            storage.setBool(StorageConstants.isSocial, true);
+            if (response.loginModel!.info!.kycStatus == 1) {
+               storage.setString(
+                  StorageConstants.username, usernameController.text);
+              storage.setString(
+                  StorageConstants.password, passwordController.text);
+              storage.setBool(StorageConstants.isSocial, true);
 
-            _loadData(response.loginModel!);
+              _loadData(response.loginModel!);       
+            } else {
+              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
+              AppDataGlobal.userInfo = response.loginModel!.info!;
+              Get.toNamed(Routes.PROFILE_UPDATE);
+            }
           } else {
             EasyLoading.dismiss();
             DialogUtil.showPopup(
@@ -202,12 +210,20 @@ class LoginController extends BaseController {
             .then((response) {
           if (response.status == CommonConstants.statusOk &&
               response.loginModel != null &&
-              response.loginModel!.info != null) {
-            storage.setString(
-                StorageConstants.token, response.loginModel!.accessToken!);
-            storage.setBool(StorageConstants.isSocial, true);
+              response.loginModel!.info != null) {     
+            if (response.loginModel!.info!.kycStatus == 1) {
+               storage.setString(
+                  StorageConstants.username, usernameController.text);
+              storage.setString(
+                  StorageConstants.password, passwordController.text);
+              storage.setBool(StorageConstants.isSocial, true);
 
-            _loadData(response.loginModel!);
+              _loadData(response.loginModel!);       
+            } else {
+              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
+              AppDataGlobal.userInfo = response.loginModel!.info!;
+              Get.toNamed(Routes.PROFILE_UPDATE);
+            }
           } else {
             EasyLoading.dismiss();
             DialogUtil.showPopup(
@@ -250,11 +266,19 @@ class LoginController extends BaseController {
           if (response.status == CommonConstants.statusOk &&
               response.loginModel != null &&
               response.loginModel!.info != null) {
-            storage.setString(
-                StorageConstants.token, response.loginModel!.accessToken!);
-            storage.setBool(StorageConstants.isSocial, true);
+            if (response.loginModel!.info!.kycStatus == 1) {
+               storage.setString(
+                  StorageConstants.username, usernameController.text);
+              storage.setString(
+                  StorageConstants.password, passwordController.text);
+              storage.setBool(StorageConstants.isSocial, true);
 
-            _loadData(response.loginModel!);
+              _loadData(response.loginModel!);       
+            } else {
+              AppDataGlobal.accessToken = response.loginModel!.accessToken!;
+              AppDataGlobal.userInfo = response.loginModel!.info!;
+              Get.toNamed(Routes.PROFILE_UPDATE);
+            }
           } else {
             EasyLoading.dismiss();
             DialogUtil.showPopup(

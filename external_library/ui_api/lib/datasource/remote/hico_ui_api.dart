@@ -27,9 +27,11 @@ import 'package:ui_api/response/statistic/statistic_response.dart';
 import 'package:ui_api/response/user/login_response.dart';
 import 'package:ui_api/response/user/user_response.dart';
 
+import '../../request/invoice/booking_extend_request.dart';
 import '../../request/invoice/confirm_sub_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
+import '../../response/invoice/booking_extend_response.dart';
 import '../../response/user/upload_certificate_response.dart';
 import '../../response/user/upload_response.dart';
 import '../../response/wallet/topup_history_response.dart';
@@ -187,6 +189,7 @@ abstract class HicoUIAPI {
     @Query('key_words') String keyWords,
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
+    @Query('status') int status,
   );
 
 //get address
@@ -340,4 +343,12 @@ abstract class HicoUIAPI {
   //update file
   @POST('/v1/user/uploadCetificateFileUser')
   Future<UploadCertificateResponse> uploadCetificateFile(@Part() File file, @Query('type') int type);
+
+  @GET('/v1/supplier/invoice/subDetail')
+  Future<BookingExtendResponse> subDetail(
+      @Query('invoice_id') int invoiceId,
+      @Query('sub_id') int subId);
+
+  @POST('/v1/supplier/invoice/subConfirm')
+  Future<BaseResponse> subConfirm(@Body() BookingExtendRequest request);
 }

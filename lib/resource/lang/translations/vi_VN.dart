@@ -237,7 +237,7 @@ const Map<String, String> vi_VN = {
   'topup.failure': 'Nạp tiền thất bại!',
 
   //statistic screen
-  'statistic.order_finish': 'Đơn hàng đã hoàn thành',
+  'statistic.order_finish': 'Danh sách đơn hàng',
   'statistic.finish': 'Đã hoàn thành',
   'statistic.cancel': 'Bạn hủy',
   'statistic.synthetic': 'Tổng hợp',
@@ -378,18 +378,25 @@ const Map<String, String> vi_VN = {
   'invoice.misson': 'Nhiệm vụ đã hoàn thành',
   'invoice.service': 'Dịch vụ:',
   'invoice.hours': 'Giờ',
+  'invoice.minutes': 'Phút',
   'invoice.all': 'Tất cả',
   'invoice.requested': 'Đã yêu cầu',
   'invoice.accepted': 'PDV đồng ý',
   'invoice.successed': 'Hoàn thành',
   'invoice.canceled': 'Đã huỷ',
   'invoice.incurred': 'Phát sinh',
+  'invoice.approve': 'Đồng ý',
 
   //invoice detail
   'invoice.detail.supplier': 'Phiên dịch viên',
   'invoice.detail.payment_method': 'Phương thức thanh toán',
   'invoice.detail.hint_cancel': 'Ghi lý do hủy đơn của bạn',
   'invoice.detail.hint_rating': 'Viết đánh giá của bạn...',
+
+  //extent
+  'extend.title.appbar': 'Chi tiết Gian Hạn',
+  'extend.approve': 'Đồng ý',
+
 
   //booking
   'booking.title': 'Chi tiết đặt lịch',

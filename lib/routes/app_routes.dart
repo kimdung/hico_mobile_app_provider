@@ -18,6 +18,8 @@ abstract class Routes {
   static const HOME = '/home';
   static const ORDER_LIST = '/order_list';
   static const ORDER_DETAIL = '/order_detail';
+  static const BOOKING_DETAIL = '/booking_detail';
+
   static const NOTIFICATION = '/notification';
   static const NOTIFICATION_DETAIL = '/notification_detail';
   static const NEWS = '/news';

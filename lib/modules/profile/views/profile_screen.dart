@@ -219,6 +219,15 @@ class ProfileScreen extends GetView<ProfileController> {
               list: AppDataGlobal.userInfo!.documentsCertificate,
             ),
             const SizedBox(height: 12),
+            buildFileGrid(
+              title: 'profile.update.curriculum_vitae'.tr,
+              list: AppDataGlobal.userInfo!.curriculumVitaeFiles,
+            ),
+            buildFileGrid(
+              title: 'profile.update.experience_title'.tr,
+              list: AppDataGlobal.userInfo!.workExperienceFiles,
+            ),
+            const SizedBox(height: 12),
             _buildLabel(
                 title: 'profile.update.number_years_in_japan'.tr, required: 1),
             const SizedBox(height: 8),

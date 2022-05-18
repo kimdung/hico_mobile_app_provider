@@ -19,6 +19,8 @@ class NotificationModel {
   int? displayType;
   @JsonKey(name: 'invoice_id')
   int? invoiceId;
+  @JsonKey(name: 'sub_id')
+  int? subId;
 
   NotificationModel(
       {this.id,
@@ -29,7 +31,8 @@ class NotificationModel {
       this.isRead,
       this.content,
       this.displayType,
-      this.invoiceId});
+      this.invoiceId,
+      this.subId});
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
       _$NotificationModelFromJson(json);

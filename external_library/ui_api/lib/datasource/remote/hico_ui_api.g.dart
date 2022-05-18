@@ -467,14 +467,15 @@ class _HicoUIAPI implements HicoUIAPI {
 
   @override
   Future<StatisticInvoiceResponse> statisticsInvoice(
-      limit, offset, keyWords, startDate, endDate) async {
+      limit, offset, keyWords, startDate, endDate, status) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'limit': limit,
       r'offset': offset,
       r'key_words': keyWords,
       r'start_date': startDate,
-      r'end_date': endDate
+      r'end_date': endDate,
+      r'status': status
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -951,6 +952,42 @@ class _HicoUIAPI implements HicoUIAPI {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = UploadCertificateResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BookingExtendResponse> subDetail(invoiceId, subId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'invoice_id': invoiceId,
+      r'sub_id': subId
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BookingExtendResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/supplier/invoice/subDetail',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BookingExtendResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BaseResponse> subConfirm(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/supplier/invoice/subConfirm',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
     return value;
   }
 

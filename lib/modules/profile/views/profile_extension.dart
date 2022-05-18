@@ -166,8 +166,61 @@ extension ProfileExtension on ProfileScreen {
                         list.length,
                         (int index) => ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: NetWorkImage(
+                          child: 
+                          (list[index].extension == 'pdf')?
+                          FCoreImage(
+                            'lib/resource/assets_resources/images/pdf_icon.jpeg',
+                            height: 119,
+                            fit: BoxFit.cover,
+                          )
+                          :
+                          NetWorkImage(
                             image: list[index].url!,
+                            height: 119,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildFileGrid({
+    required String title,
+    List<String>? list,
+  }) {
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(title, style: TextAppStyle().genaralBlackTextStyle()),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.only(bottom: 12),
+            color: Colors.white,
+            child: list != null && list.isNotEmpty
+                ? GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 3 / 2,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      ...List.generate(
+                        list.length,
+                        (int index) => ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: 
+                          FCoreImage(
+                            'lib/resource/assets_resources/images/pdf_icon.jpeg',
                             height: 119,
                             fit: BoxFit.cover,
                           ),
@@ -217,10 +270,7 @@ extension ProfileExtension on ProfileScreen {
       children: [
         Text(
           title,
-          style: TextAppStyle().genaralTextStyle().copyWith(
-                color: Colors.black,
-                fontSize: 16,
-              ),
+          style: TextAppStyle().genaralBlackTextStyle(),
         ),
         required == 1
             ? Text(

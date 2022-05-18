@@ -13,31 +13,20 @@ class StatisticController extends BaseController {
   var scrollController = ScrollController();
   final _uiRepository = Get.find<HicoUIRepository>();
   Rx<int> indexStatus = Rx(0);
-  int limit = CommonConstants.limit;
+  int limit = 5;
   int offset = 0;
-  String keyword = '';
   String fromDate = '';
   String toDate = '';
   final TextEditingController fromDateController = TextEditingController();
   final TextEditingController toDateController = TextEditingController();
+  final TextEditingController keyword = TextEditingController();
 
-  Rx<StatisticModel> completed = Rx(StatisticModel());
-  Rx<StatisticModel> canceled = Rx(StatisticModel());
+  Rx<StatisticModel> statistic = Rx(StatisticModel());
   RxList<StatisticInvoiceModel> invoiceList = RxList<StatisticInvoiceModel>();
 
   Rx<int> totalInvoice = Rx(20);
 
   StatisticController() {
-    fromDate =
-        DateFormatter.formatDate(DateTime.now().add(const Duration(days: -7)));
-    toDate = DateFormatter.formatDate(DateTime.now());
-    loadData();
-    loadInvoiceList();
-  }
-
-  @override
-  Future<void> onInit() {
-    // Setup the listener.
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {
@@ -47,6 +36,18 @@ class StatisticController extends BaseController {
       }
     });
 
+    fromDate =
+        DateFormatter.formatDate(DateTime.now().add(const Duration(days: -7)));
+    toDate = DateFormatter.formatDate(DateTime.now());
+    loadData();
+    //loadInvoiceList();
+  }
+
+  @override
+  Future<void> onInit() {
+    // Setup the listener.
+    
+
     return super.onInit();
   }
 
@@ -55,8 +56,7 @@ class StatisticController extends BaseController {
       await _uiRepository.statistics().then((response) {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
-          completed.value = response.data!.completed!;
-          canceled.value = response.data!.canceled!;
+          statistic.value = response.data!;
           return;
         }
       });
@@ -91,8 +91,18 @@ class StatisticController extends BaseController {
 
   Future<void> onSearch(String value) async {
     try {
-      keyword = value;
       await loadInvoiceList();
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> onChangeStatus(int status) async {
+    try {
+      indexStatus.value = status;
+      if (status != 0){
+        await loadInvoiceList();
+      }
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -101,8 +111,10 @@ class StatisticController extends BaseController {
   Future<void> loadInvoiceList() async {
     try {
       await EasyLoading.show();
+      offset = 0;
+      invoiceList.value = [];
       await _uiRepository
-          .statisticsInvoice(limit, offset, keyword, fromDate, toDate)
+          .statisticsInvoice(limit, offset, keyword.text, fromDate, toDate,indexStatus.value)
           .then((response) {
         EasyLoading.dismiss();
         offset = response.data!.rows!.length;
@@ -117,7 +129,7 @@ class StatisticController extends BaseController {
     try {
       await EasyLoading.show();
       await _uiRepository
-          .statisticsInvoice(limit, offset, keyword, fromDate, toDate)
+          .statisticsInvoice(limit, offset, keyword.text, fromDate, toDate,indexStatus.value)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&

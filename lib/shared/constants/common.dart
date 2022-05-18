@@ -37,6 +37,11 @@ class CommonConstants {
   static const int curriculumVitaeFiles = 1;
   static const int workExperienceFiles = 2;
 
+  //statistic status
+  static const int statisticComplete = 1;
+  static const int statisticSupplierCancel = 2;
+  static const int statisticCustomerCancel = 3;
+
 }
 
 const APP_NAME = 'Hico Supplier';
