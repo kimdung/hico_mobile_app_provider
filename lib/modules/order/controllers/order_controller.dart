@@ -265,6 +265,13 @@ class OrderController extends BaseController {
           onVaLue: (_value) async {
             if (_value == true) {
               await _uiRepository.invoiceConfirm(id, status).then((response) {
+                _uiRepository.getInfo().then((response) {
+                  if (response.status == CommonConstants.statusOk &&
+                      response.data != null &&
+                      response.data!.info != null) {
+                    AppDataGlobal.userInfo = response.data!.info!;
+                  }
+                });
                 loadData();
               });
             }
@@ -284,7 +291,16 @@ class OrderController extends BaseController {
               title: response.message,
             ),
             onVaLue: (value) {},
-          ).then((value) => loadData());
+          ).then((value) {
+            _uiRepository.getInfo().then((response) {
+              if (response.status == CommonConstants.statusOk &&
+                  response.data != null &&
+                  response.data!.info != null) {
+                AppDataGlobal.userInfo = response.data!.info!;
+              }
+            });
+            loadData();
+          });
           return;
         });
       }
