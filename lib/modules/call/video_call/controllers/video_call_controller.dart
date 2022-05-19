@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ui_api/models/call/call_model.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../../../../base/base_controller.dart';
@@ -13,6 +14,8 @@ import '../../../../data/app_data_global.dart';
 
 class VideoCallController extends BaseController {
   final appId = 'fae0cb7e3f5c4c688ca32056eaa146b4';
+
+  final _uiRepository = Get.find<HicoUIRepository>();
 
   late RtcEngine _engine;
   StreamSubscription? _callStreamSubscription;
@@ -35,7 +38,7 @@ class VideoCallController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
 
-    await Wakelock.enabled;
+    await Wakelock.enable();
 
     _addPostFrameCallback();
     await _initAgora();
@@ -44,7 +47,7 @@ class VideoCallController extends BaseController {
 
   @override
   void onClose() {
-    onEndCall();
+    printInfo(info: 'onClose');
     _engine.leaveChannel();
     _engine.destroy();
     _durationTimer?.cancel();
@@ -78,14 +81,15 @@ class VideoCallController extends BaseController {
     await _engine.enableVideo();
     _engine.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
-        printError(info: 'warning $warningCode');
+        printInfo(info: 'warning $warningCode');
       },
       error: (errorCode) {
-        printError(info: 'error $errorCode');
+        printInfo(info: 'error $errorCode');
       },
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
         remoteUid.value = uid;
+        callBeginCall();
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
           (Timer timer) {
@@ -96,13 +100,15 @@ class VideoCallController extends BaseController {
       userOffline: (int uid, UserOfflineReason reason) {
         printInfo(info: 'remote user $uid left channel');
         remoteUid.value = null;
+
+        onEndCall();
       },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
         isJoined.value = true;
       },
       leaveChannel: (stats) async {
-        printError(info: 'leaveChannel ${stats.toJson()}');
+        printInfo(info: 'leaveChannel ${stats.toJson()}');
         isJoined.value = false;
       },
     ));
@@ -132,6 +138,26 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
+    printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
+    await callEndCall();
+  }
+
+  /* API */
+
+  Future<void> callBeginCall() async {
+    try {
+      await _uiRepository.beginCall(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  Future<void> callEndCall() async {
+    try {
+      await _uiRepository.endCall(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
   }
 }

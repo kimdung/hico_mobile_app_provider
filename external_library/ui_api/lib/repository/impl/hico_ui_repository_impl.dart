@@ -3,23 +3,15 @@ import 'dart:io';
 import 'package:ui_api/datasource/remote/hico_ui_api.dart';
 import 'package:ui_api/request/general/bank_response.dart';
 import 'package:ui_api/request/general/contact_request.dart';
-import 'package:ui_api/request/invoice/booking_request.dart';
 import 'package:ui_api/request/login/login_request.dart';
 import 'package:ui_api/request/register/register_otp_request.dart';
 import 'package:ui_api/request/register/register_request.dart';
 import 'package:ui_api/request/service/update_service_request.dart';
-import 'package:ui_api/request/supplier/supplier_request.dart';
-import 'package:ui_api/request/user/avatar_request.dart';
 import 'package:ui_api/request/user/changepass_request.dart';
-import 'package:ui_api/request/user/update_bank_request.dart';
-import 'package:ui_api/request/user/update_info_request.dart';
 import 'package:ui_api/response/base_response.dart';
 import 'package:ui_api/response/general/address_response.dart';
 import 'package:ui_api/response/general/district_response.dart';
-import 'package:ui_api/response/general/general_response.dart';
 import 'package:ui_api/response/general/master_data_response.dart';
-import 'package:ui_api/response/home/home_response.dart';
-import 'package:ui_api/response/invoice/booking_response.dart';
 import 'package:ui_api/response/invoice/invoice_detail_response.dart';
 import 'package:ui_api/response/invoice/invoice_history_response.dart';
 import 'package:ui_api/response/news/news_detail_response.dart';
@@ -31,12 +23,8 @@ import 'package:ui_api/response/service/service_categories_response.dart';
 import 'package:ui_api/response/service/service_list_response.dart';
 import 'package:ui_api/response/statistic/statistic_invoice_response.dart';
 import 'package:ui_api/response/statistic/statistic_response.dart';
-import 'package:ui_api/response/supplier/supplier_profile_response.dart';
-import 'package:ui_api/response/supplier/supplier_response.dart';
 import 'package:ui_api/response/user/login_response.dart';
 import 'package:ui_api/response/user/user_response.dart';
-import 'package:ui_api/response/voucher/check_voucher_response.dart';
-import 'package:ui_api/response/voucher/voucher_response.dart';
 
 import '../../request/invoice/booking_extend_request.dart';
 import '../../request/invoice/confirm_sub_request.dart';
@@ -202,7 +190,8 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<StatisticInvoiceResponse> statisticsInvoice(int limit, int offset,
       String keyWords, String startDate, String endDate, int status) {
-    return _api.statisticsInvoice(limit, offset, keyWords, startDate, endDate, status);
+    return _api.statisticsInvoice(
+        limit, offset, keyWords, startDate, endDate, status);
   }
 
 //address list
@@ -266,7 +255,6 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
       removeDocumentsCertificate,
       documentFrontSide: documentFrontSide,
       documentBackSide: documentBackSide,
-
     );
   }
 
@@ -368,18 +356,31 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
 
   @override
   Future<UploadResponse> uploadFile(File file, int type) {
-    return _api.uploadFile(file,type);
+    return _api.uploadFile(file, type);
   }
+
   @override
   Future<UploadCertificateResponse> uploadCetificateFile(File file, int type) {
-    return _api.uploadCetificateFile(file,type);
+    return _api.uploadCetificateFile(file, type);
   }
+
   @override
   Future<BookingExtendResponse> subDetail(int invoiceId, int subId) {
-    return _api.subDetail(invoiceId,subId);
+    return _api.subDetail(invoiceId, subId);
   }
+
   @override
   Future<BaseResponse> subConfirm(BookingExtendRequest request) {
     return _api.subConfirm(request);
+  }
+
+  @override
+  Future<BaseResponse> beginCall(int invoiceId) {
+    return _api.beginCall(invoiceId);
+  }
+
+  @override
+  Future<BaseResponse> endCall(int invoiceId) {
+    return _api.endCall(invoiceId);
   }
 }

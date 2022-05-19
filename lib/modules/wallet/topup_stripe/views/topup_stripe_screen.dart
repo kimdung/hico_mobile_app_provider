@@ -18,49 +18,49 @@ import '../controllers/topup_stripe_controller.dart';
 class TopupStripeScreen extends GetView<TopupStripeController> {
   @override
   Widget build(BuildContext context) {
-    //   return PickupLayout(
-    //     controller.callMethods,
-    //     scaffold: SafeArea(
-    //       child: Scaffold(
-    //         appBar: AppBar(
-    //           centerTitle: true,
-    //           leading: IconButton(
-    //             icon: SvgPicture.asset(IconConstants.icBack, width: 11),
-    //             onPressed: Get.back,
-    //           ),
-    //           title: Text(
-    //             'topup.stripe.title'.tr,
-    //             style: TextAppStyle().titleAppBarStyle(),
-    //           ),
-    //           elevation: 1,
-    //           backgroundColor: Colors.white,
-    //         ),
-    //         body: WidgetTouchHideKeyBoard(
-    //           child: Container(
-    //             height: double.infinity,
-    //             padding: const EdgeInsets.all(20),
-    //             child: _buildBodyContent(),
-    //           ),
-    //         ),
-    //         bottomNavigationBar: Padding(
-    //           padding: const EdgeInsets.all(20),
-    //           child: GeneralButton(
-    //             onPressed: controller.onConfirm,
-    //             borderRadius: BorderRadius.circular(24),
-    //             borderColor: AppColor.primaryColorLight,
-    //             backgroundColor: AppColor.primaryColorLight,
-    //             child: Text(
-    //               'topup.confirm'.tr,
-    //               style: TextAppStyle().titleButtonStyle(),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
+      return PickupLayout(
+        controller.callMethods,
+        scaffold: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              leading: IconButton(
+                icon: SvgPicture.asset(IconConstants.icBack, width: 11),
+                onPressed: Get.back,
+              ),
+              title: Text(
+                'topup.stripe.title'.tr,
+                style: TextAppStyle().titleAppBarStyle(),
+              ),
+              elevation: 1,
+              backgroundColor: Colors.white,
+            ),
+            body: WidgetTouchHideKeyBoard(
+              child: Container(
+                height: double.infinity,
+                padding: const EdgeInsets.all(20),
+                child: _buildBodyContent(),
+              ),
+            ),
+            bottomNavigationBar: Padding(
+              padding: const EdgeInsets.all(20),
+              child: GeneralButton(
+                onPressed: controller.onConfirm,
+                borderRadius: BorderRadius.circular(24),
+                borderColor: AppColor.primaryColorLight,
+                backgroundColor: AppColor.primaryColorLight,
+                child: Text(
+                  'topup.confirm'.tr,
+                  style: TextAppStyle().titleButtonStyle(),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
-    // Widget _buildBodyContent() {
+    Widget _buildBodyContent() {
     //   return WidgetTouchHideKeyBoard(
     //     child: SingleChildScrollView(
     //       child: Column(

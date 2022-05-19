@@ -142,13 +142,17 @@ abstract class HicoUIRepository {
     int limit,
     int offset,
   );
-//statistics
-  Future<StatisticsResponse> statistics();
-  //statistics
-  Future<StatisticInvoiceResponse> statisticsInvoice(
-      int limit, int offset, String keyWords, String startDate, String endDate, int status);
 
-//address list
+  //statistics
+  Future<StatisticsResponse> statistics();
+  Future<StatisticInvoiceResponse> statisticsInvoice(int limit, int offset,
+      String keyWords, String startDate, String endDate, int status);
+
+  Future<BaseResponse> confirmSub(ConfirmSubRequest request);
+
+  Future<BaseResponse> requestUpdate();
+
+  //address list
   Future<AddressResponse> addressList(int limit, int offset, String code);
 
   Future<UserResponse> updateProfile(
@@ -212,9 +216,9 @@ abstract class HicoUIRepository {
   // Create call token
   Future<CallTokenResponse> getCallToken(String channel);
 
-  Future<BaseResponse> confirmSub(ConfirmSubRequest request);
+  Future<BaseResponse> beginCall(int invoiceId);
 
-  Future<BaseResponse> requestUpdate();
+  Future<BaseResponse> endCall(int invoiceId);
 
   /* Wallet */
 
@@ -235,11 +239,7 @@ abstract class HicoUIRepository {
   Future<UploadResponse> uploadFile(File file, int type);
   Future<UploadCertificateResponse> uploadCetificateFile(File file, int type);
 
-  Future<BookingExtendResponse> subDetail(
-      int invoiceId,
-      int subId);
+  Future<BookingExtendResponse> subDetail(int invoiceId, int subId);
 
-  Future<BaseResponse> subConfirm(
-      BookingExtendRequest request);
-
+  Future<BaseResponse> subConfirm(BookingExtendRequest request);
 }
