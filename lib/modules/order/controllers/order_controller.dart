@@ -44,6 +44,13 @@ class OrderController extends BaseController {
   }
 
   Future<void> loadData() async {
+    await _uiRepository.getInfo().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null &&
+          response.data!.info != null) {
+        AppDataGlobal.userInfo = response.data!.info!;
+      }
+    });
     await _uiRepository.invoiceDetail(id).then((response) {
       EasyLoading.dismiss();
       if (response.status == CommonConstants.statusOk &&
@@ -268,13 +275,6 @@ class OrderController extends BaseController {
           onVaLue: (_value) async {
             if (_value == true) {
               await _uiRepository.invoiceConfirm(id, status).then((response) {
-                _uiRepository.getInfo().then((response) {
-                  if (response.status == CommonConstants.statusOk &&
-                      response.data != null &&
-                      response.data!.info != null) {
-                    AppDataGlobal.userInfo = response.data!.info!;
-                  }
-                });
                 loadData();
               });
             }
@@ -295,13 +295,6 @@ class OrderController extends BaseController {
             ),
             onVaLue: (value) {},
           ).then((value) {
-            _uiRepository.getInfo().then((response) {
-              if (response.status == CommonConstants.statusOk &&
-                  response.data != null &&
-                  response.data!.info != null) {
-                AppDataGlobal.userInfo = response.data!.info!;
-              }
-            });
             loadData();
           });
           return;
@@ -343,47 +336,36 @@ class OrderController extends BaseController {
       await EasyLoading.show();
       await _uiRepository.invoiceCompleted(id).then((response) async {
         if (response.status == CommonConstants.statusOk) {
-          await _uiRepository.invoiceDetail(id).then((response) {
-            EasyLoading.dismiss();
-            if (response.status == CommonConstants.statusOk &&
-                response.data != null) {
-              invoice.value = response.data!;
-              if (invoice.value.service!.isMedical == 1) {
-                Get.toNamed(Routes.MEDICAL, arguments: id);
-              } else {
-                DialogUtil.showPopup(
-                  dialogSize: DialogSize.Popup,
-                  barrierDismissible: false,
-                  backgroundColor: Colors.transparent,
-                  child: const SummaryWorkingWidget(),
-                  onVaLue: (value) {
-                    log('Value: ${value.toString()}');
-                    if (value != null && value != '') {
-                      request.value.invoiceId = id;
-                      request.value.summary = summaryControler.text;
-                      confirmSub(request.value);
-                    }
-                  },
-                );
-              }
-              return;
-            } else {
-              DialogUtil.showPopup(
+          if (invoice.value.service!.isMedical == 1) {
+              await Get.toNamed(Routes.MEDICAL, arguments: id)!.then((value) => loadData());
+          } else {
+            await DialogUtil.showPopup(
+              dialogSize: DialogSize.Popup,
+              barrierDismissible: false,
+              backgroundColor: Colors.transparent,
+              child: const SummaryWorkingWidget(),
+              onVaLue: (value) {
+                log('Value: ${value.toString()}');
+                if (value != null && value != '') {
+                  request.value.invoiceId = id;
+                  request.value.summary = summaryControler.text;
+                  confirmSub(request.value);
+                  loadData();
+                }
+              },
+            );
+          }
+        }else{
+          await DialogUtil.showPopup(
                 dialogSize: DialogSize.Popup,
                 barrierDismissible: false,
                 backgroundColor: Colors.transparent,
                 child: NormalWidget(
-                  icon: response.status == CommonConstants.statusOk
-                      ? IconConstants.icUserTag
-                      : IconConstants.icFail,
+                  icon: IconConstants.icFail,
                   title: response.message,
                 ),
-                onVaLue: (value) {
-                  Get.back();
-                },
+                onVaLue: (value) {},
               );
-            }
-          });
         }
         return;
       });
