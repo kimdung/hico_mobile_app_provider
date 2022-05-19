@@ -220,6 +220,8 @@ abstract class HicoUIRepository {
 
   Future<BaseResponse> endCall(int invoiceId);
 
+  Future<BaseResponse> sendCallNotification(int invoiceId);
+
   /* Wallet */
 
   Future<TopupHistoryResponse> topupHistory(int limit, int offset);

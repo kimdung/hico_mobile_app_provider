@@ -43,6 +43,10 @@ class VideoCallController extends BaseController {
     _addPostFrameCallback();
     await _initAgora();
     await _joinChannel();
+
+    if (isCaller) {
+      await _sendCallNotification();
+    }
   }
 
   @override
@@ -89,7 +93,7 @@ class VideoCallController extends BaseController {
       userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
         remoteUid.value = uid;
-        callBeginCall();
+        _callBeginCall();
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
           (Timer timer) {
@@ -140,12 +144,21 @@ class VideoCallController extends BaseController {
   Future<void> onEndCall() async {
     printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
-    await callEndCall();
+    await _callEndCall();
   }
 
   /* API */
 
-  Future<void> callBeginCall() async {
+  
+  Future<void> _sendCallNotification() async {
+    try {
+      await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  Future<void> _callBeginCall() async {
     try {
       await _uiRepository.beginCall(call.invoiceId ?? -1);
     } catch (e) {
@@ -153,7 +166,7 @@ class VideoCallController extends BaseController {
     }
   }
 
-  Future<void> callEndCall() async {
+  Future<void> _callEndCall() async {
     try {
       await _uiRepository.endCall(call.invoiceId ?? -1);
     } catch (e) {
