@@ -81,6 +81,7 @@ class OrderController extends BaseController {
       filter: Filter.autoComplete('id', invoice.value.customerId.toString()),
     );
     await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.INVOICE_ID: invoice.value.id,
       CommonConstants.CHANNEL: channel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.value.getCustomer()
@@ -103,6 +104,7 @@ class OrderController extends BaseController {
             response.data != null) {
           // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
           final call = CallModel(
+            invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -133,6 +135,7 @@ class OrderController extends BaseController {
             response.data != null) {
           // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
           final call = CallModel(
+            invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -346,7 +349,7 @@ class OrderController extends BaseController {
                 response.data != null) {
               invoice.value = response.data!;
               if (invoice.value.service!.isMedical == 1) {
-                Get.toNamed(Routes.MEDICAL, arguments: id); 
+                Get.toNamed(Routes.MEDICAL, arguments: id);
               } else {
                 DialogUtil.showPopup(
                   dialogSize: DialogSize.Popup,
@@ -414,7 +417,7 @@ class OrderController extends BaseController {
       log(error.toString());
       await EasyLoading.dismiss();
     }
-  } 
+  }
 
   @override
   void onClose() {}

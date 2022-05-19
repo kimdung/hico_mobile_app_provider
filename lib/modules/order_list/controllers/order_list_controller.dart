@@ -115,6 +115,7 @@ class OrderListController extends BaseController {
       await EasyLoading.dismiss();
     }
   }
+
   Future<void> deposit() async {
     await Get.toNamed(Routes.WALLET)
         ?.then((value) => info.value = AppDataGlobal.userInfo!);
@@ -202,6 +203,7 @@ class OrderListController extends BaseController {
     );
 
     await Get.toNamed(Routes.CHAT, arguments: {
+      CommonConstants.INVOICE_ID: invoice.id,
       CommonConstants.CHANNEL: channel,
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.getCustomer()
@@ -219,6 +221,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -248,6 +251,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',

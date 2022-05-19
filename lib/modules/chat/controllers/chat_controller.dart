@@ -17,10 +17,12 @@ class ChatController extends BaseController {
   late Channel channel;
   late User user;
   late bool isNotCall;
-  
+  int? invoiceId;
+
   @override
   Future<void> onInit() async {
     final arguments = Get.arguments as Map;
+    invoiceId = arguments[CommonConstants.INVOICE_ID];
     channel = arguments[CommonConstants.CHANNEL];
     user = arguments[CommonConstants.CHAT_USER];
     isNotCall = arguments[CommonConstants.IS_NOT_CALL] ?? false;
@@ -47,6 +49,7 @@ class ChatController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
@@ -79,6 +82,7 @@ class ChatController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            invoiceId: invoiceId,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
             callerPic: AppDataGlobal.userInfo?.avatarImage ?? '',
