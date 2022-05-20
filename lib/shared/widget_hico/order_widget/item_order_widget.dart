@@ -267,7 +267,8 @@ class ItemOrderWidget extends StatelessWidget {
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: onCall,
+                                onPress: (invoice.supplierStart != null &&
+                                          invoice.supplierStart!.isNotEmpty) ? onCall : null ,
                                 icon: IconConstants.icCallColor,
                                 title: 'order.detail.call'.tr,
                                 border: Border(
@@ -283,7 +284,8 @@ class ItemOrderWidget extends StatelessWidget {
                           ),
                           Expanded(
                             child: _buildActionButton(
-                                onPress: onVideo,
+                                onPress: (invoice.supplierStart != null &&
+                                          invoice.supplierStart!.isNotEmpty) ? onVideo : null ,
                                 icon: IconConstants.icVideoCallColor,
                                 title: 'order.detail.video'.tr,
                                 border: Border(

@@ -21,7 +21,8 @@ extension OrderExtension on OrderScreen {
         children: [
           Expanded(
             child: GeneralButton(
-                onPressed: controller.onCall,
+                onPressed: (controller.invoice.value.supplierStart != null &&
+                controller.invoice.value.supplierStart!.isNotEmpty) ? controller.onCall : null,
                 height: 47,
                 backgroundColor: AppColor.greenColorLight,
                 borderColor: AppColor.greenColorLight,
@@ -42,7 +43,8 @@ extension OrderExtension on OrderScreen {
           const SizedBox(width: 16),
           Expanded(
             child: GeneralButton(
-                onPressed: controller.onVideo,
+                onPressed: (controller.invoice.value.supplierStart != null &&
+                controller.invoice.value.supplierStart!.isNotEmpty) ? controller.onVideo : null,
                 height: 47,
                 backgroundColor: AppColor.blueColorLight,
                 borderColor: AppColor.blueColorLight,
