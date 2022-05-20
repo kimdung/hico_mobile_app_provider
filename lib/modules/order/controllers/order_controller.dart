@@ -335,6 +335,7 @@ class OrderController extends BaseController {
     try {
       await EasyLoading.show();
       await _uiRepository.invoiceCompleted(id).then((response) async {
+        await EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           if (invoice.value.service!.isMedical == 1) {
               await Get.toNamed(Routes.MEDICAL, arguments: id)!.then((value) => loadData());
