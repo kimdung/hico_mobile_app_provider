@@ -51,7 +51,7 @@ dependencies:
   cloud_firestore: ^3.1.11
 
   # Payment
-  flutter_stripe: ^2.4.0
+  flutter_stripe: ^2.5.0
   
   #login
   flutter_line_sdk: ^2.1.0
