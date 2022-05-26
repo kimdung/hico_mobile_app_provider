@@ -537,7 +537,7 @@ extension OrderExtension on OrderScreen {
   Widget buildActionBtnBottom(int? status) {
     if (status == InvoiceStatus.requested.id) {
       return _btnRequestStatus();
-    } else if (status == InvoiceStatus.accepted.id) {
+    } else if (status == InvoiceStatus.accepted.id || status == InvoiceStatus.finished.id) {
       return _btnAcceptedStatus();
     }
     return Container();
