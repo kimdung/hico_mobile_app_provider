@@ -119,7 +119,7 @@ class TextFieldDecoration {
                 color: AppColor.sixTextColorLight,
                 fontWeight: FontWeight.bold,
               ),
-      contentPadding: contentPadding ?? null,
+      contentPadding: contentPadding,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radius ?? 0),
         borderSide: BorderSide(color: borderColor, width: 1),

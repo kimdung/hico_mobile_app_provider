@@ -1,17 +1,17 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/data/app_data_global.dart';
-import 'package:hico/routes/app_pages.dart';
-import 'package:hico/shared/constants/common.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
+import '../../../routes/app_pages.dart';
+import '../../../shared/constants/common.dart';
 
 class ServiceController extends BaseController {
   final Rx<int> totalRecord = Rx(0);
 
-  List<int> listRecord = new List<int>.generate(20, (i) => i + 1);
+  List<int> listRecord = List<int>.generate(20, (i) => i + 1);
 
   Rx<UserInfoModel> info = Rx(UserInfoModel(
       avatarImage: '',
@@ -22,10 +22,6 @@ class ServiceController extends BaseController {
 
   ServiceController() {
     _loadData();
-  }
-  @override
-  Future<void> onInit() {
-    return super.onInit();
   }
 
   Future _loadData() async {

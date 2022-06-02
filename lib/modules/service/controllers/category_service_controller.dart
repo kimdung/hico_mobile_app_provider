@@ -28,10 +28,6 @@ class CategoryServiceController extends BaseController {
     _loadData('');
   }
 
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
 
   Future<void> _loadData(String keyword) async {
     try {

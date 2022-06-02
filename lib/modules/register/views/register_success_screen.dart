@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/constants/common.dart';
 
 import '/resource/assets_constant/images_constants.dart';
 import '../../../shared/constants/colors.dart';
+import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';

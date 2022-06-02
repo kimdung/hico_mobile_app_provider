@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../models/time.dart';
-import '../../../modules/profile/controllers/profile_update_controller.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../constants/colors.dart';
 import '../../styles/text_style/text_style.dart';

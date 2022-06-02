@@ -55,6 +55,7 @@ extension _RegisterExtension on RegisterScreen {
           if (value == null || value.isEmpty) {
             return 'data_requied'.tr;
           }
+          return null;
         });
   }
 

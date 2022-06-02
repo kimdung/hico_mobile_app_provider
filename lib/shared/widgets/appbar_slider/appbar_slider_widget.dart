@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:hico/modules/on_boarding/controller/on_boarding_controller.dart';
-import 'package:hico/shared/widgets/carousel/slider_widget.dart';
 
+import '../../../modules/on_boarding/controller/on_boarding_controller.dart';
 import '../../../resource/assets_constant/images_constants.dart';
-import '../../../routes/app_pages.dart';
 import '../../constants/colors.dart';
 import '../carousel/carousel_widget.dart';
+import '../carousel/slider_widget.dart';
 import '../image_widget/fcore_image.dart';
 
 class AppBarSlider extends StatelessWidget {

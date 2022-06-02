@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hico/shared/constants/colors.dart';
+import '../../constants/colors.dart';
 
 class BoxDecorationWidget extends StatelessWidget {
   const BoxDecorationWidget({

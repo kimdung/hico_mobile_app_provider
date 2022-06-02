@@ -8,11 +8,11 @@ import '../../../shared/constants/common.dart';
 
 class NewsDetailController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
-  var news = Rx(NewsModel());
+  Rx<NewsModel> news = Rx(NewsModel());
 
   @override
   Future<void> onInit() {
-    int? id = Get.arguments;
+    final int? id = Get.arguments;
     _loadData(id);
     return super.onInit();
   }

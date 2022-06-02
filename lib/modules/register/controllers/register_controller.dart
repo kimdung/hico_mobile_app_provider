@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/data/app_data_global.dart';
-import 'package:hico/shared/constants/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/register/register_otp_request.dart';
 import 'package:ui_api/request/register/register_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
@@ -41,10 +39,6 @@ class RegisterController extends BaseController {
     confirmPasswordController.text = '';
   }
 
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
 
   @override
   void onClose() {}

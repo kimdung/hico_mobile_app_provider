@@ -90,7 +90,7 @@ class TopupHistoryController extends GetxController {
   Future onTopupDetail(TopupHistoryModel topup) async {
     await Get.toNamed(Routes.TOPUP_DETAIL, arguments: topup)?.then((value) {
       if (value is bool && value) {
-        this.walletController.indexPage.value = 0;
+        walletController.indexPage.value = 0;
       }
     });
   }

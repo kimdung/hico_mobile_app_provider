@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:ui_api/models/wallet/payment_method_item.dart';
 import 'package:ui_api/models/wallet/topup_item.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../data/app_data_global.dart';
 import '../../../../routes/app_pages.dart';

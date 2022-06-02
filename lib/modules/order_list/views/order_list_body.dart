@@ -63,9 +63,7 @@ extension OrderListBody on OrderListScreen {
           ),
           const SizedBox(width: 14),
           InkWell(
-            onTap: (){
-              controller.deposit();
-            },
+            onTap: controller.deposit,
             child: Container(
               margin: const EdgeInsets.all(5),
               child: FCoreImage(

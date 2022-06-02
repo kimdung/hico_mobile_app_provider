@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:ui_api/models/invoice/invoice_status.dart';
 
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
@@ -22,6 +20,7 @@ part 'booking_detail_children.dart';
 class BookingDetailScreen extends GetView<BookingDetailController> {
   const BookingDetailScreen({Key? key}) : super(key: key);
 
+  @override
   Widget build(BuildContext context) {
     return PickupLayout(
       controller.callMethods,

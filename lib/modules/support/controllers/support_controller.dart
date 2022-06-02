@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,6 @@ import 'package:ui_api/request/general/contact_request.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
-import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
@@ -23,10 +21,6 @@ class SupportController extends BaseController {
 
   bool showPassword = false;
 
-  @override
-  Future<void> onInit() async {
-    return super.onInit();
-  }
 
   Future<void> send() async {
     try {

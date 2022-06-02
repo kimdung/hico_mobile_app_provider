@@ -2,10 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -96,10 +94,6 @@ class ProfileUpDateController extends BaseController {
     _loadData();
   }
 
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
 
   Future _loadData() async {
     try {

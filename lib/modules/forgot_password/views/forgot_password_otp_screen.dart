@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hico/data/app_data_global.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '/resource/assets_constant/images_constants.dart';
+import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
-import '../../../shared/decoration/text_field_decoration.dart';
-import '../../../shared/widget_hico/button/general_button.dart';
+import '../../../shared/styles/text_style/text_style.dart';
 import '../controllers/forgot_password_controller.dart';
 
 //part 'forgot_password_extension.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'translations/ja_JP.dart';
 import 'translations/en_US.dart';
+import 'translations/ja_JP.dart';
 import 'translations/vi_VN.dart';
 
 class TranslationService extends Translations {

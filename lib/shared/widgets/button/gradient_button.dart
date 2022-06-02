@@ -31,7 +31,7 @@ class AppGradientButton extends StatelessWidget {
                   color: AppColor.colorFF4880.withOpacity(0.15),
                   spreadRadius: 5,
                   blurRadius: 5,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ]
             : null,

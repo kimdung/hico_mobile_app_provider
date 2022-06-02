@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/resource/assets_constant/images_constants.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/constants/common.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widget_hico/box_decoration/box_decoration.dart';
-import 'package:hico/shared/widget_hico/button/general_button.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
-import 'package:hico/shared/widget_hico/image_widget/network_image.dart';
 import 'package:ui_api/models/supplier/supplier_info_model.dart';
+
+import '../../../resource/assets_constant/icon_constants.dart';
+import '../../constants/colors.dart';
+import '../../styles/text_style/text_style.dart';
+import '../image_widget/network_image.dart';
 
 class SupplierWidget extends StatelessWidget {
   const SupplierWidget({

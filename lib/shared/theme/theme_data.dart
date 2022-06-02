@@ -28,7 +28,6 @@ class ThemeConfig {
 
     return ThemeData(
       brightness: brightness,
-      buttonColor: primaryColor,
       canvasColor: primaryBackgroundColor,
       cardColor: primaryBackgroundColor,
       dividerColor: divider,
@@ -50,7 +49,6 @@ class ThemeConfig {
       ),
       backgroundColor: primaryBackgroundColor,
       primaryColor: primaryColor,
-      accentColor: accentColor,
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: thirdTextColor,
         selectionColor: accentColor,
@@ -60,15 +58,19 @@ class ThemeConfig {
       appBarTheme: AppBarTheme(
         brightness: brightness,
         color: primaryColor,
-        textTheme: TextTheme(
+        iconTheme: IconThemeData(
+          color: secondTextColor,
+        ), toolbarTextStyle: TextTheme(
           bodyText1: baseTextTheme.bodyText1!.copyWith(
             color: secondTextColor,
             fontSize: 18,
           ),
-        ),
-        iconTheme: IconThemeData(
-          color: secondTextColor,
-        ),
+        ).bodyText2, titleTextStyle: TextTheme(
+          bodyText1: baseTextTheme.bodyText1!.copyWith(
+            color: secondTextColor,
+            fontSize: 18,
+          ),
+        ).headline6,
       ),
       iconTheme: IconThemeData(
         color: secondTextColor,
@@ -80,9 +82,7 @@ class ThemeConfig {
         colorScheme: ColorScheme(
           brightness: brightness,
           primary: primaryColor,
-          primaryVariant: accentColor,
           secondary: accentColor,
-          secondaryVariant: accentColor,
           surface: primaryBackgroundColor,
           background: primaryColor,
           error: error,
@@ -201,7 +201,7 @@ class ThemeConfig {
           fontSize: 11,
           fontWeight: FontWeight.w500,
         ),
-      ),
+      ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
     );
   }
 

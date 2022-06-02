@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/shared/constants/common.dart';
+
 import '../../constants/colors.dart';
+import '../../constants/common.dart';
 
 part 'borrow_data_page/borrow_data_text_style.dart';
+part 'health_assistant_page/health_assistant_style.dart';
 part 'home_page/home_page_text_style.dart';
 part 'moto_page/moto_page_text_style.dart';
-part 'product_page/product_page_text_style.dart';
 part 'payment_page/payment_page_text_style.dart';
+part 'product_page/product_page_text_style.dart';
 part 'setting_profile/setting_profile_text_style.dart';
-part 'health_assistant_page/health_assistant_style.dart';
 
 /// Define color at theme_data.dart
 class TextAppStyle {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/constants/common.dart';
-import 'package:hico/shared/decoration/text_field_decoration.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widget_hico/button/general_button.dart';
-import 'package:hico/shared/widget_hico/image_widget/network_image.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
+
+import '../../../resource/assets_constant/icon_constants.dart';
+import '../../constants/colors.dart';
+import '../../constants/common.dart';
+import '../../decoration/text_field_decoration.dart';
+import '../../styles/text_style/text_style.dart';
+import '../button/general_button.dart';
+import '../image_widget/network_image.dart';
 
 class RatingDialogWidget extends StatelessWidget {
   RatingDialogWidget({

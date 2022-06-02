@@ -1,18 +1,15 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:hico/modules/forgot_password/controllers/forgot_password_controller.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/decoration/text_field_decoration.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widget_hico/button/general_button.dart';
-import 'package:hico/shared/widgets/button/gradient_button.dart';
-import '/resource/assets_constant/images_constants.dart';
-import '/shared/widgets/button/widget_button.dart';
 
+import '/resource/assets_constant/images_constants.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../shared/constants/colors.dart';
+import '../../../shared/decoration/text_field_decoration.dart';
+import '../../../shared/styles/text_style/text_style.dart';
+import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../controllers/forgot_password_controller.dart';
 
 //part 'forgot_password_extension.dart';
 
@@ -152,6 +149,7 @@ class ForgotPasswordChangeScreen extends GetView<ForgotPasswordController> {
           if (value != controller.passwordController.text) {
             return 'incorrect_confirm_pass'.tr;
           }
+          return null;
         });
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/routes/app_pages.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../routes/app_pages.dart';
+import '../../constants/colors.dart';
+import '../../styles/text_style/text_style.dart';
+import '../image_widget/fcore_image.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({
@@ -18,10 +18,10 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 74,
-      padding: EdgeInsets.symmetric(horizontal: 35),
+      padding: const EdgeInsets.symmetric(horizontal: 35),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(18),
           topRight: Radius.circular(18),
         ),
@@ -30,7 +30,7 @@ class BottomBar extends StatelessWidget {
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, -2),
+            offset: const Offset(0, -2),
           ),
         ],
       ),

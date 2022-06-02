@@ -8,11 +8,11 @@ import '../../../shared/constants/common.dart';
 
 class NotificationDetailController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
-  var notification = Rx(NotificationModel());
+  Rx<NotificationModel> notification = Rx(NotificationModel());
 
   @override
   Future<void> onInit() {
-    int? id = Get.arguments;
+    final int? id = Get.arguments;
     _loadData(id);
     return super.onInit();
   }

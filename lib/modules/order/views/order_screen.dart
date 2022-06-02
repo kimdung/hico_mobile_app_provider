@@ -1,19 +1,18 @@
 import 'dart:developer';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 
-import '../../../shared/utils/dialog_util.dart';
-import '../../../shared/widget_hico/dialog/summary_working_widget.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/text_style.dart';
+import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
+import '../../../shared/widget_hico/dialog/summary_working_widget.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../../call/pickup/picker_layout.dart';

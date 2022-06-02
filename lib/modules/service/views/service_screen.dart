@@ -5,7 +5,6 @@ import 'package:ui_api/models/user/user_services_model.dart';
 import 'package:ui_api/models/user/user_time_model.dart';
 import 'package:ui_api/models/user/workplaces_model.dart';
 
-import '../../call/pickup/picker_layout.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -14,6 +13,7 @@ import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../call/pickup/picker_layout.dart';
 import '../controllers/service_controller.dart';
 
 part 'service_extension.dart';

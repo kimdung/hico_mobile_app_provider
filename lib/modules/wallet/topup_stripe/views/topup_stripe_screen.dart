@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 //import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
-import 'package:hico/shared/widget_hico/widget_touch_hide_keyboard.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
 
 import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../shared/constants/colors.dart';
 import '../../../../shared/styles/text_style/text_style.dart';
 import '../../../../shared/widget_hico/button/general_button.dart';
+import '../../../../shared/widget_hico/widget_touch_hide_keyboard.dart';
 //import '../../../../shared/widget_hico/widget_touch_hide_keyboard.dart';
 import '../../../call/pickup/picker_layout.dart';
 import '../controllers/topup_stripe_controller.dart';

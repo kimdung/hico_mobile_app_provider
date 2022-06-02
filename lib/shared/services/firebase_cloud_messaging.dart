@@ -246,10 +246,8 @@ class FirebaseMessageConfig {
     });
     _firebaseMessaging.onTokenRefresh.listen((token) {
       debugPrint('TOKEN FIREBASE CHANGE: $token');
-      if (token != null) {
-        AppDataGlobal.firebaseToken = token;
-        AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
-      }
+      AppDataGlobal.firebaseToken = token;
+      AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
     });
   }
 }

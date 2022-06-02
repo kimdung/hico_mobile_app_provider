@@ -10,7 +10,7 @@ import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
 
 class StatisticController extends BaseController {
-  var scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
   final _uiRepository = Get.find<HicoUIRepository>();
   Rx<int> indexStatus = Rx(0);
   int limit = 5;
@@ -43,13 +43,6 @@ class StatisticController extends BaseController {
     //loadInvoiceList();
   }
 
-  @override
-  Future<void> onInit() {
-    // Setup the listener.
-    
-
-    return super.onInit();
-  }
 
   Future<void> loadData() async {
     try {

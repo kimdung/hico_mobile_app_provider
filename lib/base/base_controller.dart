@@ -1,8 +1,5 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-import '../data/app_data_global.dart';
 import '../data/interceptors/listen_error_graphql_interceptor.dart';
 import '../shared/dialog_manager/data_models/request/common_dialog_request.dart';
 import '../shared/dialog_manager/services/dialog_service.dart';
@@ -14,7 +11,7 @@ import '../shared/services/firebase_cloud_messaging.dart';
 
 class BaseController extends GetxController
     with NetworkManager, ListenErrorGraphQL {
-  var _hasNetwork = true;
+  final _hasNetwork = true;
 
   final _networkController = Get.find<NetworkController>();
 

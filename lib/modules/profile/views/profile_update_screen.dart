@@ -15,7 +15,6 @@ import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
-import '../../../shared/widgets/experience_widget/experience_widget.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../controllers/profile_update_controller.dart';
 

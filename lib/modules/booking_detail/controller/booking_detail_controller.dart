@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/models/invoice/invoice_extend_model.dart';
-import 'package:ui_api/models/invoice/invoice_model.dart';
-import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_extend_request.dart';
-import 'package:ui_api/response/invoice/booking_extend_response.dart';
 
 import '../../../base/base_controller.dart';
-import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
-import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';

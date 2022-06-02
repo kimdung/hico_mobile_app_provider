@@ -100,8 +100,8 @@ class LoginScreen extends GetView<LoginController> {
                                 Expanded(
                                   child: Container(
                                     color: AppColor.dividerColorLight,
-                                    child: const Text(''),
                                     height: 1,
+                                    child: const Text(''),
                                   ),
                                 ),
                                 Padding(
@@ -115,8 +115,8 @@ class LoginScreen extends GetView<LoginController> {
                                 Expanded(
                                   child: Container(
                                     color: AppColor.dividerColorLight,
-                                    child: const Text(''),
                                     height: 1,
+                                    child: const Text(''),
                                   ),
                                 )
                               ],

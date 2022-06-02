@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/constants/common.dart';
-import 'package:hico/shared/utils/dialog_util.dart';
-import 'package:hico/shared/widget_hico/dialog/normal_widget.dart';
-import 'package:hico/shared/widget_hico/dialog/time_spiner_widget.dart';
 import 'package:ui_api/models/user/user_time_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/service/update_service_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../shared/constants/colors.dart';
+import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../shared/widget_hico/dialog/time_spiner_widget.dart';
 
 class TimeServiceController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -28,10 +27,6 @@ class TimeServiceController extends BaseController {
     prepareData();
   }
 
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
 
   Future<void> prepareData() async {
     try {
@@ -66,7 +61,7 @@ class TimeServiceController extends BaseController {
   }
 
   Future<void> showTimeFrom(BuildContext context, int index) async {
-    var item = lstTimes[index];
+    final item = lstTimes[index];
 
     await DialogUtil.showPopup(
       dialogSize: DialogSize.Popup,
@@ -97,7 +92,7 @@ class TimeServiceController extends BaseController {
   }
 
   Future<void> showTimeTo(BuildContext context, int index) async {
-    var item = lstTimes[index];
+    final item = lstTimes[index];
 
     await DialogUtil.showPopup(
       dialogSize: DialogSize.Popup,

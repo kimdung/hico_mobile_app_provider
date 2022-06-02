@@ -3,19 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:hico/routes/app_pages.dart';
-import 'package:hico/shared/widget_hico/box_decoration/box_decoration.dart';
-import 'package:hico/shared/widgets/experience_widget/experience_widget.dart';
 import 'package:ui_api/models/user/documents_certificate_model.dart';
 
-import '../../../shared/widget_hico/button/general_button.dart';
 import '/resource/assets_constant/images_constants.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/styles/text_style/text_style.dart';
+import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
+import '../../../shared/widget_hico/button/general_button.dart';
 import '../../../shared/widget_hico/image_widget/network_image.dart';
+import '../../../shared/widgets/experience_widget/experience_widget.dart';
 import '../../../shared/widgets/image_widget/fcore_image.dart';
 import '../controllers/profile_controller.dart';
 
@@ -64,8 +63,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(120)),
-                        child: (controller.info.value.avatarImage != null &&
-                                controller.info.value.avatarImage != '')
+                        child: (controller.info.value.avatarImage != '')
                             ? CachedNetworkImage(
                                 width: 140,
                                 height: 140,

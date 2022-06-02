@@ -98,14 +98,14 @@ class LanguageScreen extends GetView<LanguageController> {
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                   blurRadius: 10,
                   color: AppColor.shadowColorLight)
             ]),
         child: Column(
           children: [
             FCoreImage(icon),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Text(

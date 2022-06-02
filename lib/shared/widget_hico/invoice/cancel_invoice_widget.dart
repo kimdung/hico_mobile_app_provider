@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
+import '../../constants/colors.dart';
+import '../../styles/text_style/text_style.dart';
 
 class CancelInvoiceWidget extends StatelessWidget {
   const CancelInvoiceWidget({

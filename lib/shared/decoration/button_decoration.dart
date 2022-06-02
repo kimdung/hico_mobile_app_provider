@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants/colors.dart';
 
 class ButtonDecoration {
   ButtonDecoration._();

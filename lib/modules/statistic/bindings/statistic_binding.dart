@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:hico/base/base_binding.dart';
-import 'package:hico/modules/statistic/controllers/statistic_controller.dart';
+import '../../../base/base_binding.dart';
+import '../controllers/statistic_controller.dart';
 
 class StatisticBinding extends BaseBinding {
   @override

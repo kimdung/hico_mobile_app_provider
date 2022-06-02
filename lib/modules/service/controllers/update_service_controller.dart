@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/utils/dialog_util.dart';
-import 'package:hico/shared/widget_hico/dialog/normal_widget.dart';
 import 'package:ui_api/models/user/user_services_model.dart';
 import 'package:ui_api/models/user/user_time_model.dart';
 import 'package:ui_api/models/user/workplaces_model.dart';
@@ -13,8 +9,11 @@ import 'package:ui_api/request/service/update_service_request.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class UpdateServiceController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -40,10 +39,6 @@ class UpdateServiceController extends BaseController {
     _loadData();
   }
 
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
 
   Future _loadData() async {
     try {

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:ui_api/models/invoice/invoice_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 
-import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../resource/assets_constant/images_constants.dart';
-import '../../../routes/app_pages.dart';
 import '../../constants/colors.dart';
 import '../../constants/common.dart';
 import '../../styles/text_style/text_style.dart';

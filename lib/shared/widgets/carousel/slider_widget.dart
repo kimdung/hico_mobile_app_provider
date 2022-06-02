@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widgets/image_widget/fcore_image.dart';
+import '../../styles/text_style/text_style.dart';
+import '../image_widget/fcore_image.dart';
 
 class SliderItem {
   SliderItem({

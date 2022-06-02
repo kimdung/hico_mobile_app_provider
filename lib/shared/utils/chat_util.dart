@@ -14,7 +14,23 @@ class ChatUtil {
       AppDataGlobal.userInfo?.conversationInfo?.token ?? '',
     );
 
-    await AppDataGlobal.client
-        ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
+    await AppDataGlobal.client?.getDevices().then((listDevicesResponse) {
+      var isExist = false;
+      listDevicesResponse.devices.forEach((device) {
+        if (device.id == AppDataGlobal.firebaseToken) {
+          print('[ChatUtil] added firebaseToken ${device.id}');
+          isExist = true;
+        } else {
+          print('[ChatUtil] removeDevice firebaseToken ${device.id}');
+          AppDataGlobal.client?.removeDevice(device.id);
+        }
+      });
+      if (!isExist) {
+        print(
+            '[ChatUtil] new add firebaseToken ${AppDataGlobal.firebaseToken}');
+        AppDataGlobal.client
+            ?.addDevice(AppDataGlobal.firebaseToken, PushProvider.firebase);
+      }
+    });
   }
 }

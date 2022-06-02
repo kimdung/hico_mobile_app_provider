@@ -12,7 +12,7 @@ import '../../../shared/constants/common.dart';
 class NotificationController extends BaseController {
   //final Rx<int> totalRecord = Rx(1);
 
-  var scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
   final _uiRepository = Get.find<HicoUIRepository>();
   RxList<NotificationModel> notificationList = RxList<NotificationModel>();
   int limit = CommonConstants.limit;
@@ -30,10 +30,6 @@ class NotificationController extends BaseController {
     });
   }
 
-  @override
-  Future<void> onInit() {
-    return super.onInit();
-  }
 
   Future<void> loadData() async {
     try {

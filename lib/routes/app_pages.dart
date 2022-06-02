@@ -147,7 +147,7 @@ final routePages = [
       binding: OrderBinding()),
   GetPage(
       name: Routes.BOOKING_DETAIL,
-      page: () => BookingDetailScreen(),
+      page: () => const BookingDetailScreen(),
       binding: BookingDetailBinding()),
 
   //notification

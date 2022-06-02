@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:hico/resource/assets_constant/icon_constants.dart';
-import 'package:hico/shared/constants/colors.dart';
-import 'package:hico/shared/constants/common.dart';
-import 'package:hico/shared/styles/text_style/text_style.dart';
-import 'package:hico/shared/widget_hico/box_decoration/box_decoration.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:ui_api/models/master_data/provinces_model.dart';
-import 'package:ui_api/models/news/news_model.dart';
+
+import '../../../resource/assets_constant/icon_constants.dart';
+import '../../constants/colors.dart';
+import '../../constants/common.dart';
+import '../../styles/text_style/text_style.dart';
+import '../box_decoration/box_decoration.dart';
 
 class ProvinceWidget extends StatefulWidget {
   const ProvinceWidget({

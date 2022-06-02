@@ -13,7 +13,6 @@ import '../../../../base/base_controller.dart';
 import '../../../../data/app_data_global.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
-import '../../../../shared/utils/dialog_util.dart';
 import '../../../../shared/widgets/image_widget/image_widget.dart';
 
 class TopupBankController extends BaseController {
