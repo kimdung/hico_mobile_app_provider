@@ -23,7 +23,7 @@ class OrderListController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
   final Channel? adminChatChannel;
 
-  final Rx<int> totalNotif = Rx(0);
+  final Rx<int> badgeChatAdmin = Rx(0);
 
   String keyword = '';
 
@@ -207,7 +207,7 @@ class OrderListController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.getCustomer()
           : _usersResponse!.users.first,
-      CommonConstants.IS_NOT_CALL: (invoice.supplierStart != null && invoice.supplierStart!.isNotEmpty) ? false : true,
+      CommonConstants.IS_NOT_CALL: invoice.isNotCall(),
     });
   }
 

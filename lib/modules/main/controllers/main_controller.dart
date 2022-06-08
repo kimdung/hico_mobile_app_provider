@@ -15,6 +15,7 @@ import '../../order_list/views/order_list_screen.dart';
 
 class MainController extends BaseController {
   Rx<int> index = Rx(0);
+  Rx<int> badge = Rx(11);
 
   final channel = AppDataGlobal.client?.channel('messaging',
       id: AppDataGlobal.userInfo?.conversationInfo?.getAdminChannel() ?? '');
@@ -40,10 +41,11 @@ class MainController extends BaseController {
     await orderListController.loadList();
     await channel?.watch();
     channel?.state?.unreadCountStream.listen((event) {
-      orderListController.totalNotif.value = event;
+      orderListController.badgeChatAdmin.value = event;
     });
     await orderListController.loadList();
   }
+  
 
   Future<void> changeIndex(int _index) async {
     if (_index != index.value) {

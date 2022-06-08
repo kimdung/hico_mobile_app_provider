@@ -170,6 +170,22 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<NotificationUnreadResponse> notificationUnRead() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<NotificationUnreadResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/notification/count_notify_unread',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = NotificationUnreadResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<BaseResponse> logout() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

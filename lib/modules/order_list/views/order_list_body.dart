@@ -71,22 +71,22 @@ extension OrderListBody on OrderListScreen {
                 height: 24,
               ),
             ),
-          ), 
+          ),
           InkWell(
             onTap: controller.onChatAdmin,
             child: Stack(
               children: [
                 Container(
-                 margin: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(5),
                   child: FCoreImage(
                     IconConstants.icChat,
                     height: 24,
                   ),
                 ),
-                controller.totalNotif.value == 0
+                controller.badgeChatAdmin.value == 0
                     ? Container()
                     : Positioned(
-                        right: 0, 
+                        right: 0,
                         child: Container(
                           width: 15,
                           height: 15,
@@ -95,7 +95,7 @@ extension OrderListBody on OrderListScreen {
                               color: AppColor.primaryColorLight),
                           child: Center(
                             child: Text(
-                              controller.totalNotif.value.toString(),
+                              controller.badgeChatAdmin.value.toString(),
                               style: AppTextStyle.secondTextStyle.copyWith(
                                   color: Colors.white,
                                   fontSize: 10,

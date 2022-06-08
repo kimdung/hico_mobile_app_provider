@@ -84,6 +84,10 @@ class InvoiceModel {
 
   Map<String, dynamic> toJson() => _$InvoiceModelToJson(this);
 
+  bool isNotCall() {
+    return supplierStart?.isEmpty ?? true;
+  }
+
   String getChatChannel() {
     return '${AppDataGlobal.userInfo?.id}-$customerId';
   }

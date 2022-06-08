@@ -31,6 +31,7 @@ import '../../request/invoice/confirm_sub_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
 import '../../response/invoice/booking_extend_response.dart';
+import '../../response/notifications/notification_unread_response.dart';
 import '../../response/user/upload_certificate_response.dart';
 import '../../response/user/upload_response.dart';
 import '../../response/wallet/topup_history_response.dart';
@@ -131,6 +132,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<NotificationDetailResponse> notificationDetail(int id) {
     return _api.notificationDetail(id);
+  }
+
+  @override
+  Future<NotificationUnreadResponse> notificationUnRead() {
+    return _api.notificationUnRead();
   }
 
   //invoice history

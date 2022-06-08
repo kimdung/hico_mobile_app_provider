@@ -21,8 +21,9 @@ extension OrderExtension on OrderScreen {
         children: [
           Expanded(
             child: GeneralButton(
-                onPressed: (controller.invoice.value.supplierStart != null &&
-                controller.invoice.value.supplierStart!.isNotEmpty) ? controller.onCall : null,
+                onPressed: controller.invoice.value.isNotCall()
+                    ? null
+                    : controller.onCall,
                 height: 47,
                 backgroundColor: AppColor.greenColorLight,
                 borderColor: AppColor.greenColorLight,
@@ -43,8 +44,9 @@ extension OrderExtension on OrderScreen {
           const SizedBox(width: 16),
           Expanded(
             child: GeneralButton(
-                onPressed: (controller.invoice.value.supplierStart != null &&
-                controller.invoice.value.supplierStart!.isNotEmpty) ? controller.onVideo : null,
+                onPressed: controller.invoice.value.isNotCall()
+                    ? null
+                    : controller.onVideo,
                 height: 47,
                 backgroundColor: AppColor.blueColorLight,
                 borderColor: AppColor.blueColorLight,
@@ -217,27 +219,28 @@ extension OrderExtension on OrderScreen {
         );
       case OrderInfoViewType.Button:
         return InkWell(
-          onTap: (){
+          onTap: () {
             DialogUtil.showPopup(
-                  dialogSize: DialogSize.Popup,
-                  barrierDismissible: false,
-                  backgroundColor: Colors.transparent,
-                  child: const SummaryWorkingWidget(),
-                  onVaLue: (value) {
-                    log('Value: ${value.toString()}');
-                    if (value != null && value != '') {
-                      controller.request.value.invoiceId = 32;
-                      controller.request.value.summary = value;
-                     controller.confirmSub(controller.request.value);
-                    }
-                  },
-                );
+              dialogSize: DialogSize.Popup,
+              barrierDismissible: false,
+              backgroundColor: Colors.transparent,
+              child: const SummaryWorkingWidget(),
+              onVaLue: (value) {
+                log('Value: ${value.toString()}');
+                if (value != null && value != '') {
+                  controller.request.value.invoiceId = 32;
+                  controller.request.value.summary = value;
+                  controller.confirmSub(controller.request.value);
+                }
+              },
+            );
           },
           child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
               decoration: BoxDecoration(
-                  color:
-                      value == '1' ? AppColor.onlineColor : AppColor.offlineColor,
+                  color: value == '1'
+                      ? AppColor.onlineColor
+                      : AppColor.offlineColor,
                   borderRadius: BorderRadius.circular(18)),
               child: Text(
                 value == '1' ? 'Online' : 'Offline',
@@ -309,69 +312,75 @@ extension OrderExtension on OrderScreen {
                                 color: Colors.black,
                               )),
                       Container(
-                        child: 
-                        controller.invoice.value.workingForm == CommonConstants.online ?
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                                '${controller.invoice.value.service!.price} JPY/${'invoice.hours'.tr}',
-                                style:
-                                    TextAppStyle().genaralTextStyle().copyWith(
-                                          color: AppColor.blueTextColor,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                            Text(
-                                'x ${controller.invoice.value.hours} ${'invoice.hours'.tr}',
-                                style:
-                                    TextAppStyle().genaralTextStyle().copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                          ],
-                        ) :
-                        Column(
-                          children:[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    '${controller.invoice.value.service!.offlinePriceMin} JPY/ 0,5-${controller.invoice.value.service!.minHours} ${'invoice.hours'.tr}',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                        child: controller.invoice.value.workingForm ==
+                                CommonConstants.online
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                      '${controller.invoice.value.service!.price} JPY/${'invoice.hours'.tr}',
+                                      style: TextAppStyle()
+                                          .genaralTextStyle()
+                                          .copyWith(
+                                            color: AppColor.blueTextColor,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                  Text(
+                                      'x ${controller.invoice.value.hours} ${'invoice.hours'.tr}',
+                                      style: TextAppStyle()
+                                          .genaralTextStyle()
+                                          .copyWith(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                ],
+                              )
+                            : Column(children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        '${controller.invoice.value.service!.offlinePriceMin} JPY/ 0,5-${controller.invoice.value.service!.minHours} ${'invoice.hours'.tr}',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: AppColor.blueTextColor,
                                               fontWeight: FontWeight.w500,
                                             )),
-                                Text(
-                                    'x 1',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                                    Text('x 1',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
                                             )),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    '${controller.invoice.value.service!.price} JPY/${'invoice.hours'.tr}',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        '${controller.invoice.value.service!.price} JPY/${'invoice.hours'.tr}',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: AppColor.blueTextColor,
                                               fontWeight: FontWeight.w500,
                                             )),
-                                Text(
-                                    'x ${controller.invoice.value.service!.hours}',
-                                    style:
-                                        TextAppStyle().genaralTextStyle().copyWith(
+                                    Text(
+                                        'x ${controller.invoice.value.service!.hours}',
+                                        style: TextAppStyle()
+                                            .genaralTextStyle()
+                                            .copyWith(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
                                             )),
-                              ],
-                            )
-                          ]
-                        ),
+                                  ],
+                                )
+                              ]),
                       )
                     ],
                   ),
@@ -399,17 +408,13 @@ extension OrderExtension on OrderScreen {
         _buildOrderInfoItem(
             icon: IconConstants.icOrderCode,
             title:
-                ' ${(controller.invoice.value.workingForm == CommonConstants.offline && 
-                      controller.invoice.value.service != null &&
-                      controller.invoice.value.hours! > controller.invoice.value.service!.minHours!) 
-                      ? controller.invoice.value.service!.minHours :
-                       controller.invoice.value.hours
-                    } ${'invoice.hours'.tr}',
+                ' ${(controller.invoice.value.workingForm == CommonConstants.offline && controller.invoice.value.service != null && controller.invoice.value.hours! > controller.invoice.value.service!.minHours!) ? controller.invoice.value.service!.minHours : controller.invoice.value.hours} ${'invoice.hours'.tr}',
             titleColor: AppColor.blueTextColor,
             titleFontWeight: FontWeight.w500,
             type: OrderInfoViewType.Text,
             value: controller.invoice.value.workingTime ?? ''),
-          if(controller.invoice.value.workingForm == CommonConstants.offline && controller.invoice.value.service!.hours! > 0)
+        if (controller.invoice.value.workingForm == CommonConstants.offline &&
+            controller.invoice.value.service!.hours! > 0)
           _buildOrderInfoItem(
               icon: IconConstants.icOrderCode,
               title:
@@ -537,7 +542,8 @@ extension OrderExtension on OrderScreen {
   Widget buildActionBtnBottom(int? status) {
     if (status == InvoiceStatus.requested.id) {
       return _btnRequestStatus();
-    } else if (status == InvoiceStatus.accepted.id || status == InvoiceStatus.finished.id) {
+    } else if (status == InvoiceStatus.accepted.id ||
+        status == InvoiceStatus.finished.id) {
       return _btnAcceptedStatus();
     }
     return Container();

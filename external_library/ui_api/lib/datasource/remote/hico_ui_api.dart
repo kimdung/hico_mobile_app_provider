@@ -32,6 +32,8 @@ import '../../request/invoice/confirm_sub_request.dart';
 import '../../response/call/call_token_response.dart';
 import '../../response/chat/chat_token_response.dart';
 import '../../response/invoice/booking_extend_response.dart';
+import '../../response/notifications/notification_badge_response.dart';
+import '../../response/notifications/notification_unread_response.dart';
 import '../../response/user/upload_certificate_response.dart';
 import '../../response/user/upload_response.dart';
 import '../../response/wallet/topup_history_response.dart';
@@ -87,6 +89,10 @@ abstract class HicoUIAPI {
   Future<NotificationDetailResponse> notificationDetail(
     @Query('notification_id') int id,
   );
+
+  // notification count unread
+  @GET('/v1/notification/count_notify_unread')
+  Future<NotificationUnreadResponse> notificationUnRead();
 
   //master data
   @GET('/v1/auth/logout')
@@ -222,16 +228,16 @@ abstract class HicoUIAPI {
     @Query('number_of_years_in_japan') int numberOfYearsInJapan,
     @Query('interpretation_experience') int interpretationExperience,
     @Query('translation_experience') int translationExperience,
-    @Query('interpretation_experience_detail') String interpretationExperienceDetail,
+    @Query('interpretation_experience_detail')
+        String interpretationExperienceDetail,
     @Query('translation_experience_detail') String translationExperienceDetail,
     @Query('remove_curriculum_vitae_files') String removeCurriculumVitaeFiles,
     @Query('remove_work_experience_files') String removeWorkExperienceFiles,
-    @Query('remove_documents_certificate') List<int> removeDocumentsCertificate,
-    {
-      @Part(value: 'document_front_side') File? documentFrontSide,
-      @Part(value: 'document_back_side') File? documentBackSide,
-    }
-  );
+    @Query('remove_documents_certificate')
+        List<int> removeDocumentsCertificate, {
+    @Part(value: 'document_front_side') File? documentFrontSide,
+    @Part(value: 'document_back_side') File? documentBackSide,
+  });
 
   //service categories
   @GET('/v1/customer/category/list')
@@ -351,12 +357,12 @@ abstract class HicoUIAPI {
 
   //update file
   @POST('/v1/user/uploadCetificateFileUser')
-  Future<UploadCertificateResponse> uploadCetificateFile(@Part() File file, @Query('type') int type);
+  Future<UploadCertificateResponse> uploadCetificateFile(
+      @Part() File file, @Query('type') int type);
 
   @GET('/v1/supplier/invoice/subDetail')
   Future<BookingExtendResponse> subDetail(
-      @Query('invoice_id') int invoiceId,
-      @Query('sub_id') int subId);
+      @Query('invoice_id') int invoiceId, @Query('sub_id') int subId);
 
   @POST('/v1/supplier/invoice/subConfirm')
   Future<BaseResponse> subConfirm(@Body() BookingExtendRequest request);

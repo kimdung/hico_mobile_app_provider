@@ -93,7 +93,7 @@ class OrderController extends BaseController {
       CommonConstants.CHAT_USER: (_usersResponse?.users.isEmpty ?? true)
           ? invoice.value.getCustomer()
           : _usersResponse!.users.first,
-      CommonConstants.IS_NOT_CALL: invoice.value.supplierStart != null && invoice.value.supplierStart!.isNotEmpty ? false : true,
+      CommonConstants.IS_NOT_CALL: invoice.value.isNotCall(),
     });
   }
 
