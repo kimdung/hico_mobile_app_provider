@@ -83,27 +83,11 @@ extension OrderListBody on OrderListScreen {
                     height: 24,
                   ),
                 ),
-                controller.badgeChatAdmin.value == 0
-                    ? Container()
-                    : Positioned(
-                        right: 0,
-                        child: Container(
-                          width: 15,
-                          height: 15,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              color: AppColor.primaryColorLight),
-                          child: Center(
-                            child: Text(
-                              controller.badgeChatAdmin.value.toString(),
-                              style: AppTextStyle.secondTextStyle.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      )
+                Positioned(
+                  right: 0,
+                  child: Obx(() =>
+                      BadgeWidget(badge: controller.badgeChatAdmin.value)),
+                ),
               ],
             ),
           )

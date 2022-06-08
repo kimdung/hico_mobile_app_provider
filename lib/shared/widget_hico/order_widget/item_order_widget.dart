@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/invoice/invoice_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
@@ -10,8 +9,8 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../resource/assets_constant/images_constants.dart';
 import '../../constants/colors.dart';
 import '../../constants/common.dart';
-import '../../styles/text_style/app_text_style.dart';
 import '../../styles/text_style/text_style.dart';
+import '../../widgets/badge/badge_widget.dart';
 import '../../widgets/image_widget/fcore_image.dart';
 import '../image_widget/network_image.dart';
 
@@ -388,7 +387,7 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
       required Border border,
       TextStyle? style,
       required Function()? onPress,
-      int? badge = 0}) {
+      int badge = 0}) {
     return InkWell(
       onTap: onPress,
       child: Container(
@@ -408,22 +407,7 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
                     width: 17,
                   ),
                 const SizedBox(width: 5),
-                (badge == null || badge == 0)
-                    ? Container()
-                    : Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: AppColor.primaryColorLight,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          badge.toString(),
-                          style: AppTextStyle.secondTextStyle.copyWith(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
+                BadgeWidget(badge: badge),
               ],
             ),
             const SizedBox(width: 10),

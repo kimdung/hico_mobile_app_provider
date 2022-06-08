@@ -8,17 +8,18 @@ import 'package:ui_api/request/invoice/booking_extend_request.dart';
 import '../../../base/base_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
+import '../../main/controllers/main_controller.dart';
 
 class NotificationController extends BaseController {
-  //final Rx<int> totalRecord = Rx(1);
+  final _uiRepository = Get.find<HicoUIRepository>();
+  final MainController mainController;
 
   ScrollController scrollController = ScrollController();
-  final _uiRepository = Get.find<HicoUIRepository>();
   RxList<NotificationModel> notificationList = RxList<NotificationModel>();
   int limit = CommonConstants.limit;
   int offset = 0;
 
-  NotificationController() {
+  NotificationController(this.mainController) {
     loadData();
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
@@ -29,7 +30,6 @@ class NotificationController extends BaseController {
       }
     });
   }
-
 
   Future<void> loadData() async {
     try {
@@ -70,7 +70,8 @@ class NotificationController extends BaseController {
     }
   }
 
-  Future<void> viewDetail(int id, int displayType, int? invoiceId, int? subId) async {
+  Future<void> viewDetail(
+      int id, int displayType, int? invoiceId, int? subId) async {
     if (displayType == 1) {
       await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
           ?.then((value) => loadData());
@@ -79,21 +80,21 @@ class NotificationController extends BaseController {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.detail != null) {
-          Get.toNamed(Routes.BOOKING_DETAIL, arguments: BookingExtendRequest(invoiceId: invoiceId, subId: subId))
-          ?.then((value) => loadData());
+          Get.toNamed(Routes.BOOKING_DETAIL,
+                  arguments:
+                      BookingExtendRequest(invoiceId: invoiceId, subId: subId))
+              ?.then((value) => loadData());
         }
       });
-      
     } else {
       await _uiRepository.notificationDetail(id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.detail != null) {
           Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
-          ?.then((value) => loadData());
+              ?.then((value) => loadData());
         }
       });
-      
     }
   }
 

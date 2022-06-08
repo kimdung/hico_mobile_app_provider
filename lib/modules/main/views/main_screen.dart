@@ -56,7 +56,11 @@ class MainScreen extends GetView<MainController> {
                         alignment: Alignment.topCenter,
                         children: [
                           FCoreImage(IconConstants.icMenuNotifInact),
-                          Obx(() => BadgeWidget(badge: controller.badge.value)),
+                          Positioned(
+                            right: 0,
+                            child: Obx(() =>
+                                BadgeWidget(badge: controller.badge.value)),
+                          ),
                         ],
                       ),
                       activeIcon: Container(
@@ -65,8 +69,12 @@ class MainScreen extends GetView<MainController> {
                             FCoreImage(IconConstants.icMenuNotifAct),
                             Positioned(
                               right: 0,
-                              child: Obx(() =>
-                                  BadgeWidget(badge: controller.badge.value)),
+                              child: Obx(
+                                () => BadgeWidget(
+                                  badge: controller.badge.value,
+                                  isDart: true,
+                                ),
+                              ),
                             ),
                           ],
                         ),

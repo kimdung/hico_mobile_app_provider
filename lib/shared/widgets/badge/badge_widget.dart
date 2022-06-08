@@ -5,8 +5,10 @@ import '../../styles/text_style/app_text_style.dart';
 
 class BadgeWidget extends StatelessWidget {
   final int badge;
+  final bool isDart;
 
-  const BadgeWidget({Key? key, this.badge = 0}) : super(key: key);
+  const BadgeWidget({Key? key, this.badge = 0, this.isDart = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +20,26 @@ class BadgeWidget extends StatelessWidget {
               minWidth: 15,
             ),
             child: Container(
-              padding: const EdgeInsets.all(4),
+              padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColor.primaryColorLight,
+                border: Border.all(
+                  color: isDart
+                      ? AppColor.primaryColorLight
+                      : AppColor.accentColorLight,
+                ),
+                color: isDart
+                    ? AppColor.accentColorLight
+                    : AppColor.primaryColorLight,
               ),
               child: Center(
                 child: Text(
                   badge.toString(),
                   style: AppTextStyle.secondTextStyle.copyWith(
-                      color: Colors.white,
-                      fontSize: 10,
+                      color: isDart
+                          ? AppColor.primaryColorLight
+                          : AppColor.accentColorLight,
+                      fontSize: 8,
                       fontWeight: FontWeight.w500),
                 ),
               ),

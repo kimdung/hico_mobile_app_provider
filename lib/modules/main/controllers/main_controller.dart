@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../shared/constants/common.dart';
 import '../../account/controllers/account_controller.dart';
 import '../../account/views/account_screen.dart';
 import '../../news/controllers/news_controller.dart';
@@ -15,19 +17,21 @@ import '../../order_list/views/order_list_screen.dart';
 
 class MainController extends BaseController {
   Rx<int> index = Rx(0);
-  Rx<int> badge = Rx(11);
+  Rx<int> badge = Rx(0);
+  final _uiRepository = Get.find<HicoUIRepository>();
 
   final channel = AppDataGlobal.client?.channel('messaging',
       id: AppDataGlobal.userInfo?.conversationInfo?.getAdminChannel() ?? '');
 
   List<Widget> tabs = <Widget>[];
   late OrderListController orderListController;
-  final notificationController = NotificationController();
+  late NotificationController notificationController;
   final newsController = NewsController();
   final accountController = AccountController();
 
   MainController() {
     orderListController = OrderListController(channel);
+    notificationController = NotificationController(this);
     tabs = [
       OrderListScreen(orderListController),
       NotificationScreen(notificationController),
@@ -45,7 +49,6 @@ class MainController extends BaseController {
     });
     await orderListController.loadList();
   }
-  
 
   Future<void> changeIndex(int _index) async {
     if (_index != index.value) {
@@ -61,5 +64,16 @@ class MainController extends BaseController {
     }
 
     index.value = _index;
+
+    await countNotifyUnread();
+  }
+
+  Future<void> countNotifyUnread() async {
+    await _uiRepository.notificationUnRead().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null) {
+        badge.value = response.data!;
+      }
+    });
   }
 }
