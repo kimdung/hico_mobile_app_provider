@@ -43,23 +43,10 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
   Channel? _channel;
   int _badge = 0;
 
-  @override
-  void initState() {
-    super.initState();
-
-    if (AppDataGlobal.client != null) {
-      _channel = AppDataGlobal.client!
-          .channel('messaging', id: widget.invoice.getChatChannel());
-      _listenerBadge();
-    }
-  }
-
   Future<void> _listenerBadge() async {
     try {
       await _channel?.watch();
-      _channel?.state?.unreadCountStream.listen((event) {
-        debugPrint(
-            '[ItemOrderWidget] channel?.state?.unreadCountStream.listen $event');
+      _channel?.state?.unreadCountStream.listen((event) { 
         setState(() {
           _badge = event;
         });
@@ -71,6 +58,14 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.invoice.status == InvoiceStatus.accepted.id &&
+        AppDataGlobal.client != null &&
+        _channel == null) {
+      _channel = AppDataGlobal.client!
+          .channel('messaging', id: widget.invoice.getChatChannel());
+      _listenerBadge();
+    }
+
     return InkWell(
       onTap: widget.onPress,
       child: Container(

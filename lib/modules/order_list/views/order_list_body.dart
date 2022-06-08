@@ -192,29 +192,56 @@ extension OrderListBody on OrderListScreen {
   Widget _buildListOrder() {
     return Container(
       color: AppColor.primaryBackgroundColorLight,
-      child: Column(
-        children: [
-          ...List.generate(
-              controller.list.length,
-              (index) => ItemOrderWidget(
-                    invoice: controller.list[index],
-                    onPress: () {
-                      controller.viewDetail(controller.list[index].id!);
-                    },
-                    onAccept: () {
-                      controller.confirm(
-                          controller.list[index].id!, InvoiceStatus.accepted);
-                    },
-                    onCancel: () {
-                      controller.confirm(
-                          controller.list[index].id!, InvoiceStatus.canceled);
-                    },
-                    onChat: () => controller.onChat(controller.list[index]),
-                    onCall: () => controller.onCall(controller.list[index]),
-                    onVideo: () => controller.onVideo(controller.list[index]),
-                  ))
-        ],
+      child: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.list.length,
+        itemBuilder: (context, index) => ItemOrderWidget(
+          invoice: controller.list[index],
+          onPress: () {
+            controller.viewDetail(controller.list[index].id!);
+          },
+          onAccept: () {
+            controller.confirm(
+                controller.list[index].id!, InvoiceStatus.accepted);
+          },
+          onCancel: () {
+            controller.confirm(
+                controller.list[index].id!, InvoiceStatus.canceled);
+          },
+          onChat: () => controller.onChat(controller.list[index]),
+          onCall: () => controller.onCall(controller.list[index]),
+          onVideo: () => controller.onVideo(controller.list[index]),
+        ),
+        separatorBuilder: (context, index) => Container(),
       ),
     );
+
+    // return Container(
+    //   color: AppColor.primaryBackgroundColorLight,
+    //   child: Column(
+    //     children: [
+    //       ...List.generate(
+    //           controller.list.length,
+    //           (index) => ItemOrderWidget(
+    //                 invoice: controller.list[index],
+    //                 onPress: () {
+    //                   controller.viewDetail(controller.list[index].id!);
+    //                 },
+    //                 onAccept: () {
+    //                   controller.confirm(
+    //                       controller.list[index].id!, InvoiceStatus.accepted);
+    //                 },
+    //                 onCancel: () {
+    //                   controller.confirm(
+    //                       controller.list[index].id!, InvoiceStatus.canceled);
+    //                 },
+    //                 onChat: () => controller.onChat(controller.list[index]),
+    //                 onCall: () => controller.onCall(controller.list[index]),
+    //                 onVideo: () => controller.onVideo(controller.list[index]),
+    //               ))
+    //     ],
+    //   ),
+    // );
   }
 }
