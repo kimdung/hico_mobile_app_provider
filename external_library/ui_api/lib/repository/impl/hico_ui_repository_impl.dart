@@ -287,6 +287,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.updateService(request);
   }
 
+   @override
+  Future<BaseResponse> requestUpdateService() {
+    return _api.requestUpdateService();
+  }
+
   @override
   Future<BaseResponse> checkUserTime(UpdateServiceRequest request) {
     return _api.checkUserTime(request);

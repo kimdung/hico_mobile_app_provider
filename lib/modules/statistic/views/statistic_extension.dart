@@ -44,12 +44,14 @@ extension StatisticExtension on StatisticScreen {
               ),
               InkWell(
                 onTap: () {
-                  controller.onChangeStatus(CommonConstants.statisticCustomerCancel);
+                  controller
+                      .onChangeStatus(CommonConstants.statisticCustomerCancel);
                 },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  decoration: controller.indexStatus.value == CommonConstants.statisticCustomerCancel
+                  decoration: controller.indexStatus.value ==
+                          CommonConstants.statisticCustomerCancel
                       ? BoxDecoration(
                           color: AppColor.primaryColorLight,
                           borderRadius:
@@ -63,7 +65,8 @@ extension StatisticExtension on StatisticScreen {
                     'statistic.customer.cancel'.tr,
                     textAlign: TextAlign.center,
                     style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: controller.indexStatus.value == CommonConstants.statisticCustomerCancel
+                          color: controller.indexStatus.value ==
+                                  CommonConstants.statisticCustomerCancel
                               ? AppColor.secondTextColorLight
                               : AppColor.primaryTextColorLight,
                         ),
@@ -80,7 +83,8 @@ extension StatisticExtension on StatisticScreen {
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  decoration: controller.indexStatus.value == CommonConstants.statisticComplete
+                  decoration: controller.indexStatus.value ==
+                          CommonConstants.statisticComplete
                       ? BoxDecoration(
                           color: AppColor.primaryColorLight,
                           borderRadius:
@@ -94,7 +98,8 @@ extension StatisticExtension on StatisticScreen {
                     'statistic.finish'.tr,
                     textAlign: TextAlign.center,
                     style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: controller.indexStatus.value == CommonConstants.statisticComplete
+                          color: controller.indexStatus.value ==
+                                  CommonConstants.statisticComplete
                               ? AppColor.secondTextColorLight
                               : AppColor.primaryTextColorLight,
                         ),
@@ -106,12 +111,14 @@ extension StatisticExtension on StatisticScreen {
               ),
               InkWell(
                 onTap: () {
-                  controller.onChangeStatus(CommonConstants.statisticSupplierCancel);
+                  controller
+                      .onChangeStatus(CommonConstants.statisticSupplierCancel);
                 },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  decoration: controller.indexStatus.value == CommonConstants.statisticSupplierCancel
+                  decoration: controller.indexStatus.value ==
+                          CommonConstants.statisticSupplierCancel
                       ? BoxDecoration(
                           color: AppColor.primaryColorLight,
                           borderRadius:
@@ -125,7 +132,8 @@ extension StatisticExtension on StatisticScreen {
                     'statistic.cancel'.tr,
                     textAlign: TextAlign.center,
                     style: TextAppStyle().genaralTextStyle().copyWith(
-                          color: controller.indexStatus.value == CommonConstants.statisticSupplierCancel
+                          color: controller.indexStatus.value ==
+                                  CommonConstants.statisticSupplierCancel
                               ? AppColor.secondTextColorLight
                               : AppColor.primaryTextColorLight,
                         ),
@@ -181,25 +189,31 @@ extension StatisticExtension on StatisticScreen {
                   ])
                 : controller.indexStatus.value == 3
                     ? Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 20.0),
-                              child: _buildTotalItem(
-                                  margin: 1,
-                                  icon: IconConstants.icMoneyGreen,
-                                  title: 'statistic.bonus'.tr,
-                                  price:
-                                      '${controller.statistic.value.invoiceCancelByCustomer ?? 0} JPY ',
-                                  textColor: AppColor.blueTextColor),
-                            ),
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: _buildTotalItem(
+                                margin: 1,
+                                icon: IconConstants.icMoneyGreen,
+                                title: 'statistic.bonus'.tr,
+                                price:
+                                    '${controller.statistic.value.invoiceCancelByCustomer ?? 0} JPY ',
+                                textColor: AppColor.blueTextColor),
                           ),
-                        ],
-                      )
+                        ),
+                      ],
+                    )
                     : controller.indexStatus.value == 1
                         ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 10),
+                              Text(
+                                'statistic.note_tax'.tr,
+                                style: TextAppStyle().normalTextPink(),
+                              ),
+                              const SizedBox(height: 10),
                               _buildTotalItem(
                                   margin: 1,
                                   icon: IconConstants.icMoneyGreen,
@@ -476,68 +490,78 @@ extension StatisticExtension on StatisticScreen {
   }
 
   Widget _buildOrderItem({required StatisticInvoiceModel item}) {
-    return Container(
-      //height: 100,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        boxShadow: [
-          BoxShadow(
-            color: AppColor.secondColorLight.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-              margin: const EdgeInsets.only(right: 20),
-              child: (item.supplierAvatar != null && item.supplierAvatar != '')
-                  ? NetWorkImage(
-                      image: item.supplierAvatar!,
-                      height: 60,
-                    )
-                  : FCoreImage(
-                      ImageConstants.imageDefault,
-                      height: 60,
-                    )),
-          Expanded(
-              child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'statistic.order_code'.tr,
-                    style: TextAppStyle().smallTextPink(),
-                  ),
-                  Text(
-                    item.code ?? '',
-                    style: TextAppStyle().smallTextBlack(),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 13),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'statistic.amount'.tr,
-                    style: TextAppStyle().smallTextPink(),
-                  ),
-                  Text(
-                    '${item.total} JPY',
-                    style: TextAppStyle().smallTextBlack(),
-                  ),
-                ],
-              )
-            ],
-          ))
-        ],
+    return InkWell(
+      onTap: () {
+        controller.onDetail(item.id!);
+      },
+      child: Container(
+        //height: 100,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        margin: const EdgeInsets.only(bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: [
+            BoxShadow(
+              color: AppColor.secondColorLight.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+                margin: const EdgeInsets.only(right: 20),
+                child:
+                    (item.customerAvatar != null && item.customerAvatar! != '')
+                        ? NetWorkImage(
+                            image: item.customerAvatar!,
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                          )
+                        : FCoreImage(
+                            ImageConstants.emptyImage,
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                          )),
+            Expanded(
+                child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'statistic.order_code'.tr,
+                      style: TextAppStyle().smallTextPink(),
+                    ),
+                    Text(
+                      item.code ?? '',
+                      style: TextAppStyle().smallTextBlack(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 13),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'statistic.amount'.tr,
+                      style: TextAppStyle().smallTextPink(),
+                    ),
+                    Text(
+                      '${item.total} JPY',
+                      style: TextAppStyle().smallTextBlack(),
+                    ),
+                  ],
+                )
+              ],
+            ))
+          ],
+        ),
       ),
     );
   }

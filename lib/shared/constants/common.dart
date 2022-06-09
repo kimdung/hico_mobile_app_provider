@@ -170,3 +170,27 @@ extension WorkExperienceValue on WorkExperience {
     }
   }
 }
+
+enum DisplayType { All, Notif, Order,Remind, Extend, Rating }
+
+extension DisplayTypeId on DisplayType {
+  int get id {
+    switch (this) {
+      case DisplayType.All:
+        return 0;
+      case DisplayType.Notif:
+        return 1;
+      case DisplayType.Order:
+        return 2;
+      case DisplayType.Remind:
+        return 3;
+      case DisplayType.Extend:
+        return 7;
+      case DisplayType.Rating:
+        return 8;
+      default:
+        return 0;
+    }
+  }
+}
+

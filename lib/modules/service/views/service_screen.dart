@@ -78,6 +78,32 @@ class ServiceScreen extends GetView<ServiceController> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: CommonConstants.paddingDefault),
+                  child: GeneralButton(
+                    onPressed: () {
+                      controller.request();
+                    },
+                    borderRadius: BorderRadius.circular(24),
+                    borderColor: AppColor.primaryColorLight,
+                    borderWidth: 2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FCoreImage(IconConstants.icEdit, width: 30,height: 30,),
+                        const SizedBox(width: 18),
+                        Text(
+                          'service.edit'.tr,
+                          style: TextAppStyle().titleButtonStyle().copyWith(
+                                color: AppColor.primaryTextColorLight,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 24),
               ],
             ),

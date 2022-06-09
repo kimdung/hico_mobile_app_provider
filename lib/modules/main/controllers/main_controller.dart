@@ -48,6 +48,7 @@ class MainController extends BaseController {
       orderListController.badgeChatAdmin.value = event;
     });
     await orderListController.loadList();
+    await countNotifyUnread();
   }
 
   Future<void> changeIndex(int _index) async {

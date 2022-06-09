@@ -267,6 +267,10 @@ abstract class HicoUIAPI {
     @Body() UpdateServiceRequest request,
   );
 
+  //request update service
+  @POST('/v1/user/requestUpdateService')
+  Future<BaseResponse> requestUpdateService();
+
   //check UserTime
   @POST('/v1/user/checkUserTime')
   Future<BaseResponse> checkUserTime(

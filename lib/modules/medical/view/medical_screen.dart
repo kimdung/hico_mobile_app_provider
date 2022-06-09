@@ -35,7 +35,7 @@ class MeidcalScreen extends GetView<MedicalController> {
                 children: [
                   _buildInputTextArea(
                     textEditng: controller.symptomController,
-                    title: 'medical.symptom.title'.tr,
+                    title: '症状',
                     description: 'medical.symptom.description'.tr,
                   ),
                   const SizedBox(
@@ -43,7 +43,7 @@ class MeidcalScreen extends GetView<MedicalController> {
                   ),
                   _buildInputTextArea(
                     textEditng: controller.testMethodController,
-                    title: 'medical.test_method.title'.tr,
+                    title: '検査方法',
                     description: 'medical.test_method.description'.tr,
                   ),
                   const SizedBox(
@@ -51,7 +51,7 @@ class MeidcalScreen extends GetView<MedicalController> {
                   ),
                   _buildInputTextArea(
                     textEditng: controller.diseaseNameController,
-                    title: 'medical.name_disease.title'.tr,
+                    title: '病名',
                     description: 'medical.name_disease.description'.tr,
                   ),
                   const SizedBox(
@@ -59,7 +59,7 @@ class MeidcalScreen extends GetView<MedicalController> {
                   ),
                   _buildInputTextArea(
                     textEditng: controller.treatmentsController,
-                    title: 'medical.treatments.title'.tr,
+                    title: '治療方法',
                     description: 'medical.treatments.description'.tr,
                   ),
                   const SizedBox(
@@ -67,7 +67,7 @@ class MeidcalScreen extends GetView<MedicalController> {
                   ),
                   _buildInputTextArea(
                     textEditng: controller.appointmentNextTimeController,
-                    title: 'medical.book.title'.tr,
+                    title: '次回予約',
                     description: 'medical.book_description'.tr,
                   ),
                   const SizedBox(
@@ -75,7 +75,7 @@ class MeidcalScreen extends GetView<MedicalController> {
                   ),
                   _buildInputTextArea(
                     textEditng: controller.commentController,
-                    title: 'medical.doctor_comments.title'.tr,
+                    title: '先生コメント',
                     description: 'medical.doctor_commnets.description'.tr,
                   ),
                   const SizedBox(

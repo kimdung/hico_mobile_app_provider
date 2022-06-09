@@ -5,11 +5,11 @@ part 'statistic_invoice_model.g.dart';
 class StatisticInvoiceModel {
   int? id;
   String? code;
-  @JsonKey(name: 'supplier_avatar', defaultValue: '')
-  String? supplierAvatar;
+  @JsonKey(name: 'customer_avatar', defaultValue: '')
+  String? customerAvatar;
   double? total;
 
-  StatisticInvoiceModel({this.id, this.code, this.supplierAvatar, this.total});
+  StatisticInvoiceModel({this.id, this.code, this.customerAvatar, this.total});
 
   factory StatisticInvoiceModel.fromJson(Map<String, dynamic> json) =>
       _$StatisticInvoiceModelFromJson(json);

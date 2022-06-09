@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'base/app_binding.dart';
+import 'data/app_data_global.dart';
 import 'resource/lang/translation_service.dart';
 import 'routes/app_pages.dart';
 import 'shared/constants/colors.dart';
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
       enableLog: true,
       initialRoute: Routes.SPLASH,
       defaultTransition: Transition.fade,
+      navigatorKey: AppDataGlobal.navigatorKey,
       getPages: routePages,
       initialBinding: AppBinding(),
       smartManagement: SmartManagement.keepFactory,

@@ -11,7 +11,7 @@ StatisticInvoiceModel _$StatisticInvoiceModelFromJson(
     StatisticInvoiceModel(
       id: json['id'] as int?,
       code: json['code'] as String?,
-      supplierAvatar: json['supplier_avatar'] as String? ?? '',
+      customerAvatar: json['customer_avatar'] as String? ?? '',
       total: (json['total'] as num?)?.toDouble(),
     );
 
@@ -20,6 +20,6 @@ Map<String, dynamic> _$StatisticInvoiceModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
-      'supplier_avatar': instance.supplierAvatar,
+      'customer_avatar': instance.customerAvatar,
       'total': instance.total,
     };

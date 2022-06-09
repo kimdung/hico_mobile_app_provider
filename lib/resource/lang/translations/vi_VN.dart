@@ -256,6 +256,7 @@ const Map<String, String> vi_VN = {
   'statistic.amount': 'Số tiền',
   'statistic.wallet': 'Số dư ví',
   'statistic.bonus': 'Số tiền được thưởng khi khách hàng huỷ',
+  'statistic.note_tax': 'Lưu ý: Thu nhập này chưa trừ thuế',
 
   //support screen
   'support.title':
@@ -320,6 +321,8 @@ const Map<String, String> vi_VN = {
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
   'service.add': 'Thêm/Sửa Dịch Vụ',
+  'service.edit': 'Yêu Cầu Sửa Dịch Vụ',
+
   'service.empty':
       'Bạn chưa có dịch vụ nào trong danh sách đăng ký dịch vụ bạn muốn cung cấp',
   'service.title':

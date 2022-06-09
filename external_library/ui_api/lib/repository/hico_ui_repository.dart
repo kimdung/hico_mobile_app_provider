@@ -190,6 +190,9 @@ abstract class HicoUIRepository {
   //update service
   Future<BaseResponse> updateService(UpdateServiceRequest request);
 
+//update service
+  Future<BaseResponse> requestUpdateService();
+
   //check UserTime
   Future<BaseResponse> checkUserTime(UpdateServiceRequest request);
 

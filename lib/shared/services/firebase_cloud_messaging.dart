@@ -8,6 +8,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../../data/app_data_global.dart';
+import '../../routes/app_pages.dart';
+import '../constants/common.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -169,6 +171,26 @@ class FirebaseMessageConfig {
             //     message?.data['id']?.toString(),
             //   ),
             // );
+            //FCM Firebase
+            final type = message.data['display_type']?.toString();
+            final id = message.data['invoice_id']?.toString();
+            //FCM GetStream
+            final sender = message.data['sender']?.toString();
+
+            if (type == DisplayType.Order.id.toString() ||
+                type == DisplayType.Remind.id.toString()) {
+              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+                  .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+            } else if (type == DisplayType.Extend.id.toString()) {
+              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+                  .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+            } else if (type == DisplayType.Rating.id.toString()) {
+              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+                  .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+            } else if (sender == 'stream.chat') {
+              //router chat screen
+              debugPrint('router chat screen');
+            }
           }
         },
       );
