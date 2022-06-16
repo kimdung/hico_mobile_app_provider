@@ -15,7 +15,7 @@ class BaseController extends GetxController
 
   final _networkController = Get.find<NetworkController>();
 
-  FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
+  // FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
   final CallMethods callMethods = CallMethods();
 
   @override
@@ -25,7 +25,7 @@ class BaseController extends GetxController
     // check network
     await checkConnectNetwork();
 
-    await firebaseMessageConfig.handleMessage(); 
+    // await firebaseMessageConfig.handleMessage(); 
   }
 
   @override
