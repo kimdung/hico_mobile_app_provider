@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../../data/app_data_global.dart';
@@ -110,7 +112,14 @@ class FirebaseMessageConfig {
       );
       await _flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
-        onSelectNotification: _onSelectNotifcation,
+        onSelectNotification: (payload) {
+          if (payload?.isEmpty ?? true) {
+            return;
+          }
+          final message = jsonDecode(payload ?? '');
+          debugPrint('onSelectNotification');
+          _onSelectNotifcation(message);
+        },
       );
 
       if (Platform.isIOS) {
@@ -159,41 +168,16 @@ class FirebaseMessageConfig {
       FirebaseMessaging.onMessage.listen(_showNotification);
 
       /// Tương tác với thông báo khi ứng dụng đang ở background và khi đang khóa màn hình
-      FirebaseMessaging.onMessageOpenedApp.listen(
-        (RemoteMessage message) {
-          /// ['id']: Key json chứa ID của thông báo server trả về.
-          /// Dùng để điều hướng vào màn chi tiết thông báo
-          /// Mặc định đang là ['id']
-          if (message.data.isNotEmpty) {
-            // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
-            //   DetailNotificationScreen.routeName,
-            //   arguments: int.tryParse(
-            //     message?.data['id']?.toString(),
-            //   ),
-            // );
-            //FCM Firebase
-            final type = message.data['display_type']?.toString();
-            final id = message.data['invoice_id']?.toString();
-            //FCM GetStream
-            final sender = message.data['sender']?.toString();
-
-            if (type == DisplayType.Order.id.toString() ||
-                type == DisplayType.Remind.id.toString()) {
-              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-                  .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-            } else if (type == DisplayType.Extend.id.toString()) {
-              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-                  .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-            } else if (type == DisplayType.Rating.id.toString()) {
-              Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-                  .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-            } else if (sender == 'stream.chat') {
-              //router chat screen
-              debugPrint('router chat screen');
-            }
-          }
-        },
-      );
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        /// ['id']: Key json chứa ID của thông báo server trả về.
+        /// Dùng để điều hướng vào màn chi tiết thông báo
+        /// Mặc định đang là ['id']
+        if (message.data.isEmpty) {
+          return;
+        }
+        debugPrint('onMessageOpenedApp');
+        _onSelectNotifcation(message.data);
+      });
     } catch (e) {
       debugPrint('$e');
     }
@@ -217,9 +201,9 @@ class FirebaseMessageConfig {
             android: AndroidNotificationDetails(
               _androidNotificationChannel.id,
               _androidNotificationChannel.name,
-              importance: Importance.high,
+              importance: Importance.max,
               visibility: NotificationVisibility.public,
-              priority: Priority.high,
+              priority: Priority.max,
               playSound: true,
               enableLights: true,
               enableVibration: true,
@@ -239,19 +223,57 @@ class FirebaseMessageConfig {
     }
   }
 
-  Future<void> _onSelectNotifcation(String? payload) async {
-    debugPrint('ONTAP NOTIFICATION: $payload');
-    if (payload?.isNotEmpty ?? false) {
-      /// ['id']: Key json chứa ID của thông báo server trả về.
-      /// Dùng để điều hướng vào màn chi tiết thông báo
-      /// Mặc định đang là ['id']
-      // Navigator.of(AppConfig.navigatorKey.currentContext).pushNamed(
-      //   DetailNotificationScreen.routeName,
-      //   arguments: int.tryParse(
-      //     json.decode(payload)['id']?.toString(),
-      //   ),
-      // );
+  Future<void> _onSelectNotifcation(Map<String, dynamic> message) async {
+    debugPrint('ONTAP NOTIFICATION: $message');
+    //FCM Firebase
+    final type = message['display_type']?.toString();
+    final id = message['invoice_id']?.toString();
+
+    //FCM GetStream
+    final sender = message['sender']?.toString();
+    final channelId = message['channel_id'] ?? '';
+
+    if (type == DisplayType.Order.id.toString() ||
+        type == DisplayType.Remind.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+          .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+    } else if (type == DisplayType.Extend.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+          .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+    } else if (type == DisplayType.Rating.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+          .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+    } else if (sender == 'stream.chat') {
+      //router chat screen
+      debugPrint('router chat screen');
+      await onChat(channelId);
     }
+    // if (payload?.isNotEmpty ?? false) {
+    //   final message = jsonDecode(payload ?? '');
+    //   //FCM Firebase
+    //   final type = message['display_type']?.toString();
+    //   final id = message['invoice_id']?.toString();
+
+    //   //FCM GetStream
+    //   final sender = message['sender']?.toString();
+    //   final channelId = message['channel_id'] ?? '';
+
+    //   if (type == DisplayType.Order.id.toString() ||
+    //       type == DisplayType.Remind.id.toString()) {
+    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+    //         .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+    //   } else if (type == DisplayType.Extend.id.toString()) {
+    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+    //         .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+    //   } else if (type == DisplayType.Rating.id.toString()) {
+    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+    //         .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+    //   } else if (sender == 'stream.chat') {
+    //     //router chat screen
+    //     debugPrint('router chat screen');
+    //     await onChat(channelId);
+    //   }
+    // }
   }
 
   Future<void> resetDeviceToken() async {
@@ -270,6 +292,30 @@ class FirebaseMessageConfig {
       debugPrint('TOKEN FIREBASE CHANGE: $token');
       AppDataGlobal.firebaseToken = token;
       AppDataGlobal.client?.addDevice(token, PushProvider.firebase);
+    });
+  }
+
+  Future<void> onChat(String channelId) async {
+    if (AppDataGlobal.client == null) {
+      return;
+    }
+    final channel = AppDataGlobal.client!.channel('messaging', id: channelId);
+    final ids = channelId.split('-');
+    final userId = ids
+        .firstWhereOrNull((id) => id != AppDataGlobal.userInfo?.id.toString());
+    if (userId == null) {
+      return;
+    }
+    await AppDataGlobal.client
+        ?.queryUsers(filter: Filter.autoComplete('id', userId))
+        .then((response) {
+      if (response.users.isEmpty) {
+        return;
+      }
+      Get.toNamed(Routes.CHAT, arguments: {
+        CommonConstants.CHANNEL: channel,
+        CommonConstants.CHAT_USER: response.users.first,
+      });
     });
   }
 }
