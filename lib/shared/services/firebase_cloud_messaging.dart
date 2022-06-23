@@ -243,6 +243,9 @@ class FirebaseMessageConfig {
     } else if (type == DisplayType.Rating.id.toString()) {
       await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
           .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+    } else if (type == DisplayType.UpdateInfo.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+          .pushNamed(Routes.UPDATE_SERVICE);
     } else if (sender == 'stream.chat') {
       //router chat screen
       debugPrint('router chat screen');

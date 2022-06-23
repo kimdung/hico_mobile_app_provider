@@ -171,7 +171,7 @@ extension WorkExperienceValue on WorkExperience {
   }
 }
 
-enum DisplayType { All, Notif, Order,Remind, Extend, Rating }
+enum DisplayType { All, Notif, Order,Remind, Extend, Rating, UpdateInfo }
 
 extension DisplayTypeId on DisplayType {
   int get id {
@@ -188,6 +188,8 @@ extension DisplayTypeId on DisplayType {
         return 7;
       case DisplayType.Rating:
         return 8;
+      case DisplayType.UpdateInfo:
+        return 10;
       default:
         return 0;
     }

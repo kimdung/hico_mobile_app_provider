@@ -478,10 +478,10 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                                 required: 1),
                             const SizedBox(height: 8),
                             _buildPickFile(files: controller.info.value.workExperienceFiles, type: CommonConstants.workExperienceFiles),
-                            const SizedBox(height: 8),
-                            _buildInputTextArea(
-                                textEditng: controller.experience,
-                                title: 'profile.update.experience'.tr),
+                            // const SizedBox(height: 8),
+                            // _buildInputTextArea(
+                            //     textEditng: controller.experience,
+                            //     title: 'profile.update.experience'.tr),
                             const SizedBox(height: 14.0),
                             // interpreting experience
                             _buildLabel(
