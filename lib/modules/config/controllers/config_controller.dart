@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ui_api/models/master_data/master_data_model.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -33,6 +36,7 @@ extension LanguageValue on LanguageCode {
 class ConfigController extends BaseController {
   Rx<LanguageCode> currentLanguage = Rx<LanguageCode>(LanguageCode.VN);
   final storage = Get.find<SharedPreferences>();
+  final HicoUIRepository _uiRepository = Get.find<HicoUIRepository>();
 
   final changePassForm = GlobalKey<FormState>();
   final TextEditingController oldPasswordController = TextEditingController();
@@ -40,27 +44,14 @@ class ConfigController extends BaseController {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
-  String html = '''
-<div>
-<h3>Tình trạng thiếu thông dịch viên tiếng Việt</h3>
-<p>Osaka International House Foundation cung cấp thông dịch viên cho người nước ngoài hoặc giới thiệu họ đến các văn phòng chính phủ. 
-Từ khi Covid-19 bắt đầu lan rộng, tổ chức này nhận được ngày càng nhiều các yêu cầu về chăm sóc sức khỏe và việc làm từ người dân Việt Nam.</p>
-<p>Có hơn 420.000 người Việt Nam cư trú tại Nhật Bản, tính đến cuối tháng 6, 
-tăng 2% so với cuối năm ngoái và gấp 3,4 lần so với 5 năm trước đó, theo Bộ Tư pháp Nhật Bản. 
-Họ chiếm 14,6% tổng số cư dân nước ngoài tại Nhật, tăng 8,8% so với 5 năm trước đó. 
-Đây cũng là tỷ lệ cao thứ ba, sau người Trung Quốc và Hàn Quốc.
-</p>
-<p>Số lượng thông dịch viên tiếng Việt ít do khan hiếm người Việt thuộc thế hệ thứ hai và thứ ba thông thạo cả hai thứ tiếng. 
-Nguồn tài chính công eo hẹp khiến chính quyền địa phương ngần ngại khi thuê thông dịch viên thường trực. 
-Các trường hợp ngoại lệ là các địa phương có đông người nước ngoài, 
-như văn phòng thị trấn Oizumi ở tỉnh Gunma và chính quyền thành phố Yao ở tỉnh Osaka.</p>
-</div>
-''';
+  String html = '';
 
   bool showPassword = false;
+  MasterDataModel masterData = MasterDataModel();
 
   @override
   Future<void> onInit() {
+    masterData = AppDataGlobal.masterData!;
     final language = storage.getString(StorageConstants.language);
     switch (language) {
       case VIETNAMESE_LANG:
@@ -75,6 +66,34 @@ như văn phòng thị trấn Oizumi ở tỉnh Gunma và chính quyền thành 
     }
     return super.onInit();
   }
+
+  Future<void> selectLanguage() async {
+    switch (currentLanguage.value) {
+      case LanguageCode.VN:
+        AppDataGlobal.languageCode = VIETNAMESE_LANG;
+        break;
+      case LanguageCode.EN:
+        AppDataGlobal.languageCode = ENGLISH_LANG;
+        break;
+      case LanguageCode.JA:
+        AppDataGlobal.languageCode = JAPANESE_LANG;
+        break;
+    }
+
+    TranslationService.changeLocale(currentLanguage.value.languageLocale);
+
+    await storage.setString(
+        StorageConstants.language, AppDataGlobal.languageCode);
+
+    await _uiRepository.masterData().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.masterDataModel != null) {
+        AppDataGlobal.masterData = response.masterDataModel!;
+        return;
+      }
+    });
+  }
+
 
   Future<void> confirmLanguage() async {
     switch (currentLanguage.value) {
@@ -127,6 +146,14 @@ như văn phòng thị trấn Oizumi ở tỉnh Gunma và chính quyền thành 
         ),
       );
     }
+  }
+
+  Future<void> makeAction(String scheme, String endpoint) async {
+    final launchUri = Uri(
+      scheme: scheme,
+      path: endpoint,
+    );
+    await launchUrl(launchUri);
   }
 
   @override

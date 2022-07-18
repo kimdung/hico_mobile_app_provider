@@ -8,8 +8,9 @@ const Map<String, String> vi_VN = {
   'not_account': 'Bạn chưa có tài khoản?',
   'password': 'Mật khẩu',
   'confirm_password': 'Nhập lại mật khẩu',
-  'register_notif': 'Bằng cách đăng ký, bạn đồng ý với',
-  'term_and_conditions': 'Điều khoản & Điều kiện',
+  'register_notif':
+      'Bằng cách đăng ký, bạn đồng ý với\nĐiều khoản chính sách và Chính sách bảo mật',
+  'term_and_conditions': 'Điều khoản chính sách',
   'and': 'và',
   'privacy_policy': 'Chính sách bảo mật',
   'success': 'Thành công',
@@ -78,6 +79,10 @@ const Map<String, String> vi_VN = {
   'incorrect_confirm_pass': 'Mật khẩu mới không chính xác',
   'refund_policy': 'Điều kiện hoàn tiền của Hico',
   'account.rating': 'Đánh giá của khách hàng',
+  'account.delete': 'Xoá tài khoản',
+  'account.required_delete': 'Yêu cầu huỷ tài khoản',
+  'account.description_delete':
+      'Chúng tôi rất lấy làm tiếc khi bạn muốn rời Hico, nhưng xin lưu ý các tài khoản đã bị xoá sẽ không được mở trở lại.',
 
   //home
   'home.home': 'Trang chủ',
@@ -93,6 +98,7 @@ const Map<String, String> vi_VN = {
   //news
   'news.title': 'Tin tức',
   'news.detail_title': 'Chi tiết tin tức',
+  'news.empty': 'Chưa có tin tức cho ngôn ngữ này',
 
   //notification
   'notification.title': 'Thông báo',
@@ -173,7 +179,7 @@ const Map<String, String> vi_VN = {
   'profile': 'Thông tin cá nhân',
   'services': 'Dịch vụ đang cung cấp',
   'statistic': 'Thống kê',
-  'setting': 'Cài đặt',
+  'setting': 'Ngôn ngữ',
   'topup': 'Nạp tiền',
   'change_password': 'Đổi mật khẩu',
   'contact': 'Liên hệ',
@@ -383,8 +389,8 @@ const Map<String, String> vi_VN = {
   'invoice.hours': 'Giờ',
   'invoice.minutes': 'Phút',
   'invoice.all': 'Tất cả',
-  'invoice.requested': 'Đã yêu cầu',
-  'invoice.accepted': 'PDV đồng ý',
+  'invoice.requested': 'Yêu cầu mới',
+  'invoice.accepted': 'Đã nhận',
   'invoice.successed': 'Hoàn thành',
   'invoice.canceled': 'Đã huỷ',
   'invoice.incurred': 'Phát sinh',
@@ -399,7 +405,6 @@ const Map<String, String> vi_VN = {
   //extent
   'extend.title.appbar': 'Chi tiết Gian Hạn',
   'extend.approve': 'Đồng ý',
-
 
   //booking
   'booking.title': 'Chi tiết đặt lịch',
@@ -448,4 +453,6 @@ const Map<String, String> vi_VN = {
   'dialog.summary': 'Tóm tắt nội dung buổi làm việc',
   'dialog.summary.hint':
       'Hãy ghi tóm tắt nội dung buổi phiên dịch hôm nay của bạn',
+
+  'notif.error': 'Có lỗi xảy ra',
 };

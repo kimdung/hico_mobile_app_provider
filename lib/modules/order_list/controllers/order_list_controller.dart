@@ -48,6 +48,7 @@ class OrderListController extends BaseController {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {
+          debugPrint('reload');
           // You're at the top.
           // offset = 0;
           // _loadNewsList();

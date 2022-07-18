@@ -475,7 +475,7 @@ class ProfileUpdateScreen extends GetView<ProfileUpDateController> {
                             //experience
                             _buildLabel(
                                 title: 'profile.update.experience_title'.tr,
-                                required: 1),
+                                required: 0),
                             const SizedBox(height: 8),
                             _buildPickFile(files: controller.info.value.workExperienceFiles, type: CommonConstants.workExperienceFiles),
                             // const SizedBox(height: 8),

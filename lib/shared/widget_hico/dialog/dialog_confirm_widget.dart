@@ -22,32 +22,40 @@ class _DialogConfirmWidgetState extends State<DialogConfirmWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.height ?? 150,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 14),
-                  (widget.title != null)
-                      ? Text(
-                          widget.title!,
-                          textAlign: TextAlign.center,
-                          style: TextAppStyle().largeTextStype(),
-                        )
-                      : Container(),
-                  const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            width: double.infinity,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12))),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 15),
+                if (widget.title != null && widget.title != '')
                   Text(
-                    widget.description,
+                    widget.title ?? '',
                     textAlign: TextAlign.center,
-                    style: TextAppStyle().normalTextGrey(),
+                    style: TextAppStyle().normalTextStype().copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
-                ],
-              ),
+                const SizedBox(height: 5),
+                if (widget.description != '')
+                  Text(
+                    widget.description.toString(),
+                    textAlign: TextAlign.center,
+                    style: TextAppStyle().normalTextStype(),
+                  ),
+                const SizedBox(height: 15),
+              ],
             ),
           ),
           Row(

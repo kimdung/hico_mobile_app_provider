@@ -250,6 +250,9 @@ class FirebaseMessageConfig {
       //router chat screen
       debugPrint('router chat screen');
       await onChat(channelId);
+    }else {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+          .pushNamedAndRemoveUntil(Routes.MAIN,(Route<dynamic> route) => false);
     }
     // if (payload?.isNotEmpty ?? false) {
     //   final message = jsonDecode(payload ?? '');

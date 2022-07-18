@@ -455,11 +455,9 @@ class ProfileUpDateController extends BaseController {
             backgroundColor: Colors.transparent,
             child: NormalWidget(
               icon: IconConstants.icFail,
-              title: e.toString(),
+              title: 'notif.error'.tr,
             ),
-            onVaLue: (value) {
-              
-            },
+            onVaLue: (value) {},
           );
     }
   }

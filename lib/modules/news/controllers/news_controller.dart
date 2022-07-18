@@ -21,6 +21,8 @@ class NewsController extends BaseController {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {
+          print('reload');
+          loadNewsList();
         } else {
           _loadMore();
         }

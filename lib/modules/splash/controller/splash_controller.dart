@@ -73,6 +73,7 @@ class SplashController extends GetxController {
       } else {
         storage.setBool(StorageConstants.isLogin.toString(), false);
         _loadLanguage(storage);
+         Get.offAndToNamed(Routes.LANGUAGE);
       }
     });
   }

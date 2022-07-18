@@ -24,6 +24,7 @@ class NotificationController extends BaseController {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels == 0) {
+          debugPrint('reload');
         } else {
           _loadMore();
         }

@@ -369,4 +369,7 @@ abstract class HicoUIAPI {
 
   @POST('/v1/supplier/invoice/subConfirm')
   Future<BaseResponse> subConfirm(@Body() BookingExtendRequest request);
+
+   @POST('/v1/user/deleteUser')
+  Future<BaseResponse> deleteUser();
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../shared/widget_hico/image_widget/network_image.dart';
 import '/resource/assets_constant/images_constants.dart';
+import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/decoration/text_field_decoration.dart';
@@ -131,33 +131,21 @@ class LoginScreen extends GetView<LoginController> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 83, vertical: 28),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  _buildSocialBtn(controller.loginFB,
-                                      ImageConstants.facebook),
-                                  // _buildSocialBtn(controller.loginLine,
-                                  //     ImageConstants.line),
-                                  _buildSocialBtn(controller.loginGG,
-                                      ImageConstants.google),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                FCoreImage('https://s3.cloud.cmctelecom.vn/bank/637806135845873936ACB_Logo.svg', width: 100, height: 100,),
-                                NetWorkImage(image: 'https://s3.cloud.cmctelecom.vn/bank/637806136353202179ARIBANK.svg', width: 100, height: 100,),
-                                SvgPicture.network('https://s3.cloud.cmctelecom.vn/bank/637806787778989493atm.svg', width: 100, height: 100,),
-                                SvgPicture.network('https://s3.cloud.cmctelecom.vn/bank/637806135041944131ABBANK.svg', width: 100, height: 100,),
-                                SvgPicture.network('https://s3.cloud.cmctelecom.vn/bank/637806135845873936ACB_Logo.svg', width: 100, height: 100,),
-                                SvgPicture.network('https://s3.cloud.cmctelecom.vn/bank/637806136353202179ARIBANK.svg', width: 100, height: 100,),
-                                SvgPicture.network('https://s3.cloud.cmctelecom.vn/bank/637806137216146940BACABANK.svg', width: 100, height: 100,),
-
-                              ],
+                            Container(
+                              child: AppDataGlobal.masterData?.loginSocial == 1 ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 83, vertical: 28),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    _buildSocialBtn(controller.loginFB,
+                                        ImageConstants.facebook),
+                                    _buildSocialBtn(controller.loginGG,
+                                        ImageConstants.google),
+                                  ],
+                                ),
+                              ): Container(),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

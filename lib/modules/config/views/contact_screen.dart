@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
@@ -40,17 +41,26 @@ class ContactScreen extends GetView<ConfigController> {
               buildContactItem(
                 icon: IconConstants.icCtHotline,
                 title: 'Hotline',
-                value: '1900800988',
+                value: controller.masterData.hotline ?? '',
+                onPress: (){
+                  controller.makeAction('tel',controller.masterData.hotline??'');
+                }
               ),
               buildContactItem(
                 icon: IconConstants.icCtEmail,
                 title: 'Email',
-                value: 'hicosupport@hico.com',
+                value: controller.masterData.supportEmail ?? '',
+                onPress: (){
+                  controller.makeAction('mailto',controller.masterData.supportEmail??'');
+                },
               ),
               buildContactItem(
                 icon: IconConstants.icCtMessenger,
                 title: 'Messenger',
-                value: 'https://www.facebook.com/messages/hico',
+                value: controller.masterData.linkMessenger ?? '',
+                onPress: (){
+                  controller.makeAction('https',controller.masterData.linkMessenger??'');
+                },
               )
             ],
           ),
@@ -59,8 +69,12 @@ class ContactScreen extends GetView<ConfigController> {
     );
   }
 
-  Container buildContactItem(
-      {required String icon, required String title, required String value}) {
+  Container buildContactItem({
+    required String icon,
+    required String title,
+    required String value,
+    Function()? onPress,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -91,7 +105,10 @@ class ContactScreen extends GetView<ConfigController> {
                       color: Colors.black,
                     ),
               ),
-              Text(value, style: TextAppStyle().genaralTextStyle()),
+              InkWell(
+                onTap: onPress,
+                child: Text(value, style: TextAppStyle().genaralTextStyle()),
+              ),
             ],
           ))
         ],

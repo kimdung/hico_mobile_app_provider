@@ -44,7 +44,7 @@ class LoginController extends BaseController {
 
   @override
   Future<void> onReady() {
-    usernameController.text = storage.getString(StorageConstants.username)!;
+    usernameController.text = storage.getString(StorageConstants.username)??'';
     passwordController.text = '';
     return super.onReady();
   }
@@ -78,7 +78,7 @@ class LoginController extends BaseController {
               response.loginModel != null &&
               response.loginModel!.info != null) {
             if (response.loginModel!.info!.kycStatus == 1) {
-               storage.setString(
+              storage.setString(
                   StorageConstants.username, usernameController.text);
               storage.setString(
                   StorageConstants.password, passwordController.text);
@@ -266,7 +266,7 @@ class LoginController extends BaseController {
               response.loginModel != null &&
               response.loginModel!.info != null) {
             if (response.loginModel!.info!.kycStatus == 1) {
-               storage.setString(
+              storage.setString(
                   StorageConstants.username, usernameController.text);
               storage.setString(
                   StorageConstants.password, passwordController.text);

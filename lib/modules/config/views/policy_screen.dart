@@ -7,15 +7,12 @@ import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
-import '../../call/pickup/picker_layout.dart';
 import '../controllers/config_controller.dart';
 
 class PolicyScreen extends GetView<ConfigController> {
   @override
   Widget build(BuildContext context) {
-    return PickupLayout(
-      controller.callMethods,
-      scaffold: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           centerTitle: true,
@@ -57,7 +54,6 @@ class PolicyScreen extends GetView<ConfigController> {
             ),
           ),
         ),
-      ),
     );
   }
 }

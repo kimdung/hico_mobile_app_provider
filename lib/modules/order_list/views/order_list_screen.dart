@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,35 +31,33 @@ class OrderListScreen extends GetView<OrderListController> {
       body: Obx(() => Container(
             color: AppColor.secondBackgroundColorLight,
             child: SafeArea(
-              child: Column(
-                children: [
-                  const SizedBox(height: 12),
-                  _buildHeaderBar(),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: Container(
-                      color: AppColor.primaryBackgroundColorLight,
-                      child: SingleChildScrollView(
-                        controller: controller.scrollController,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 5,
-                              child: Container(
-                                color: AppColor.secondBackgroundColorLight,
-                              ),
-                            ),
-                            Container(
-                                color: AppColor.secondBackgroundColorLight,
-                                child: _buildSearchField()),
-                            _buildOrderStatus(),
-                            _buildListOrder(),
-                          ],
-                        ),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: Column(
+                  children: [
+                    const SizedBox(height: 12),
+                    _buildHeaderBar(),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 5,
+                      child: Container(
+                        color: AppColor.secondBackgroundColorLight,
                       ),
                     ),
-                  )
-                ],
+                    Container(
+                        color: AppColor.secondBackgroundColorLight,
+                        child: _buildSearchField()),
+                    _buildStatus(),
+                    Expanded(
+                      child: Container(
+                        color: AppColor.primaryBackgroundColorLight,
+                        child: _buildListOrder(),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )),

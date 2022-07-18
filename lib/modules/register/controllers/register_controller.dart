@@ -12,6 +12,7 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/constants/storage.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
@@ -38,7 +39,6 @@ class RegisterController extends BaseController {
     passwordController.text = '';
     confirmPasswordController.text = '';
   }
-
 
   @override
   void onClose() {}
@@ -110,16 +110,18 @@ class RegisterController extends BaseController {
       await EasyLoading.show();
       await _uiRepository
           .registerOtp(RegisterOtpRequest(
-        usernameController.text,
-        value,
-      ))
+              usernameController.text, value, AppDataGlobal.firebaseToken))
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.loginModel != null &&
             response.loginModel!.info != null) {
+          storage.setString(StorageConstants.username, usernameController.text);
+          storage.setString(StorageConstants.password, passwordController.text);
+          storage.setBool(StorageConstants.isSocial, true);
           AppDataGlobal.accessToken = response.loginModel!.accessToken!;
           AppDataGlobal.userInfo = response.loginModel!.info!;
+
           Get.toNamed(Routes.REGISTER_SUCCESS);
         } else {
           DialogUtil.showPopup(

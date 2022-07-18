@@ -240,4 +240,6 @@ abstract class HicoUIRepository {
   Future<BookingExtendResponse> subDetail(int invoiceId, int subId);
 
   Future<BaseResponse> subConfirm(BookingExtendRequest request);
+  Future<BaseResponse> deleteUser();
+
 }

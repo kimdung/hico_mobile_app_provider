@@ -149,7 +149,7 @@ class UpdateServiceController extends BaseController {
 
   Future addUserTime() async {
     try {
-      await Get.toNamed(Routes.TIME_SERVICE)?.then((value) {
+      await Get.toNamed(Routes.TIME_SERVICE, arguments: removeTimeIds)?.then((value) {
         if (value != null) {
           userTime = value;
           if (userTime.list != null && userTime.list!.isNotEmpty) {

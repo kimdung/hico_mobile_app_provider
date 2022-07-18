@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../data/app_data_global.dart';
 import '../../../resource/lang/translation_service.dart';
@@ -29,10 +30,38 @@ extension LanguageValue on LanguageCode {
 class LanguageController extends GetxController {
   Rx<LanguageCode> currentLanguage = Rx<LanguageCode>(LanguageCode.VN);
   final storage = Get.find<SharedPreferences>();
+  final HicoUIRepository _uiRepository = Get.find<HicoUIRepository>();
 
   @override
   Future<void> onReady() async {
     super.onReady();
+  }
+
+  Future<void> selectLanguage() async {
+    switch (currentLanguage.value) {
+      case LanguageCode.VN:
+        AppDataGlobal.languageCode = VIETNAMESE_LANG;
+        break;
+      case LanguageCode.EN:
+        AppDataGlobal.languageCode = ENGLISH_LANG;
+        break;
+      case LanguageCode.JA:
+        AppDataGlobal.languageCode = JAPANESE_LANG;
+        break;
+    }
+
+    TranslationService.changeLocale(currentLanguage.value.languageLocale);
+
+    await storage.setString(
+        StorageConstants.language, AppDataGlobal.languageCode);
+
+    await _uiRepository.masterData().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.masterDataModel != null) {
+        AppDataGlobal.masterData = response.masterDataModel!;
+        return;
+      }
+    });
   }
 
   Future<void> confirmLanguage() async {

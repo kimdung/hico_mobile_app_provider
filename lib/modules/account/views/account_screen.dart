@@ -138,6 +138,12 @@ class AccountScreen extends GetView<AccountController> {
             ),
             const SizedBox(height: 14),
             buildItem(
+              icon: IconConstants.icProfilePass,
+              title: 'account.delete'.tr,
+              onPress: () {controller.deleteUser();} ,
+            ),
+            const SizedBox(height: 14),
+            buildItem(
               icon: IconConstants.icProfileLogout,
               title: 'logout'.tr,
               titleColor: AppColor.primaryTextColorLight,

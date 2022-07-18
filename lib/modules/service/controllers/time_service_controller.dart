@@ -22,11 +22,12 @@ class TimeServiceController extends BaseController {
   RxList<UserTimeListModel> lstTimes = RxList<UserTimeListModel>();
 
   Rx<DateTime> currentDate = Rx(DateTime.now());
+  List<int> removeTimeIds = [];
 
   TimeServiceController() {
+    removeTimeIds = Get.arguments;
     prepareData();
   }
-
 
   Future<void> prepareData() async {
     try {
@@ -148,9 +149,12 @@ class TimeServiceController extends BaseController {
 
       //call api check time
       await _uiRepository
-          .checkUserTime(UpdateServiceRequest(
-        userTime: lstTimeSlotRequest,
-      ))
+          .checkUserTime(
+        UpdateServiceRequest(
+          userTime: lstTimeSlotRequest,
+          removeTimeIds: removeTimeIds,
+        ),
+      )
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {

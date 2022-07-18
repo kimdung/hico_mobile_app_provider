@@ -10,10 +10,12 @@ RegisterOtpRequest _$RegisterOtpRequestFromJson(Map<String, dynamic> json) =>
     RegisterOtpRequest(
       json['email'] as String,
       json['code'] as String,
+      json['device_identifier'] as String? ?? '',
     );
 
 Map<String, dynamic> _$RegisterOtpRequestToJson(RegisterOtpRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
       'code': instance.code,
+      'device_identifier': instance.deviceIdentifier,
     };
