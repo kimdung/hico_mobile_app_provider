@@ -82,6 +82,7 @@ class VideoCallController extends BaseController {
 
     //create the engine
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
+    await _engine.setParameters('{"che.audio.opensl":true}');
     await _engine.enableVideo();
     _engine.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
