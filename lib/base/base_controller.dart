@@ -7,10 +7,9 @@ import '../shared/methods/call_methods.dart';
 import '../shared/network/constants/constants.dart';
 import '../shared/network/controllers/network_controller.dart';
 import '../shared/network/managers/network_manager.dart';
-import '../shared/services/firebase_cloud_messaging.dart';
 
-class BaseController extends GetxController
-    with NetworkManager, ListenErrorGraphQL {
+class BaseController extends FullLifeCycleController
+    with NetworkManager, ListenErrorGraphQL, FullLifeCycleMixin {
   final _hasNetwork = true;
 
   final _networkController = Get.find<NetworkController>();
@@ -25,7 +24,7 @@ class BaseController extends GetxController
     // check network
     await checkConnectNetwork();
 
-    // await firebaseMessageConfig.handleMessage(); 
+    // await firebaseMessageConfig.handleMessage();
   }
 
   @override
@@ -83,5 +82,25 @@ class BaseController extends GetxController
 
   CommonDialogRequest handleErrorResponse(Object e) {
     return handleErrorGraphQLResponse(e);
+  }
+
+  @override
+  void onDetached() {
+    // TODO: implement onDetached
+  }
+
+  @override
+  void onInactive() {
+    // TODO: implement onInactive
+  }
+
+  @override
+  void onPaused() {
+    // TODO: implement onPaused
+  }
+
+  @override
+  void onResumed() {
+    // TODO: implement onResumed
   }
 }

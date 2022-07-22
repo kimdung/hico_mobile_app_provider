@@ -39,6 +39,7 @@ class MainController extends BaseController {
       AccountScreen(accountController),
     ];
   }
+  
   @override
   Future<void> onInit() async {
     await super.onInit();
