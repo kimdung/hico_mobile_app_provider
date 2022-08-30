@@ -41,46 +41,94 @@ extension TimeServiceComponent on TimeServiceScreen {
     required UserTimeListModel time,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 15),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: buildBoxTimeSection(
+                  onPress: () {
+                    controller.showTimeFrom(context, index);
+                  },
+                  title: 'supplier.filter.from'.tr,
+                  value: time.beginTime ?? '',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: CommonConstants.paddingDefault),
+                child: SizedBox(
+                  width: 12,
+                  height: 1,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(color: Colors.red),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: buildBoxTimeSection(
+                  onPress: () {
+                    controller.showTimeTo(context, index);
+                  },
+                  alignment: MainAxisAlignment.end,
+                  title: 'supplier.filter.to'.tr,
+                  value: time.endTime ?? '',
+                ),
+              ),
+              const SizedBox(width: 40),
+              InkWell(
+                onTap: () {
+                  controller.removeItem(index);
+                },
+                child: FCoreImage(IconConstants.icClose),
+              )
+            ],
+          ),
+          const SizedBox(height:10),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: Get.width / 3,
+                   // 100,
+                  child: Text(
+                    'service.update.offline_time'.tr,
+                    style: TextAppStyle().normalTextStype(),
+                  ),
+                ),
+                buildRadioComponent(
+                  value: time.checkOffline ?? 0,
+                  type: 1,
+                  index: index,
+                ),
+                buildRadioComponent(
+                    value: time.checkOffline ?? 0, type: 0, index: index),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildRadioComponent(
+      {required int value, required int type, required int index}) {
+    return InkWell(
+      onTap: () => controller.selectRadio(type, index),
       child: Row(
         children: [
-          Expanded(
-            child: buildBoxTimeSection(
-              onPress: () {
-                controller.showTimeFrom(context, index);
-              },
-              title: 'supplier.filter.from'.tr,
-              value: time.beginTime ?? '',
-            ),
+          FCoreImage(
+            type.isEqual(value)
+                ? IconConstants.icRadioSelected
+                : IconConstants.icRadioUnselect,
+            fit: BoxFit.fill,
+            width: 16,
+            height: 16,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: CommonConstants.paddingDefault),
-            child: SizedBox(
-              width: 12,
-              height: 1,
-              child: DecoratedBox(
-                decoration: BoxDecoration(color: Colors.red),
-              ),
-            ),
-          ),
-          Expanded(
-            child: buildBoxTimeSection(
-              onPress: () {
-                controller.showTimeTo(context, index);
-              },
-              alignment: MainAxisAlignment.end,
-              title: 'supplier.filter.to'.tr,
-              value: time.endTime ?? '',
-            ),
-          ),
-          const SizedBox(width: 40),
-          InkWell(
-            onTap: () {
-              controller.removeItem(index);
-            },
-            child: FCoreImage(IconConstants.icClose),
-          )
+          const SizedBox(width: 12),
+          Text(type == 1 ? 'Có' : 'Không', style: TextAppStyle().normalTextStype(),),
         ],
       ),
     );

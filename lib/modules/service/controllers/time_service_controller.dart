@@ -35,6 +35,7 @@ class TimeServiceController extends BaseController {
       final time = UserTimeListModel();
       time.beginTime = '0:00';
       time.endTime = '0:00';
+      time.checkOffline = 0;
       lstTimes.add(time);
     } catch (e) {
       await EasyLoading.dismiss();
@@ -46,6 +47,7 @@ class TimeServiceController extends BaseController {
       final time = UserTimeListModel();
       time.beginTime = '0:00';
       time.endTime = '0:00';
+      time.checkOffline = 0;
       lstTimes.add(time);
       lstTimes.refresh();
     } catch (e) {
@@ -121,6 +123,13 @@ class TimeServiceController extends BaseController {
     //   },
     //   currentTime: DateTime.now(),
     // );
+  }
+
+  Future<void> selectRadio(int value, int index) async {
+    final item = lstTimes[index];
+    item.checkOffline = value;
+    lstTimes[index] = item;
+    lstTimes.refresh();
   }
 
   Future<void> removeItem(int index) async {

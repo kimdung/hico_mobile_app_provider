@@ -67,6 +67,7 @@ class AddressServiceController extends BaseController {
               workplaces.provinceId = id;
               workplaces.name = name;
               workplaces.districts = lstDistrictTmp;
+              workplaces.openChild = true;
             }
             Get.back(result: workplaces);
           }

@@ -158,12 +158,26 @@ extension UpdateServiceComponent on UpdateServiceScreen {
                 workplacesItem.name ?? '',
                 style: TextAppStyle().normalTextPink(),
               ),
-              FCoreImage(IconConstants.icArrowDown),
+              InkWell(
+                onTap: () {
+                  controller.changeArrow(workplacesItem);
+                },
+                child: FCoreImage(
+                  workplacesItem.openChild != null && workplacesItem.openChild!
+                      ? IconConstants.icArrowDown
+                      : IconConstants.icArrowForwardIos,
+                  width: 18,
+                  height: 18,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 11),
           Container(
-            child: workplacesItem.districts!.isNotEmpty
+            child: workplacesItem.openChild != null &&
+                    workplacesItem.openChild! &&
+                    workplacesItem.districts!.isNotEmpty
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -207,55 +221,93 @@ extension UpdateServiceComponent on UpdateServiceScreen {
   Widget buildTimeItem({required UserTimeModel timeItem, required int index}) {
     return Container(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
           Container(
-              child: Row(
-            children: [
-              FCoreImage(
-                IconConstants.icCalendarPink,
-                width: 18,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                timeItem.date ?? '',
-                style: TextAppStyle().normalTextStype(),
-              ),
-            ],
-          )),
-          const SizedBox(width: 17),
-          Expanded(
-            flex: 2,
+            padding: const EdgeInsets.only(bottom: 5),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
+                Container(
+                    child: Row(
+                  children: [
+                    FCoreImage(
+                      IconConstants.icCalendarPink,
+                      width: 18,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      timeItem.date ?? '',
+                      style: TextAppStyle().normalTextStype(),
+                    ),
+                  ],
+                )),
+                const SizedBox(width: 17),
+                // Expanded(
+                //   flex: 2,
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Padding(
+                //         padding: const EdgeInsets.only(top: 3),
+                //         child: FCoreImage(
+                //           IconConstants.icTimeCircle,
+                //           width: 18,
+                //         ),
+                //       ),
+                //       const SizedBox(width: 6),
+                //       Expanded(
+                //         child: Text(
+                //           timeItem.getTime(),
+                //           style: TextAppStyle().normalTextStype(),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                InkWell(
+                  onTap: () {
+                    controller.removeTime(index);
+                  },
                   child: FCoreImage(
-                    IconConstants.icTimeCircle,
+                    IconConstants.icClose,
                     width: 18,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    timeItem.getTime(),
-                    style: TextAppStyle().normalTextStype(),
+                    height: 18,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ],
             ),
           ),
-          InkWell(
-            onTap: () {
-              controller.removeTime(index);
-            },
-            child: FCoreImage(
-              IconConstants.icClose,
-              width: 18,
-              height: 18,
-              fit: BoxFit.fill,
+          ...List.generate(
+            timeItem.list!.length,
+            (index) => Container(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 20),
+                      FCoreImage(
+                        IconConstants.icTimeCircle,
+                        width: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        timeItem.list![index].getTime(),
+                        style: TextAppStyle().normalTextStype(),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    timeItem.list![index].checkOffline == 1 ? 'Off' :'',
+                    style: TextAppStyle().normalTextPink(),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

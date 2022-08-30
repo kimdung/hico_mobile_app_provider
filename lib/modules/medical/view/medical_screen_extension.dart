@@ -60,6 +60,8 @@ extension MedicalScreenExtension on MeidcalScreen {
             color: AppColor.borderGrayColorLight,
             child: TextFormField(
               controller: textEditng,
+              enableInteractiveSelection: true,
+              textInputAction: TextInputAction.newline,
               keyboardType: TextInputType.text,
               cursorColor: AppColor.fifthTextColorLight,
               autovalidateMode: AutovalidateMode.onUserInteraction,

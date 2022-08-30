@@ -38,10 +38,14 @@ TimeSlotModel _$TimeSlotModelFromJson(Map<String, dynamic> json) =>
       timeSlot: (json['time_slot'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      checkOffline: (json['check_offline'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
     );
 
 Map<String, dynamic> _$TimeSlotModelToJson(TimeSlotModel instance) =>
     <String, dynamic>{
       'date': instance.date,
+      'check_offline': instance.checkOffline,
       'time_slot': instance.timeSlot,
     };

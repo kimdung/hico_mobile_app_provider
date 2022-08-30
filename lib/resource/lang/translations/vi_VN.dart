@@ -337,6 +337,9 @@ const Map<String, String> vi_VN = {
   'service.address': 'Địa điểm phiên dịch',
   'service.time_slot': 'Thời gian',
 
+  //service update
+  'service.update.offline_time': 'Đi dịch Offline',
+
   // service category
   'service.category.title_bar': 'Danh Sách loại Dịch Vụ',
   'service.category.search_field': 'Tìm kiếm dịch vụ',

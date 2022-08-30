@@ -39,7 +39,6 @@ class UpdateServiceController extends BaseController {
     _loadData();
   }
 
-
   Future _loadData() async {
     try {
       await EasyLoading.show();
@@ -149,7 +148,8 @@ class UpdateServiceController extends BaseController {
 
   Future addUserTime() async {
     try {
-      await Get.toNamed(Routes.TIME_SERVICE, arguments: removeTimeIds)?.then((value) {
+      await Get.toNamed(Routes.TIME_SERVICE, arguments: removeTimeIds)
+          ?.then((value) {
         if (value != null) {
           userTime = value;
           if (userTime.list != null && userTime.list!.isNotEmpty) {
@@ -167,6 +167,10 @@ class UpdateServiceController extends BaseController {
             lstUserTimes.refresh();
 
             //prepare data
+            final offlineArray = <int>[];
+            for (final item in userTime.list!) {
+              offlineArray.add(item.checkOffline ?? 0);
+            }
             final timeArray = <String>[];
             for (final item in userTime.list!) {
               timeArray.add('${item.beginTime} - ${item.endTime}');
@@ -177,17 +181,21 @@ class UpdateServiceController extends BaseController {
                 .isEmpty) {
               final newTime = TimeSlotModel();
               newTime.date = userTime.date;
+              newTime.checkOffline = offlineArray;
               newTime.timeSlot = timeArray;
               lstTimeSlotRequest.add(newTime);
             } else {
               final indexItem =
                   lstTimeSlotRequest.indexWhere((e) => e.date == userTime.date);
+              lstTimeSlotRequest[indexItem].checkOffline!.addAll(offlineArray);
               lstTimeSlotRequest[indexItem].timeSlot!.addAll(timeArray);
             }
           }
         }
       });
-    } catch (e) {}
+    } catch (e) {
+       await EasyLoading.dismiss();
+    }
   }
 
   Future changeWorkingForm(
@@ -287,7 +295,6 @@ class UpdateServiceController extends BaseController {
 
   Future save() async {
     try {
-      
       //prepare
       final lstServiceRequest = <UserServicesModel>[];
       for (final item in lstServiceUser) {
@@ -315,17 +322,30 @@ class UpdateServiceController extends BaseController {
           ),
           onVaLue: (value) {
             if (response.status == CommonConstants.statusOk) {
-              if(AppDataGlobal.userInfo!.kycStatus == 1){
+              if (AppDataGlobal.userInfo!.kycStatus == 1) {
                 Get.back();
-              }else{
+              } else {
                 Get.offAllNamed(Routes.UPDATE_SERVICE_SUCCESS);
               }
-              
             }
           },
         );
         return;
       });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> changeArrow(WorkplacesModel item) async {
+    try {
+      item.openChild = !item.openChild!;
+      var index = lstWorkplaces
+          .indexWhere((element) => element.provinceId == item.provinceId);
+      if (index != -1) {
+        lstWorkplaces[index] = item;
+        lstWorkplaces.refresh();
+      }
     } catch (e) {
       await EasyLoading.dismiss();
     }

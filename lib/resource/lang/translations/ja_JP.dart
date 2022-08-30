@@ -21,7 +21,7 @@ const Map<String, String> ja_JP = {
   'save': '保存',
   'back_home': 'ホームへ',
   'note': '注意',
-  'accept': '受付',
+  'accept': '承認',
   'all': '一覧',
   'service': 'サービス',
   'done': '完了',
@@ -115,8 +115,8 @@ const Map<String, String> ja_JP = {
   'order.detail.ship_fee': '交通費',
   'order.detail.extend': '延長',
   'order.detail.pay_value': '合計',
-  'order.detail.accept': '受入',
-  'order.detail.cancel': '拒否',
+  'order.detail.accept': '承認',
+  'order.detail.cancel': '否認',
   'order.detail.cancel_reason': 'キャンセル理由',
   'order.detail.voucher': 'クーポン',
   'order.detail.step': '回',
@@ -135,8 +135,8 @@ const Map<String, String> ja_JP = {
 
 //order
   'order.hello': 'こんにちは',
-  'order.search_title': '予約腱索',
-  'order.cancel_confirm': 'この予約を拒否',
+  'order.search_title': '予約検索',
+  'order.cancel_confirm': 'この予約を否認しますか？',
 
 //profile
   'profile.add_avatar': 'プロファイル写真を変更',
@@ -321,6 +321,9 @@ const Map<String, String> ja_JP = {
 
   'service.address': '通訳場所',
   'service.time_slot': '時間',
+
+  //service update
+  'service.update.offline_time': 'オフラインで翻訳',
 
 // service category
   'service.category.title_bar': 'サービスリスト',

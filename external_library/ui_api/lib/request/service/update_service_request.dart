@@ -29,12 +29,15 @@ class UpdateServiceRequest {
 @JsonSerializable()
 class TimeSlotModel {
   String? date;
+  @JsonKey(name: 'check_offline')
+  List<int>? checkOffline;
   @JsonKey(name: 'time_slot')
   List<String>? timeSlot;
 
   TimeSlotModel({
     this.date,
     this.timeSlot,
+    this.checkOffline,
   });
 
   factory TimeSlotModel.fromJson(Map<String, dynamic> json) =>

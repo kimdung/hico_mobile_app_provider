@@ -26,8 +26,16 @@ class UserTimeListModel {
   String? beginTime;
   @JsonKey(name: 'end_time', defaultValue: '')
   String? endTime;
+  @JsonKey(name: 'check_offline', defaultValue: 0)
+  int? checkOffline;
 
-  UserTimeListModel({this.id, this.date, this.beginTime, this.endTime});
+  UserTimeListModel({
+    this.id,
+    this.date,
+    this.beginTime,
+    this.endTime,
+    this.checkOffline,
+  });
 
   factory UserTimeListModel.fromJson(Map<String, dynamic> json) =>
       _$UserTimeListModelFromJson(json);

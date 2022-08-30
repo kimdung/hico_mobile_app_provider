@@ -332,7 +332,8 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_expand_more.png';
   static const String icArrowDown =
       'lib/resource/assets_resources/icons/ic_arrow_down.png';
-
+  static const String icArrowForwardIos =
+      'lib/resource/assets_resources/icons/ic_arrow_forward.jpeg';
   //star icon
   static const String icStarColor =
       'lib/resource/assets_resources/icons/star_color.png';

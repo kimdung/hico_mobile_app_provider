@@ -26,6 +26,7 @@ UserTimeListModel _$UserTimeListModelFromJson(Map<String, dynamic> json) =>
       date: json['date'] as String?,
       beginTime: json['begin_time'] as String? ?? '',
       endTime: json['end_time'] as String? ?? '',
+      checkOffline: json['check_offline'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$UserTimeListModelToJson(UserTimeListModel instance) =>
@@ -34,4 +35,5 @@ Map<String, dynamic> _$UserTimeListModelToJson(UserTimeListModel instance) =>
       'date': instance.date,
       'begin_time': instance.beginTime,
       'end_time': instance.endTime,
+      'check_offline': instance.checkOffline,
     };

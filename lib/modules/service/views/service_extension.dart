@@ -116,12 +116,24 @@ extension ServiceExtension on ServiceScreen {
                 '${'service'.tr} ${item.name}',
                 style: TextAppStyle().normalTextPink(),
               ),
-              FCoreImage(IconConstants.icArrowDown),
+              InkWell(
+                onTap: (){
+                  controller.changeServiceArrow(item);
+                },
+                child: FCoreImage(
+                  item.openChild! ? 
+                          IconConstants.icArrowDown: 
+                          IconConstants.icArrowForwardIos,
+                  width: 18,
+                  height: 18,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 11),
           Container(
-            child: item.list!.isNotEmpty
+            child: item.openChild! && item.list!.isNotEmpty
                 ? Column(
                     children: [
                       ...List.generate(
@@ -173,12 +185,24 @@ extension ServiceExtension on ServiceScreen {
                 workplacesItem.name ?? '',
                 style: TextAppStyle().normalTextPink(),
               ),
-              FCoreImage(IconConstants.icArrowDown),
+              InkWell(
+                onTap: (){
+                  controller.changeArrow(workplacesItem);
+                },
+                child: FCoreImage(
+                  workplacesItem.openChild! ? 
+                          IconConstants.icArrowDown: 
+                          IconConstants.icArrowForwardIos,
+                  width: 18,
+                  height: 18,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 11),
           Container(
-            child: workplacesItem.districts!.isNotEmpty
+            child: workplacesItem.openChild! && workplacesItem.districts!.isNotEmpty
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -204,57 +228,61 @@ extension ServiceExtension on ServiceScreen {
   Widget buildTimeItem({required UserTimeModel timeItem}) {
     return Container(
       padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
           Container(
-              child: Row(
-            children: [
-              FCoreImage(
-                IconConstants.icCalendarPink,
-                width: 18,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                timeItem.date ?? '',
-                style: TextAppStyle().normalTextStype(),
-              ),
-            ],
-          )),
-          const SizedBox(width: 17),
-          Expanded(
-              flex: 2,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3),
-                    child: FCoreImage(
-                      IconConstants.icTimeCircle,
+            padding:const EdgeInsets.only(bottom:6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    child: Row(
+                  children: [
+                    FCoreImage(
+                      IconConstants.icCalendarPink,
                       width: 18,
                     ),
-                  ),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        text: '',
-                        style: TextAppStyle().normalTextStype(),
-                        children: <TextSpan>[
-                          ...List.generate(
-                            timeItem.list!.length,
-                            (int index) => TextSpan(
-                              text:
-                                  '${timeItem.list![index].beginTime}-${timeItem.list![index].endTime}${(index + 1) == timeItem.list!.length ? '' : ', '}',
-                              style: TextAppStyle().normalTextStype(),
-                            ),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(width: 6),
+                    Text(
+                      timeItem.date ?? '',
+                      style: TextAppStyle().normalTextStype(),
                     ),
+                  ],
+                )),
+              ],
+            ),
+          ),
+        ...List.generate(
+            timeItem.list!.length,
+            (index) => Container(
+              padding: const EdgeInsets.only(bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 20),
+                      FCoreImage(
+                        IconConstants.icTimeCircle,
+                        width: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        timeItem.list![index].getTime(),
+                        style: TextAppStyle().normalTextStype(),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    timeItem.list![index].checkOffline == 1 ? 'Off' :'',
+                    style: TextAppStyle().normalTextPink(),
                   ),
                 ],
-              )),
+              ),
+            ),
+          ),
         ],
       ),
     );
