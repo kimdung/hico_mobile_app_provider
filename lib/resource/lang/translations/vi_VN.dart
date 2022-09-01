@@ -32,7 +32,7 @@ const Map<String, String> vi_VN = {
   'camera': 'Hình ảnh',
   'year': 'năm',
   'bank': 'Ngân hàng',
-
+  'notif': 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
   // onboard
   'onboard.title1': 'Welcome to Hico',
   'onboard.title2': 'Dịch vụ tận tình - chu đáo',

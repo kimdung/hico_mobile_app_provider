@@ -31,7 +31,7 @@ const Map<String, String> ja_JP = {
   'camera': '写真',
   'year': '年',
   'bank': '銀行',
-
+  'notif' : 'システムは日本時間帯を使用しています',
 // onboard
   'onboard.title1': 'HICOへようこそ',
   'onboard.title2': 'おもてなしサービス',

@@ -246,13 +246,18 @@ class FirebaseMessageConfig {
     } else if (type == DisplayType.UpdateInfo.id.toString()) {
       await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
           .pushNamed(Routes.UPDATE_SERVICE);
+    } else if (type == DisplayType.UpdateBalance.id.toString()) {
+      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+          .pushNamedAndRemoveUntil(
+              Routes.MAIN, (Route<dynamic> route) => false, arguments: true);
     } else if (sender == 'stream.chat') {
       //router chat screen
       debugPrint('router chat screen');
       await onChat(channelId);
-    }else {
+    } else {
       await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamedAndRemoveUntil(Routes.MAIN,(Route<dynamic> route) => false);
+          .pushNamedAndRemoveUntil(
+              Routes.MAIN, (Route<dynamic> route) => false);
     }
     // if (payload?.isNotEmpty ?? false) {
     //   final message = jsonDecode(payload ?? '');

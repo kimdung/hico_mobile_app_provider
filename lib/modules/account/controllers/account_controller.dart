@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
@@ -7,6 +8,7 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
+import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/dialog_confirm_widget.dart';
@@ -29,8 +31,21 @@ class AccountController extends BaseController {
     await super.onInit();
   }
 
-  Future<void> loadData() async {
-    info.value = AppDataGlobal.userInfo!;
+  Future loadData() async {
+    try {
+      await _uiRepository.getInfo().then((response) {
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null &&
+            response.data!.info != null) {
+          AppDataGlobal.userInfo = response.data!.info!;
+          info.value = AppDataGlobal.userInfo!;
+
+          return;
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
   }
 
   Future<void> updateInfo() async {

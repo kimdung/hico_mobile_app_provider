@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
@@ -30,6 +31,9 @@ class MainController extends BaseController {
   final accountController = AccountController();
 
   MainController() {
+    if (Get.arguments != null && Get.arguments == true) {
+      _loadInfo();
+    }
     orderListController = OrderListController(channel);
     notificationController = NotificationController(this);
     tabs = [
@@ -39,7 +43,7 @@ class MainController extends BaseController {
       AccountScreen(accountController),
     ];
   }
-  
+
   @override
   Future<void> onInit() async {
     await super.onInit();
@@ -50,6 +54,21 @@ class MainController extends BaseController {
     });
     await orderListController.loadList();
     await countNotifyUnread();
+  }
+
+  Future _loadInfo() async {
+    try {
+      await _uiRepository.getInfo().then((response) {
+        if (response.status == CommonConstants.statusOk &&
+            response.data != null &&
+            response.data!.info != null) {
+          AppDataGlobal.userInfo = response.data!.info!;
+          return;
+        }
+      });
+    } catch (e) {
+      await EasyLoading.dismiss();
+    }
   }
 
   Future<void> changeIndex(int _index) async {

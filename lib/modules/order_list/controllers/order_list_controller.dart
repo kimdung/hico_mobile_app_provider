@@ -11,6 +11,7 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../resource/assets_constant/images_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
@@ -62,6 +63,16 @@ class OrderListController extends BaseController {
   @override
   Future<void> onInit() async {
     await super.onInit();
+    await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: NormalWidget(
+          icon: ImageConstants.appLogo,
+          title: 'notif'.tr ,
+        ),
+        onVaLue: (value) {},
+      );
   }
 
   Future<void> selectStatus(InvoiceStatus status) async {

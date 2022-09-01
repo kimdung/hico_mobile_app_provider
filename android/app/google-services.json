@@ -4,7 +4,75 @@
     "project_id": "hicoapp-73545",
     "storage_bucket": "hicoapp-73545.appspot.com"
   },
-  "client": [ 
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17268526518:android:608ca4284a188cc6eac517",
+        "android_client_info": {
+          "package_name": "com.wap.hico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17268526518-ajolksrr402bdvuglviaulf063rv6ott.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hico",
+            "certificate_hash": "57adc6b35b376c75e5d13a1f4130260edb787d65"
+          }
+        },
+        {
+          "client_id": "17268526518-ddjkomlrevbr4l8fka7pn5rg9adqnq36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hico",
+            "certificate_hash": "b5a2cb42c913e42d69e8e8da1f80cb58d777a812"
+          }
+        },
+        {
+          "client_id": "17268526518-hpe0gar9o7lcrt4uk8g55n7u11ql7c2m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hico",
+            "certificate_hash": "6df17bbd802c9dacf1e22d675f23ae20c8b4c559"
+          }
+        },
+        {
+          "client_id": "17268526518-sunc0r4r7am48epjga7jjgt31onp7vho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hico",
+            "certificate_hash": "bdee3e3ff9a7407a26234b736110458918b25976"
+          }
+        },
+        {
+          "client_id": "17268526518-ilther3s6u9mq7dfoo992d8du5copa97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlJ0bVQkCtA0ebdwWD2xvJsGf9hQh9zqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17268526518-ilther3s6u9mq7dfoo992d8du5copa97.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "17268526518-6q28br1tnlhb69rgldgs5ae4pbhieq4t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.wap.hico"
+              }
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:17268526518:android:b8dac88c5f750d88eac517",
@@ -19,6 +87,74 @@
           "android_info": {
             "package_name": "com.wap.hicoprovider",
             "certificate_hash": "bdee3e3ff9a7407a26234b736110458918b25976"
+          }
+        },
+        {
+          "client_id": "17268526518-6b3cuj5q20pounbjr4vfursalcenbh71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hicoprovider",
+            "certificate_hash": "b5a2cb42c913e42d69e8e8da1f80cb58d777a812"
+          }
+        },
+        {
+          "client_id": "17268526518-c1fjq49uhvbd74lf1c9j1lpi66q3059q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hicoprovider",
+            "certificate_hash": "57adc6b35b376c75e5d13a1f4130260edb787d65"
+          }
+        },
+        {
+          "client_id": "17268526518-ek71bvpdl5ap5tlcqt41n7nfijbmfgl2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wap.hicoprovider",
+            "certificate_hash": "20ab787fad427f97ae78b175a848a294da01c248"
+          }
+        },
+        {
+          "client_id": "17268526518-ilther3s6u9mq7dfoo992d8du5copa97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlJ0bVQkCtA0ebdwWD2xvJsGf9hQh9zqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17268526518-ilther3s6u9mq7dfoo992d8du5copa97.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "17268526518-6q28br1tnlhb69rgldgs5ae4pbhieq4t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.wap.hico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17268526518:android:7d21f47ab30a8afeeac517",
+        "android_client_info": {
+          "package_name": "jp.wap.hicoprovider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17268526518-7ho6jj46ues130h5qgvlnlev58ah9kvn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "jp.wap.hicoprovider",
+            "certificate_hash": "ff0b6a689143bf9443e11f39fe69968eb8c58775"
           }
         },
         {
