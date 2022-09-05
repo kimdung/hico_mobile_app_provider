@@ -167,6 +167,24 @@ class VoiceCallController extends BaseController {
     await _callEndCall();
   }
 
+  void _startRingtone() {
+    if (Platform.isAndroid) {
+      FlutterRingtonePlayer.playRingtone();
+    } else if (Platform.isIOS) {
+      FlutterRingtonePlayer.playRingtone();
+      timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+        printInfo(info: 'playRingtone');
+        FlutterRingtonePlayer.playRingtone();
+      });
+    }
+  }
+
+  void _endRingtone() {
+    timer?.cancel();
+    timer = null;
+    FlutterRingtonePlayer.stop();
+  }
+
   /* API */
 
   Future<void> _sendCallNotification() async {
@@ -191,23 +209,5 @@ class VoiceCallController extends BaseController {
     } catch (e) {
       printError(info: e.toString());
     }
-  }
-
-  void _startRingtone() {
-    if (Platform.isAndroid) {
-      FlutterRingtonePlayer.playRingtone();
-    } else if (Platform.isIOS) {
-      FlutterRingtonePlayer.playRingtone();
-      timer = Timer.periodic(const Duration(seconds: 4), (timer) {
-        printInfo(info: 'playRingtone');
-        FlutterRingtonePlayer.playRingtone();
-      });
-    }
-  }
-
-  void _endRingtone() {
-    timer?.cancel();
-    timer = null;
-    FlutterRingtonePlayer.stop();
   }
 }
