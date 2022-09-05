@@ -35,7 +35,7 @@ class VoiceCallController extends BaseController {
   Timer? _durationTimer;
   final RxInt dutationCall = RxInt(0);
 
-  Timer? _timerRingwait;
+  Timer? timer;
 
   VoiceCallController(this.isCaller, this.call, this.token);
 
@@ -50,21 +50,14 @@ class VoiceCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
-      if (Platform.isAndroid) {
-        await FlutterRingtonePlayer.playRingtone();
-      } else if (Platform.isIOS) {
-        await FlutterRingtonePlayer.playRingtone();
-        _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
-          FlutterRingtonePlayer.playRingtone();
-        });
-      }
-
       await _sendCallNotification();
     }
   }
 
   @override
   void onClose() {
+    _endRingtone();
+
     onEndCall();
     _engine?.leaveChannel();
     _engine?.destroy();
@@ -72,10 +65,6 @@ class VoiceCallController extends BaseController {
 
     _durationTimer?.cancel();
     _durationTimer = null;
-
-    _timerRingwait?.cancel();
-    _timerRingwait = null;
-    FlutterRingtonePlayer.stop();
 
     Wakelock.disable();
 
@@ -111,13 +100,11 @@ class VoiceCallController extends BaseController {
         printError(info: 'error $errorCode');
       },
       userJoined: (uid, elapsed) {
+        _endRingtone();
+
         printInfo(info: 'userJoined $uid $elapsed');
         isRemoted.value = true;
         _callBeginCall();
-
-        _timerRingwait?.cancel();
-        _timerRingwait = null;
-        FlutterRingtonePlayer.stop();
 
         _durationTimer ??= Timer.periodic(
           const Duration(seconds: 1),
@@ -128,19 +115,25 @@ class VoiceCallController extends BaseController {
       },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+
+        _startRingtone();
+
         isJoined.value = true;
 
         _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
       },
       leaveChannel: (stats) async {
         printError(info: 'leaveChannel ${stats.toJson()}');
+
+        _endRingtone();
+
         isJoined.value = false;
       },
     ));
 
     await _engine?.enableAudio();
     await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine?.setClientRole(ClientRole.Broadcaster);
+    // await _engine?.setClientRole(ClientRole.Broadcaster);
   }
 
   Future<void> _joinChannel() async {
@@ -170,10 +163,6 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
-    _timerRingwait?.cancel();
-    _timerRingwait = null;
-    await FlutterRingtonePlayer.stop();
-
     await callMethods.endCall(call: call);
     await _callEndCall();
   }
@@ -202,5 +191,23 @@ class VoiceCallController extends BaseController {
     } catch (e) {
       printError(info: e.toString());
     }
+  }
+
+  void _startRingtone() {
+    if (Platform.isAndroid) {
+      FlutterRingtonePlayer.playRingtone();
+    } else if (Platform.isIOS) {
+      FlutterRingtonePlayer.playRingtone();
+      timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+        printInfo(info: 'playRingtone');
+        FlutterRingtonePlayer.playRingtone();
+      });
+    }
+  }
+
+  void _endRingtone() {
+    timer?.cancel();
+    timer = null;
+    FlutterRingtonePlayer.stop();
   }
 }

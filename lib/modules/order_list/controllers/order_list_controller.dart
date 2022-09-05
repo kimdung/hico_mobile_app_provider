@@ -189,6 +189,7 @@ class OrderListController extends BaseController {
     if (AppDataGlobal.client == null) {
       return;
     }
+    
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
       filter: Filter.autoComplete(
           'id', AppDataGlobal.userInfo?.conversationInfo?.adminId ?? ''),

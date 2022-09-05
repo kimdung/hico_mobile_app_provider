@@ -25,8 +25,12 @@ extension OrderExtension on OrderScreen {
                     ? null
                     : controller.onCall,
                 height: 47,
-                backgroundColor: AppColor.greenColorLight,
-                borderColor: AppColor.greenColorLight,
+                backgroundColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.greenColorLight,
+                borderColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.greenColorLight,
                 padding: 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -48,8 +52,12 @@ extension OrderExtension on OrderScreen {
                     ? null
                     : controller.onVideo,
                 height: 47,
-                backgroundColor: AppColor.blueColorLight,
-                borderColor: AppColor.blueColorLight,
+                backgroundColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.blueColorLight,
+                borderColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.blueColorLight,
                 padding: 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

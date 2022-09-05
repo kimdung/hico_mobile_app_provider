@@ -31,7 +31,7 @@ const Map<String, String> ja_JP = {
   'camera': '写真',
   'year': '年',
   'bank': '銀行',
-  'notif' : 'システムは日本時間帯を使用しています',
+  'notif': 'システムは日本時間帯を使用しています',
 // onboard
   'onboard.title1': 'HICOへようこそ',
   'onboard.title2': 'おもてなしサービス',
@@ -47,6 +47,7 @@ const Map<String, String> ja_JP = {
 // error
   'error': 'エラーが発生しました。',
   'error.expires': '予約した時間を超過しました。',
+  'error.not.connect': 'サーバーに接続できません。',
 
 //register
   'register.comfirm': 'アカウント認証',

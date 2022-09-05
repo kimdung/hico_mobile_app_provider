@@ -49,15 +49,6 @@ class VideoCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
-      if (Platform.isAndroid) {
-        await FlutterRingtonePlayer.playRingtone();
-      } else if (Platform.isIOS) {
-        await FlutterRingtonePlayer.playRingtone();
-        _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
-          FlutterRingtonePlayer.playRingtone();
-        });
-      }
-
       await _sendCallNotification();
     }
   }
@@ -72,14 +63,12 @@ class VideoCallController extends BaseController {
   @override
   void onClose() {
     printInfo(info: 'onClose');
+    _endRingtone();
+
     _engine?.leaveChannel();
     _engine?.destroy();
     _durationTimer?.cancel();
     _callStreamSubscription?.cancel();
-
-    _timerRingwait?.cancel();
-    _timerRingwait = null;
-    FlutterRingtonePlayer.stop();
 
     Wakelock.disable();
 
@@ -117,12 +106,10 @@ class VideoCallController extends BaseController {
         printInfo(info: 'error $errorCode');
       },
       userJoined: (uid, elapsed) {
+        _endRingtone();
+
         printInfo(info: 'userJoined $uid $elapsed');
         remoteUid.value = uid;
-
-        _timerRingwait?.cancel();
-        _timerRingwait = null;
-        FlutterRingtonePlayer.stop();
 
         _callBeginCall();
         _durationTimer ??= Timer.periodic(
@@ -134,16 +121,24 @@ class VideoCallController extends BaseController {
       },
       userOffline: (int uid, UserOfflineReason reason) {
         printInfo(info: 'remote user $uid left channel');
+        _endRingtone();
+
         remoteUid.value = null;
 
         onEndCall();
       },
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+
+        _startRingtone();
+
         isJoined.value = true;
       },
       leaveChannel: (stats) async {
         printInfo(info: 'leaveChannel ${stats.toJson()}');
+
+        _endRingtone();
+
         isJoined.value = false;
       },
     ));
@@ -173,13 +168,26 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
-    _timerRingwait?.cancel();
-    _timerRingwait = null;
-    await FlutterRingtonePlayer.stop();
-
     printInfo(info: 'onEndCall');
     await callMethods.endCall(call: call);
     await _callEndCall();
+  }
+
+  void _startRingtone() {
+    if (Platform.isAndroid) {
+      FlutterRingtonePlayer.playRingtone();
+    } else if (Platform.isIOS) {
+      FlutterRingtonePlayer.playRingtone(looping: false);
+      _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
+        FlutterRingtonePlayer.playRingtone(looping: false);
+      });
+    }
+  }
+
+  void _endRingtone() {
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
+    FlutterRingtonePlayer.stop();
   }
 
   /* API */

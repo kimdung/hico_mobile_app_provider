@@ -51,6 +51,7 @@ const Map<String, String> vi_VN = {
   // error
   'error': 'Có lỗi xẩy ra',
   'error.expires': 'Phiên làm việc hết hạn!',
+  'error.not.connect': 'Không kết nối được đến máy chủ!',
 
   //register
   'register.comfirm': 'Xác thực tài khoản',
