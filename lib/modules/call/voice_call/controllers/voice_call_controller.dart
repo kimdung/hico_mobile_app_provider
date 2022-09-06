@@ -35,7 +35,7 @@ class VoiceCallController extends BaseController {
   Timer? _durationTimer;
   final RxInt dutationCall = RxInt(0);
 
-  Timer? timer;
+  Timer? _timerRingwait;
 
   VoiceCallController(this.isCaller, this.call, this.token);
 
@@ -50,6 +50,8 @@ class VoiceCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
+      _startRingtone();
+
       await _sendCallNotification();
     }
   }
@@ -92,18 +94,32 @@ class VoiceCallController extends BaseController {
 
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
+
     _engine?.setEventHandler(RtcEngineEventHandler(
-      warning: (warningCode) {
-        printError(info: 'warning $warningCode');
+      joinChannelSuccess: (channel, uid, elapsed) {
+        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+
+        isJoined.value = true;
+
+        _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
       },
-      error: (errorCode) {
-        printError(info: 'error $errorCode');
-      },
-      userJoined: (uid, elapsed) {
+      leaveChannel: (stats) {
+        printInfo(info: 'leaveChannel ${stats.toJson()}');
+
         _endRingtone();
 
+        isJoined.value = false;
+      },
+      userJoined: (uid, elapsed) {
         printInfo(info: 'userJoined $uid $elapsed');
+
+        _engine?.enableLocalAudio(true);
+        // _engine?.muteLocalAudioStream(false);
+
+        _endRingtone();
+
         isRemoted.value = true;
+
         _callBeginCall();
 
         _durationTimer ??= Timer.periodic(
@@ -113,27 +129,23 @@ class VoiceCallController extends BaseController {
           },
         );
       },
-      joinChannelSuccess: (channel, uid, elapsed) {
-        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
-
-        _startRingtone();
-
-        isJoined.value = true;
-
-        _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
+      userOffline: (int uid, UserOfflineReason reason) {
+        printInfo(info: 'userOffline $uid ${reason.toString()}');
       },
-      leaveChannel: (stats) async {
-        printError(info: 'leaveChannel ${stats.toJson()}');
-
-        _endRingtone();
-
-        isJoined.value = false;
+      warning: (warningCode) {
+        printError(info: 'warning $warningCode');
+      },
+      error: (errorCode) {
+        printError(info: 'error $errorCode');
       },
     ));
 
     await _engine?.enableAudio();
     await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    // await _engine?.setClientRole(ClientRole.Broadcaster);
+    await _engine?.setClientRole(ClientRole.Broadcaster);
+
+    await _engine?.enableLocalAudio(false);
+    // await _engine?.muteLocalAudioStream(true);
   }
 
   Future<void> _joinChannel() async {
@@ -171,17 +183,17 @@ class VoiceCallController extends BaseController {
     if (Platform.isAndroid) {
       FlutterRingtonePlayer.playRingtone();
     } else if (Platform.isIOS) {
-      FlutterRingtonePlayer.playRingtone();
-      timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      FlutterRingtonePlayer.playRingtone(looping: false);
+      _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
         printInfo(info: 'playRingtone');
-        FlutterRingtonePlayer.playRingtone();
+        FlutterRingtonePlayer.playRingtone(looping: false);
       });
     }
   }
 
   void _endRingtone() {
-    timer?.cancel();
-    timer = null;
+    _timerRingwait?.cancel();
+    _timerRingwait = null;
     FlutterRingtonePlayer.stop();
   }
 

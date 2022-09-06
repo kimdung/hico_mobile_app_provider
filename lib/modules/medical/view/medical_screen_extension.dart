@@ -27,12 +27,12 @@ extension MedicalScreenExtension on MeidcalScreen {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(IconConstants.icDocumentEdit),
-          const SizedBox(
-            width: 11.0,
-          ),
-          Text(
-            'medical.header'.tr,
-            style: TextAppStyle().headerTextStyle(),
+          const SizedBox(width: 11),
+          Expanded(
+            child: Text(
+              'medical.header'.tr,
+              style: TextAppStyle().headerTextStyle(),
+            ),
           ),
         ],
       ),
@@ -48,9 +48,7 @@ extension MedicalScreenExtension on MeidcalScreen {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: TextAppStyle().titleTextStyle()),
-        const SizedBox(
-          height: 8.0,
-        ),
+        const SizedBox(height: 8),
         Container(
           child: GFBorder(
             dashedLine: const [4, 6],
@@ -61,11 +59,10 @@ extension MedicalScreenExtension on MeidcalScreen {
             child: TextFormField(
               controller: textEditng,
               enableInteractiveSelection: true,
-              textInputAction: TextInputAction.newline,
-              keyboardType: TextInputType.text,
+              maxLines: 3,
+              keyboardType: TextInputType.multiline,
               cursorColor: AppColor.fifthTextColorLight,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              maxLines: 3,
               decoration: InputDecoration(
                 hintText: description,
                 hintStyle: TextAppStyle().normalTextGrey(),

@@ -71,6 +71,7 @@ const DefaultLanguageCode = 'DefaultLanguageCode';
 const UIAPIDomain = 'UIAPIDomain';
 const LineChannelId = 'LineChannelId';
 const StripePublishableKey = 'StripePublishableKey';
+const AgoraAppId = 'AgoraAppId';
 
 // URL DOWNLOAD APP
 const URL_ANDROID =

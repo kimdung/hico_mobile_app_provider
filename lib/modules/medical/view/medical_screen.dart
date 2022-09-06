@@ -8,6 +8,7 @@ import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/styles/text_style/text_style.dart';
 import '../../../shared/widget_hico/button/general_button.dart';
+import '../../../shared/widget_hico/widget_touch_hide_keyboard.dart';
 import '../controller/medical_controller.dart';
 
 part 'medical_screen_extension.dart';
@@ -21,6 +22,7 @@ class MeidcalScreen extends GetView<MedicalController> {
       backgroundColor: Colors.white,
       appBar: _buildAppBar(),
       body: SingleChildScrollView(
+          child: WidgetTouchHideKeyBoard(
         child: Column(
           children: [
             _buildHeader(),
@@ -99,7 +101,7 @@ class MeidcalScreen extends GetView<MedicalController> {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }

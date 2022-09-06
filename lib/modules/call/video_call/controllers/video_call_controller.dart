@@ -49,6 +49,8 @@ class VideoCallController extends BaseController {
     await _joinChannel();
 
     if (isCaller) {
+      _startRingtone();
+
       await _sendCallNotification();
     }
   }
@@ -105,6 +107,18 @@ class VideoCallController extends BaseController {
       error: (errorCode) {
         printInfo(info: 'error $errorCode');
       },
+      joinChannelSuccess: (channel, uid, elapsed) {
+        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+
+        isJoined.value = true;
+      },
+      leaveChannel: (stats) {
+        printInfo(info: 'leaveChannel ${stats.toJson()}');
+
+        _endRingtone();
+
+        isJoined.value = false;
+      },
       userJoined: (uid, elapsed) {
         _endRingtone();
 
@@ -126,20 +140,6 @@ class VideoCallController extends BaseController {
         remoteUid.value = null;
 
         onEndCall();
-      },
-      joinChannelSuccess: (channel, uid, elapsed) {
-        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
-
-        _startRingtone();
-
-        isJoined.value = true;
-      },
-      leaveChannel: (stats) async {
-        printInfo(info: 'leaveChannel ${stats.toJson()}');
-
-        _endRingtone();
-
-        isJoined.value = false;
       },
     ));
   }
