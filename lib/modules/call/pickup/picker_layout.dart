@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:ui_api/models/call/call_model.dart';
 
@@ -34,7 +35,7 @@ class PickupLayout extends GetView<BaseController> {
                     return PickupView(call: call);
                   }
                 } catch (e) {
-                  print(e.toString());
+                  printError(info: 'Get call firebase ${e.toString()}');
                 }
               }
               return scaffold;
