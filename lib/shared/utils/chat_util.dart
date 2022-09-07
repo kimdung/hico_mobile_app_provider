@@ -1,8 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart'; 
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import '../../data/app_data_global.dart';

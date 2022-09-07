@@ -173,13 +173,14 @@ class VideoCallController extends BaseController {
     await _callEndCall();
   }
 
-  void _startRingtone() {
+  void _startRingtone() { 
     if (Platform.isAndroid) {
-      FlutterRingtonePlayer.playRingtone();
+      FlutterRingtonePlayer.playRingtone(asAlarm: true);
     } else if (Platform.isIOS) {
-      FlutterRingtonePlayer.playRingtone(looping: false);
-      _timerRingwait = Timer.periodic(const Duration(seconds: 3), (timer) {
-        FlutterRingtonePlayer.playRingtone(looping: false);
+      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
+        printInfo(info: 'playRingtone');
+        FlutterRingtonePlayer.playRingtone(asAlarm: true);
       });
     }
   }
