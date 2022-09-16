@@ -105,7 +105,9 @@ class OrderController extends BaseController {
 
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository
+          .getCallToken(channelId, invoice.value.id)
+          .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
@@ -136,7 +138,9 @@ class OrderController extends BaseController {
     final channelId = invoice.value.getCallChannel();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository
+          .getCallToken(channelId, invoice.value.id)
+          .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
@@ -338,7 +342,8 @@ class OrderController extends BaseController {
         await EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           if (invoice.value.service!.isMedical == 1) {
-              await Get.toNamed(Routes.MEDICAL, arguments: id)!.then((value) => loadData());
+            await Get.toNamed(Routes.MEDICAL, arguments: id)!
+                .then((value) => loadData());
           } else {
             await DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
@@ -356,17 +361,17 @@ class OrderController extends BaseController {
               },
             );
           }
-        }else{
+        } else {
           await DialogUtil.showPopup(
-                dialogSize: DialogSize.Popup,
-                barrierDismissible: false,
-                backgroundColor: Colors.transparent,
-                child: NormalWidget(
-                  icon: IconConstants.icFail,
-                  title: response.message,
-                ),
-                onVaLue: (value) {},
-              );
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {},
+          );
         }
         return;
       });

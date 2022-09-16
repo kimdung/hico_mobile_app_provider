@@ -22,7 +22,7 @@ class VoiceCallController extends BaseController {
   RtcEngine? _engine;
   StreamSubscription? _callStreamSubscription;
 
-  RxBool isRemoted = RxBool(false);
+  RxBool isCalling = RxBool(false);
   RxBool isJoined = RxBool(false);
 
   RxBool enableSpeakerphone = RxBool(false);
@@ -118,7 +118,7 @@ class VoiceCallController extends BaseController {
 
         _endRingtone();
 
-        isRemoted.value = true;
+        isCalling.value = true;
 
         _callBeginCall();
 
@@ -175,18 +175,31 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
+    if (isCaller && !isCalling.value) {
+      _sendMissCall();
+    }
+    _endRingtone();
     await callMethods.endCall(call: call);
     await _callEndCall();
   }
 
   void _startRingtone() {
-    if (Platform.isAndroid) {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
-    } else if (Platform.isIOS) {
+    if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
+        AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: true,
+        asAlarm: true,
+      );
+    } else {
       FlutterRingtonePlayer.playRingtone(asAlarm: true);
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
-        FlutterRingtonePlayer.playRingtone(asAlarm: true);
+        FlutterRingtonePlayer.play(
+          fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+          looping: false,
+          asAlarm: true,
+        );
       });
     }
   }
@@ -202,6 +215,14 @@ class VoiceCallController extends BaseController {
   Future<void> _sendCallNotification() async {
     try {
       await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  void _sendMissCall() {
+    try {
+      _uiRepository.sendMissCall(call.invoiceId ?? -1);
     } catch (e) {
       printError(info: e.toString());
     }

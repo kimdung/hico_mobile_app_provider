@@ -287,7 +287,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.updateService(request);
   }
 
-   @override
+  @override
   Future<BaseResponse> requestUpdateService() {
     return _api.requestUpdateService();
   }
@@ -319,8 +319,13 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   }
 
   @override
-  Future<CallTokenResponse> getCallToken(String channel) {
-    return _api.getCallToken(channel);
+  Future<CallTokenResponse> getCallToken(String channel, int? invoiceId) {
+    return _api.getCallToken(channel, invoiceId);
+  }
+
+  @override
+  Future<BaseResponse> sendMissCall(int invoiceId) {
+    return _api.sendMissCall(invoiceId);
   }
 
   @override

@@ -210,13 +210,15 @@ abstract class HicoUIRepository {
   Future<ChatTokenResponse> createChatToken();
 
   // Create call token
-  Future<CallTokenResponse> getCallToken(String channel);
+  Future<CallTokenResponse> getCallToken(String channel, int? invoiceId);
 
   Future<BaseResponse> beginCall(int invoiceId);
 
   Future<BaseResponse> endCall(int invoiceId);
 
   Future<BaseResponse> sendCallNotification(int invoiceId);
+
+  Future<BaseResponse> sendMissCall(int invoiceId);
 
   /* Wallet */
 
@@ -241,5 +243,4 @@ abstract class HicoUIRepository {
 
   Future<BaseResponse> subConfirm(BookingExtendRequest request);
   Future<BaseResponse> deleteUser();
-
 }

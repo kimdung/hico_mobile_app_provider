@@ -64,15 +64,15 @@ class OrderListController extends BaseController {
   Future<void> onInit() async {
     await super.onInit();
     await DialogUtil.showPopup(
-        dialogSize: DialogSize.Popup,
-        barrierDismissible: false,
-        backgroundColor: Colors.transparent,
-        child: NormalWidget(
-          icon: ImageConstants.appLogo,
-          title: 'notif'.tr ,
-        ),
-        onVaLue: (value) {},
-      );
+      dialogSize: DialogSize.Popup,
+      barrierDismissible: false,
+      backgroundColor: Colors.transparent,
+      child: NormalWidget(
+        icon: ImageConstants.appLogo,
+        title: 'notif'.tr,
+      ),
+      onVaLue: (value) {},
+    );
   }
 
   Future<void> selectStatus(InvoiceStatus status) async {
@@ -189,7 +189,7 @@ class OrderListController extends BaseController {
     if (AppDataGlobal.client == null) {
       return;
     }
-    
+
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
       filter: Filter.autoComplete(
           'id', AppDataGlobal.userInfo?.conversationInfo?.adminId ?? ''),
@@ -228,7 +228,7 @@ class OrderListController extends BaseController {
     final channelId = invoice.getCallChannel();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
@@ -258,7 +258,7 @@ class OrderListController extends BaseController {
     final channelId = invoice.getCallChannel();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {

@@ -23,6 +23,7 @@ class VideoCallController extends BaseController {
   StreamSubscription? _callStreamSubscription;
 
   RxnInt remoteUid = RxnInt();
+  RxBool isCalling = RxBool(false);
   RxBool isJoined = RxBool(false);
 
   RxBool muteLocalAudio = RxBool(false);
@@ -120,10 +121,12 @@ class VideoCallController extends BaseController {
         isJoined.value = false;
       },
       userJoined: (uid, elapsed) {
+        printInfo(info: 'userJoined $uid $elapsed');
+
         _endRingtone();
 
-        printInfo(info: 'userJoined $uid $elapsed');
         remoteUid.value = uid;
+        isCalling.value = true;
 
         _callBeginCall();
         _durationTimer ??= Timer.periodic(
@@ -168,19 +171,32 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> onEndCall() async {
-    printInfo(info: 'onEndCall');
+    if (isCaller && !isCalling.value) {
+      _sendMissCall();
+    }
+    _endRingtone();
+
     await callMethods.endCall(call: call);
     await _callEndCall();
   }
 
-  void _startRingtone() { 
-    if (Platform.isAndroid) {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
-    } else if (Platform.isIOS) {
+  void _startRingtone() {
+    if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
+        AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: true,
+        asAlarm: true,
+      );
+    } else {
       FlutterRingtonePlayer.playRingtone(asAlarm: true);
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
-        FlutterRingtonePlayer.playRingtone(asAlarm: true);
+        FlutterRingtonePlayer.play(
+          fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+          looping: false,
+          asAlarm: true,
+        );
       });
     }
   }
@@ -196,6 +212,14 @@ class VideoCallController extends BaseController {
   Future<void> _sendCallNotification() async {
     try {
       await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+
+  void _sendMissCall() {
+    try {
+      _uiRepository.sendMissCall(call.invoiceId ?? -1);
     } catch (e) {
       printError(info: e.toString());
     }
