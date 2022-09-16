@@ -75,7 +75,11 @@ class DialogUtil {
           ),
         );
       },
-    ).then((value) => onVaLue);
+    ).then((value) {
+      if (onVaLue != null) {
+        onVaLue(value);
+      }
+    });
   }
 
   static Future showPopup({
@@ -113,6 +117,10 @@ class DialogUtil {
           backgroundColor: backgroundColor ?? Colors.white,
         );
       },
-    ).then((value) => onVaLue!(value));
+    ).then((value) {
+      if (onVaLue != null) {
+        onVaLue(value);
+      }
+    });
   }
 }
