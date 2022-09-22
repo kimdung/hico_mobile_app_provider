@@ -201,6 +201,7 @@ const Map<String, String> vi_VN = {
   'topup.balance': 'Số dư ví: ',
   'topup.amount': 'Số tiền cần nạp (JPY)',
   'topup.amount.hint': 'Nhập số tiền cần nạp',
+  'topup.amount.validate': 'Số tiền cần nạp không đúng',
   'topup.method.title': 'Hình thức nạp tiền',
   'topup.bank': 'Chuyển khoản ngân hàng',
   'topup.bank.description': 'Chuyển khoản ngân hàng TK Hico',
@@ -241,6 +242,7 @@ const Map<String, String> vi_VN = {
   'topup.recharge': 'Nạp thêm',
 
   'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
+  'topup.success': 'Nạp tiền thành công!',
   'topup.failure': 'Nạp tiền thất bại!',
 
   //statistic screen

@@ -87,17 +87,39 @@ class TopupBankController extends BaseController {
             backgroundColor: Colors.transparent,
             child: NormalWidget(
               icon: IconConstants.icSuccess,
-              title: response.message,
+              title: response.message ?? 'topup.success'.tr,
             ),
             onVaLue: (value) {
               Get.offAndToNamed(Routes.TOPUP_DETAIL,
                   arguments: response.data!.row);
             },
           );
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'topup.failure'.tr,
+            ),
+            onVaLue: (value) {},
+          );
         }
       });
     } catch (e) {
+      printError(info: 'Nạp tiền thất bại ${e.toString()}');
       await EasyLoading.dismiss();
+      await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: NormalWidget(
+          icon: IconConstants.icFail,
+          title: 'topup.failure'.tr,
+        ),
+        onVaLue: (value) {},
+      );
     }
   }
 }
