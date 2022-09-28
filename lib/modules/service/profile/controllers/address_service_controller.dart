@@ -6,11 +6,11 @@ import 'package:ui_api/models/master_data/provinces_model.dart';
 import 'package:ui_api/models/user/workplaces_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
-import '../../../base/base_controller.dart';
-import '../../../data/app_data_global.dart';
-import '../../../shared/constants/common.dart';
-import '../../../shared/widget_hico/service/service_district.dart';
-import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
+import '../../../../base/base_controller.dart';
+import '../../../../data/app_data_global.dart';
+import '../../../../shared/constants/common.dart';
+import '../../../../shared/widget_hico/service/service_district.dart';
+import '../../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
 class AddressServiceController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();

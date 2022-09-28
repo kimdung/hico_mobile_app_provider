@@ -54,7 +54,7 @@ class TopupDetailScreen extends GetView<TopupDetailController> {
               borderColor: AppColor.primaryColorLight,
               backgroundColor: AppColor.primaryColorLight,
               child: Text(
-                'topup.recharge'.tr,
+                'back_home'.tr,
                 style: TextAppStyle().titleButtonStyle(),
               ),
             ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../resource/assets_constant/images_constants.dart';
-import '../../../shared/styles/text_style/text_style.dart';
-import '../../../shared/widgets/image_widget/fcore_image.dart';
-import '../../call/pickup/picker_layout.dart';
+import '../../../../resource/assets_constant/images_constants.dart';
+import '../../../../shared/styles/text_style/text_style.dart';
+import '../../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../../call/pickup/picker_layout.dart';
 import '../controllers/update_service_controller.dart';
 
 class UpdateServiceSuccessScreen extends GetView<UpdateServiceController> {

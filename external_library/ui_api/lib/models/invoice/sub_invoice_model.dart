@@ -4,7 +4,7 @@ part 'sub_invoice_model.g.dart';
 @JsonSerializable()
 class SubInvoiceModel {
   int? minutes;
-  int? price;
+  double? price;
   @JsonKey(name: 'payment_status')
   int? paymentStatus;
 

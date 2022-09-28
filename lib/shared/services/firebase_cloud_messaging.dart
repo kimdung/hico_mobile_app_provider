@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
@@ -21,6 +22,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 class FirebaseMessageConfig {
   static final FirebaseMessageConfig _singleton =
       FirebaseMessageConfig._internal();
+
+  final _uiRepository = Get.find<HicoUIRepository>();
 
   factory FirebaseMessageConfig() {
     return _singleton;
@@ -232,11 +235,14 @@ class FirebaseMessageConfig {
     //FCM GetStream
     final sender = message['sender']?.toString();
     final channelId = message['channel_id'] ?? '';
+    
+    reloadBalance();
 
     if (type == DisplayType.Order.id.toString() ||
         type == DisplayType.Remind.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+      // await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+      //     .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+      await Get.toNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
     } else if (type == DisplayType.Extend.id.toString()) {
       await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
           .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
@@ -248,8 +254,8 @@ class FirebaseMessageConfig {
           .pushNamed(Routes.UPDATE_SERVICE);
     } else if (type == DisplayType.UpdateBalance.id.toString()) {
       await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamedAndRemoveUntil(
-              Routes.MAIN, (Route<dynamic> route) => false, arguments: true);
+          .pushNamedAndRemoveUntil(Routes.MAIN, (Route<dynamic> route) => false,
+              arguments: true);
     } else if (sender == 'stream.chat') {
       //router chat screen
       debugPrint('router chat screen');
@@ -327,6 +333,16 @@ class FirebaseMessageConfig {
         CommonConstants.CHANNEL: channel,
         CommonConstants.CHAT_USER: response.users.first,
       });
+    });
+  }
+
+  Future<void> reloadBalance() async {
+    await _uiRepository.getInfo().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null &&
+          response.data!.info != null) {
+        AppDataGlobal.userInfo = response.data!.info!;
+      }
     });
   }
 }

@@ -55,6 +55,7 @@ class LoginController extends BaseController {
   Future<void> onLogin() async {
     hideKeyboard(Get.overlayContext!);
     try {
+      await EasyLoading.show();
       await _uiRepository
           .login(LoginRequest(
               email: usernameController.text,
@@ -62,8 +63,9 @@ class LoginController extends BaseController {
               deviceIdentifier: AppDataGlobal.firebaseToken))
           .then(
         (response) {
-          EasyLoading.dismiss();
+          
           if (response.status == CommonConstants.statusFailed) {
+            EasyLoading.dismiss();
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,
@@ -86,12 +88,14 @@ class LoginController extends BaseController {
 
               _loadData(response.loginModel!);       
             } else {
+              EasyLoading.dismiss();
               AppDataGlobal.accessToken = response.loginModel!.accessToken!;
               AppDataGlobal.userInfo = response.loginModel!.info!;
               Get.toNamed(Routes.PROFILE_UPDATE);
             }
           } else if (response.loginModel != null &&
               response.loginModel!.info!.isUpdate == 1) {
+                EasyLoading.dismiss();
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,

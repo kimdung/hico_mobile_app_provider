@@ -32,6 +32,8 @@ const Map<String, String> ja_JP = {
   'year': '年',
   'bank': '銀行',
   'notif': 'システムは日本時間帯を使用しています',
+  'change_pass':'パスワードを変更する',
+  'cancel' : 'キャンセル',
 // onboard
   'onboard.title1': 'HICOへようこそ',
   'onboard.title2': 'おもてなしサービス',
@@ -237,6 +239,7 @@ const Map<String, String> ja_JP = {
   'topup.error': 'チャージ中にエラーが発生します。',
   'topup.success': 'リチャージ成功。',
   'topup.failure': 'チャージ失敗しました。',
+  'topup.notif': '注: 長時間の翻訳が必要な場合や、追加の翻訳時間の発生が予想される場合は、3,000 円以上の入金をお勧めします。',
 
 //statistic screen
   'statistic.order_finish': '予約の照会',
@@ -316,7 +319,7 @@ const Map<String, String> ja_JP = {
 
 //service
   'service.titlebar': '提供できるサービス',
-  'service.add': 'サービス追加・変更',
+  'service.add': 'スケジュール追加・編集サービス',
   'service.edit': 'サービ変更依頼',
 
   'service.empty': '提供できるサービスまだまだ登録していません。',

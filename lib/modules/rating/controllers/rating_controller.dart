@@ -23,6 +23,7 @@ class RatingController extends BaseController {
   Future<void> loadData() async {
     try {
       offset = 0;
+      await EasyLoading.show();
       await _uiRepository
           .listReview(currentStar.value, limit, offset)
           .then((response) {

@@ -124,12 +124,12 @@ class LoginScreen extends GetView<LoginController> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Center(
+                              child: AppDataGlobal.masterData?.loginSocial == 1 ? Center(
                                 child: Text(
                                   'login_with'.tr,
                                   style: TextAppStyle().secondTextStyle(),
                                 ),
-                              ),
+                              ) : Container(),
                             ),
                             Container(
                               child: AppDataGlobal.masterData?.loginSocial == 1 ? Padding(

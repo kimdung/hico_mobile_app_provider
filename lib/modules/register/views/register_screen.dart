@@ -48,24 +48,22 @@ class RegisterScreen extends GetView<RegisterController> {
           child: Container(
             child: Form(
               key: controller.registerForm,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 40),
-                            child: FCoreImage(
-                              ImageConstants.appLogo,
-                              fit: BoxFit.fill,
-                              height: 51,
-                            ),
+              child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40),
+                          child: FCoreImage(
+                            ImageConstants.appLogo,
+                            fit: BoxFit.fill,
+                            height: 51,
                           ),
-                          const SizedBox(width: 60),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
+                        ),
+                        const SizedBox(width: 60),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Obx(
+                            () => Column(
                               children: [
                                 const SizedBox(height: 20),
                                 _buildUsername(),
@@ -84,7 +82,8 @@ class RegisterScreen extends GetView<RegisterController> {
                                     textAlign: TextAlign.center,
                                     patternList: [
                                       EasyRichTextPattern(
-                                        targetString: 'term_and_conditions'.tr,
+                                        targetString:
+                                            'term_and_conditions'.tr,
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
                                             controller.termsOfUse();
@@ -106,13 +105,17 @@ class RegisterScreen extends GetView<RegisterController> {
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  Padding(
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: CommonConstants.paddingDefault),
+                        horizontal: CommonConstants.paddingDefault, vertical: CommonConstants.paddingDefault),
                     child: GeneralButton(
                       onPressed: () => controller.register(),
                       borderRadius: BorderRadius.circular(24),
@@ -124,13 +127,6 @@ class RegisterScreen extends GetView<RegisterController> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
