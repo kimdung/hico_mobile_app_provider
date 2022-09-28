@@ -9,6 +9,8 @@ import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences_android/shared_preferences_android.dart';
+import 'package:shared_preferences_ios/shared_preferences_ios.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/notifications/notification_data.dart';
@@ -45,6 +47,11 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
         }
       });
 
+      if (Platform.isIOS) {
+        SharedPreferencesIOS.registerWith();
+      } else if (Platform.isAndroid) {
+        SharedPreferencesAndroid.registerWith();
+      }
       final sp = await SharedPreferences.getInstance();
       final locale = sp.getString(StorageConstants.language) ?? VIETNAMESE_LANG;
       final String handle,

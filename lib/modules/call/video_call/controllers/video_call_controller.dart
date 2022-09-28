@@ -46,14 +46,8 @@ class VideoCallController extends BaseController {
     await Wakelock.enable();
 
     _addPostFrameCallback();
+
     await _initAgora();
-    await _joinChannel();
-
-    if (isCaller) {
-      _startRingtone();
-
-      await _sendCallNotification();
-    }
   }
 
   @override
@@ -94,13 +88,21 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _initAgora() async {
-    // Get permissions
-    await [Permission.microphone, Permission.camera].request();
-
     //create the engine
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
+
+    _addListeners();
+
     await _engine?.enableVideo();
+    await _engine?.startPreview();
+    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine?.setClientRole(ClientRole.Broadcaster);
+
+    await _joinChannel();
+  }
+
+  void _addListeners() {
     _engine?.setEventHandler(RtcEngineEventHandler(
       warning: (warningCode) {
         printInfo(info: 'warning $warningCode');
@@ -129,12 +131,6 @@ class VideoCallController extends BaseController {
         isCalling.value = true;
 
         _callBeginCall();
-        _durationTimer ??= Timer.periodic(
-          const Duration(seconds: 1),
-          (Timer timer) {
-            dutationCall.value++;
-          },
-        );
       },
       userOffline: (int uid, UserOfflineReason reason) {
         printInfo(info: 'remote user $uid left channel');
@@ -144,9 +140,17 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _joinChannel() async {
+    if (Platform.isAndroid) {
+      await [Permission.microphone, Permission.camera].request();
+    }
     await _engine
         ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
-        .catchError((onError) {
+        .then((value) {
+      if (isCaller) {
+        _startRingtone();
+        _sendCallNotification();
+      }
+    }).catchError((onError) {
       printError(info: 'error ${onError.toString()}');
       Future.delayed(Duration.zero, Get.back);
     });
@@ -223,6 +227,13 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _callBeginCall() async {
+    _durationTimer ??= Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) {
+        dutationCall.value++;
+      },
+    );
+
     try {
       await _uiRepository.beginCall(call.invoiceId ?? -1);
     } catch (e) {

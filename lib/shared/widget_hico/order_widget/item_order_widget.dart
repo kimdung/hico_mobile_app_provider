@@ -43,28 +43,26 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
   Channel? _channel;
   int _badge = 0;
 
-  Future<void> _listenerBadge() async {
-    try {
-      await _channel?.watch();
-      _channel?.state?.unreadCountStream.listen((event) { 
-        setState(() {
-          _badge = event;
-        });
-      });
-    } catch (e) {
-      debugPrint('[ItemOrderWidget] get unread error ${e.toString()}');
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.invoice.status == InvoiceStatus.accepted.id &&
+        AppDataGlobal.client != null &&
+        _channel == null) {
+      _listenerBadge();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.invoice.status == InvoiceStatus.accepted.id &&
-        AppDataGlobal.client != null &&
-        _channel == null) {
-      _channel = AppDataGlobal.client!
-          .channel('messaging', id: widget.invoice.getChatChannel());
-      _listenerBadge();
-    }
+    // if (widget.invoice.status == InvoiceStatus.accepted.id &&
+    //     AppDataGlobal.client != null &&
+    //     _channel == null) {
+    //   _channel = AppDataGlobal.client!
+    //       .channel('messaging', id: widget.invoice.getChatChannel());
+    //   _listenerBadge();
+    // }
 
     return InkWell(
       onTap: widget.onPress,
@@ -411,5 +409,20 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> _listenerBadge() async {
+    try {
+      _channel = AppDataGlobal.client!
+          .channel('messaging', id: widget.invoice.getChatChannel());
+      await _channel?.watch();
+      _channel?.state?.unreadCountStream.listen((event) {
+        setState(() {
+          _badge = event;
+        });
+      });
+    } catch (e) {
+      debugPrint('[ItemOrderWidget] get unread error ${e.toString()}');
+    }
   }
 }

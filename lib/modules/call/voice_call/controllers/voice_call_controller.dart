@@ -22,8 +22,8 @@ class VoiceCallController extends BaseController {
   RtcEngine? _engine;
   StreamSubscription? _callStreamSubscription;
 
-  RxBool isCalling = RxBool(false);
   RxBool isJoined = RxBool(false);
+  RxBool isCalling = RxBool(false);
 
   RxBool enableSpeakerphone = RxBool(false);
   RxBool openMicrophone = RxBool(true);
@@ -33,7 +33,7 @@ class VoiceCallController extends BaseController {
   final CallModel call;
 
   Timer? _durationTimer;
-  final RxInt dutationCall = RxInt(0);
+  final RxInt durationCall = RxInt(0);
 
   Timer? _timerRingwait;
 
@@ -46,14 +46,8 @@ class VoiceCallController extends BaseController {
     await Wakelock.enable();
 
     _addPostFrameCallback();
+
     await _initEngine();
-    await _joinChannel();
-
-    if (isCaller) {
-      _startRingtone();
-
-      await _sendCallNotification();
-    }
   }
 
   @override
@@ -90,22 +84,29 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _initEngine() async {
-    // Get microphone permission
-    await [Permission.microphone].request();
-
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine?.setParameters('{"che.audio.opensl":true}');
 
+    await _addListeners();
+
+    await _engine?.enableAudio();
+    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine?.setClientRole(ClientRole.Broadcaster);
+
+    await _engine?.enableLocalAudio(false);
+
+    await _joinChannel();
+  }
+
+  Future<void> _addListeners() async {
     _engine?.setEventHandler(RtcEngineEventHandler(
       joinChannelSuccess: (channel, uid, elapsed) {
         printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
 
         isJoined.value = true;
-
-        _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
       },
       leaveChannel: (stats) {
-        printInfo(info: 'leaveChannel ${stats.toJson()}');
+        printError(info: 'leaveChannel ${stats.toJson()}');
 
         _endRingtone();
 
@@ -115,23 +116,12 @@ class VoiceCallController extends BaseController {
         printInfo(info: 'userJoined $uid $elapsed');
 
         _engine?.enableLocalAudio(true);
-        // _engine?.muteLocalAudioStream(false);
 
         _endRingtone();
 
         isCalling.value = true;
 
         _callBeginCall();
-
-        _durationTimer ??= Timer.periodic(
-          const Duration(seconds: 1),
-          (Timer timer) {
-            dutationCall.value++;
-          },
-        );
-      },
-      userOffline: (int uid, UserOfflineReason reason) {
-        printInfo(info: 'userOffline $uid ${reason.toString()}');
       },
       warning: (warningCode) {
         printError(info: 'warning $warningCode');
@@ -140,19 +130,20 @@ class VoiceCallController extends BaseController {
         printError(info: 'error $errorCode');
       },
     ));
-
-    await _engine?.enableAudio();
-    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine?.setClientRole(ClientRole.Broadcaster);
-
-    await _engine?.enableLocalAudio(false);
-    // await _engine?.muteLocalAudioStream(true);
   }
 
   Future<void> _joinChannel() async {
+    if (Platform.isAndroid) {
+      await Permission.microphone.request();
+    }
     await _engine
         ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
-        .catchError((onError) {
+        .then((value) async {
+      if (isCaller) {
+        _startRingtone();
+        _sendCallNotification();
+      }
+    }).catchError((onError) {
       printError(info: 'error ${onError.toString()}');
       Future.delayed(Duration.zero, Get.back);
     });
@@ -214,9 +205,9 @@ class VoiceCallController extends BaseController {
 
   /* API */
 
-  Future<void> _sendCallNotification() async {
+  void _sendCallNotification() {
     try {
-      await _uiRepository.sendCallNotification(call.invoiceId ?? -1);
+      _uiRepository.sendCallNotification(call.invoiceId ?? -1);
     } catch (e) {
       printError(info: e.toString());
     }
@@ -231,6 +222,13 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _callBeginCall() async {
+    _durationTimer ??= Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer timer) {
+        durationCall.value++;
+        printInfo(info: '_durationTimer $durationCall');
+      },
+    );
     try {
       await _uiRepository.beginCall(call.invoiceId ?? -1);
     } catch (e) {

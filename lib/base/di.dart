@@ -38,9 +38,12 @@ class DependencyInjection {
     } catch (e) {
       //
     }
-
-    Stripe.publishableKey = config.value[StripePublishableKey]!;
-    await Stripe.instance.applySettings();
+    try {
+      Stripe.publishableKey = config.value[StripePublishableKey]!;
+      await Stripe.instance.applySettings();
+    } catch (e) {
+      debugPrint('init Stripe error ${e.toString()}');
+    }
 
     // UI api
     final _dioUIAPI =
