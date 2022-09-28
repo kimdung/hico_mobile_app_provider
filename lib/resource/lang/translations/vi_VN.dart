@@ -33,7 +33,8 @@ const Map<String, String> vi_VN = {
   'year': 'năm',
   'bank': 'Ngân hàng',
   'notif': 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
-  
+  'change_pass':'Thay đổi mật khẩu',
+  'cancel' : 'Huỷ',
   // onboard
   'onboard.title1': 'Welcome to Hico',
   'onboard.title2': 'Dịch vụ tận tình - chu đáo',
@@ -90,6 +91,7 @@ const Map<String, String> vi_VN = {
   'home.home': 'Trang chủ',
   'home.order': 'Đơn hàng',
   'home.notification': 'Thông báo',
+  'home.calendar': 'Thêm lịch',
   'home.news': 'Tin tức',
   'home.account': 'Tài khoản',
   'home.view_all': 'Xem tất cả',
@@ -245,6 +247,7 @@ const Map<String, String> vi_VN = {
   'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
   'topup.success': 'Nạp tiền thành công!',
   'topup.failure': 'Nạp tiền thất bại!',
+  'topup.notif': 'Lưu ý: Quý khách nên nạp trên 3000 yên trong trường hợp quý khách cần phiên dịch trong thời gian dài hay dự kiến sẽ phát sinh thêm thời gian phiên dịch.',
 
   //statistic screen
   'statistic.order_finish': 'Danh sách đơn hàng',
@@ -330,7 +333,7 @@ const Map<String, String> vi_VN = {
 
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
-  'service.add': 'Thêm/Sửa Dịch Vụ',
+  'service.add': 'Thêm lịch/Sửa Dịch Vụ',
   'service.edit': 'Yêu Cầu Sửa Dịch Vụ',
 
   'service.empty':

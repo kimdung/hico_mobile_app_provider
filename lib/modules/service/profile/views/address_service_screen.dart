@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../resource/assets_constant/icon_constants.dart';
-import '../../../shared/constants/colors.dart';
-import '../../../shared/constants/common.dart';
-import '../../../shared/styles/text_style/text_style.dart';
-import '../../../shared/widget_hico/box_decoration/box_decoration.dart';
-import '../../../shared/widgets/image_widget/fcore_image.dart';
-import '../../call/pickup/picker_layout.dart';
+import '../../../../resource/assets_constant/icon_constants.dart';
+import '../../../../shared/constants/colors.dart';
+import '../../../../shared/constants/common.dart';
+import '../../../../shared/styles/text_style/text_style.dart';
+import '../../../../shared/widget_hico/box_decoration/box_decoration.dart';
+import '../../../../shared/widgets/image_widget/fcore_image.dart';
+import '../../../call/pickup/picker_layout.dart';
 import '../controllers/address_service_controller.dart';
 
 part 'address_service_component.dart';

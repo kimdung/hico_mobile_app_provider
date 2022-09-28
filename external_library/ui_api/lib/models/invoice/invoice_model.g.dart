@@ -24,9 +24,9 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
       workingTime: json['working_time'] as String? ?? '',
       hours: (json['hours'] as num?)?.toDouble(),
       paymentType: json['payment_type'] as int? ?? 0,
-      travelingCosts: json['traveling_costs'] as int? ?? 0,
-      tmpTotal: json['tmp_total'] as int? ?? 0,
-      total: json['total'] as int?,
+      travelingCosts: (json['traveling_costs'] as num?)?.toDouble() ?? 0,
+      tmpTotal: (json['tmp_total'] as num?)?.toDouble() ?? 0,
+      total: (json['total'] as num?)?.toDouble(),
       cancel: json['cancel'] == null
           ? null
           : CancelReasonModel.fromJson(json['cancel'] as Map<String, dynamic>),

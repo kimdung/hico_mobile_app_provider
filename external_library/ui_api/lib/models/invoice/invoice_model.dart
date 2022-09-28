@@ -41,10 +41,10 @@ class InvoiceModel {
   @JsonKey(name: 'payment_type', defaultValue: 0)
   int? paymentType;
   @JsonKey(name: 'traveling_costs', defaultValue: 0)
-  int? travelingCosts;
+  double? travelingCosts;
   @JsonKey(name: 'tmp_total', defaultValue: 0)
-  int? tmpTotal;
-  int? total;
+  double? tmpTotal;
+  double? total;
   CancelReasonModel? cancel;
   @JsonKey(name: 'sub_invoice')
   List<SubInvoiceModel>? subInvoice;

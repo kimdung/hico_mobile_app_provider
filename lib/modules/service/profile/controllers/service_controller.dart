@@ -6,13 +6,13 @@ import 'package:ui_api/models/user/user_services_model.dart';
 import 'package:ui_api/models/user/workplaces_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
-import '../../../base/base_controller.dart';
-import '../../../data/app_data_global.dart';
-import '../../../resource/assets_constant/icon_constants.dart';
-import '../../../routes/app_pages.dart';
-import '../../../shared/constants/common.dart';
-import '../../../shared/utils/dialog_util.dart';
-import '../../../shared/widget_hico/dialog/normal_widget.dart';
+import '../../../../base/base_controller.dart';
+import '../../../../data/app_data_global.dart';
+import '../../../../resource/assets_constant/icon_constants.dart';
+import '../../../../routes/app_pages.dart';
+import '../../../../shared/constants/common.dart';
+import '../../../../shared/utils/dialog_util.dart';
+import '../../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class ServiceController extends BaseController {
   final Rx<int> totalRecord = Rx(0);

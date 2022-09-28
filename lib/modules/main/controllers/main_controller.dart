@@ -6,6 +6,7 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../account/controllers/account_controller.dart';
 import '../../account/views/account_screen.dart';
@@ -15,6 +16,9 @@ import '../../notification/controllers/notification_controller.dart';
 import '../../notification/views/notification_screen.dart';
 import '../../order_list/controllers/order_list_controller.dart';
 import '../../order_list/views/order_list_screen.dart';
+import '../../service/main/controllers/service_controller.dart';
+import '../../service/main/views/service_screen.dart';
+import '../../service/profile/controllers/service_controller.dart';
 
 class MainController extends BaseController {
   Rx<int> index = Rx(0);
@@ -27,6 +31,7 @@ class MainController extends BaseController {
   List<Widget> tabs = <Widget>[];
   late OrderListController orderListController;
   late NotificationController notificationController;
+  final serviceController = MainServiceController();
   final newsController = NewsController();
   final accountController = AccountController();
 
@@ -39,6 +44,7 @@ class MainController extends BaseController {
     tabs = [
       OrderListScreen(orderListController),
       NotificationScreen(notificationController),
+      MainServiceScreen(serviceController),
       NewsScreen(newsController),
       AccountScreen(accountController),
     ];
@@ -78,8 +84,10 @@ class MainController extends BaseController {
       } else if (_index == 1) {
         await notificationController.loadData();
       } else if (_index == 2) {
-        await newsController.loadNewsList();
+        await serviceController.loadData();
       } else if (_index == 3) {
+        await newsController.loadNewsList();
+      } else if (_index == 4) {
         await accountController.loadData();
       }
     }

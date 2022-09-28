@@ -6,10 +6,10 @@ import 'package:ui_api/models/home/services_model.dart';
 import 'package:ui_api/models/user/user_services_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
-import '../../../base/base_controller.dart';
-import '../../../shared/constants/common.dart';
-import '../../../shared/widget_hico/service/service.dart';
-import '../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
+import '../../../../base/base_controller.dart';
+import '../../../../shared/constants/common.dart';
+import '../../../../shared/widget_hico/service/service.dart';
+import '../../../../shared/widgets/showbottom_sheet/show_bottom_sheet.dart';
 
 class CategoryServiceController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();

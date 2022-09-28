@@ -34,61 +34,65 @@ class ConfigScreen extends GetView<ConfigController> {
           elevation: 1,
           backgroundColor: Colors.white,
         ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        buildLanguageItem(
-                          icon: ImageConstants.japanFlag,
-                          title: '日本語',
-                          code: LanguageCode.JA,
-                          onPress: () {
-                            controller.currentLanguage.value = LanguageCode.JA;
-                            controller.selectLanguage();
-                          },
-                        ),
-                        buildLanguageItem(
-                          icon: ImageConstants.vietnamFlag,
-                          title: 'Tiếng Việt',
-                          code: LanguageCode.VN,
-                          onPress: () {
-                            controller.currentLanguage.value = LanguageCode.VN;
-                            controller.selectLanguage();
-                          },
-                        ),
-                        // buildLanguageItem(
-                        //   icon: ImageConstants.ukFlag,
-                        //   title: 'English',
-                        //   code: LanguageCode.EN,
-                        //   onPress: () => {
-                        //     controller.currentLanguage.value = LanguageCode.EN
-                        //   },
-                        // )
-                      ],
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                child: GeneralButton(
-                  onPressed: () {
-                    controller.confirmLanguage();
-                  },
-                  borderRadius: BorderRadius.circular(24),
-                  borderColor: AppColor.primaryColorLight,
-                  backgroundColor: AppColor.primaryColorLight,
-                  child: Text(
-                    'config'.tr,
-                    style: TextAppStyle().titleButtonStyle(),
+        body: Obx(
+          () => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      buildLanguageItem(
+                        icon: ImageConstants.japanFlag,
+                        title: '日本語',
+                        code: LanguageCode.JA,
+                        onPress: () {
+                          controller.currentLanguage.value = LanguageCode.JA;
+                        },
+                      ),
+                      buildLanguageItem(
+                        icon: ImageConstants.vietnamFlag,
+                        title: 'Tiếng Việt',
+                        code: LanguageCode.VN,
+                        onPress: () {
+                          controller.currentLanguage.value = LanguageCode.VN;
+                        },
+                      ),
+                      // buildLanguageItem(
+                      //   icon: ImageConstants.ukFlag,
+                      //   title: 'English',
+                      //   code: LanguageCode.EN,
+                      //   onPress: () => {
+                      //     controller.currentLanguage.value = LanguageCode.EN
+                      //   },
+                      // )
+                    ],
                   ),
                 ),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: GeneralButton(
+            onPressed: () {
+              controller.confirmLanguage();
+            },
+            borderRadius: BorderRadius.circular(24),
+            borderColor: AppColor.primaryColorLight,
+            backgroundColor: AppColor.primaryColorLight,
+            child: Obx(
+              () => Text(
+                controller.currentLanguage.value == LanguageCode.VN
+                    ? 'Thiết lập'
+                    : '設定',
+                style: TextAppStyle().titleButtonStyle(),
               ),
-            ],
+            ),
           ),
         ),
       ),

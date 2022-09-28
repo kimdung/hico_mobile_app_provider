@@ -86,7 +86,7 @@ class TopupBankController extends BaseController {
             barrierDismissible: false,
             backgroundColor: Colors.transparent,
             child: NormalWidget(
-              icon: IconConstants.icSuccess,
+              icon: IconConstants.icInfo,
               title: response.message ?? 'topup.success'.tr,
             ),
             onVaLue: (value) {

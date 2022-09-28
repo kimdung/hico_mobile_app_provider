@@ -14,6 +14,7 @@ import 'package:shared_preferences_ios/shared_preferences_ios.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/notifications/notification_data.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
@@ -177,6 +178,8 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
 class FirebaseMessageConfig {
   static final FirebaseMessageConfig _singleton =
       FirebaseMessageConfig._internal();
+
+  final _uiRepository = Get.find<HicoUIRepository>();
 
   factory FirebaseMessageConfig() {
     return _singleton;
@@ -388,11 +391,14 @@ class FirebaseMessageConfig {
     //FCM GetStream
     final sender = message['sender']?.toString();
     final channelId = message['channel_id'] ?? '';
+    
+    reloadBalance();
 
     if (type == DisplayType.Order.id.toString() ||
         type == DisplayType.Remind.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+      // await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
+      //     .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
+      await Get.toNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
     } else if (type == DisplayType.Extend.id.toString()) {
       await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
           .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
@@ -483,6 +489,16 @@ class FirebaseMessageConfig {
         CommonConstants.CHANNEL: channel,
         CommonConstants.CHAT_USER: response.users.first,
       });
+    });
+  }
+
+  Future<void> reloadBalance() async {
+    await _uiRepository.getInfo().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null &&
+          response.data!.info != null) {
+        AppDataGlobal.userInfo = response.data!.info!;
+      }
     });
   }
 }
