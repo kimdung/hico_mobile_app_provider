@@ -32,6 +32,18 @@ class BaseController extends FullLifeCycleController
     super.onReady();
   }
 
+  @override
+  void onDetached() {}
+
+  @override
+  void onInactive() {}
+
+  @override
+  void onPaused() {}
+
+  @override
+  void onResumed() {}
+
   Future<void> checkConnectNetwork() async {
     // if (_networkController.connectionStatus.value == 0) {
     //   _hasNetwork = false;
@@ -82,25 +94,5 @@ class BaseController extends FullLifeCycleController
 
   CommonDialogRequest handleErrorResponse(Object e) {
     return handleErrorGraphQLResponse(e);
-  }
-
-  @override
-  void onDetached() {
-    // TODO: implement onDetached
-  }
-
-  @override
-  void onInactive() {
-    // TODO: implement onInactive
-  }
-
-  @override
-  void onPaused() {
-    // TODO: implement onPaused
-  }
-
-  @override
-  void onResumed() {
-    // TODO: implement onResumed
   }
 }

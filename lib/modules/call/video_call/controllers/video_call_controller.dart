@@ -50,7 +50,7 @@ class VideoCallController extends BaseController {
     await _initAgora();
   }
 
-  @override
+ @override
   void onResumed() {
     _engine?.disableVideo();
     _engine?.enableVideo();
