@@ -559,6 +559,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  flutter_callkit_incoming:
+    dependency: "direct main"
+    description:
+      name: flutter_callkit_incoming
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2+2"
   flutter_datetime_picker:
     dependency: "direct main"
     description:

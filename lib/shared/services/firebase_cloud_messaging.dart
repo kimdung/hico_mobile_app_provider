@@ -1,20 +1,169 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:collection/collection.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:ui_api/models/call/call_model.dart';
+import 'package:ui_api/models/notifications/notification_data.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
 import '../constants/common.dart';
+import '../constants/storage.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+  final notificationData = NotificationData.fromJson(message.data);
+  if (notificationData.displayType == NotificationData.typeIncomingCall) {
+    await showCallkitIncoming(notificationData);
+  }
+}
+
+Future<void> showCallkitIncoming(NotificationData notificationData) async {
+  if (notificationData.receiverId == null) {
+    return;
+  }
+  final callCollection = FirebaseFirestore.instance.collection('call');
+  final doc = await callCollection.doc(notificationData.receiverId).get();
+  final data = doc.data() as Map<String, dynamic>;
+  try {
+    final call = CallModel.fromJson(data);
+    if (call.hasDialled != null && !call.hasDialled!) {
+      callCollection
+          .doc(notificationData.receiverId)
+          .snapshots()
+          .listen((DocumentSnapshot ds) {
+        if (ds.data() == null) {
+          FlutterCallkitIncoming.endAllCalls();
+        }
+      });
+
+      final sp = await SharedPreferences.getInstance();
+      final locale = sp.getString(StorageConstants.language) ?? VIETNAMESE_LANG;
+      final String handle,
+          textAccept,
+          textDecline,
+          textMissedCall,
+          textCallback;
+      switch (locale) {
+        case ENGLISH_LANG:
+          handle = (call.isVideo ?? false)
+              ? 'Incoming video call...'
+              : 'Incoming voice call...';
+          textAccept = 'Accept';
+          textDecline = 'Decline';
+          textMissedCall = 'Missed Call';
+          textCallback = 'Callback';
+          break;
+        case JAPANESE_LANG:
+          handle = (call.isVideo ?? false) ? 'ビデオ通話の着信...' : '音声通話の着信...';
+          textAccept = '承認';
+          textDecline = '却下';
+          textMissedCall = '不在着信';
+          textCallback = '折り返し電話';
+          break;
+        default:
+          handle = (call.isVideo ?? false)
+              ? 'Có cuộc gọi âm thanh...'
+              : 'Có cuộc gọi video...';
+          textAccept = 'Chấp nhận';
+          textDecline = 'Từ chối';
+          textMissedCall = 'Có cuộc gọi nhỡ';
+          textCallback = 'Gọi lại';
+      }
+
+      final params = <String, dynamic>{
+        'id': call.id ?? '',
+        'appName': 'HICO Provider',
+        'nameCaller': call.callerName ?? '',
+        'avatar': call.callerPic,
+        'handle': handle,
+        'type': (call.isVideo ?? false) ? 1 : 0,
+        'duration': 60000,
+        'textAccept': textAccept,
+        'textDecline': textDecline,
+        'textMissedCall': textMissedCall,
+        'textCallback': textCallback,
+        // 'extra': <String, dynamic>{'userId': '1a2b3c4d'},
+        // 'headers': <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
+        'android': <String, dynamic>{
+          'isCustomNotification': true,
+          'isShowLogo': false,
+          'isShowCallback': false,
+          'ringtonePath': 'bell',
+          'backgroundColor': '#DF4D6F',
+          // 'backgroundUrl': 'https://i.pravatar.cc/500',
+          // 'actionColor': '#4CAF50'
+        },
+        'ios': <String, dynamic>{
+          'iconName': 'CallKitLogo',
+          'handleType': '',
+          'supportsVideo': true,
+          'maximumCallGroups': 2,
+          'maximumCallsPerCallGroup': 1,
+          'audioSessionMode': 'default',
+          'audioSessionActive': true,
+          'audioSessionPreferredSampleRate': 44100.0,
+          'audioSessionPreferredIOBufferDuration': 0.005,
+          'supportsDTMF': true,
+          'supportsHolding': true,
+          'supportsGrouping': false,
+          'supportsUngrouping': false,
+          'ringtonePath': 'system_ringtone_default'
+        }
+      };
+      FlutterCallkitIncoming.onEvent.listen((event) async {
+        switch (event!.name) {
+          case CallEvent.ACTION_CALL_INCOMING:
+            break;
+          case CallEvent.ACTION_CALL_START:
+            break;
+          case CallEvent.ACTION_CALL_ACCEPT:
+            break;
+          case CallEvent.ACTION_CALL_DECLINE:
+            try {
+              await callCollection.doc(call.callerId.toString()).delete();
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+            try {
+              await callCollection.doc(call.receiverId.toString()).delete();
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+            break;
+          case CallEvent.ACTION_CALL_ENDED:
+            break;
+          case CallEvent.ACTION_CALL_TIMEOUT:
+            break;
+          case CallEvent.ACTION_CALL_CALLBACK:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_HOLD:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_MUTE:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_DMTF:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_GROUP:
+            break;
+          case CallEvent.ACTION_CALL_TOGGLE_AUDIO_SESSION:
+            break;
+          case CallEvent.ACTION_DID_UPDATE_DEVICE_PUSH_TOKEN_VOIP:
+            break;
+        }
+      });
+      await FlutterCallkitIncoming.showCallkitIncoming(params);
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+  }
 }
 
 /// https://firebase.flutter.dev/docs/messaging/usage/
@@ -248,8 +397,8 @@ class FirebaseMessageConfig {
           .pushNamed(Routes.UPDATE_SERVICE);
     } else if (type == DisplayType.UpdateBalance.id.toString()) {
       await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamedAndRemoveUntil(
-              Routes.MAIN, (Route<dynamic> route) => false, arguments: true);
+          .pushNamedAndRemoveUntil(Routes.MAIN, (Route<dynamic> route) => false,
+              arguments: true);
     } else if (sender == 'stream.chat') {
       //router chat screen
       debugPrint('router chat screen');

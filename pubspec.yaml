@@ -101,6 +101,8 @@ dependencies:
 
   # Call
   agora_rtc_engine: 5.1.0
+  flutter_callkit_incoming: ^1.0.2+2
+  
   web_socket_channel: 2.1.0
   permission_handler: ^9.2.0
   flutter_ringtone_player: ^3.2.0

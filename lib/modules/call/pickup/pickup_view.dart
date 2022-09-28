@@ -172,22 +172,25 @@ class _PickupViewState extends State<PickupView> {
     await callMethods.endCall(call: widget.call);
   }
 
+  /* Function */
+
   void _startRingtone() {
     if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
         AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,
-        asAlarm: true,
       );
     } else {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: false,
+      );
       _timerRingWait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
           fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
-          asAlarm: true,
         );
       });
     }

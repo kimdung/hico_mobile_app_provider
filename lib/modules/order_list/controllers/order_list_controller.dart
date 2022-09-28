@@ -7,6 +7,7 @@ import 'package:ui_api/models/invoice/invoice_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -233,6 +234,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            id: const Uuid().v4(),
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -263,6 +265,7 @@ class OrderListController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           final call = CallModel(
+            id: const Uuid().v4(),
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',

@@ -58,17 +58,18 @@ class VoiceCallController extends BaseController {
 
   @override
   void onClose() {
+    Wakelock.disable();
     _endRingtone();
 
-    onEndCall();
+    _callEndCall();
+    callMethods.endCall(call: call);
+
     _engine?.leaveChannel();
     _engine?.destroy();
     _callStreamSubscription?.cancel();
 
     _durationTimer?.cancel();
     _durationTimer = null;
-
-    Wakelock.disable();
 
     super.onClose();
   }
@@ -189,16 +190,17 @@ class VoiceCallController extends BaseController {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,
-        asAlarm: true,
       );
     } else {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: false,
+      );
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
           fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
-          asAlarm: true,
         );
       });
     }

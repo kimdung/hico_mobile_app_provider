@@ -138,11 +138,7 @@ class VideoCallController extends BaseController {
       },
       userOffline: (int uid, UserOfflineReason reason) {
         printInfo(info: 'remote user $uid left channel');
-        _endRingtone();
-
         remoteUid.value = null;
-
-        onEndCall();
       },
     ));
   }
@@ -186,16 +182,17 @@ class VideoCallController extends BaseController {
       FlutterRingtonePlayer.play(
         fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
         looping: true,
-        asAlarm: true,
       );
     } else {
-      FlutterRingtonePlayer.playRingtone(asAlarm: true);
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: false,
+      );
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
           fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
           looping: false,
-          asAlarm: true,
         );
       });
     }
