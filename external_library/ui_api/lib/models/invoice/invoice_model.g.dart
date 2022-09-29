@@ -36,6 +36,10 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
       createdAt: json['created_at'] as String? ?? '',
       isFined: json['is_fined'] as int? ?? 0,
       supplierStart: json['supplier_start'] as String? ?? '',
+      workContent: json['work_content'] == null
+          ? null
+          : WorkContentModel.fromJson(
+              json['work_content'] as Map<String, dynamic>),
     )
       ..serviceId = json['service_id'] as int? ?? 0
       ..serviceName = json['service_name'] as String? ?? ''
@@ -68,4 +72,27 @@ Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
       'created_at': instance.createdAt,
       'is_fined': instance.isFined,
       'supplier_start': instance.supplierStart,
+      'work_content': instance.workContent,
+    };
+
+WorkContentModel _$WorkContentModelFromJson(Map<String, dynamic> json) =>
+    WorkContentModel(
+      symptom: json['symptom'] as String? ?? '',
+      testMethod: json['test_method'] as String? ?? '',
+      diseaseName: json['disease_name'] as String? ?? '',
+      treatments: json['treatments'] as String? ?? '',
+      appointmentNextTime: json['appointment_next_time'] as String? ?? '',
+      comment: json['comment'] as String? ?? '',
+      summary: json['summary'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$WorkContentModelToJson(WorkContentModel instance) =>
+    <String, dynamic>{
+      'symptom': instance.symptom,
+      'test_method': instance.testMethod,
+      'disease_name': instance.diseaseName,
+      'treatments': instance.treatments,
+      'appointment_next_time': instance.appointmentNextTime,
+      'comment': instance.comment,
+      'summary': instance.summary,
     };

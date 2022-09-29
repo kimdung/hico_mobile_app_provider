@@ -712,4 +712,93 @@ extension OrderExtension on OrderScreen {
       ),
     );
   }
+
+  Widget buildWorkContent() {
+    return Container(
+      width: Get.width,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: (controller.invoice.value.service?.isMedical != 1)
+          ? Container(
+              child: Text(
+              controller.invoice.value.workContent != null
+                  ? controller.invoice.value.workContent!.summary.toString()
+                  : '',
+              style: TextAppStyle().normalTextGrey(),
+            ))
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Nội dung làm việc',
+                  style: TextAppStyle().normalTextStype().copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                ),
+                const SizedBox(height:5),
+                Text(
+                  'Triệu chứng',
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.symptom.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'Phương pháp kiểm tra',
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.testMethod.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'Tên bệnh',
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.testMethod.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'Phương pháp điều trị',
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.diseaseName.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'Đặt lịch từ lần 2 trở đi',
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.appointmentNextTime
+                      .toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'Nhận xét của bác sĩ',
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.comment.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+              ],
+            ),
+    );
+  }
 }

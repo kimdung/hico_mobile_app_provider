@@ -52,8 +52,10 @@ class OrderScreen extends GetView<OrderController> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(120)),
-                        child: (controller.invoice.value.customerAvatar != null && 
-                              controller.invoice.value.customerAvatar!.isNotEmpty)
+                        child: (controller.invoice.value.customerAvatar !=
+                                    null &&
+                                controller
+                                    .invoice.value.customerAvatar!.isNotEmpty)
                             ? NetWorkImage(
                                 image: controller.invoice.value.customerAvatar!,
                                 height: 120,
@@ -94,6 +96,9 @@ class OrderScreen extends GetView<OrderController> {
                     if (controller.invoice.value.status ==
                         InvoiceStatus.canceled.id)
                       buildCancelReason(),
+                    const SizedBox(height: 14),
+                    Container(color: AppColor.greyBackgroundColor, height: 6),
+                    buildWorkContent(),
                     const SizedBox(height: 32),
                     buildActionBtnBottom(controller.invoice.value.status),
                     const SizedBox(height: 20),

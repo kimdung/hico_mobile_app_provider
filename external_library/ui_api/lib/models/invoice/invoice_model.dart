@@ -54,30 +54,34 @@ class InvoiceModel {
   int? isFined;
   @JsonKey(name: 'supplier_start', defaultValue: '')
   String? supplierStart;
+  @JsonKey(name: 'work_content')
+  WorkContentModel? workContent;
 
-  InvoiceModel(
-      {this.id,
-      this.code,
-      this.customerId,
-      this.customerAvatar,
-      this.customerName,
-      this.customerAddress,
-      this.customerTubeStationNearest,
-      this.workingForm,
-      this.status,
-      this.service,
-      this.workingDate,
-      this.workingTime,
-      this.hours,
-      this.paymentType,
-      this.travelingCosts,
-      this.tmpTotal,
-      this.total,
-      this.cancel,
-      this.subInvoice,
-      this.createdAt,
-      this.isFined,
-      this.supplierStart});
+  InvoiceModel({
+    this.id,
+    this.code,
+    this.customerId,
+    this.customerAvatar,
+    this.customerName,
+    this.customerAddress,
+    this.customerTubeStationNearest,
+    this.workingForm,
+    this.status,
+    this.service,
+    this.workingDate,
+    this.workingTime,
+    this.hours,
+    this.paymentType,
+    this.travelingCosts,
+    this.tmpTotal,
+    this.total,
+    this.cancel,
+    this.subInvoice,
+    this.createdAt,
+    this.isFined,
+    this.supplierStart,
+    this.workContent,
+  });
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceModelFromJson(json);
@@ -108,4 +112,37 @@ class InvoiceModel {
     return InvoiceStatus.status
         .firstWhereOrNull((element) => element.id == status);
   }
+}
+
+@JsonSerializable()
+class WorkContentModel {
+  @JsonKey(name: 'symptom', defaultValue: '')
+  String? symptom;
+  @JsonKey(name: 'test_method', defaultValue: '')
+  String? testMethod;
+  @JsonKey(name: 'disease_name', defaultValue: '')
+  String? diseaseName;
+  @JsonKey(name: 'treatments', defaultValue: '')
+  String? treatments;
+  @JsonKey(name: 'appointment_next_time', defaultValue: '')
+  String? appointmentNextTime;
+  @JsonKey(name: 'comment', defaultValue: '')
+  String? comment;
+  @JsonKey(name: 'summary', defaultValue: '')
+  String? summary;
+
+  WorkContentModel({
+    this.symptom,
+    this.testMethod,
+    this.diseaseName,
+    this.treatments,
+    this.appointmentNextTime,
+    this.comment,
+    this.summary,
+  });
+
+  factory WorkContentModel.fromJson(Map<String, dynamic> json) =>
+      _$WorkContentModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WorkContentModelToJson(this);
 }
