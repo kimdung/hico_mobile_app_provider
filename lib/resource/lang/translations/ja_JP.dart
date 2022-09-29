@@ -135,6 +135,13 @@ const Map<String, String> ja_JP = {
   'order.detail.cancel_warning': '予約キャンセル回数が記録される',
   'order.detail.cancel_not_refund': 'キャンセル料率は100％となります。',
   'order.detail.cancel_not_refund_ctn': '予約をキャンセルすると',
+  'order.detail.work_content': '作業内容',
+  'order.detail.symptom': '症状',
+  'order.detail.test_method': '試験方法',
+  'order.detail.disease_name': '病名',
+  'order.detail.treatments': 'トリートメント',
+  'order.detail.appointment_next_time': '2回目以降のご予約はこちら',
+  'order.detail.comment': '医師のコメント',
 
 //order
   'order.hello': 'こんにちは',

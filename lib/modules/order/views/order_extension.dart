@@ -729,7 +729,7 @@ extension OrderExtension on OrderScreen {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Nội dung làm việc',
+                  'order.detail.work_content'.tr,
                   style: TextAppStyle().normalTextStype().copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -737,7 +737,7 @@ extension OrderExtension on OrderScreen {
                 ),
                 const SizedBox(height:5),
                 Text(
-                  'Triệu chứng',
+                  'order.detail.symptom'.tr,
                   style: TextAppStyle()
                       .normalTextStype()
                       .copyWith(fontWeight: FontWeight.bold),
@@ -747,7 +747,7 @@ extension OrderExtension on OrderScreen {
                   style: TextAppStyle().normalTextGrey(),
                 ),
                 Text(
-                  'Phương pháp kiểm tra',
+                  'order.detail.test_method'.tr,
                   style: TextAppStyle()
                       .normalTextStype()
                       .copyWith(fontWeight: FontWeight.bold),
@@ -757,7 +757,7 @@ extension OrderExtension on OrderScreen {
                   style: TextAppStyle().normalTextGrey(),
                 ),
                 Text(
-                  'Tên bệnh',
+                  'order.detail.disease_name'.tr,
                   style: TextAppStyle()
                       .normalTextStype()
                       .copyWith(fontWeight: FontWeight.bold),
@@ -767,7 +767,7 @@ extension OrderExtension on OrderScreen {
                   style: TextAppStyle().normalTextGrey(),
                 ),
                 Text(
-                  'Phương pháp điều trị',
+                  'order.detail.treatments'.tr,
                   style: TextAppStyle()
                       .normalTextStype()
                       .copyWith(fontWeight: FontWeight.bold),
@@ -777,7 +777,7 @@ extension OrderExtension on OrderScreen {
                   style: TextAppStyle().normalTextGrey(),
                 ),
                 Text(
-                  'Đặt lịch từ lần 2 trở đi',
+                  'order.detail.appointment_next_time'.tr,
                   style: TextAppStyle()
                       .normalTextStype()
                       .copyWith(fontWeight: FontWeight.bold),
@@ -788,7 +788,7 @@ extension OrderExtension on OrderScreen {
                   style: TextAppStyle().normalTextGrey(),
                 ),
                 Text(
-                  'Nhận xét của bác sĩ',
+                  'order.detail.comment'.tr,
                   style: TextAppStyle()
                       .normalTextStype()
                       .copyWith(fontWeight: FontWeight.bold),

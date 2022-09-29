@@ -33,8 +33,8 @@ const Map<String, String> vi_VN = {
   'year': 'năm',
   'bank': 'Ngân hàng',
   'notif': 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
-  'change_pass':'Thay đổi mật khẩu',
-  'cancel' : 'Huỷ',
+  'change_pass': 'Thay đổi mật khẩu',
+  'cancel': 'Huỷ',
   // onboard
   'onboard.title1': 'Welcome to Hico',
   'onboard.title2': 'Dịch vụ tận tình - chu đáo',
@@ -141,6 +141,13 @@ const Map<String, String> vi_VN = {
   'order.detail.cancel_warning': 'Bạn sẽ bị ghi nhận lần hủy đơn này!',
   'order.detail.cancel_not_refund': 'Oh! Bạn sẽ bị mất toàn bộ',
   'order.detail.cancel_not_refund_ctn': 'nếu hủy đơn hàng này!',
+  'order.detail.work_content': 'Nội dung làm việc',
+  'order.detail.symptom': 'Triệu chứng',
+  'order.detail.test_method': 'Phương pháp kiểm tra',
+  'order.detail.disease_name': 'Tên bệnh',
+  'order.detail.treatments': 'Phương pháp điều trị',
+  'order.detail.appointment_next_time': 'Đặt lịch từ lần 2 trở đi',
+  'order.detail.comment': 'Nhận xét của bác sĩ',
 
   //order
   'order.hello': 'Xin chào,',
@@ -247,7 +254,8 @@ const Map<String, String> vi_VN = {
   'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
   'topup.success': 'Nạp tiền thành công!',
   'topup.failure': 'Nạp tiền thất bại!',
-  'topup.notif': 'Lưu ý: Quý khách nên nạp trên 3000 yên trong trường hợp quý khách cần phiên dịch trong thời gian dài hay dự kiến sẽ phát sinh thêm thời gian phiên dịch.',
+  'topup.notif':
+      'Lưu ý: Quý khách nên nạp trên 3000 yên trong trường hợp quý khách cần phiên dịch trong thời gian dài hay dự kiến sẽ phát sinh thêm thời gian phiên dịch.',
 
   //statistic screen
   'statistic.order_finish': 'Danh sách đơn hàng',
