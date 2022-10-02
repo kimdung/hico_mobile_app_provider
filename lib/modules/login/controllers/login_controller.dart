@@ -44,13 +44,11 @@ class LoginController extends BaseController {
 
   @override
   Future<void> onReady() {
-    usernameController.text = storage.getString(StorageConstants.username)??'';
+    usernameController.text =
+        storage.getString(StorageConstants.username) ?? '';
     passwordController.text = '';
     return super.onReady();
   }
-
-  @override
-  void onClose() {}
 
   Future<void> onLogin() async {
     hideKeyboard(Get.overlayContext!);
@@ -63,7 +61,6 @@ class LoginController extends BaseController {
               deviceIdentifier: AppDataGlobal.firebaseToken))
           .then(
         (response) {
-          
           if (response.status == CommonConstants.statusFailed) {
             EasyLoading.dismiss();
             DialogUtil.showPopup(
@@ -86,7 +83,7 @@ class LoginController extends BaseController {
                   StorageConstants.password, passwordController.text);
               storage.setBool(StorageConstants.isLogin, true);
 
-              _loadData(response.loginModel!);       
+              _loadData(response.loginModel!);
             } else {
               EasyLoading.dismiss();
               AppDataGlobal.accessToken = response.loginModel!.accessToken!;
@@ -95,7 +92,7 @@ class LoginController extends BaseController {
             }
           } else if (response.loginModel != null &&
               response.loginModel!.info!.isUpdate == 1) {
-                EasyLoading.dismiss();
+            EasyLoading.dismiss();
             DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
               barrierDismissible: false,
@@ -167,13 +164,13 @@ class LoginController extends BaseController {
               response.loginModel != null &&
               response.loginModel!.info != null) {
             if (response.loginModel!.info!.kycStatus == 1) {
-               storage.setString(
+              storage.setString(
                   StorageConstants.username, usernameController.text);
               storage.setString(
                   StorageConstants.password, passwordController.text);
               storage.setBool(StorageConstants.isSocial, true);
 
-              _loadData(response.loginModel!);       
+              _loadData(response.loginModel!);
             } else {
               AppDataGlobal.accessToken = response.loginModel!.accessToken!;
               AppDataGlobal.userInfo = response.loginModel!.info!;
@@ -213,15 +210,15 @@ class LoginController extends BaseController {
             .then((response) {
           if (response.status == CommonConstants.statusOk &&
               response.loginModel != null &&
-              response.loginModel!.info != null) {     
+              response.loginModel!.info != null) {
             if (response.loginModel!.info!.kycStatus == 1) {
-               storage.setString(
+              storage.setString(
                   StorageConstants.username, usernameController.text);
               storage.setString(
                   StorageConstants.password, passwordController.text);
               storage.setBool(StorageConstants.isSocial, true);
 
-              _loadData(response.loginModel!);       
+              _loadData(response.loginModel!);
             } else {
               AppDataGlobal.accessToken = response.loginModel!.accessToken!;
               AppDataGlobal.userInfo = response.loginModel!.info!;
@@ -276,7 +273,7 @@ class LoginController extends BaseController {
                   StorageConstants.password, passwordController.text);
               storage.setBool(StorageConstants.isSocial, true);
 
-              _loadData(response.loginModel!);       
+              _loadData(response.loginModel!);
             } else {
               AppDataGlobal.accessToken = response.loginModel!.accessToken!;
               AppDataGlobal.userInfo = response.loginModel!.info!;

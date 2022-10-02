@@ -391,7 +391,7 @@ class FirebaseMessageConfig {
     //FCM GetStream
     final sender = message['sender']?.toString();
     final channelId = message['channel_id'] ?? '';
-    
+
     reloadBalance();
 
     if (type == DisplayType.Order.id.toString() ||
