@@ -15,6 +15,7 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/notifications/notification_data.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../data/app_data_global.dart';
 import '../../routes/app_pages.dart';
@@ -23,6 +24,10 @@ import '../constants/storage.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
+
+  debugPrint('[FirebaseMessageConfig] Got a message whilst in the background!');
+  debugPrint(
+      '[FirebaseMessageConfig] Message data: ${message.toMap().toString()}');
   final notificationData = NotificationData.fromJson(message.data);
   if (notificationData.displayType == NotificationData.typeIncomingCall) {
     await showCallkitIncoming(notificationData);
@@ -30,14 +35,20 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> showCallkitIncoming(NotificationData notificationData) async {
+  debugPrint('[FirebaseMessageConfig] showCallkitIncoming');
   if (notificationData.receiverId == null) {
     return;
   }
+  debugPrint('[FirebaseMessageConfig] FirebaseFirestore collection call');
   final callCollection = FirebaseFirestore.instance.collection('call');
   final doc = await callCollection.doc(notificationData.receiverId).get();
   final data = doc.data() as Map<String, dynamic>;
+  debugPrint(
+      '[FirebaseMessageConfig] FirebaseFirestore data ${data.toString()}');
   try {
     final call = CallModel.fromJson(data);
+    debugPrint(
+        '[FirebaseMessageConfig] FirebaseFirestore call data ${call.toString()}');
     if (call.hasDialled != null && !call.hasDialled!) {
       callCollection
           .doc(notificationData.receiverId)
@@ -47,7 +58,6 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           FlutterCallkitIncoming.endAllCalls();
         }
       });
-
       if (Platform.isIOS) {
         SharedPreferencesIOS.registerWith();
       } else if (Platform.isAndroid) {
@@ -79,17 +89,19 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           break;
         default:
           handle = (call.isVideo ?? false)
-              ? 'Có cuộc gọi âm thanh...'
-              : 'Có cuộc gọi video...';
+              ? 'Có cuộc gọi video...'
+              : 'Có cuộc gọi âm thanh...';
           textAccept = 'Chấp nhận';
           textDecline = 'Từ chối';
           textMissedCall = 'Có cuộc gọi nhỡ';
           textCallback = 'Gọi lại';
       }
 
+      await Get.updateLocale(const Locale('vi', 'VN'));
+
       final params = <String, dynamic>{
-        'id': call.id ?? '',
-        'appName': 'HICO Provider',
+        'id': call.id ?? const Uuid().v4(),
+        'appName': 'HICO',
         'nameCaller': call.callerName ?? '',
         'avatar': call.callerPic,
         'handle': handle,
@@ -111,8 +123,8 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           // 'actionColor': '#4CAF50'
         },
         'ios': <String, dynamic>{
-          'iconName': 'CallKitLogo',
-          'handleType': '',
+          'iconName': 'AppIcon',
+          'handleType': 'generic',
           'supportsVideo': true,
           'maximumCallGroups': 2,
           'maximumCallsPerCallGroup': 1,
@@ -124,7 +136,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'supportsHolding': true,
           'supportsGrouping': false,
           'supportsUngrouping': false,
-          'ringtonePath': 'system_ringtone_default'
+          'ringtonePath': 'bell'
         }
       };
       FlutterCallkitIncoming.onEvent.listen((event) async {
@@ -134,6 +146,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           case CallEvent.ACTION_CALL_START:
             break;
           case CallEvent.ACTION_CALL_ACCEPT:
+            AppDataGlobal.acceptCall = true;
             break;
           case CallEvent.ACTION_CALL_DECLINE:
             try {
@@ -170,7 +183,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
       await FlutterCallkitIncoming.showCallkitIncoming(params);
     }
   } catch (e) {
-    debugPrint(e.toString());
+    debugPrint('[FirebaseMessageConfig] $e');
   }
 }
 
