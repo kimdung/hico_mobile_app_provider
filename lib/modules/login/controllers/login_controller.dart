@@ -43,11 +43,10 @@ class LoginController extends BaseController {
   }
 
   @override
-  Future<void> onReady() {
+  void onReady() {
     usernameController.text =
         storage.getString(StorageConstants.username) ?? '';
     passwordController.text = '';
-    return super.onReady();
   }
 
   Future<void> onLogin() async {
