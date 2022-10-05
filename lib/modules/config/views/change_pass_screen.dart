@@ -196,8 +196,14 @@ class ChangePassScreen extends GetView<ConfigController> {
           ),
         ),
       ),
-      validator: (value) =>
-          (value == null || value.isEmpty) ? 'incorrect_confirm_pass'.tr : null,
+      validator: (value){
+          if (value == null || value.isEmpty) {
+            return 'data_requied'.tr;
+          }
+          if (value != controller.newsPasswordController.text) {
+            return 'data_not_match'.tr;
+          }
+        },
     );
   }
 }

@@ -735,7 +735,7 @@ extension OrderExtension on OrderScreen {
                         fontSize: 15,
                       ),
                 ),
-                const SizedBox(height:5),
+                const SizedBox(height: 5),
                 Text(
                   'order.detail.symptom'.tr,
                   style: TextAppStyle()
