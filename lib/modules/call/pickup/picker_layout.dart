@@ -31,18 +31,14 @@ class PickupLayout extends GetView<BaseController> {
         ? StreamBuilder<DocumentSnapshot>(
             stream: callMethods.callStream(uid: userInfo.id.toString()),
             builder: (context, snapshot) {
+              if (WidgetsBinding.instance?.lifecycleState == null ||
+                  WidgetsBinding.instance?.lifecycleState !=
+                      AppLifecycleState.resumed) {
+                return scaffold;
+              }
               if (snapshot.hasData &&
                   snapshot.data?.data() != null &&
                   snapshot.data?.data() is Map<String, dynamic>) {
-                // final data = snapshot.data!.data() as Map<String, dynamic>;
-                // try {
-                //   final call = CallModel.fromJson(data);
-                //   if (call.hasDialled != null && !call.hasDialled!) {
-                //     return PickupView(call: call);
-                //   }
-                // } catch (e) {
-                //   printError(info: 'Get call firebase ${e.toString()}');
-                // }
                 return FutureBuilder<CallModel?>(
                   future: _pickupCall(
                       snapshot.data?.data() as Map<String, dynamic>),
@@ -86,7 +82,7 @@ class PickupLayout extends GetView<BaseController> {
         }
       }
 
-      if (call.hasDialled != null && !call.hasDialled!) { 
+      if (call.hasDialled != null && !call.hasDialled!) {
         return call;
       }
     } catch (e) {

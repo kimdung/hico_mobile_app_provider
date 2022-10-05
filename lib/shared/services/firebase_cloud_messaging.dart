@@ -25,9 +25,6 @@ import '../constants/storage.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 
-  debugPrint('[FirebaseMessageConfig] Got a message whilst in the background!');
-  debugPrint(
-      '[FirebaseMessageConfig] Message data: ${message.toMap().toString()}');
   final notificationData = NotificationData.fromJson(message.data);
   if (notificationData.displayType == NotificationData.typeIncomingCall) {
     await showCallkitIncoming(notificationData);
@@ -35,16 +32,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> showCallkitIncoming(NotificationData notificationData) async {
-  debugPrint('[FirebaseMessageConfig] showCallkitIncoming');
   if (notificationData.receiverId == null) {
     return;
   }
-  debugPrint('[FirebaseMessageConfig] FirebaseFirestore collection call');
   final callCollection = FirebaseFirestore.instance.collection('call');
   final doc = await callCollection.doc(notificationData.receiverId).get();
   final data = doc.data() as Map<String, dynamic>;
-  debugPrint(
-      '[FirebaseMessageConfig] FirebaseFirestore data ${data.toString()}');
   try {
     final call = CallModel.fromJson(data);
     debugPrint(
@@ -101,7 +94,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
 
       final params = <String, dynamic>{
         'id': call.id ?? const Uuid().v4(),
-        'appName': 'HICO',
+        'appName': 'HICO-Provider',
         'nameCaller': call.callerName ?? '',
         'avatar': call.callerPic,
         'handle': handle,
@@ -117,10 +110,9 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'isCustomNotification': true,
           'isShowLogo': false,
           'isShowCallback': false,
+          'isShowMissedCallNotification': false,
           'ringtonePath': 'bell',
           'backgroundColor': '#DF4D6F',
-          // 'backgroundUrl': 'https://i.pravatar.cc/500',
-          // 'actionColor': '#4CAF50'
         },
         'ios': <String, dynamic>{
           'iconName': 'AppIcon',
@@ -136,7 +128,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'supportsHolding': true,
           'supportsGrouping': false,
           'supportsUngrouping': false,
-          'ringtonePath': 'bell'
+          'ringtonePath': 'bell.caf'
         }
       };
       FlutterCallkitIncoming.onEvent.listen((event) async {
