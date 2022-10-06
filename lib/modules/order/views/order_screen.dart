@@ -98,7 +98,9 @@ class OrderScreen extends GetView<OrderController> {
                       buildCancelReason(),
                     const SizedBox(height: 14),
                     Container(color: AppColor.greyBackgroundColor, height: 6),
-                    buildWorkContent(),
+                    if (controller.invoice.value.status ==
+                        InvoiceStatus.successed.id)
+                      buildWorkContent(),
                     const SizedBox(height: 32),
                     buildActionBtnBottom(controller.invoice.value.status),
                     const SizedBox(height: 20),

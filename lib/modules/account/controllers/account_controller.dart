@@ -7,12 +7,14 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/constants/storage.dart';
 import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/dialog_confirm_widget.dart';
 import '../../../shared/widget_hico/dialog/logout_widget.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class AccountController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -89,11 +91,26 @@ class AccountController extends BaseController {
         if (_value != null && _value is bool) {
           if (_value == true) {
             _uiRepository.deleteUser().then((response) {
-              AppDataGlobal.accessToken = '';
-              storage.setBool(StorageConstants.isLogin, false);
-              storage.setBool(StorageConstants.isSocial, false);
-              storage.setString(StorageConstants.token, '');
-              Get.offAllNamed(Routes.ONBOARDING);
+              if (response.status == CommonConstants.statusOk) {
+                AppDataGlobal.accessToken = '';
+                storage.setBool(StorageConstants.isLogin, false);
+                storage.setBool(StorageConstants.isSocial, false);
+                storage.setString(StorageConstants.token, '');
+                Get.offAllNamed(Routes.ONBOARDING);
+              } else {
+                DialogUtil.showPopup(
+                  dialogSize: DialogSize.Popup,
+                  barrierDismissible: false,
+                  backgroundColor: Colors.transparent,
+                  child: NormalWidget(
+                    icon: IconConstants.icFail,
+                    title: response.message,
+                  ),
+                  onVaLue: (value) {
+                    Get.back();
+                  },
+                );
+              }
             });
           }
         }

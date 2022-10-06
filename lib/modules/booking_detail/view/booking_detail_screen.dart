@@ -62,50 +62,51 @@ class BookingDetailScreen extends GetView<BookingDetailController> {
                     const SizedBox(height: 18),
                     buildWorkingTime(),
                     const SizedBox(height: 19),
-                    // Container(color: AppColor.greyBackgroundColor, height: 1),
-                    // const SizedBox(height: 18),
-                    // buildPaymentMethod(),
-                    // const SizedBox(height: 18),
                     Container(color: AppColor.greyBackgroundColor, height: 6),
                     const SizedBox(height: 14),
-                    buildOrderDetail(),       
+                    buildOrderDetail(),
                     const SizedBox(height: 32),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: CommonConstants.paddingDefault),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: GeneralButton(
-                                onPressed: () {
-                                  controller.onSubmit(CommonConstants.statusFailed);
-                                },
-                                borderRadius: BorderRadius.circular(24),
-                                borderColor: AppColor.primaryColorLight,
-                                backgroundColor: Colors.white,
-                                child: Text(
-                                  'order.detail.cancel'.tr,
-                                  style: TextAppStyle().normalTextPink(),
+                    (controller.extendInfo.value.invoiceStatus == 5)
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: CommonConstants.paddingDefault),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: GeneralButton(
+                                    onPressed: () {
+                                      controller.onSubmit(
+                                          CommonConstants.statusFailed);
+                                    },
+                                    borderRadius: BorderRadius.circular(24),
+                                    borderColor: AppColor.primaryColorLight,
+                                    backgroundColor: Colors.white,
+                                    child: Text(
+                                      'order.detail.cancel'.tr,
+                                      style: TextAppStyle().normalTextPink(),
+                                    ),
+                                  ),
                                 ),
-                            ),
-                          ),
-                          const SizedBox(width: 14),
-                          Expanded(
-                            child: GeneralButton(
-                                onPressed: () {
-                                  controller.onSubmit(CommonConstants.statusOk);
-                                },
-                                borderRadius: BorderRadius.circular(24),
-                                borderColor: AppColor.primaryColorLight,
-                                backgroundColor: AppColor.primaryColorLight,
-                                child: Text(
-                                  'extend.approve'.tr,
-                                  style: TextAppStyle().normalTextWhite(),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: GeneralButton(
+                                    onPressed: () {
+                                      controller
+                                          .onSubmit(CommonConstants.statusOk);
+                                    },
+                                    borderRadius: BorderRadius.circular(24),
+                                    borderColor: AppColor.primaryColorLight,
+                                    backgroundColor: AppColor.primaryColorLight,
+                                    child: Text(
+                                      'extend.approve'.tr,
+                                      style: TextAppStyle().normalTextWhite(),
+                                    ),
+                                  ),
                                 ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),),
-
+                          )
+                        : Container(),
                     const SizedBox(height: 20),
                   ],
                 ),

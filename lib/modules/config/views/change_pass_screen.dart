@@ -121,7 +121,7 @@ class ChangePassScreen extends GetView<ConfigController> {
             controller.hideShowPassword();
           },
           icon: Icon(
-            !controller.hidePassword.value ? Icons.visibility : Icons.visibility_off,
+            controller.hidePassword.value ? Icons.visibility : Icons.visibility_off,
             color: AppColor.gray1,
           ),
         ),
@@ -156,7 +156,7 @@ class ChangePassScreen extends GetView<ConfigController> {
             controller.hideShowNewPassword();
           },
           icon: Icon(
-            !controller.hideNewPassword.value ? Icons.visibility : Icons.visibility_off,
+            controller.hideNewPassword.value ? Icons.visibility : Icons.visibility_off,
             color: AppColor.gray1,
           ),
         ),
@@ -191,7 +191,7 @@ class ChangePassScreen extends GetView<ConfigController> {
             controller.hideShowRetypePassword();
           },
           icon: Icon(
-            !controller.hideRetypePassword.value ? Icons.visibility : Icons.visibility_off,
+            controller.hideRetypePassword.value ? Icons.visibility : Icons.visibility_off,
             color: AppColor.gray1,
           ),
         ),

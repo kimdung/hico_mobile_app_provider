@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:ui_api/models/invoice/invoice_model.dart';
 import 'package:ui_api/response/base_response.dart';
 
 import '../../models/invoice/invoice_extend_model.dart';

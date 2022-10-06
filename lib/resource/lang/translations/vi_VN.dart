@@ -197,7 +197,7 @@ const Map<String, String> vi_VN = {
   'bank_info': 'Thông tin ngân hàng',
   'logout': 'Đăng xuất',
   'payment_policy': 'Chính sách thanh toán',
-  'support': 'Hỗ trợ & góp ý',
+  'support': 'Hỗ Trợ & Góp Ý',
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
   'account_number': 'Số tải khoản:',
