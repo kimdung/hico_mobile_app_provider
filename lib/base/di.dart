@@ -40,7 +40,7 @@ class DependencyInjection {
       //
     }
     try {
-      Stripe.publishableKey = config.value[StripePublishableKey]!;
+      Stripe.publishableKey = config.value[StripePublishableKey]!; 
       await Stripe.instance.applySettings();
     } catch (e) {
       debugPrint('init Stripe error ${e.toString()}');
