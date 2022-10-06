@@ -121,7 +121,7 @@ class ChangePassScreen extends GetView<ConfigController> {
             controller.hideShowPassword();
           },
           icon: Icon(
-            !controller.hidePassword.value ? Icons.visibility : Icons.visibility_off,
+            controller.hidePassword.value ? Icons.visibility : Icons.visibility_off,
             color: AppColor.gray1,
           ),
         ),
@@ -156,7 +156,7 @@ class ChangePassScreen extends GetView<ConfigController> {
             controller.hideShowNewPassword();
           },
           icon: Icon(
-            !controller.hideNewPassword.value ? Icons.visibility : Icons.visibility_off,
+            controller.hideNewPassword.value ? Icons.visibility : Icons.visibility_off,
             color: AppColor.gray1,
           ),
         ),
@@ -191,13 +191,19 @@ class ChangePassScreen extends GetView<ConfigController> {
             controller.hideShowRetypePassword();
           },
           icon: Icon(
-            !controller.hideRetypePassword.value ? Icons.visibility : Icons.visibility_off,
+            controller.hideRetypePassword.value ? Icons.visibility : Icons.visibility_off,
             color: AppColor.gray1,
           ),
         ),
       ),
-      validator: (value) =>
-          (value == null || value.isEmpty) ? 'incorrect_confirm_pass'.tr : null,
+      validator: (value){
+          if (value == null || value.isEmpty) {
+            return 'data_requied'.tr;
+          }
+          if (value != controller.newsPasswordController.text) {
+            return 'data_not_match'.tr;
+          }
+        },
     );
   }
 }

@@ -350,7 +350,7 @@ class FirebaseMessageConfig {
   void _showNotification(RemoteMessage message) {
     debugPrint('Got a message whilst in the foreground!');
     debugPrint('Message data: ${message.data}');
-
+    reloadBalance();
     try {
       debugPrint('FirebaseMessageConfig RemoteMessage $message');
       final remoteNotification = message.notification;
@@ -389,69 +389,115 @@ class FirebaseMessageConfig {
 
   Future<void> _onSelectNotifcation(Map<String, dynamic> message) async {
     debugPrint('ONTAP NOTIFICATION: $message');
+
+    final notificationData = NotificationData.fromJson(message);
+
     //FCM Firebase
-    final type = message['display_type']?.toString();
-    final id = message['invoice_id']?.toString();
+    final type = notificationData.displayType;
+    final id = int.tryParse(notificationData.invoiceId ?? '');
 
     //FCM GetStream
-    final sender = message['sender']?.toString();
+    final sender = notificationData.sender;
     final channelId = message['channel_id'] ?? '';
-
-    reloadBalance();
-
-    if (type == DisplayType.Order.id.toString() ||
-        type == DisplayType.Remind.id.toString()) {
-      // await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-      //     .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-      await Get.toNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-    } else if (type == DisplayType.Extend.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-    } else if (type == DisplayType.Rating.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-    } else if (type == DisplayType.UpdateInfo.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamed(Routes.UPDATE_SERVICE);
-    } else if (type == DisplayType.UpdateBalance.id.toString()) {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamedAndRemoveUntil(Routes.MAIN, (Route<dynamic> route) => false,
-              arguments: true);
-    } else if (sender == 'stream.chat') {
+    if (sender == 'stream.chat' && channelId.isNotEmpty) {
       //router chat screen
       debugPrint('router chat screen');
       await onChat(channelId);
-    } else {
-      await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-          .pushNamedAndRemoveUntil(
-              Routes.MAIN, (Route<dynamic> route) => false);
+      return;
     }
-    // if (payload?.isNotEmpty ?? false) {
-    //   final message = jsonDecode(payload ?? '');
-    //   //FCM Firebase
-    //   final type = message['display_type']?.toString();
-    //   final id = message['invoice_id']?.toString();
 
-    //   //FCM GetStream
-    //   final sender = message['sender']?.toString();
-    //   final channelId = message['channel_id'] ?? '';
-
-    //   if (type == DisplayType.Order.id.toString() ||
-    //       type == DisplayType.Remind.id.toString()) {
-    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-    //         .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-    //   } else if (type == DisplayType.Extend.id.toString()) {
-    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-    //         .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-    //   } else if (type == DisplayType.Rating.id.toString()) {
-    //     await Navigator.of(AppDataGlobal.navigatorKey.currentContext!)
-    //         .pushNamed(Routes.ORDER_DETAIL, arguments: int.parse(id!));
-    //   } else if (sender == 'stream.chat') {
-    //     //router chat screen
-    //     debugPrint('router chat screen');
-    //     await onChat(channelId);
-    //   }
-    // }
+    switch (type) {
+      case NotificationData.typeSupplierReviewProfile:
+        // do something else 2
+        await Get.toNamed(Routes.ACCOUNT);
+        break;
+      case NotificationData.typeSupplierAgreeCustomer:
+        // do something else 3
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSupplierCancel:
+        // do something else 4
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSupplierNewInvoice:
+        // do something else 5
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeCustomerCancel:
+        // do something else 6
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeCustomerExtendPeriod:
+        // do something else 7
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSupplierCompleted:
+        // do something else 8
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeTravelingCosts:
+        // do something else 9
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeTimeReminder:
+        // do something else 10
+        await Get.toNamed(Routes.ACCOUNT);
+        break;
+      case NotificationData.typeAdminApproved:
+        // do something else 11
+        await Get.toNamed(Routes.MAIN);
+        break;
+      case NotificationData.typeSystemStart:
+        // do something else 12
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSendNotifyTimeout:
+        // do something else 13
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeAdminApprovedWallet:
+        // do something else 14
+        await Get.toNamed(Routes.WALLET);
+        break;
+      case NotificationData.typeMissedCall:
+        // do something else 16
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSupplierOvertime:
+        // do something else 17
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSystemCancel:
+        // do something else 18
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSystemSendBefore10:
+        // do something else 19
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSystemSendBefore5:
+        // do something else 20
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSupplierAgreeExtend:
+        // do something else 21
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSupplierRefuseExtend:
+        // do something else 22
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeSupplierRefuseCustomer:
+        // do something else 23
+        await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
+        break;
+      case NotificationData.typeAdminTransferUser:
+        // do something else 24
+        await Get.toNamed(Routes.WALLET);
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> resetDeviceToken() async {

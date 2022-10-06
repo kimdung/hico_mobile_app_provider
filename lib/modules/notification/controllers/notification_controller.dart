@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:ui_api/models/notifications/notification_data.dart';
 import 'package:ui_api/models/notifications/notification_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_extend_request.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../main/controllers/main_controller.dart';
@@ -74,42 +76,138 @@ class NotificationController extends BaseController {
 
   Future<void> viewDetail(
       int id, int displayType, int? invoiceId, int? subId) async {
-    if (displayType == DisplayType.Notif.id) {
-      await Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
-          ?.then((value) => loadData());
-    } else if (displayType == 7) {
-      await _uiRepository.notificationDetail(id).then((response) {
-        EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.detail != null) {
+    await reloadBalance();
+    //Router
+    await _uiRepository.notificationDetail(id).then((response) {
+      EasyLoading.dismiss();
+      switch (displayType.toString()) {
+        case NotificationData.typeSupplierReviewProfile:
+          // do something else 2
+          Get.toNamed(Routes.UPDATE_SERVICE)?.then((value) => loadData());
+          break;
+        case NotificationData.typeSupplierAgreeCustomer:
+          // do something else 3
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSupplierCancel:
+          // do something else 4
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSupplierNewInvoice:
+          // do something else 5
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeCustomerCancel:
+          // do something else 6
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeCustomerExtendPeriod:
+          // do something else 7
           Get.toNamed(Routes.BOOKING_DETAIL,
                   arguments:
                       BookingExtendRequest(invoiceId: invoiceId, subId: subId))
               ?.then((value) {
             loadData();
           });
-        }
-      });
-    } else if (displayType == DisplayType.UpdateInfo.id) {
-      await _uiRepository.notificationDetail(id).then((response) {
-        EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.detail != null) {
+          break;
+        case NotificationData.typeSupplierCompleted:
+          // do something else 8
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeTravelingCosts:
+          // do something else 9
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeTimeReminder:
+          // do something else 10
           Get.toNamed(Routes.UPDATE_SERVICE)?.then((value) {
             loadData();
           });
-        }
-      });
-    } else {
-      await _uiRepository.notificationDetail(id).then((response) {
-        EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.detail != null) {
+          break;
+        case NotificationData.typeAdminApproved:
+          // do something else 11
+          Get.toNamed(Routes.MAIN);
+          break;
+        case NotificationData.typeSystemStart:
+          // do something else 12
           Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
               ?.then((value) => loadData());
-        }
-      });
-    }
+          break;
+        case NotificationData.typeSendNotifyTimeout:
+          // do something else 13
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeAdminApprovedWallet:
+          // do something else 14
+          Get.toNamed(Routes.WALLET);
+          break;
+        case NotificationData.typeMissedCall:
+          // do something else 16
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSupplierOvertime:
+          // do something else 17
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSystemCancel:
+          // do something else 18
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSystemSendBefore10:
+          // do something else 19
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSystemSendBefore5:
+          // do something else 20
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSupplierAgreeExtend:
+          // do something else 21
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSupplierRefuseExtend:
+          // do something else 22
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeSupplierRefuseCustomer:
+          // do something else 23
+          Get.toNamed(Routes.ORDER_DETAIL, arguments: invoiceId)
+              ?.then((value) => loadData());
+          break;
+        case NotificationData.typeAdminTransferUser:
+          // do something else 24
+          Get.toNamed(Routes.WALLET);
+          break;
+        default:
+          Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
+              ?.then((value) => loadData());
+          break;
+      }
+    });
+  }
+
+  Future<void> reloadBalance() async {
+    await _uiRepository.getInfo().then((response) {
+      if (response.status == CommonConstants.statusOk &&
+          response.data != null &&
+          response.data!.info != null) {
+        AppDataGlobal.userInfo = response.data!.info!;
+      }
+    });
   }
 
   @override
