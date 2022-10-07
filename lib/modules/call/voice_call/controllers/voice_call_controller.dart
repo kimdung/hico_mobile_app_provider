@@ -92,12 +92,6 @@ class VoiceCallController extends BaseController {
 
     await _addListeners();
 
-    await _engine?.enableAudio();
-    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine?.setClientRole(ClientRole.Broadcaster);
-
-    await _engine?.enableLocalAudio(false);
-
     await _joinChannel();
   }
 
@@ -136,6 +130,13 @@ class VoiceCallController extends BaseController {
         onEndCall();
       },
     ));
+
+    await _engine?.enableAudio();
+    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
+    await _engine?.setClientRole(ClientRole.Broadcaster);
+
+    await _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
+    await _engine?.enableLocalAudio(false);
   }
 
   Future<void> _joinChannel() async {
