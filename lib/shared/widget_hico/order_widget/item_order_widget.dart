@@ -49,11 +49,9 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
           .channel('messaging', id: widget.invoice.getChatChannel());
       await _channel?.watch();
       _channel?.state?.unreadCountStream.listen((event) {
-        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-          setState(() {
-            _badge = event;
-          });
-        });
+        if (mounted) {
+          setState(() => _badge = event);
+        }
       });
     } catch (e) {
       debugPrint('[ItemOrderWidget] get unread error ${e.toString()}');
