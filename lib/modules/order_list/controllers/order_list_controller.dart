@@ -138,6 +138,11 @@ class OrderListController extends BaseController {
         ?.then((value) => loadList());
   }
 
+   Future<void> viewProfile() async {
+    await Get.toNamed(Routes.PROFILE)
+        ?.then((value) => loadList());
+  }
+
   Future<void> confirm(int id, InvoiceStatus status) async {
     try {
       await EasyLoading.show();
