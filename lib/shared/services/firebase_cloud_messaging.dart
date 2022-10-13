@@ -58,6 +58,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
       }
       final sp = await SharedPreferences.getInstance();
       final locale = sp.getString(StorageConstants.language) ?? VIETNAMESE_LANG;
+
       final String handle,
           textAccept,
           textDecline,
@@ -98,7 +99,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
         'nameCaller': call.callerName ?? '',
         'avatar': call.callerPic,
         'handle': handle,
-        'type': (call.isVideo ?? false) ? 1 : 0,
+        'type': (Platform.isIOS || (call.isVideo ?? false)) ? 1 : 0,
         'duration': 60000,
         'textAccept': textAccept,
         'textDecline': textDecline,
@@ -110,7 +111,7 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           'isCustomNotification': true,
           'isShowLogo': false,
           'isShowCallback': false,
-          'isShowMissedCallNotification': false,
+          'isShowMissedCallNotification': true,
           'ringtonePath': 'bell',
           'backgroundColor': '#DF4D6F',
         },
@@ -198,7 +199,7 @@ class FirebaseMessageConfig {
 
   final AndroidNotificationChannel _androidNotificationChannel =
       const AndroidNotificationChannel(
-    'high_importance_channel',
+    'hico_provider_high_importance_channel',
     'High Importance Notifications',
     importance: Importance.max,
     enableLights: true,

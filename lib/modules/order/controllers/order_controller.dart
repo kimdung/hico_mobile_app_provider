@@ -130,7 +130,15 @@ class OrderController extends BaseController {
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
         } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -148,9 +156,7 @@ class OrderController extends BaseController {
           .getCallToken(channelId, invoice.value.id)
           .then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
-          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             id: id,
             invoiceId: invoice.value.id,
@@ -165,6 +171,16 @@ class OrderController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {

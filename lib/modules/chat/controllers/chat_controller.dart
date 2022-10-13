@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat/stream_chat.dart';
@@ -7,8 +8,11 @@ import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/call_utilities.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class ChatController extends BaseController {
   final _uiRepository = Get.find<HicoUIRepository>();
@@ -64,7 +68,15 @@ class ChatController extends BaseController {
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
         } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -100,7 +112,15 @@ class ChatController extends BaseController {
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
         } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {

@@ -138,9 +138,8 @@ class OrderListController extends BaseController {
         ?.then((value) => loadList());
   }
 
-   Future<void> viewProfile() async {
-    await Get.toNamed(Routes.PROFILE)
-        ?.then((value) => loadList());
+  Future<void> viewProfile() async {
+    await Get.toNamed(Routes.PROFILE)?.then((value) => loadList());
   }
 
   Future<void> confirm(int id, InvoiceStatus status) async {
@@ -238,8 +237,7 @@ class OrderListController extends BaseController {
       channelId = '$channelId-$id';
       await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             id: id,
             invoiceId: invoice.id,
@@ -254,8 +252,16 @@ class OrderListController extends BaseController {
             isVideo: false,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -271,8 +277,7 @@ class OrderListController extends BaseController {
       channelId = '$channelId-$id';
       await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
             id: id,
             invoiceId: invoice.id,
@@ -287,8 +292,16 @@ class OrderListController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
