@@ -46,67 +46,40 @@ class TimeServiceScreen extends GetView<TimeServiceController> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    Container(
-                      child: CalendarCarousel<Event>(
-                        onDayPressed: (DateTime date, List<Event> events) {
-                          controller.selectDate(date);
-                        },
-                        headerTextStyle: TextAppStyle().largeTextStype(),
-                        weekdayTextStyle: const TextStyle(color: Colors.black),
-                        weekendTextStyle: const TextStyle(color: Colors.black),
-                        thisMonthDayBorderColor: Colors.grey,
-                        weekFormat: false,
-                        height: 400,
-                        dayPadding: 1,
-                        todayBorderColor: Colors.grey,
-                        todayButtonColor: Colors.white,
-                        todayTextStyle: TextAppStyle().normalTextStype(),
-                        selectedDateTime: controller.currentDate.value,
-                        selectedDayButtonColor: AppColor.primaryColorLight,
-                        selectedDayBorderColor: AppColor.primaryColorLight,
-                        daysHaveCircularBorder: false,
-                      ),
-                    ),
-                    buildTitleComponent(
-                      title: 'Khung giờ',
-                      onPress: () {
-                        controller.addItem();
-                      },
-                    ),
+                    buildCalender(),
                     const SizedBox(height: 12),
-                    Container(
-                      child: (controller.lstTimes.isNotEmpty)
-                          ? Column(
-                              children: [
-                                ...List.generate(
-                                  controller.lstTimes.length,
-                                  (index) => buildUserTimeItem(
-                                    context: context,
-                                    index: index,
-                                    time: controller.lstTimes[index],
-                                  ),
-                                )
-                              ],
-                            )
-                          : Container(),
-                    ),
-                    const SizedBox(height: 30),
-                    GeneralButton(
-                      onPressed: () {
-                        controller.comfirm();
-                      },
-                      borderRadius: BorderRadius.circular(24),
-                      borderColor: AppColor.primaryColorLight,
-                      backgroundColor: AppColor.primaryColorLight,
-                      child: Text(
-                        'confirm'.tr,
-                        style: TextAppStyle().titleButtonStyle(),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.lstUserTimes.length,
+                      itemBuilder: (context, index) =>
+                       buildTimeViewComponent(
+                        item: controller.lstUserTimes[index],
+                        context: context,
+                        parentIndex: index,
                       ),
+                      separatorBuilder: (context, index) => Container(),
                     ),
-                    const SizedBox(height: 24),
                   ],
                 ),
               )),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: CommonConstants.paddingDefault,
+              vertical: CommonConstants.paddingDefault),
+          child: GeneralButton(
+            onPressed: () {
+              controller.comfirm();
+            },
+            borderRadius: BorderRadius.circular(24),
+            borderColor: AppColor.primaryColorLight,
+            backgroundColor: AppColor.primaryColorLight,
+            child: Text(
+              'confirm'.tr,
+              style: TextAppStyle().titleButtonStyle(),
+            ),
+          ),
         ),
       ),
     );

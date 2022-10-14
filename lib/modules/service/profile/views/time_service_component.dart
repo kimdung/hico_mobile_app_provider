@@ -18,7 +18,7 @@ extension TimeServiceComponent on TimeServiceScreen {
             child: Container(
               padding: const EdgeInsets.only(left: 14),
               alignment: alignment,
-              child: Text(title, style: TextAppStyle().normalTextPink()),
+              child: Text(title, style: TextAppStyle().normalTextStype()),
             ),
           ),
           if (prefixIcon)
@@ -37,6 +37,7 @@ extension TimeServiceComponent on TimeServiceScreen {
 
   Widget buildUserTimeItem({
     required BuildContext context,
+    required int parentIndex,
     required int index,
     required UserTimeListModel time,
   }) {
@@ -49,7 +50,7 @@ extension TimeServiceComponent on TimeServiceScreen {
               Expanded(
                 child: buildBoxTimeSection(
                   onPress: () {
-                    controller.showTimeFrom(context, index);
+                    controller.showTimeFrom(context, parentIndex, index);
                   },
                   title: 'supplier.filter.from'.tr,
                   value: time.beginTime ?? '',
@@ -69,7 +70,7 @@ extension TimeServiceComponent on TimeServiceScreen {
               Expanded(
                 child: buildBoxTimeSection(
                   onPress: () {
-                    controller.showTimeTo(context, index);
+                    controller.showTimeTo(context, parentIndex, index);
                   },
                   alignment: MainAxisAlignment.end,
                   title: 'supplier.filter.to'.tr,
@@ -79,20 +80,20 @@ extension TimeServiceComponent on TimeServiceScreen {
               const SizedBox(width: 40),
               InkWell(
                 onTap: () {
-                  controller.removeItem(index);
+                  controller.removeItem(parentIndex, index);
                 },
                 child: FCoreImage(IconConstants.icClose),
               )
             ],
           ),
-          const SizedBox(height:10),
+          const SizedBox(height: 10),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   width: Get.width / 3,
-                   // 100,
+                  // 100,
                   child: Text(
                     'service.update.offline_time'.tr,
                     style: TextAppStyle().normalTextStype(),
@@ -100,11 +101,16 @@ extension TimeServiceComponent on TimeServiceScreen {
                 ),
                 buildRadioComponent(
                   value: time.checkOffline ?? 0,
-                  type: 1,
+                  type: CommonConstants.online,
                   index: index,
+                  parentIndex: parentIndex,
                 ),
                 buildRadioComponent(
-                    value: time.checkOffline ?? 0, type: 0, index: index),
+                  value: time.checkOffline ?? 0,
+                  type: CommonConstants.offline,
+                  index: index,
+                  parentIndex: parentIndex,
+                ),
               ],
             ),
           ),
@@ -113,10 +119,14 @@ extension TimeServiceComponent on TimeServiceScreen {
     );
   }
 
-  Widget buildRadioComponent(
-      {required int value, required int type, required int index}) {
+  Widget buildRadioComponent({
+    required int value,
+    required int type,
+    required int parentIndex,
+    required int index,
+  }) {
     return InkWell(
-      onTap: () => controller.selectRadio(type, index),
+      onTap: () => controller.selectRadio(type, parentIndex, index),
       child: Row(
         children: [
           FCoreImage(
@@ -128,7 +138,10 @@ extension TimeServiceComponent on TimeServiceScreen {
             height: 16,
           ),
           const SizedBox(width: 12),
-          Text(type == 1 ? 'Có' : 'Không', style: TextAppStyle().normalTextStype(),),
+          Text(
+            type == 1 ? 'Có' : 'Không',
+            style: TextAppStyle().normalTextStype(),
+          ),
         ],
       ),
     );
@@ -206,6 +219,90 @@ extension TimeServiceComponent on TimeServiceScreen {
             SizedBox(width: paddingRight ?? 16),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildTimeViewComponent({
+    required UserTimeModel item,
+    required BuildContext context,
+    required int parentIndex,
+  }) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('${'day'.tr} ${item.date.toString()}',
+              style: TextAppStyle().normalTextStype()),
+          const SizedBox(height: 12),
+          buildTitleComponent(
+            title: 'supplier.filter.time_slot'.tr,
+            onPress: () {
+              controller.addItem(parentIndex);
+            },
+          ),
+          const SizedBox(height: 12),
+          Container(
+            child: (item.list != null && item.list!.length > 0)
+                ? Column(
+                    children: [
+                      ...List.generate(
+                        item.list!.length,
+                        (index) => buildUserTimeItem(
+                          context: context,
+                          parentIndex: parentIndex,
+                          index: index,
+                          time: item.list![index],
+                        ),
+                      )
+                    ],
+                  )
+                : Container(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCalender() {
+    return Container(
+      child: CalendarCarousel<Event>(
+        onDayPressed: (DateTime date, List<Event> events) {
+          controller.selectDate(date);
+        },
+        headerTextStyle: TextAppStyle().largeTextStype(),
+        weekdayTextStyle: const TextStyle(color: Colors.black),
+        weekendTextStyle: const TextStyle(color: Colors.black),
+        thisMonthDayBorderColor: Colors.grey,
+        weekFormat: false,
+        height: 420,
+        dayPadding: 1,
+        todayBorderColor: Colors.grey,
+        todayButtonColor: Colors.white,
+        todayTextStyle: TextAppStyle().normalTextStype(),
+        selectedDateTime: controller.currentDate.value,
+        selectedDayButtonColor: Colors.white, // AppColor.primaryColorLight,
+        selectedDayBorderColor: Colors.grey, // AppColor.primaryColorLight,
+        daysHaveCircularBorder: false,
+        markedDatesMap: controller.markedDate.value.dates,
+        markedDateShowIcon: true,
+        markedDateIconMargin: 0,
+        markedDateIconOffset: 0,
+        selectedDayTextStyle: const TextStyle(
+          color: Colors.black,
+        ),
+        markedDateIconBorderColor: AppColor.primaryColorLight,
+        markedDateIconBuilder: (event) {
+          return Container(
+            color: AppColor.primaryColorLight,
+            child: Center(
+                child: Text(
+              event.title.toString(),
+              style: TextAppStyle().normalTextWhite(),
+            )),
+          );
+        },
+        markedDateMoreShowTotal: false,
       ),
     );
   }

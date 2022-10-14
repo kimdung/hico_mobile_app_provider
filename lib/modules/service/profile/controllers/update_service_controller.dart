@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -27,7 +29,8 @@ class UpdateServiceController extends BaseController {
   //data change
   UserServicesCategoryModel servicesReturn = UserServicesCategoryModel();
   WorkplacesModel workplacesReturn = WorkplacesModel();
-  UserTimeModel userTime = UserTimeModel();
+  //UserTimeModel userTime = UserTimeModel();
+  List<UserTimeModel> lstUserTimeReturn = <UserTimeModel>[];
 
   //data request
   List<int> lstDistrictId = [];
@@ -151,50 +154,54 @@ class UpdateServiceController extends BaseController {
       await Get.toNamed(Routes.TIME_SERVICE, arguments: removeTimeIds)
           ?.then((value) {
         if (value != null) {
-          userTime = value;
-          if (userTime.list != null && userTime.list!.isNotEmpty) {
-            //update data view
-            //check list view
-            if (lstUserTimes
-                .where((element) => element.date == userTime.date)
-                .isEmpty) {
-              lstUserTimes.add(userTime);
-            } else {
-              final indexItem =
-                  lstUserTimes.indexWhere((e) => e.date == userTime.date);
-              lstUserTimes[indexItem].list!.addAll(userTime.list!);
-            }
-            lstUserTimes.refresh();
+          lstUserTimeReturn = value;
+          for (var userTime in lstUserTimeReturn) {
+            if (userTime.list != null && userTime.list!.isNotEmpty) {
+              //update data view
+              //check list view
+              if (lstUserTimes
+                  .where((element) => element.date == userTime.date)
+                  .isEmpty) {
+                lstUserTimes.add(userTime);
+              } else {
+                final indexItem =
+                    lstUserTimes.indexWhere((e) => e.date == userTime.date);
+                lstUserTimes[indexItem].list!.addAll(userTime.list!);
+              }
+              lstUserTimes.refresh();
 
-            //prepare data
-            final offlineArray = <int>[];
-            for (final item in userTime.list!) {
-              offlineArray.add(item.checkOffline ?? 0);
-            }
-            final timeArray = <String>[];
-            for (final item in userTime.list!) {
-              timeArray.add('${item.beginTime} - ${item.endTime}');
-            }
-            //check list request
-            if (lstTimeSlotRequest
-                .where((element) => element.date == userTime.date)
-                .isEmpty) {
-              final newTime = TimeSlotModel();
-              newTime.date = userTime.date;
-              newTime.checkOffline = offlineArray;
-              newTime.timeSlot = timeArray;
-              lstTimeSlotRequest.add(newTime);
-            } else {
-              final indexItem =
-                  lstTimeSlotRequest.indexWhere((e) => e.date == userTime.date);
-              lstTimeSlotRequest[indexItem].checkOffline!.addAll(offlineArray);
-              lstTimeSlotRequest[indexItem].timeSlot!.addAll(timeArray);
+              //prepare data
+              final offlineArray = <int>[];
+              for (final item in userTime.list!) {
+                offlineArray.add(item.checkOffline ?? 0);
+              }
+              final timeArray = <String>[];
+              for (final item in userTime.list!) {
+                timeArray.add('${item.beginTime} - ${item.endTime}');
+              }
+              //check list request
+              if (lstTimeSlotRequest
+                  .where((element) => element.date == userTime.date)
+                  .isEmpty) {
+                final newTime = TimeSlotModel();
+                newTime.date = userTime.date;
+                newTime.checkOffline = offlineArray;
+                newTime.timeSlot = timeArray;
+                lstTimeSlotRequest.add(newTime);
+              } else {
+                final indexItem = lstTimeSlotRequest
+                    .indexWhere((e) => e.date == userTime.date);
+                lstTimeSlotRequest[indexItem]
+                    .checkOffline!
+                    .addAll(offlineArray);
+                lstTimeSlotRequest[indexItem].timeSlot!.addAll(timeArray);
+              }
             }
           }
         }
       });
     } catch (e) {
-       await EasyLoading.dismiss();
+      await EasyLoading.dismiss();
     }
   }
 
@@ -295,11 +302,13 @@ class UpdateServiceController extends BaseController {
 
   Future save() async {
     try {
+      await EasyLoading.show();
       //prepare
       final lstServiceRequest = <UserServicesModel>[];
       for (final item in lstServiceUser) {
         lstServiceRequest.addAll(item.list!);
       }
+      log('data: ${lstTimeSlotRequest.toString()}');
       //call api
       await _uiRepository
           .updateService(UpdateServiceRequest(

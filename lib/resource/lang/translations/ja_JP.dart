@@ -34,6 +34,8 @@ const Map<String, String> ja_JP = {
   'notif': 'システムは日本時間帯を使用しています',
   'change_pass': 'パスワードを変更する',
   'cancel': 'キャンセル',
+  'day': '日',
+
 // onboard
   'onboard.title1': 'HICOへようこそ',
   'onboard.title2': 'おもてなしサービス',
@@ -339,6 +341,7 @@ const Map<String, String> ja_JP = {
 
   //service update
   'service.update.offline_time': 'オフラインで翻訳',
+  'service.update.day_incorrect': '無効な日付',
 
 // service category
   'service.category.title_bar': 'サービスリスト',

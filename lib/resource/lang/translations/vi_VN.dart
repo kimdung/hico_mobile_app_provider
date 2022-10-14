@@ -35,6 +35,8 @@ const Map<String, String> vi_VN = {
   'notif': 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
   'change_pass': 'Thay đổi mật khẩu',
   'cancel': 'Huỷ',
+  'day': 'Ngày',
+
   // onboard
   'onboard.title1': 'Welcome to Hico',
   'onboard.title2': 'Dịch vụ tận tình - chu đáo',
@@ -345,7 +347,6 @@ const Map<String, String> vi_VN = {
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
   'service.add': 'Thêm lịch/Sửa Dịch Vụ',
   'service.edit': 'Yêu Cầu Sửa Dịch Vụ',
-
   'service.empty':
       'Bạn chưa có dịch vụ nào trong danh sách đăng ký dịch vụ bạn muốn cung cấp',
   'service.title':
@@ -356,6 +357,7 @@ const Map<String, String> vi_VN = {
 
   //service update
   'service.update.offline_time': 'Đi dịch Offline',
+  'service.update.day_incorrect': 'Ngày không hợp lệ',
 
   // service category
   'service.category.title_bar': 'Danh Sách loại Dịch Vụ',
