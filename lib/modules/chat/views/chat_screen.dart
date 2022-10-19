@@ -160,11 +160,11 @@ class ChatScreen extends GetView<ChatController> {
       body: Column(
         children: <Widget>[
           const Expanded(
-            child: MessageListView(),
+            child: MessageListView(showFloatingDateDivider: false,),
           ),
           MessageInput(
             showCommandsButton: false,
-            actionsLocation: ActionsLocation.rightInside,
+            actionsLocation: ActionsLocation.rightInside, 
             attachmentButtonBuilder: (context, icon) {
               return icon.copyWith(
                 icon: SvgPicture.asset(IconConstants.icImage),

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
@@ -28,6 +29,7 @@ class PickupView extends StatefulWidget {
 class _PickupViewState extends State<PickupView> {
   final CallMethods callMethods = CallMethods();
   Timer? _timerRingWait;
+  Timer? _timerVibration;
 
   @override
   void initState() {
@@ -87,9 +89,7 @@ class _PickupViewState extends State<PickupView> {
         const SizedBox(height: 15),
         Text(
           widget.call.getName() ?? '',
-          style: TextAppStyle().mediumTextStype().copyWith(
-                fontSize: 18,
-              ),
+          style: TextAppStyle().mediumTextStype().copyWith(fontSize: 18),
         ),
       ],
     );
@@ -194,11 +194,17 @@ class _PickupViewState extends State<PickupView> {
         );
       });
     }
+
+    Vibration.vibrate();
+    _timerVibration = Timer.periodic(const Duration(seconds: 2), (timer) {
+      printInfo(info: 'playRingtone');
+      Vibration.vibrate();
+    });
   }
 
   void _endRingtone() {
     _timerRingWait?.cancel();
-    _timerRingWait = null;
+    _timerVibration?.cancel();
     FlutterRingtonePlayer.stop();
   }
 }

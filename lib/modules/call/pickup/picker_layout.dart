@@ -62,7 +62,6 @@ class PickupLayout extends GetView<BaseController> {
 
   Future<CallModel?>? _pickupCall(Map<String, dynamic> data) async {
     try {
-      printInfo(info: '[PickupLayout] incoming call ${data.toString()}');
       final call = CallModel.fromJson(data);
       if (AppDataGlobal.acceptCall) {
         AppDataGlobal.acceptCall = false;
@@ -70,9 +69,7 @@ class PickupLayout extends GetView<BaseController> {
         return null;
       }
 
-      final activeCalls = await FlutterCallkitIncoming.activeCalls();
-      printInfo(info: '[PickupLayout] $activeCalls');
-      printInfo(info: '[PickupLayout] ${call.id}');
+      final activeCalls = await FlutterCallkitIncoming.activeCalls(); 
       if (activeCalls is List && activeCalls.isNotEmpty) {
         final activeCall = activeCalls.firstWhereOrNull(
             (element) => (element as Map<dynamic, dynamic>?)?['id'] == call.id);

@@ -237,8 +237,6 @@ Future<void> showCallkitIncoming(NotificationData notificationData) async {
           textCallback = 'Gọi lại';
       }
 
-      await Get.updateLocale(const Locale('vi', 'VN'));
-
       final params = <String, dynamic>{
         'id': call.id ?? const Uuid().v4(),
         'appName': 'HICO-Provider',
