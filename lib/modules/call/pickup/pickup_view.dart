@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -6,7 +8,9 @@ import 'package:get/get.dart';
 
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:vibration/vibration.dart';
 
+import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
@@ -24,16 +28,27 @@ class PickupView extends StatefulWidget {
 
 class _PickupViewState extends State<PickupView> {
   final CallMethods callMethods = CallMethods();
+  Timer? _timerRingWait;
+  Timer? _timerVibration;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   _startRingtone();
+  // }
+  
   @override
-  void initState() {
-    FlutterRingtonePlayer.playRingtone();
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _startRingtone();
   }
 
   @override
   void dispose() {
-    FlutterRingtonePlayer.stop();
+    _endRingtone();
+
     super.dispose();
   }
 
@@ -81,9 +96,7 @@ class _PickupViewState extends State<PickupView> {
         const SizedBox(height: 15),
         Text(
           widget.call.getName() ?? '',
-          style: TextAppStyle().mediumTextStype().copyWith(
-                fontSize: 18,
-              ),
+          style: TextAppStyle().mediumTextStype().copyWith(fontSize: 18),
         ),
       ],
     );
@@ -122,41 +135,83 @@ class _PickupViewState extends State<PickupView> {
   }
 
   Future<void> onAcceptCall() async {
+    _endRingtone();
+
     if (widget.call.channelId == null) {
       await callMethods.endCall(call: widget.call);
       return;
     }
     final _uiRepository = Get.find<HicoUIRepository>();
-    try {
-      await EasyLoading.show();
-      await _uiRepository.getCallToken(widget.call.channelId!).then((response) {
-        EasyLoading.dismiss();
-
-        if (response.status == CommonConstants.statusOk &&
-            response.data?.token != null) {
-          FlutterRingtonePlayer.stop();
-          if (widget.call.isVideo ?? false) {
-            Get.toNamed(Routes.VIDEO_CALL, arguments: {
-              CommonConstants.IS_CALLER: false,
-              CommonConstants.CALL_MODEL: widget.call,
-              CommonConstants.CALL_TOKEN: response.data!.token!,
-            });
-          } else {
-            Get.toNamed(Routes.VOICE_CALL, arguments: {
-              CommonConstants.IS_CALLER: false,
-              CommonConstants.CALL_MODEL: widget.call,
-              CommonConstants.CALL_TOKEN: response.data!.token!,
-            });
-          }
+    await EasyLoading.show();
+    await _uiRepository
+        .getCallToken(widget.call.channelId ?? '', widget.call.invoiceId)
+        .then((response) {
+      EasyLoading.dismiss();
+      if (response.status == CommonConstants.statusOk) {
+        if (widget.call.isVideo ?? false) {
+          Get.toNamed(Routes.VIDEO_CALL, arguments: {
+            CommonConstants.IS_CALLER: false,
+            CommonConstants.CALL_MODEL: widget.call,
+            CommonConstants.CALL_TOKEN: response.data?.token ?? '',
+          });
+        } else {
+          Get.toNamed(Routes.VOICE_CALL, arguments: {
+            CommonConstants.IS_CALLER: false,
+            CommonConstants.CALL_MODEL: widget.call,
+            CommonConstants.CALL_TOKEN: response.data?.token ?? '',
+          });
         }
-      });
-    } catch (e) {
-      await EasyLoading.dismiss();
-    }
+      } else {
+        callMethods.endCall(call: widget.call);
+      }
+    }).catchError((error) {
+      printError(info: error.toString());
+
+      EasyLoading.dismiss();
+
+      callMethods.endCall(call: widget.call);
+    });
   }
 
   Future<void> onDeniedCall() async {
-    await FlutterRingtonePlayer.stop();
+    _endRingtone();
+
     await callMethods.endCall(call: widget.call);
+  }
+
+  /* Function */
+
+  void _startRingtone() {
+    if (AppDataGlobal.androidDeviceInfo?.version.sdkInt != null &&
+        AppDataGlobal.androidDeviceInfo!.version.sdkInt! >= 28) {
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: true,
+      );
+    } else {
+      FlutterRingtonePlayer.play(
+        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+        looping: false,
+      );
+      _timerRingWait = Timer.periodic(const Duration(seconds: 4), (timer) {
+        printInfo(info: 'playRingtone');
+        FlutterRingtonePlayer.play(
+          fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
+          looping: false,
+        );
+      });
+    }
+
+    Vibration.vibrate();
+    _timerVibration = Timer.periodic(const Duration(seconds: 2), (timer) {
+      printInfo(info: 'playRingtone');
+      Vibration.vibrate();
+    });
+  }
+
+  void _endRingtone() {
+    _timerRingWait?.cancel();
+    _timerVibration?.cancel();
+    FlutterRingtonePlayer.stop();
   }
 }

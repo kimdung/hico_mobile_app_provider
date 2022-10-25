@@ -9,5 +9,5 @@ final Map<String, String> productAppSettings = {
   UIAPIDomain: 'https://hico.dev.bluebolt.software/api',
   LineChannelId: '1656878196',
   StripePublishableKey:
-      'pk_test_51KXiEpLepUHLp8PmntSg4hW8F1GUz8me3Sz3x7VX4wt4WleJhBmSDfqO3JTYhP1mfjKEKsWJ97axUVx2sAW77q9J006Y4kM1D3',
+      'pk_live_51Gt542F8AuNSUurPdhLJmDtUprwHaDjLlntokyK6GorPlKECgV90UEdFXeflWX1Q7bimvU9H18Scb9LzBFGoz5RX00BG88HNp8',
 };

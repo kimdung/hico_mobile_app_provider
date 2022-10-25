@@ -195,6 +195,8 @@ class IconConstants {
       'lib/resource/assets_resources/icons/mn_inv_inact.svg';
   static const String icMenuNotifInact =
       'lib/resource/assets_resources/icons/mn_notif_inact.svg';
+  static const String icMenuServiceInact =
+      'lib/resource/assets_resources/icons/menuicon.svg';
   static const String icMenuNewsInact =
       'lib/resource/assets_resources/icons/mn_news_inact.svg';
   static const String icMenuAccountInact =
@@ -206,6 +208,8 @@ class IconConstants {
       'lib/resource/assets_resources/icons/mn_inv_act.svg';
   static const String icMenuNotifAct =
       'lib/resource/assets_resources/icons/mn_notif_act.svg';
+  static const String icMenuServiceAct =
+      'lib/resource/assets_resources/icons/menuiconcolor.svg';
   static const String icMenuNewsAct =
       'lib/resource/assets_resources/icons/mn_news_act.svg';
   static const String icMenuAccountAct =
@@ -332,7 +336,8 @@ class IconConstants {
       'lib/resource/assets_resources/icons/ic_expand_more.png';
   static const String icArrowDown =
       'lib/resource/assets_resources/icons/ic_arrow_down.png';
-
+  static const String icArrowForwardIos =
+      'lib/resource/assets_resources/icons/ic_arrow_forward.jpeg';
   //star icon
   static const String icStarColor =
       'lib/resource/assets_resources/icons/star_color.png';

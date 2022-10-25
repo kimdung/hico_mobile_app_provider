@@ -45,11 +45,13 @@ class _ItemOrderWidgetState extends State<ItemOrderWidget> {
 
   Future<void> _listenerBadge() async {
     try {
+      _channel = AppDataGlobal.client!
+          .channel('messaging', id: widget.invoice.getChatChannel());
       await _channel?.watch();
-      _channel?.state?.unreadCountStream.listen((event) { 
-        setState(() {
-          _badge = event;
-        });
+      _channel?.state?.unreadCountStream.listen((event) {
+        if (mounted) {
+          setState(() => _badge = event);
+        }
       });
     } catch (e) {
       debugPrint('[ItemOrderWidget] get unread error ${e.toString()}');

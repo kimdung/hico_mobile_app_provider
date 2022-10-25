@@ -14,6 +14,7 @@ WorkplacesModel _$WorkplacesModelFromJson(Map<String, dynamic> json) =>
           ?.map((e) =>
               DistrictsWorkplacesModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      openChild: json['open_child'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$WorkplacesModelToJson(WorkplacesModel instance) =>
@@ -21,6 +22,7 @@ Map<String, dynamic> _$WorkplacesModelToJson(WorkplacesModel instance) =>
       'province_id': instance.provinceId,
       'name': instance.name,
       'districts': instance.districts,
+      'open_child': instance.openChild,
     };
 
 DistrictsWorkplacesModel _$DistrictsWorkplacesModelFromJson(

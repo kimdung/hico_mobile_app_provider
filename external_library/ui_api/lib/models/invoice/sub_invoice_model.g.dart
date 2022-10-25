@@ -9,7 +9,7 @@ part of 'sub_invoice_model.dart';
 SubInvoiceModel _$SubInvoiceModelFromJson(Map<String, dynamic> json) =>
     SubInvoiceModel(
       minutes: json['minutes'] as int?,
-      price: json['price'] as int?,
+      price: (json['price'] as num?)?.toDouble(),
       paymentStatus: json['payment_status'] as int?,
     );
 

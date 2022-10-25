@@ -17,6 +17,7 @@ InvoiceExtendModel _$InvoiceExtendModelFromJson(Map<String, dynamic> json) =>
       workingDate: json['working_date'] as String? ?? '',
       tmpTotal: json['tmp_total'] as int? ?? 0,
       total: json['total'] as int?,
+      invoiceStatus: json['invoice_status'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$InvoiceExtendModelToJson(InvoiceExtendModel instance) =>
@@ -28,4 +29,5 @@ Map<String, dynamic> _$InvoiceExtendModelToJson(InvoiceExtendModel instance) =>
       'working_date': instance.workingDate,
       'tmp_total': instance.tmpTotal,
       'total': instance.total,
+      'invoice_status': instance.invoiceStatus,
     };

@@ -1,20 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../data/interceptors/listen_error_graphql_interceptor.dart';
-import '../shared/dialog_manager/data_models/request/common_dialog_request.dart';
-import '../shared/dialog_manager/services/dialog_service.dart';
+import '../resource/assets_constant/icon_constants.dart';
+import '../routes/app_pages.dart';
 import '../shared/methods/call_methods.dart';
 import '../shared/network/constants/constants.dart';
 import '../shared/network/controllers/network_controller.dart';
 import '../shared/network/managers/network_manager.dart';
+import '../shared/utils/dialog_util.dart';
+import '../shared/widget_hico/dialog/normal_widget.dart';
 
 class BaseController extends FullLifeCycleController
-    with NetworkManager, ListenErrorGraphQL, FullLifeCycleMixin {
-  final _hasNetwork = true;
-
+    with FullLifeCycleMixin, NetworkManager, ListenErrorGraphQL {
   final _networkController = Get.find<NetworkController>();
+  BuildContext? dialogErrorNetworkContext;
 
-  // FirebaseMessageConfig firebaseMessageConfig = FirebaseMessageConfig();
   final CallMethods callMethods = CallMethods();
 
   @override
@@ -23,84 +24,62 @@ class BaseController extends FullLifeCycleController
 
     // check network
     await checkConnectNetwork();
-
-    // await firebaseMessageConfig.handleMessage();
   }
 
   @override
-  Future<void> onReady() async {
-    super.onReady();
+  void onDetached() {}
+
+  @override
+  void onInactive() {}
+
+  @override
+  void onPaused() {}
+
+  @override
+  Future<void> onResumed() async {
+    // check network
+    await checkConnectNetwork();
   }
 
   Future<void> checkConnectNetwork() async {
-    // if (_networkController.connectionStatus.value == 0) {
-    //   _hasNetwork = false;
-    //   await callDialogErrorNetwork();
-    // }
-    // _networkController.connectionStatus.listen((status) {
-    //   if (status == 0) {
-    //     _hasNetwork = false;
-    //     callDialogErrorNetwork();
-    //   } else {
-    //     _hasNetwork = true;
-    //   }
-    // });
+    await _updateConnectNetwork(_networkController.connectionStatus.value);
+    _networkController.connectionStatus.listen(_updateConnectNetwork);
   }
 
-  Future<void> callDialogErrorNetwork() async {
-    final dialogRequest = CommonDialogRequest(
-      title: 'Network error',
-      description: 'Network error',
-      defineEvent: NO_CONNECT_NETWORK,
-    );
-    await doShowDialog(dialogRequest);
-  }
-
-  Future<void> doShowDialog(CommonDialogRequest dialogRequest) async {
-    final locator = Get.find<DialogService>();
-    final dialogResult = await locator.showDialog(dialogRequest);
-
-    if (dialogResult.confirmed) {
-      print('User press confirm');
-      await _handleEventDialog(dialogRequest.defineEvent);
+  Future _updateConnectNetwork(int status) async {
+    if (status == NO_NETWORK) {
+      if (Get.currentRoute == Routes.VIDEO_CALL ||
+          Get.currentRoute == Routes.VOICE_CALL) {
+        Get.back();
+      } else {
+        await _callDialogErrorNetwork();
+      }
     } else {
-      print('User press cancel!');
+      if (dialogErrorNetworkContext != null) {
+        Navigator.of(dialogErrorNetworkContext!, rootNavigator: true).pop();
+        dialogErrorNetworkContext = null;
+      }
     }
   }
 
-  Future<void> _handleEventDialog(String? defineEvent) async {
-    switch (defineEvent) {
-      case NO_CONNECT_NETWORK:
-        if (_hasNetwork == false) {
-          await callDialogErrorNetwork();
-        }
-        break;
-      default:
-        break;
+  Future<void> _callDialogErrorNetwork() async {
+    if (dialogErrorNetworkContext == null) {
+      dialogErrorNetworkContext = Get.context!;
+
+      await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: NormalWidget(
+          icon: IconConstants.icFail,
+          title: 'notify.network.error'.tr,
+        ),
+        onVaLue: (value) async {
+          dialogErrorNetworkContext = null;
+          final status = await _networkController.checkConnectivity();
+          await _updateConnectNetwork(status);
+        },
+      );
     }
-  }
-
-  CommonDialogRequest handleErrorResponse(Object e) {
-    return handleErrorGraphQLResponse(e);
-  }
-
-  @override
-  void onDetached() {
-    // TODO: implement onDetached
-  }
-
-  @override
-  void onInactive() {
-    // TODO: implement onInactive
-  }
-
-  @override
-  void onPaused() {
-    // TODO: implement onPaused
-  }
-
-  @override
-  void onResumed() {
-    // TODO: implement onResumed
   }
 }

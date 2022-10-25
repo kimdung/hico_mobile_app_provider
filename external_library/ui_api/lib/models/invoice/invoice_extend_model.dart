@@ -23,6 +23,8 @@ class InvoiceExtendModel {
   @JsonKey(name: 'tmp_total', defaultValue: 0)
   int? tmpTotal;
   int? total;
+  @JsonKey(name: 'invoice_status', defaultValue: 0)
+  int? invoiceStatus;
 
   InvoiceExtendModel(
       {
@@ -32,7 +34,9 @@ class InvoiceExtendModel {
       this.minutes,
       this.workingDate,
       this.tmpTotal,
-      this.total});
+      this.total,
+      this.invoiceStatus,
+      });
   
   factory InvoiceExtendModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceExtendModelFromJson(json);

@@ -32,6 +32,10 @@ const Map<String, String> vi_VN = {
   'camera': 'Hình ảnh',
   'year': 'năm',
   'bank': 'Ngân hàng',
+  'notif': 'Hệ thống đang sử dụng múi giờ Nhật Bản.',
+  'change_pass': 'Thay đổi mật khẩu',
+  'cancel': 'Huỷ',
+  'day': 'Ngày',
 
   // onboard
   'onboard.title1': 'Welcome to Hico',
@@ -51,6 +55,9 @@ const Map<String, String> vi_VN = {
   // error
   'error': 'Có lỗi xẩy ra',
   'error.expires': 'Phiên làm việc hết hạn!',
+  'error.not.connect': 'Không kết nối được đến máy chủ!',
+  'error.call': 'Không thể thực hiện cuộc gọi lúc này!',
+  'notify.network.error': 'Không có kết nối mạng!',
 
   //register
   'register.comfirm': 'Xác thực tài khoản',
@@ -88,6 +95,7 @@ const Map<String, String> vi_VN = {
   'home.home': 'Trang chủ',
   'home.order': 'Đơn hàng',
   'home.notification': 'Thông báo',
+  'home.calendar': 'Thêm lịch',
   'home.news': 'Tin tức',
   'home.account': 'Tài khoản',
   'home.view_all': 'Xem tất cả',
@@ -137,6 +145,13 @@ const Map<String, String> vi_VN = {
   'order.detail.cancel_warning': 'Bạn sẽ bị ghi nhận lần hủy đơn này!',
   'order.detail.cancel_not_refund': 'Oh! Bạn sẽ bị mất toàn bộ',
   'order.detail.cancel_not_refund_ctn': 'nếu hủy đơn hàng này!',
+  'order.detail.work_content': 'Nội dung làm việc',
+  'order.detail.symptom': 'Triệu chứng',
+  'order.detail.test_method': 'Phương pháp kiểm tra',
+  'order.detail.disease_name': 'Tên bệnh',
+  'order.detail.treatments': 'Phương pháp điều trị',
+  'order.detail.appointment_next_time': 'Đặt lịch từ lần 2 trở đi',
+  'order.detail.comment': 'Nhận xét của bác sĩ',
 
   //order
   'order.hello': 'Xin chào,',
@@ -186,7 +201,7 @@ const Map<String, String> vi_VN = {
   'bank_info': 'Thông tin ngân hàng',
   'logout': 'Đăng xuất',
   'payment_policy': 'Chính sách thanh toán',
-  'support': 'Hỗ trợ & góp ý',
+  'support': 'Hỗ Trợ & Góp Ý',
   'branch': 'Chi nhánh:',
   'account_holder': 'Chủ tải khoản:',
   'account_number': 'Số tải khoản:',
@@ -200,6 +215,7 @@ const Map<String, String> vi_VN = {
   'topup.balance': 'Số dư ví: ',
   'topup.amount': 'Số tiền cần nạp (JPY)',
   'topup.amount.hint': 'Nhập số tiền cần nạp',
+  'topup.amount.validate': 'Số tiền cần nạp không đúng',
   'topup.method.title': 'Hình thức nạp tiền',
   'topup.bank': 'Chuyển khoản ngân hàng',
   'topup.bank.description': 'Chuyển khoản ngân hàng TK Hico',
@@ -240,7 +256,10 @@ const Map<String, String> vi_VN = {
   'topup.recharge': 'Nạp thêm',
 
   'topup.error': 'Có lỗi xẩy ra trong quá trình nạp tiền!',
+  'topup.success': 'Nạp tiền thành công!',
   'topup.failure': 'Nạp tiền thất bại!',
+  'topup.notif':
+      'Lưu ý: Quý khách nên nạp trên 3000 yên trong trường hợp quý khách cần phiên dịch trong thời gian dài hay dự kiến sẽ phát sinh thêm thời gian phiên dịch.',
 
   //statistic screen
   'statistic.order_finish': 'Danh sách đơn hàng',
@@ -326,9 +345,8 @@ const Map<String, String> vi_VN = {
 
   //service
   'service.titlebar': 'Danh Sách Dịch Vụ Cung Cấp',
-  'service.add': 'Thêm/Sửa Dịch Vụ',
+  'service.add': 'Thêm lịch/Sửa Dịch Vụ',
   'service.edit': 'Yêu Cầu Sửa Dịch Vụ',
-
   'service.empty':
       'Bạn chưa có dịch vụ nào trong danh sách đăng ký dịch vụ bạn muốn cung cấp',
   'service.title':
@@ -336,6 +354,10 @@ const Map<String, String> vi_VN = {
 
   'service.address': 'Địa điểm phiên dịch',
   'service.time_slot': 'Thời gian',
+
+  //service update
+  'service.update.offline_time': 'Đi dịch Offline',
+  'service.update.day_incorrect': 'Ngày không hợp lệ',
 
   // service category
   'service.category.title_bar': 'Danh Sách loại Dịch Vụ',

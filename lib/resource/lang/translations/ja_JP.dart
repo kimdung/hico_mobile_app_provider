@@ -21,7 +21,7 @@ const Map<String, String> ja_JP = {
   'save': '保存',
   'back_home': 'ホームへ',
   'note': '注意',
-  'accept': '受付',
+  'accept': '承認',
   'all': '一覧',
   'service': 'サービス',
   'done': '完了',
@@ -31,6 +31,10 @@ const Map<String, String> ja_JP = {
   'camera': '写真',
   'year': '年',
   'bank': '銀行',
+  'notif': 'システムは日本時間帯を使用しています',
+  'change_pass': 'パスワードを変更する',
+  'cancel': 'キャンセル',
+  'day': '日',
 
 // onboard
   'onboard.title1': 'HICOへようこそ',
@@ -47,6 +51,9 @@ const Map<String, String> ja_JP = {
 // error
   'error': 'エラーが発生しました。',
   'error.expires': '予約した時間を超過しました。',
+  'error.not.connect': 'サーバーに接続できません。',
+  'error.call': '現在、通話はできません。',
+  'notify.network.error': 'ネットワーク接続なし。',
 
 //register
   'register.comfirm': 'アカウント認証',
@@ -115,8 +122,8 @@ const Map<String, String> ja_JP = {
   'order.detail.ship_fee': '交通費',
   'order.detail.extend': '延長',
   'order.detail.pay_value': '合計',
-  'order.detail.accept': '受入',
-  'order.detail.cancel': '拒否',
+  'order.detail.accept': '承認',
+  'order.detail.cancel': '否認',
   'order.detail.cancel_reason': 'キャンセル理由',
   'order.detail.voucher': 'クーポン',
   'order.detail.step': '回',
@@ -132,11 +139,18 @@ const Map<String, String> ja_JP = {
   'order.detail.cancel_warning': '予約キャンセル回数が記録される',
   'order.detail.cancel_not_refund': 'キャンセル料率は100％となります。',
   'order.detail.cancel_not_refund_ctn': '予約をキャンセルすると',
+  'order.detail.work_content': '作業内容',
+  'order.detail.symptom': '症状',
+  'order.detail.test_method': '試験方法',
+  'order.detail.disease_name': '病名',
+  'order.detail.treatments': 'トリートメント',
+  'order.detail.appointment_next_time': '2回目以降のご予約はこちら',
+  'order.detail.comment': '医師のコメント',
 
 //order
   'order.hello': 'こんにちは',
-  'order.search_title': '予約腱索',
-  'order.cancel_confirm': 'この予約を拒否',
+  'order.search_title': '予約検索',
+  'order.cancel_confirm': 'この予約を否認しますか？',
 
 //profile
   'profile.add_avatar': 'プロファイル写真を変更',
@@ -194,6 +208,7 @@ const Map<String, String> ja_JP = {
   'topup.balance': '残高',
   'topup.amount': 'チャージ金額（¥）',
   'topup.amount.hint': 'チャージ金額入力してください。',
+  'topup.amount.validate': '入金金額が正しくありません。',
   'topup.method.title': 'チャージ方法',
   'topup.bank': '銀行振込',
   'topup.bank.description': 'HICOの銀行口座振込',
@@ -233,7 +248,9 @@ const Map<String, String> ja_JP = {
   'topup.recharge': 'チャージ追加',
 
   'topup.error': 'チャージ中にエラーが発生します。',
-  'topup.failure': 'チャージ失敗しました！',
+  'topup.success': 'リチャージ成功。',
+  'topup.failure': 'チャージ失敗しました。',
+  'topup.notif': '注: 長時間の翻訳が必要な場合や、追加の翻訳時間の発生が予想される場合は、3,000 円以上の入金をお勧めします。',
 
 //statistic screen
   'statistic.order_finish': '予約の照会',
@@ -313,7 +330,7 @@ const Map<String, String> ja_JP = {
 
 //service
   'service.titlebar': '提供できるサービス',
-  'service.add': 'サービス追加・変更',
+  'service.add': 'スケジュール追加・編集サービス',
   'service.edit': 'サービ変更依頼',
 
   'service.empty': '提供できるサービスまだまだ登録していません。',
@@ -321,6 +338,10 @@ const Map<String, String> ja_JP = {
 
   'service.address': '通訳場所',
   'service.time_slot': '時間',
+
+  //service update
+  'service.update.offline_time': 'オフラインで翻訳',
+  'service.update.day_incorrect': '無効な日付',
 
 // service category
   'service.category.title_bar': 'サービスリスト',

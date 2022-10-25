@@ -20,7 +20,7 @@ class VoiceCallView extends GetView<VoiceCallController> {
               children: [
                 Obx(
                   () => Text(
-                    (!controller.isRemoted.value && controller.isCaller)
+                    (!controller.isCalling.value && controller.isCaller)
                         ? 'calling'.tr
                         : '',
                     style: TextAppStyle().normalTextGrey(),
@@ -61,9 +61,9 @@ class VoiceCallView extends GetView<VoiceCallController> {
                 ),
                 Obx(
                   () => Text(
-                    (controller.isRemoted.value)
+                    (controller.isCalling.value)
                         ? DateFormatter.formatSecondsToTime(
-                            controller.dutationCall.value)
+                            controller.durationCall.value)
                         : '',
                     style: TextAppStyle().titleAppBarStyle().copyWith(
                           color: AppColor.primaryColorLight,

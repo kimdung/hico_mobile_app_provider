@@ -66,7 +66,7 @@ class UserInfoModel {
   @JsonKey(name: 'conversation_info')
   ConversationInfoModel? conversationInfo;
   @JsonKey(name: 'account_balance')
-  int? accountBalance;
+  double? accountBalance;
   @JsonKey(name: 'curriculum_vitae_files')
   List<String>? curriculumVitaeFiles;
   @JsonKey(name: 'work_experience_files')

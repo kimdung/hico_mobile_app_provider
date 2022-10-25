@@ -7,13 +7,15 @@ extension OrderListBody on OrderListScreen {
       child: Row(
         children: [
           InkWell(
-            onTap: () => Get.toNamed(Routes.PROFILE),
+            onTap: () {
+              controller.viewProfile();
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(21),
               child: CachedNetworkImage(
                 width: 42,
                 height: 42,
-                imageUrl: AppDataGlobal.userInfo?.avatarImage ?? '',
+                imageUrl: controller.info.value.avatarImage,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(21),
@@ -202,7 +204,8 @@ extension OrderListBody on OrderListScreen {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               return InkWell(
-                onTap: ()=>controller.selectStatus(controller.invoiceStatus[index]),
+                onTap: () =>
+                    controller.selectStatus(controller.invoiceStatus[index]),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border(
@@ -223,12 +226,14 @@ extension OrderListBody on OrderListScreen {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 17),
                         decoration: BoxDecoration(
-                          border: index == (controller.invoiceStatus.length -1) ? null : const Border(
-                            right: BorderSide(
-                              color: Color(0xFFDCDCDC),
-                              width: 1,
-                            ),
-                          ),
+                          border: index == (controller.invoiceStatus.length - 1)
+                              ? null
+                              : const Border(
+                                  right: BorderSide(
+                                    color: Color(0xFFDCDCDC),
+                                    width: 1,
+                                  ),
+                                ),
                         ),
                         child: Text(
                           controller.invoiceStatus[index].name.tr,

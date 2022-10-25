@@ -283,6 +283,13 @@ abstract class HicoUIAPI {
     @Query('email') String email,
   );
 
+  //ResetPass otp
+  @POST('/api/v1/password/checkOTPForgotPassword')
+  Future<BaseResponse> forgetPasswordOtp(
+    @Query('code') String code,
+    @Query('email') String email,
+  );
+
   //ResetPass
   @POST('/v1/password/reset')
   Future<BaseResponse> resetPassword(
@@ -301,7 +308,8 @@ abstract class HicoUIAPI {
 
   //Get call token
   @POST('/v1/agoraCall/createToken')
-  Future<CallTokenResponse> getCallToken(@Query('channel') String channel);
+  Future<CallTokenResponse> getCallToken(
+      @Query('channel') String channel, @Query('invoice_id') int? invoiceId);
 
   @POST('/v1/supplier/invoice/beginOnline')
   Future<BaseResponse> beginCall(@Query('invoice_id') int invoiceId);
@@ -310,7 +318,15 @@ abstract class HicoUIAPI {
   Future<BaseResponse> endCall(@Query('invoice_id') int invoiceId);
 
   @POST('/v1/agoraCall/sendFCMToCall')
-  Future<BaseResponse> sendCallNotification(@Query('invoice_id') int invoiceId);
+  Future<BaseResponse> sendCallNotification(
+      @Query('invoice_id') int? invoiceId,
+      @Query('callId') String? callId,
+      @Query('callIsVideo') bool? callIsVideo,
+      @Query('callerName') String? callerName,
+      @Query('callerPic') String? callerPic);
+
+  @POST('/v1/agoraCall/sendFCMMissedCall')
+  Future<BaseResponse> sendMissCall(@Query('invoice_id') int invoiceId);
 
   //invoice confirm sub
   @POST('/v1/supplier/invoice/workContent')
@@ -370,6 +386,6 @@ abstract class HicoUIAPI {
   @POST('/v1/supplier/invoice/subConfirm')
   Future<BaseResponse> subConfirm(@Body() BookingExtendRequest request);
 
-   @POST('/v1/user/deleteUser')
+  @POST('/v1/user/deleteUser')
   Future<BaseResponse> deleteUser();
 }

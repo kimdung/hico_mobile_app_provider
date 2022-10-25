@@ -37,7 +37,6 @@ class LanguageScreen extends GetView<LanguageController> {
                         code: LanguageCode.JA,
                         onPress: () {
                           controller.currentLanguage.value = LanguageCode.JA;
-                          controller.selectLanguage();
                         },
                       ),
                       buildLanguageItem(
@@ -46,7 +45,6 @@ class LanguageScreen extends GetView<LanguageController> {
                         code: LanguageCode.VN,
                         onPress: () {
                           controller.currentLanguage.value = LanguageCode.VN;
-                          controller.selectLanguage();
                         },
                       ),
                       // buildLanguageItem(
@@ -60,20 +58,24 @@ class LanguageScreen extends GetView<LanguageController> {
                     ],
                   )),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: GeneralButton(
-                onPressed: () => controller.confirmLanguage(),
-                borderRadius: BorderRadius.circular(24),
-                borderColor: AppColor.primaryColorLight,
-                backgroundColor: AppColor.primaryColorLight,
-                child: Text(
-                  'continue'.tr,
-                  style: TextAppStyle().titleButtonStyle(),
-                ),
-              ),
-            ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        child: GeneralButton(
+          onPressed: () => controller.confirmLanguage(),
+          borderRadius: BorderRadius.circular(24),
+          borderColor: AppColor.primaryColorLight,
+          backgroundColor: AppColor.primaryColorLight,
+          child: Obx(
+            () => Text(
+              controller.currentLanguage.value == LanguageCode.VN
+                    ? 'Tiếp tục'
+                    : '次へ',
+              style: TextAppStyle().titleButtonStyle(),
+            ),
+          ),
         ),
       ),
     );

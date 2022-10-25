@@ -10,6 +10,7 @@ import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/confirm_sub_request.dart';
 import 'package:ui_api/request/invoice/rating_request.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -101,16 +102,21 @@ class OrderController extends BaseController {
     if (AppDataGlobal.userInfo == null) {
       return;
     }
-    final channelId = invoice.value.getCallChannel();
+    var channelId = invoice.value.getCallChannel();
 
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
+      await _uiRepository
+          .getCallToken(channelId, invoice.value.id)
+          .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
             response.data != null) {
           // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
           final call = CallModel(
+            id: id,
             invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -124,7 +130,15 @@ class OrderController extends BaseController {
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
         } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -133,15 +147,18 @@ class OrderController extends BaseController {
   }
 
   Future<void> onVideo() async {
-    final channelId = invoice.value.getCallChannel();
+    var channelId = invoice.value.getCallChannel();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
+      await _uiRepository
+          .getCallToken(channelId, invoice.value.id)
+          .then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
-          // Get.toNamed(Routes.VOICE_CALL, arguments: response.data);
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
+            id: id,
             invoiceId: invoice.value.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -154,6 +171,16 @@ class OrderController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -338,7 +365,8 @@ class OrderController extends BaseController {
         await EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
           if (invoice.value.service!.isMedical == 1) {
-              await Get.toNamed(Routes.MEDICAL, arguments: id)!.then((value) => loadData());
+            await Get.toNamed(Routes.MEDICAL, arguments: id)!
+                .then((value) => loadData());
           } else {
             await DialogUtil.showPopup(
               dialogSize: DialogSize.Popup,
@@ -356,17 +384,17 @@ class OrderController extends BaseController {
               },
             );
           }
-        }else{
+        } else {
           await DialogUtil.showPopup(
-                dialogSize: DialogSize.Popup,
-                barrierDismissible: false,
-                backgroundColor: Colors.transparent,
-                child: NormalWidget(
-                  icon: IconConstants.icFail,
-                  title: response.message,
-                ),
-                onVaLue: (value) {},
-              );
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {},
+          );
         }
         return;
       });

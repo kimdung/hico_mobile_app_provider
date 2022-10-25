@@ -57,34 +57,40 @@ class ChangePassScreen extends GetView<ConfigController> {
                 ),
                 Form(
                   key: controller.changePassForm,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(height: 14),
-                      _buildOldPassword(),
-                      const SizedBox(height: 4),
-                      _buildPassword(),
-                      const SizedBox(height: 4),
-                      _buildConfirmPassword(),
-                    ],
+                  child: Obx(
+                    () => Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(height: 14),
+                        _buildOldPassword(),
+                        const SizedBox(height: 4),
+                        _buildPassword(),
+                        const SizedBox(height: 4),
+                        _buildConfirmPassword(),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 60),
-                GeneralButton(
-                  onPressed: () {
-                    controller.changePassword();
-                  },
-                  borderRadius: BorderRadius.circular(24),
-                  borderColor: AppColor.primaryColorLight,
-                  backgroundColor: AppColor.primaryColorLight,
-                  child: Text(
-                    'confirm'.tr,
-                    style: TextAppStyle().titleButtonStyle(),
-                  ),
-                ),
+                
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: GeneralButton(
+                    onPressed: () {
+                      controller.changePassword();
+                    },
+                    borderRadius: BorderRadius.circular(24),
+                    borderColor: AppColor.primaryColorLight,
+                    backgroundColor: AppColor.primaryColorLight,
+                    child: Text(
+                      'confirm'.tr,
+                      style: TextAppStyle().titleButtonStyle(),
+                    ),
+                  ),
         ),
       ),
     );
@@ -94,7 +100,7 @@ class ChangePassScreen extends GetView<ConfigController> {
     return TextFormField(
       controller: controller.oldPasswordController,
       keyboardType: TextInputType.text,
-      obscureText: !controller.showPassword,
+      obscureText: controller.hidePassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().normalTextGrey(),
       decoration: TextFieldDecoration.borderLogin(
@@ -110,6 +116,15 @@ class ChangePassScreen extends GetView<ConfigController> {
             IconConstants.icKey,
           ),
         ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowPassword();
+          },
+          icon: Icon(
+            controller.hidePassword.value ? Icons.visibility : Icons.visibility_off,
+            color: AppColor.gray1,
+          ),
+        ),
       ),
       validator: (value) =>
           (value == null || value.isEmpty) ? 'enter_old_pass'.tr : null,
@@ -120,7 +135,7 @@ class ChangePassScreen extends GetView<ConfigController> {
     return TextFormField(
       controller: controller.newsPasswordController,
       keyboardType: TextInputType.text,
-      obscureText: !controller.showPassword,
+      obscureText: controller.hideNewPassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().normalTextGrey(),
       decoration: TextFieldDecoration.borderLogin(
@@ -136,6 +151,15 @@ class ChangePassScreen extends GetView<ConfigController> {
             IconConstants.icKey,
           ),
         ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowNewPassword();
+          },
+          icon: Icon(
+            controller.hideNewPassword.value ? Icons.visibility : Icons.visibility_off,
+            color: AppColor.gray1,
+          ),
+        ),
       ),
       validator: (value) =>
           (value == null || value.isEmpty) ? 'enter_new_pass'.tr : null,
@@ -146,7 +170,7 @@ class ChangePassScreen extends GetView<ConfigController> {
     return TextFormField(
       controller: controller.confirmPasswordController,
       keyboardType: TextInputType.text,
-      obscureText: !controller.showPassword,
+      obscureText: controller.hideRetypePassword.value,
       cursorColor: AppColor.fifthTextColorLight,
       style: TextAppStyle().normalTextGrey(),
       decoration: TextFieldDecoration.borderLogin(
@@ -162,9 +186,24 @@ class ChangePassScreen extends GetView<ConfigController> {
             IconConstants.icKey,
           ),
         ),
+        suffixIcon: IconButton(
+          onPressed: () {
+            controller.hideShowRetypePassword();
+          },
+          icon: Icon(
+            controller.hideRetypePassword.value ? Icons.visibility : Icons.visibility_off,
+            color: AppColor.gray1,
+          ),
+        ),
       ),
-      validator: (value) =>
-          (value == null || value.isEmpty) ? 'incorrect_confirm_pass'.tr : null,
+      validator: (value){
+          if (value == null || value.isEmpty) {
+            return 'data_requied'.tr;
+          }
+          if (value != controller.newsPasswordController.text) {
+            return 'data_not_match'.tr;
+          }
+        },
     );
   }
 }

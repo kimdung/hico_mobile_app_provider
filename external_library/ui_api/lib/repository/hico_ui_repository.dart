@@ -199,6 +199,9 @@ abstract class HicoUIRepository {
   //check UserTime
   Future<BaseResponse> forgetPassword(String email);
 
+  //check otp
+  Future<BaseResponse> forgetPasswordOtp(String code, String email);
+
   //check UserTime
   Future<BaseResponse> resetPassword(
       String code, String email, String password);
@@ -210,13 +213,20 @@ abstract class HicoUIRepository {
   Future<ChatTokenResponse> createChatToken();
 
   // Create call token
-  Future<CallTokenResponse> getCallToken(String channel);
+  Future<CallTokenResponse> getCallToken(String channel, int? invoiceId);
 
   Future<BaseResponse> beginCall(int invoiceId);
 
   Future<BaseResponse> endCall(int invoiceId);
 
-  Future<BaseResponse> sendCallNotification(int invoiceId);
+  Future<BaseResponse> sendCallNotification(
+      {int? invoiceId,
+      String? callId,
+      bool? callIsVideo,
+      String? callerName,
+      String? callerPic});
+
+  Future<BaseResponse> sendMissCall(int invoiceId);
 
   /* Wallet */
 
@@ -241,5 +251,4 @@ abstract class HicoUIRepository {
 
   Future<BaseResponse> subConfirm(BookingExtendRequest request);
   Future<BaseResponse> deleteUser();
-
 }

@@ -16,28 +16,28 @@ class ChatScreen extends GetView<ChatController> {
   Widget build(BuildContext context) {
     final customTheme = StreamChatThemeData.fromTheme(Get.theme).merge(
       StreamChatThemeData(
-        channelHeaderTheme: const ChannelHeaderThemeData(),
-        imageHeaderTheme: const GalleryHeaderThemeData(),
-        channelPreviewTheme: ChannelPreviewThemeData(
-          avatarTheme: AvatarThemeData(
+        channelHeaderTheme: const StreamChannelHeaderThemeData(),
+        imageHeaderTheme: const StreamGalleryHeaderThemeData(),
+        channelPreviewTheme: StreamChannelPreviewThemeData(
+          avatarTheme: StreamAvatarThemeData(
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        messageListViewTheme: MessageListViewThemeData(
+        messageListViewTheme: StreamMessageListViewThemeData(
           backgroundColor: AppColor.secondBackgroundColorLight,
         ),
-        ownMessageTheme: MessageThemeData(
+        ownMessageTheme: StreamMessageThemeData(
           messageBackgroundColor: AppColor.primaryColorLight,
           messageTextStyle: TextStyle(color: AppColor.secondTextColorLight),
         ),
-        otherMessageTheme: MessageThemeData(
+        otherMessageTheme: StreamMessageThemeData(
           messageBackgroundColor: AppColor.primaryBackgroundColorLight,
           messageTextStyle: TextStyle(color: AppColor.thirdTextColorLight),
-          avatarTheme: AvatarThemeData(
+          avatarTheme: StreamAvatarThemeData(
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        messageInputTheme: MessageInputThemeData(
+        messageInputTheme: StreamMessageInputThemeData(
           inputBackgroundColor: AppColor.secondBackgroundColorLight,
           // activeBorderGradient:
           //     LinearGradient(colors: [AppColor.primaryBackgroundColorLight]),
@@ -105,7 +105,7 @@ class ChatScreen extends GetView<ChatController> {
   Widget _buildBodyContent() {
     return Scaffold(
       backgroundColor: AppColor.secondBackgroundColorLight,
-      appBar: ChannelHeader(
+      appBar: StreamChannelHeader(
         backgroundColor: AppColor.secondBackgroundColorLight,
         leading: IconButton(
           icon: SvgPicture.asset(
@@ -116,7 +116,7 @@ class ChatScreen extends GetView<ChatController> {
         ),
         title: Row(
           children: [
-            UserAvatar(
+            StreamUserAvatar(
               user: controller.user,
               borderRadius: BorderRadius.circular(24),
               constraints: const BoxConstraints.tightFor(
@@ -159,11 +159,13 @@ class ChatScreen extends GetView<ChatController> {
       body: Column(
         children: <Widget>[
           const Expanded(
-            child: MessageListView(),
+            child: StreamMessageListView(
+              showFloatingDateDivider: false,
+            ),
           ),
-          MessageInput(
+          StreamMessageInput(
             showCommandsButton: false,
-            actionsLocation: ActionsLocation.rightInside,
+            // actionsLocation: ActionsLocation.rightInside,
             attachmentButtonBuilder: (context, icon) {
               return icon.copyWith(
                 icon: SvgPicture.asset(IconConstants.icImage),

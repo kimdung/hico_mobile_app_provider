@@ -42,7 +42,6 @@ class CommonConstants {
   static const int statisticComplete = 1;
   static const int statisticSupplierCancel = 2;
   static const int statisticCustomerCancel = 3;
-
 }
 
 const APP_NAME = 'Hico Supplier';
@@ -71,6 +70,7 @@ const DefaultLanguageCode = 'DefaultLanguageCode';
 const UIAPIDomain = 'UIAPIDomain';
 const LineChannelId = 'LineChannelId';
 const StripePublishableKey = 'StripePublishableKey';
+const AgoraAppId = 'AgoraAppId';
 
 // URL DOWNLOAD APP
 const URL_ANDROID =
@@ -171,7 +171,16 @@ extension WorkExperienceValue on WorkExperience {
   }
 }
 
-enum DisplayType { All, Notif, Order,Remind, Extend, Rating, UpdateInfo }
+enum DisplayType {
+  All,
+  Notif,
+  Order,
+  Remind,
+  Extend,
+  Rating,
+  UpdateInfo,
+  UpdateBalance
+}
 
 extension DisplayTypeId on DisplayType {
   int get id {
@@ -190,9 +199,10 @@ extension DisplayTypeId on DisplayType {
         return 8;
       case DisplayType.UpdateInfo:
         return 10;
+      case DisplayType.UpdateBalance:
+        return 14;
       default:
         return 0;
     }
   }
 }
-

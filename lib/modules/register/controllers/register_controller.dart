@@ -30,6 +30,9 @@ class RegisterController extends BaseController {
   bool showPassword = false;
   final storage = Get.find<SharedPreferences>();
 
+  final hideNewPassword = true.obs;
+  final hideRetypePassword = true.obs;
+
   RegisterController() {
     usernameController.text = Get.arguments ?? '';
     emailHidden.value = Get.arguments != null
@@ -42,6 +45,13 @@ class RegisterController extends BaseController {
 
   @override
   void onClose() {}
+
+  void hideShowNewPassword() {
+    hideNewPassword.value = !hideNewPassword.value;
+  }
+  void hideShowRetypePassword() {
+    hideRetypePassword.value = !hideRetypePassword.value;
+  }
 
   Future<void> register() async {
     try {

@@ -11,8 +11,11 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../../base/base_controller.dart';
 import '../../../../data/app_data_global.dart';
+import '../../../../resource/assets_constant/icon_constants.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
+import '../../../../shared/utils/dialog_util.dart';
+import '../../../../shared/widget_hico/dialog/normal_widget.dart';
 import '../../../../shared/widgets/image_widget/image_widget.dart';
 
 class TopupBankController extends BaseController {
@@ -78,11 +81,45 @@ class TopupBankController extends BaseController {
         if (response.status == CommonConstants.statusOk &&
             response.data != null &&
             response.data!.row != null) {
-          Get.offAndToNamed(Routes.TOPUP_DETAIL, arguments: response.data!.row);
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icInfo,
+              title: response.message ?? 'topup.success'.tr,
+            ),
+            onVaLue: (value) {
+              Get.offAndToNamed(Routes.TOPUP_DETAIL,
+                  arguments: response.data!.row);
+            },
+          );
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'topup.failure'.tr,
+            ),
+            onVaLue: (value) {},
+          );
         }
       });
     } catch (e) {
+      printError(info: 'Nạp tiền thất bại ${e.toString()}');
       await EasyLoading.dismiss();
+      await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: NormalWidget(
+          icon: IconConstants.icFail,
+          title: 'topup.failure'.tr,
+        ),
+        onVaLue: (value) {},
+      );
     }
   }
 }

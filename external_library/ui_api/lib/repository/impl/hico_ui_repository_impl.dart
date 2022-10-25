@@ -287,7 +287,7 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.updateService(request);
   }
 
-   @override
+  @override
   Future<BaseResponse> requestUpdateService() {
     return _api.requestUpdateService();
   }
@@ -300,6 +300,11 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   @override
   Future<BaseResponse> forgetPassword(String email) {
     return _api.forgetPassword(email);
+  }
+
+    @override
+  Future<BaseResponse> forgetPasswordOtp(String code, String email) {
+    return _api.forgetPasswordOtp(code, email);
   }
 
   @override
@@ -319,8 +324,13 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
   }
 
   @override
-  Future<CallTokenResponse> getCallToken(String channel) {
-    return _api.getCallToken(channel);
+  Future<CallTokenResponse> getCallToken(String channel, int? invoiceId) {
+    return _api.getCallToken(channel, invoiceId);
+  }
+
+  @override
+  Future<BaseResponse> sendMissCall(int invoiceId) {
+    return _api.sendMissCall(invoiceId);
   }
 
   @override
@@ -395,13 +405,30 @@ class HicoUIRepositoryImpl extends HicoUIRepository {
     return _api.endCall(invoiceId);
   }
 
-  @override
-  Future<BaseResponse> sendCallNotification(int invoiceId) {
-    return _api.sendCallNotification(invoiceId);
-  }
+  // @override
+  // Future<BaseResponse> sendCallNotification(
+  //     {int? invoiceId,
+  //     String? callId,
+  //     String? callIsVideo,
+  //     String? callerName,
+  //     String? callerPic}) {
+  //   return _api.sendCallNotification(
+  //       invoiceId, callId, callIsVideo, callerName, callerPic);
+  // }
 
   @override
   Future<BaseResponse> deleteUser() {
     return _api.deleteUser();
+  }
+
+  @override
+  Future<BaseResponse> sendCallNotification(
+      {int? invoiceId,
+      String? callId,
+      bool? callIsVideo,
+      String? callerName,
+      String? callerPic}) {
+    return _api.sendCallNotification(
+        invoiceId, callId, callIsVideo, callerName, callerPic);
   }
 }

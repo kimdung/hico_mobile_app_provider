@@ -14,6 +14,7 @@ UserServicesCategoryModel _$UserServicesCategoryModelFromJson(
       list: (json['list'] as List<dynamic>?)
           ?.map((e) => UserServicesModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      openChild: json['open_child'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$UserServicesCategoryModelToJson(
@@ -22,6 +23,7 @@ Map<String, dynamic> _$UserServicesCategoryModelToJson(
       'service_category_id': instance.serviceCategoryId,
       'name': instance.name,
       'list': instance.list,
+      'open_child': instance.openChild,
     };
 
 UserServicesModel _$UserServicesModelFromJson(Map<String, dynamic> json) =>

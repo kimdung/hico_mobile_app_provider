@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
@@ -37,33 +38,6 @@ class LanguageController extends GetxController {
     super.onReady();
   }
 
-  Future<void> selectLanguage() async {
-    switch (currentLanguage.value) {
-      case LanguageCode.VN:
-        AppDataGlobal.languageCode = VIETNAMESE_LANG;
-        break;
-      case LanguageCode.EN:
-        AppDataGlobal.languageCode = ENGLISH_LANG;
-        break;
-      case LanguageCode.JA:
-        AppDataGlobal.languageCode = JAPANESE_LANG;
-        break;
-    }
-
-    TranslationService.changeLocale(currentLanguage.value.languageLocale);
-
-    await storage.setString(
-        StorageConstants.language, AppDataGlobal.languageCode);
-
-    await _uiRepository.masterData().then((response) {
-      if (response.status == CommonConstants.statusOk &&
-          response.masterDataModel != null) {
-        AppDataGlobal.masterData = response.masterDataModel!;
-        return;
-      }
-    });
-  }
-
   Future<void> confirmLanguage() async {
     switch (currentLanguage.value) {
       case LanguageCode.VN:
@@ -81,6 +55,18 @@ class LanguageController extends GetxController {
 
     await storage.setString(
         StorageConstants.language, AppDataGlobal.languageCode);
+
+    await EasyLoading.show();
+    await storage.setString(
+        StorageConstants.language, AppDataGlobal.languageCode);
+    await _uiRepository.masterData().then((response) {
+      EasyLoading.dismiss();
+      if (response.status == CommonConstants.statusOk &&
+          response.masterDataModel != null) {
+        AppDataGlobal.masterData = response.masterDataModel!;
+        return;
+      }
+    });
 
     await Get.offAndToNamed(Routes.ONBOARDING);
   }

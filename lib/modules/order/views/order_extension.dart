@@ -25,8 +25,12 @@ extension OrderExtension on OrderScreen {
                     ? null
                     : controller.onCall,
                 height: 47,
-                backgroundColor: AppColor.greenColorLight,
-                borderColor: AppColor.greenColorLight,
+                backgroundColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.greenColorLight,
+                borderColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.greenColorLight,
                 padding: 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -48,8 +52,12 @@ extension OrderExtension on OrderScreen {
                     ? null
                     : controller.onVideo,
                 height: 47,
-                backgroundColor: AppColor.blueColorLight,
-                borderColor: AppColor.blueColorLight,
+                backgroundColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.blueColorLight,
+                borderColor: controller.invoice.value.isNotCall()
+                    ? AppColor.disabledColorLight
+                    : AppColor.blueColorLight,
                 padding: 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -702,6 +710,95 @@ extension OrderExtension on OrderScreen {
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildWorkContent() {
+    return Container(
+      width: Get.width,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: (controller.invoice.value.service?.isMedical != 1)
+          ? Container(
+              child: Text(
+              controller.invoice.value.workContent != null
+                  ? controller.invoice.value.workContent!.summary.toString()
+                  : '',
+              style: TextAppStyle().normalTextGrey(),
+            ))
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'order.detail.work_content'.tr,
+                  style: TextAppStyle().normalTextStype().copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  'order.detail.symptom'.tr,
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.symptom.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'order.detail.test_method'.tr,
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.testMethod.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'order.detail.disease_name'.tr,
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.testMethod.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'order.detail.treatments'.tr,
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.diseaseName.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'order.detail.appointment_next_time'.tr,
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.appointmentNextTime
+                      .toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+                Text(
+                  'order.detail.comment'.tr,
+                  style: TextAppStyle()
+                      .normalTextStype()
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.invoice.value.workContent!.comment.toString(),
+                  style: TextAppStyle().normalTextGrey(),
+                ),
+              ],
+            ),
     );
   }
 }

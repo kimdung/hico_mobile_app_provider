@@ -82,6 +82,11 @@ class MainScreen extends GetView<MainController> {
                       label: 'home.notification'.tr,
                     ),
                     BottomNavigationBarItem(
+                      icon: FCoreImage(IconConstants.icMenuServiceInact),
+                      activeIcon: FCoreImage(IconConstants.icMenuServiceAct),
+                      label: 'home.calendar'.tr,
+                    ),
+                    BottomNavigationBarItem(
                       icon: FCoreImage(IconConstants.icMenuNewsInact),
                       activeIcon: FCoreImage(IconConstants.icMenuNewsAct),
                       label: 'home.news'.tr,

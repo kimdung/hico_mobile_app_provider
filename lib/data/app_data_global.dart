@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:ui_api/models/master_data/master_data_model.dart';
@@ -11,10 +12,12 @@ class AppDataGlobal {
   static String firebaseToken = '';
   static bool isLogin = false;
 
+  static bool acceptCall = false;
+
   static UserInfoModel? userInfo;
   static MasterDataModel? masterData;
+  static AndroidDeviceInfo? androidDeviceInfo;
 
   static StreamChatClient? client;
-    static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 }

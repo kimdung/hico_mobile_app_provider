@@ -734,6 +734,23 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
+  Future<BaseResponse> forgetPasswordOtp(code, email) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'code': code, r'email': email};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(
+                    _dio.options, '/api/v1/password/checkOTPForgotPassword',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<BaseResponse> resetPassword(code, email, password) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -786,9 +803,13 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
-  Future<CallTokenResponse> getCallToken(channel) async {
+  Future<CallTokenResponse> getCallToken(channel, invoiceId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'channel': channel};
+    final queryParameters = <String, dynamic>{
+      r'channel': channel,
+      r'invoice_id': invoiceId
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -834,7 +855,31 @@ class _HicoUIAPI implements HicoUIAPI {
   }
 
   @override
-  Future<BaseResponse> sendCallNotification(invoiceId) async {
+  Future<BaseResponse> sendCallNotification(
+      invoiceId, callId, callIsVideo, callerName, callerPic) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'invoice_id': invoiceId,
+      r'callId': callId,
+      r'callIsVideo': callIsVideo,
+      r'callerName': callerName,
+      r'callerPic': callerPic
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BaseResponse>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/v1/agoraCall/sendFCMToCall',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = BaseResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<BaseResponse> sendMissCall(invoiceId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'invoice_id': invoiceId};
     final _headers = <String, dynamic>{};
@@ -842,7 +887,7 @@ class _HicoUIAPI implements HicoUIAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/v1/agoraCall/sendFCMToCall',
+                .compose(_dio.options, '/v1/agoraCall/sendFCMMissedCall',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);

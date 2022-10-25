@@ -6,11 +6,12 @@ import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/models/invoice/invoice_model.dart';
 import 'package:ui_api/models/invoice/invoice_status.dart';
 import 'package:ui_api/models/user/user_info_model.dart';
-import 'package:ui_api/repository/hico_ui_repository.dart';
+import 'package:ui_api/repository/hico_ui_repository.dart'; 
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../resource/assets_constant/icon_constants.dart';
+import '../../../resource/assets_constant/images_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/colors.dart';
 import '../../../shared/constants/common.dart';
@@ -62,6 +63,16 @@ class OrderListController extends BaseController {
   @override
   Future<void> onInit() async {
     await super.onInit();
+    await DialogUtil.showPopup(
+      dialogSize: DialogSize.Popup,
+      barrierDismissible: false,
+      backgroundColor: Colors.transparent,
+      child: NormalWidget(
+        icon: ImageConstants.appLogo,
+        title: 'notif'.tr,
+      ),
+      onVaLue: (value) {},
+    );
   }
 
   Future<void> selectStatus(InvoiceStatus status) async {
@@ -126,6 +137,10 @@ class OrderListController extends BaseController {
         ?.then((value) => loadList());
   }
 
+  Future<void> viewProfile() async {
+    await Get.toNamed(Routes.PROFILE)?.then((value) => loadList());
+  }
+
   Future<void> confirm(int id, InvoiceStatus status) async {
     try {
       await EasyLoading.show();
@@ -178,6 +193,7 @@ class OrderListController extends BaseController {
     if (AppDataGlobal.client == null) {
       return;
     }
+
     final _usersResponse = await AppDataGlobal.client?.queryUsers(
       filter: Filter.autoComplete(
           'id', AppDataGlobal.userInfo?.conversationInfo?.adminId ?? ''),
@@ -213,14 +229,16 @@ class OrderListController extends BaseController {
   }
 
   Future<void> onCall(InvoiceModel invoice) async {
-    final channelId = invoice.getCallChannel();
+    var channelId = invoice.getCallChannel();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
+      await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
+            id: id,
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -233,8 +251,16 @@ class OrderListController extends BaseController {
             isVideo: false,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
@@ -243,14 +269,16 @@ class OrderListController extends BaseController {
   }
 
   Future<void> onVideo(InvoiceModel invoice) async {
-    final channelId = invoice.getCallChannel();
+    var channelId = invoice.getCallChannel();
     try {
       await EasyLoading.show();
-      await _uiRepository.getCallToken(channelId).then((response) {
+      final id = const Uuid().v4();
+      channelId = '$channelId-$id';
+      await _uiRepository.getCallToken(channelId, invoice.id).then((response) {
         EasyLoading.dismiss();
-        if (response.status == CommonConstants.statusOk &&
-            response.data != null) {
+        if (response.status == CommonConstants.statusOk) {
           final call = CallModel(
+            id: id,
             invoiceId: invoice.id,
             callerId: AppDataGlobal.userInfo?.id,
             callerName: AppDataGlobal.userInfo?.name ?? '',
@@ -263,8 +291,16 @@ class OrderListController extends BaseController {
             isVideo: true,
           );
           CallUtils.dial(callMethods, call, response.data?.token ?? '');
-        } else if (response.message?.isNotEmpty ?? false) {
-          EasyLoading.showToast(response.message ?? '');
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: IconConstants.icFail,
+              title: response.message ?? 'error.call'.tr,
+            ),
+          );
         }
       });
     } catch (e) {
