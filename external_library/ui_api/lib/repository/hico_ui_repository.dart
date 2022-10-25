@@ -199,6 +199,9 @@ abstract class HicoUIRepository {
   //check UserTime
   Future<BaseResponse> forgetPassword(String email);
 
+  //check otp
+  Future<BaseResponse> forgetPasswordOtp(String code, String email);
+
   //check UserTime
   Future<BaseResponse> resetPassword(
       String code, String email, String password);
