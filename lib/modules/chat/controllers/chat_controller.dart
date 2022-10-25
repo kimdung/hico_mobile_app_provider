@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:stream_chat/stream_chat.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -28,7 +27,8 @@ class ChatController extends BaseController {
     invoiceId = arguments[CommonConstants.INVOICE_ID];
     channel = arguments[CommonConstants.CHANNEL];
     user = arguments[CommonConstants.CHAT_USER];
-    isNotCall = arguments[CommonConstants.IS_NOT_CALL] ?? false;
+    isNotCall = arguments[CommonConstants.IS_NOT_CALL] ?? true;
+
     await channel.watch();
 
     final addMembers = [user.id];

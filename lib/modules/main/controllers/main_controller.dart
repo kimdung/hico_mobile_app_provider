@@ -139,7 +139,7 @@ class MainController extends BaseController {
     if (sender == 'stream.chat' && channelId.isNotEmpty) {
       //router chat screen
       debugPrint('router chat screen');
-      await onChat(channelId);
+      await onChat(499, channelId, false);
       return;
     }
 
@@ -237,7 +237,7 @@ class MainController extends BaseController {
     }
   }
 
-  Future<void> onChat(String channelId) async {
+  Future<void> onChat(int? invoiceId, String channelId, bool? isNotCall) async {
     if (AppDataGlobal.client == null) {
       return;
     }
@@ -255,8 +255,10 @@ class MainController extends BaseController {
         return;
       }
       Get.toNamed(Routes.CHAT, arguments: {
+        CommonConstants.INVOICE_ID: invoiceId,
         CommonConstants.CHANNEL: channel,
         CommonConstants.CHAT_USER: response.users.first,
+        CommonConstants.IS_NOT_CALL: isNotCall,
       });
     });
   }

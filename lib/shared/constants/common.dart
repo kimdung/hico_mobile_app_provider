@@ -42,7 +42,6 @@ class CommonConstants {
   static const int statisticComplete = 1;
   static const int statisticSupplierCancel = 2;
   static const int statisticCustomerCancel = 3;
-
 }
 
 const APP_NAME = 'Hico Supplier';
@@ -172,7 +171,16 @@ extension WorkExperienceValue on WorkExperience {
   }
 }
 
-enum DisplayType { All, Notif, Order,Remind, Extend, Rating, UpdateInfo, UpdateBalance }
+enum DisplayType {
+  All,
+  Notif,
+  Order,
+  Remind,
+  Extend,
+  Rating,
+  UpdateInfo,
+  UpdateBalance
+}
 
 extension DisplayTypeId on DisplayType {
   int get id {
@@ -198,4 +206,3 @@ extension DisplayTypeId on DisplayType {
     }
   }
 }
-

@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ui_api/models/call/call_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
@@ -13,6 +12,7 @@ import '../../../../data/app_data_global.dart';
 import '../../../../shared/methods/call_methods.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/constants/storage.dart';
 import 'pickup_view.dart';
 
 class PickupLayout extends GetView<BaseController> {
@@ -62,21 +62,26 @@ class PickupLayout extends GetView<BaseController> {
 
   Future<CallModel?>? _pickupCall(Map<String, dynamic> data) async {
     try {
+      final storage = Get.find<SharedPreferences>();
+      final isAcceptCall =
+          storage.getBool(StorageConstants.isAcceptCall) ?? false;
+
       final call = CallModel.fromJson(data);
-      if (AppDataGlobal.acceptCall) {
+      if (isAcceptCall || AppDataGlobal.acceptCall) {
         AppDataGlobal.acceptCall = false;
+        await storage.setBool(StorageConstants.isAcceptCall, false);
         await onAcceptCall(call);
         return null;
       }
 
-      final activeCalls = await FlutterCallkitIncoming.activeCalls(); 
+      final activeCalls = await FlutterCallkitIncoming.activeCalls();
       if (activeCalls is List && activeCalls.isNotEmpty) {
         final activeCall = activeCalls.firstWhereOrNull(
             (element) => (element as Map<dynamic, dynamic>?)?['id'] == call.id);
         if (activeCall != null && (activeCall['isAccepted'] ?? false)) {
           await onAcceptCall(call);
-          return null;
         }
+        return null;
       }
 
       if (call.hasDialled != null && !call.hasDialled!) {

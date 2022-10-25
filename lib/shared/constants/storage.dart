@@ -8,5 +8,6 @@ class StorageConstants {
   static const String username = 'username';
   static const String password = 'password';
   static const String isLogin = 'isLogin';
-  static const String isSocial = 'false';
+  static const String isSocial = 'isSocial';
+  static const String isAcceptCall = 'isAcceptCall';
 }

@@ -31,9 +31,16 @@ class _PickupViewState extends State<PickupView> {
   Timer? _timerRingWait;
   Timer? _timerVibration;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   _startRingtone();
+  // }
+  
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     _startRingtone();
   }
