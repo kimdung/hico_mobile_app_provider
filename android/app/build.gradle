@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.wap.hicoprovider"
+        applicationId "jp.wap.hicoprovider"
         minSdkVersion 23
         targetSdkVersion 31
         renderscriptTargetApi 21
