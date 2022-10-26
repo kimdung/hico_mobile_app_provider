@@ -572,7 +572,7 @@ packages:
       name: flutter_calendar_carousel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.4.0"
+    version: "2.1.0"
   flutter_callkit_incoming:
     dependency: "direct main"
     description:
