@@ -79,7 +79,6 @@ dependencies:
 
   wakelock: ^0.6.1+2
   collection: ^1.15.0
-  open_file: ^3.2.1
   uuid: ^3.0.5
   mime: ^1.0.1
   image_picker: ^0.8.4+5
@@ -119,6 +118,9 @@ dependencies:
   device_info_plus: ^4.0.0
   vibration: ^1.7.6
 
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
