@@ -12,6 +12,7 @@ import '../../../shared/utils/dialog_util.dart';
 import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class MedicalController extends BaseController {
+  final submitForm = GlobalKey<FormState>();
   TextEditingController symptomController = TextEditingController();
   TextEditingController testMethodController = TextEditingController();
   TextEditingController diseaseNameController = TextEditingController();
@@ -26,39 +27,63 @@ class MedicalController extends BaseController {
   @override
   Future<void> onInit() async {
     id = Get.arguments;
-    log('Invoice Id: ${id.toString()}');
     return super.onInit();
   }
 
   Future<void> confirmSub() async {
-    request.value.invoiceId = id;
-    request.value.symptom = symptomController.text;
-    request.value.testMethod = testMethodController.text;
-    request.value.diseaseName = diseaseNameController.text;
-    request.value.treatments = treatmentsController.text;
-    request.value.appointmentNextTime = appointmentNextTimeController.text;
-    request.value.comment = commentController.text;
-    await _repository.confirmSub(request.value).then((response) {
-      if (response.status == CommonConstants.statusOk) {
-        log(response.toString());
-        DialogUtil.showPopup(
-          dialogSize: DialogSize.Popup,
-          barrierDismissible: false,
-          backgroundColor: Colors.transparent,
-          child: NormalWidget(
-            icon: response.status == CommonConstants.statusOk
-                ? IconConstants.icSuccess
-                : IconConstants.icFail,
-            title: response.message,
-          ),
-          onVaLue: (value) {},
-        ).then((value) {
-          Get.back();
+    try {
+      if (submitForm.currentState?.validate() ?? false) {
+        request.value.invoiceId = id;
+        request.value.symptom = symptomController.text;
+        request.value.testMethod = testMethodController.text;
+        request.value.diseaseName = diseaseNameController.text;
+        request.value.treatments = treatmentsController.text;
+        request.value.appointmentNextTime = appointmentNextTimeController.text;
+        request.value.comment = commentController.text;
+        await _repository.confirmSub(request.value).then((response) {
+          if (response.status == CommonConstants.statusOk) {
+            log(response.toString());
+            DialogUtil.showPopup(
+              dialogSize: DialogSize.Popup,
+              barrierDismissible: false,
+              backgroundColor: Colors.transparent,
+              child: NormalWidget(
+                icon: response.status == CommonConstants.statusOk
+                    ? IconConstants.icSuccess
+                    : IconConstants.icFail,
+                title: response.message,
+              ),
+              onVaLue: (value) {},
+            ).then((value) {
+              Get.back();
+            });
+          } else {
+            DialogUtil.showPopup(
+              dialogSize: DialogSize.Popup,
+              barrierDismissible: false,
+              backgroundColor: Colors.transparent,
+              child: NormalWidget(
+                icon: IconConstants.icFail,
+                title: 'notif.error'.tr,
+              ),
+              onVaLue: (value) {},
+            ).then((value) {});
+          }
+        }).onError((error, stackTrace) {
+          log(error.toString());
         });
-        return;
       }
-    }).onError((error, stackTrace) {
-      log(error.toString());
-    });
+    } catch (e) {
+      await DialogUtil.showPopup(
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: NormalWidget(
+          icon: IconConstants.icFail,
+          title: 'notif.error'.tr,
+        ),
+        onVaLue: (value) {},
+      ).then((value) {});
+    }
   }
 }

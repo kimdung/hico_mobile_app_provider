@@ -18,6 +18,7 @@ NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
       displayType: json['display_type'] as int?,
       invoiceId: json['invoice_id'] as int?,
       subId: json['sub_id'] as int?,
+      typeLink: json['type_link'] as String? ?? '',
     );
 
 Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
       'display_type': instance.displayType,
       'invoice_id': instance.invoiceId,
       'sub_id': instance.subId,
+      'type_link': instance.typeLink,
     };

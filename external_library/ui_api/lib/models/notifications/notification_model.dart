@@ -21,18 +21,22 @@ class NotificationModel {
   int? invoiceId;
   @JsonKey(name: 'sub_id')
   int? subId;
+  @JsonKey(name: 'type_link', defaultValue: '')
+  String? typeLink;
 
-  NotificationModel(
-      {this.id,
-      this.title,
-      this.description,
-      this.displayImage,
-      this.createdAt,
-      this.isRead,
-      this.content,
-      this.displayType,
-      this.invoiceId,
-      this.subId});
+  NotificationModel({
+    this.id,
+    this.title,
+    this.description,
+    this.displayImage,
+    this.createdAt,
+    this.isRead,
+    this.content,
+    this.displayType,
+    this.invoiceId,
+    this.subId,
+    this.typeLink,
+  });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
       _$NotificationModelFromJson(json);

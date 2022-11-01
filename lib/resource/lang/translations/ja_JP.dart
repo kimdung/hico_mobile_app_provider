@@ -273,6 +273,7 @@ const Map<String, String> ja_JP = {
   'statistic.wallet': '残高',
   'statistic.bonus': 'お客様キャンセルしたより保証',
   'statistic.note_tax': '注意：源泉徴収税額まだ引かれていない収入です。',
+  'statistic.time_incorrect': '無効な時間',
 
 //support screen
   'support.title': 'お問い合わせ内容を入力してください。',

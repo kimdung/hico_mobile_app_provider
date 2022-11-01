@@ -5,6 +5,7 @@ import 'package:ui_api/models/notifications/notification_data.dart';
 import 'package:ui_api/models/notifications/notification_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/request/invoice/booking_extend_request.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
@@ -74,8 +75,8 @@ class NotificationController extends BaseController {
     }
   }
 
-  Future<void> viewDetail(
-      int id, int displayType, int? invoiceId, int? subId) async {
+  Future<void> viewDetail(int id, int displayType, int? invoiceId, int? subId,
+      String? typeLink) async {
     await reloadBalance();
     //Router
     await _uiRepository.notificationDetail(id).then((response) {
@@ -192,6 +193,17 @@ class NotificationController extends BaseController {
           // do something else 24
           Get.toNamed(Routes.WALLET);
           break;
+        case NotificationData.typeUrlLink:
+          // do something else 26
+          final _url = Uri.parse(typeLink ?? '');
+          launchUrl(_url);
+          break;
+        case NotificationData.typeNews:
+          // do something else 27
+          if (typeLink != null && typeLink.isNotEmpty) {
+            Get.toNamed(Routes.NEWS_DETAIL, arguments: int.parse(typeLink));
+          }
+          break;
         default:
           Get.toNamed(Routes.NOTIFICATION_DETAIL, arguments: id)
               ?.then((value) => loadData());
@@ -208,6 +220,11 @@ class NotificationController extends BaseController {
         AppDataGlobal.userInfo = response.data!.info!;
       }
     });
+  }
+
+  Future<void> openLink(String url) async {
+    final _url = Uri.parse(url);
+    await launchUrl(_url);
   }
 
   @override

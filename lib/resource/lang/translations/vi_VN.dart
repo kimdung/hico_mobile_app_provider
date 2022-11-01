@@ -282,6 +282,7 @@ const Map<String, String> vi_VN = {
   'statistic.wallet': 'Số dư ví',
   'statistic.bonus': 'Số tiền được thưởng khi khách hàng huỷ',
   'statistic.note_tax': 'Lưu ý: Thu nhập này chưa trừ thuế',
+  'statistic.time_incorrect': 'Thời gian không hợp lệ',
 
   //support screen
   'support.title':

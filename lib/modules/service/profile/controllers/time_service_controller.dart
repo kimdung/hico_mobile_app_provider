@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
@@ -39,7 +40,6 @@ class TimeServiceController extends BaseController {
 
   TimeServiceController() {
     removeTimeIds = Get.arguments;
-    // prepareData();
     markedDate.value.dates = EventList<Event>(
       events: {
         DateTime.now(): [
@@ -50,13 +50,33 @@ class TimeServiceController extends BaseController {
         ],
       },
     );
-    markedDate.refresh();
+    // markedDate.refresh();
+    prepareData();
   }
 
   Future<void> prepareData() async {
-    try {} catch (e) {
-      await EasyLoading.dismiss();
-    }
+    final now = DateTime.now();
+    final date = DateTime(now.year, now.month, now.day);
+    lstDateSelected.add(date);
+    markedDate.value.dates?.add(
+      date,
+      Event(
+        date: date,
+        title: date.day.toString(),
+      ),
+    );
+    markedDate.refresh();
+
+    final item = UserTimeModel();
+    item.date = DateFormatter.formatDate(date);
+    item.list = <UserTimeListModel>[];
+    final time = UserTimeListModel();
+    time.beginTime = '00:00';
+    time.endTime = '00:00';
+    time.checkOffline = 0;
+    item.list!.add(time);
+    lstUserTimes.add(item);
+    await EasyLoading.dismiss();
   }
 
   Future<void> addItem(int index) async {

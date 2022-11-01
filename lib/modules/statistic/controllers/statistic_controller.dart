@@ -6,9 +6,12 @@ import 'package:ui_api/models/statistic/statistic_model.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../base/base_controller.dart';
+import '../../../resource/assets_constant/icon_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
 import '../../../shared/utils/date_formatter.dart';
+import '../../../shared/utils/dialog_util.dart';
+import '../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class StatisticController extends BaseController {
   ScrollController scrollController = ScrollController();
@@ -18,6 +21,8 @@ class StatisticController extends BaseController {
   int offset = 0;
   String fromDate = '';
   String toDate = '';
+  DateTime dteToDate = DateTime.now();
+  DateTime dteFromDate = DateTime.now().add(const Duration(days: -7));
   final TextEditingController fromDateController = TextEditingController();
   final TextEditingController toDateController = TextEditingController();
   final TextEditingController keyword = TextEditingController();
@@ -44,7 +49,6 @@ class StatisticController extends BaseController {
     //loadInvoiceList();
   }
 
-
   Future<void> loadData() async {
     try {
       await _uiRepository.statistics().then((response) {
@@ -66,6 +70,7 @@ class StatisticController extends BaseController {
         firstDate: DateTime(1901, 1),
         lastDate: DateTime(2100));
     if (picked != null) {
+      dteFromDate = picked;
       fromDate = DateFormatter.formatDate(picked);
       fromDateController.value = TextEditingValue(text: fromDate);
     }
@@ -78,6 +83,7 @@ class StatisticController extends BaseController {
         firstDate: DateTime(1901, 1),
         lastDate: DateTime(2100));
     if (picked != null) {
+      dteToDate = picked;
       toDate = DateFormatter.formatDate(picked);
       toDateController.value = TextEditingValue(text: toDate);
     }
@@ -94,30 +100,48 @@ class StatisticController extends BaseController {
   Future<void> onChangeStatus(int status) async {
     try {
       indexStatus.value = status;
-      if (status != 0){
+      if (status != 0) {
         await loadInvoiceList();
       }
     } catch (e) {
       await EasyLoading.dismiss();
     }
   }
+
   Future<void> onDetail(int id) async {
     await Get.toNamed(Routes.ORDER_DETAIL, arguments: id);
   }
 
-
   Future<void> loadInvoiceList() async {
     try {
       await EasyLoading.show();
-      offset = 0;
-      invoiceList.value = [];
-      await _uiRepository
-          .statisticsInvoice(limit, offset, keyword.text, fromDate, toDate,indexStatus.value)
-          .then((response) {
-        EasyLoading.dismiss();
-        offset = response.data!.rows!.length;
-        invoiceList.value = response.data!.rows!;
-      });
+      if (dteToDate.isBefore(dteFromDate)) {
+        await EasyLoading.dismiss();
+        await DialogUtil.showPopup(
+          dialogSize: DialogSize.Popup,
+          barrierDismissible: false,
+          backgroundColor: Colors.transparent,
+          child: NormalWidget(
+            icon: IconConstants.icFail,
+            title: 'statistic.time_incorrect'.tr,
+          ),
+          onVaLue: (value) {},
+        );
+      } else {
+        offset = 0;
+        await _uiRepository
+            .statisticsInvoice(limit, offset, keyword.text, fromDate, toDate,
+                indexStatus.value)
+            .then((response) {
+          EasyLoading.dismiss();
+          if (response.data!.rows!.isNotEmpty) {
+            offset = response.data!.rows!.length;
+            invoiceList.value = response.data!.rows!;
+          } else {
+            invoiceList.value = [];
+          }
+        });
+      }
     } catch (e) {
       await EasyLoading.dismiss();
     }
@@ -127,7 +151,8 @@ class StatisticController extends BaseController {
     try {
       await EasyLoading.show();
       await _uiRepository
-          .statisticsInvoice(limit, offset, keyword.text, fromDate, toDate,indexStatus.value)
+          .statisticsInvoice(
+              limit, offset, keyword.text, fromDate, toDate, indexStatus.value)
           .then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk &&
