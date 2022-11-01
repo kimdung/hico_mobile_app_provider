@@ -742,8 +742,7 @@ class _HicoUIAPI implements HicoUIAPI {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BaseResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(
-                    _dio.options, '/api/v1/password/checkOTPForgotPassword',
+                .compose(_dio.options, '/v1/password/checkOTPForgotPassword',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BaseResponse.fromJson(_result.data!);
