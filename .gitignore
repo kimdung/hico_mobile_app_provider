@@ -45,4 +45,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/android
+/android/app/dev/debug
+/android/app/dev/profile
+/android/app/dev/release
+/android/app/prod/debug
+/android/app/prod/profile
+/android/app/prod/release
+/android/app/uat/debug
+/android/app/uat/profile
+/android/app/uat/release
