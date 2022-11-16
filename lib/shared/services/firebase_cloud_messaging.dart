@@ -638,7 +638,7 @@ class FirebaseMessageConfig {
         break;
       case NotificationData.typeAdminTransferUser:
         // do something else 24
-        await Get.toNamed(Routes.WALLET);
+        await Get.toNamed(Routes.STATISTIC);
         break;
       default:
         break;
