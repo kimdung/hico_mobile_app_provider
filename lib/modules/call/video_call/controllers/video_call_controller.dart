@@ -149,14 +149,6 @@ class VideoCallController extends BaseController {
     ));
 
     await engine.enableVideo();
-    // await engine.setVideoEncoderConfiguration(
-    //   const VideoEncoderConfiguration(
-    //     dimensions: VideoDimensions(width: 640, height: 360),
-    //     frameRate: 15,
-    //     bitrate: 0,
-    //   ),
-    // );
-
     await engine.startPreview();
     // await engine.setChannelProfile(ChannelProfile.LiveBroadcasting);
     // await engine.setClientRole(ClientRole.Broadcaster);
