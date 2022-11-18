@@ -40,7 +40,7 @@ class DependencyInjection {
       //
     }
     try {
-      Stripe.publishableKey = config.value[StripePublishableKey]!; 
+      Stripe.publishableKey = config.value[StripePublishableKey]!;
       await Stripe.instance.applySettings();
     } catch (e) {
       debugPrint('init Stripe error ${e.toString()}');
@@ -57,7 +57,9 @@ class DependencyInjection {
     ));
 
     if (kDebugMode) {
-      _dioUIAPI.interceptors.add(LoggerInterceptor());
+      _dioUIAPI.interceptors.add(LoggerInterceptor(
+        ignoreReponseDataLog: (p0) => false,
+      ));
     }
     final uiAPI = HicoUIAPI(_dioUIAPI);
     final HicoUIRepository uiRepo = HicoUIRepositoryImpl(uiAPI);

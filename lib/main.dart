@@ -20,6 +20,17 @@ Future<void> main() async {
     ),
   );
   await Firebase.initializeApp();
+
+  if (kIsWeb || defaultTargetPlatform == TargetPlatform.macOS) {
+    // initialiaze the facebook javascript SDK
+    await FacebookAuth.instance.webAndDesktopInitialize(
+      appId: "1329834907365798",
+      cookie: true,
+      xfbml: true,
+      version: "v15.0",
+    );
+  }
+
   await DependencyInjection.init(DEV_ENVIRONMENT);
   runApp(App());
   configLoading();

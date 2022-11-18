@@ -43,8 +43,7 @@ class LoginSocialServices {
       verificationId: _verificationIdController!,
       smsCode: opt,
     );
-    final userCredential =
-        await _firebaseAuth.signInWithCredential(credential);
+    final userCredential = await _firebaseAuth.signInWithCredential(credential);
     return userCredential;
   }
 
@@ -65,7 +64,7 @@ class LoginSocialServices {
 
   /// Login With Facebook Account
   Future<LoginResult> loginWithFacebook() async {
-    return await _facebookAuth.login();
+    return _facebookAuth.login();
   }
 
   // LogOut With Facebook Account
@@ -79,8 +78,7 @@ class LoginSocialServices {
   /// Login With Google Account
   Future<GoogleSignInAuthentication> loginWithGoogle() async {
     final googleUser = await _googleSignIn.signIn();
-    final googleAuth =
-        await googleUser!.authentication;
+    final googleAuth = await googleUser!.authentication;
     return googleAuth;
   }
 

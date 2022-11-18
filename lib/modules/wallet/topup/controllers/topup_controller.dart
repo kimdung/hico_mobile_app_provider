@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -9,13 +8,10 @@ import 'package:ui_api/models/wallet/topup_item.dart';
 import 'package:ui_api/repository/hico_ui_repository.dart';
 
 import '../../../../data/app_data_global.dart';
-import '../../../../resource/assets_constant/icon_constants.dart';
-import '../../../../resource/assets_constant/images_constants.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../shared/constants/common.dart';
 import '../../../../shared/utils/dialog_util.dart';
 import '../../../../shared/widget_hico/dialog/dialog_confirm_widget.dart';
-import '../../../../shared/widget_hico/dialog/normal_widget.dart';
 
 class TopupController extends GetxController {
   final _uiRepository = Get.find<HicoUIRepository>();

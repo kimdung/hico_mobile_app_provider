@@ -14,14 +14,14 @@ import '../../../shared/utils/chat_util.dart';
 
 class SplashController extends GetxController {
   final HicoUIRepository _uiRepository = Get.find<HicoUIRepository>();
-  final config = FirebaseMessageConfig();
+
   final storage = Get.find<SharedPreferences>();
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    await config.initFirebaseMessageConfig();
-    await config.handleMessage();
+    await FirebaseMessageConfig.instance.initFirebaseMessageConfig();
+    await FirebaseMessageConfig.instance.handleMessage();
     await loadInitSplashScreen();
   }
 
@@ -73,7 +73,7 @@ class SplashController extends GetxController {
       } else {
         storage.setBool(StorageConstants.isLogin.toString(), false);
         _loadLanguage(storage);
-         Get.offAndToNamed(Routes.LANGUAGE);
+        Get.offAndToNamed(Routes.LANGUAGE);
       }
     });
   }

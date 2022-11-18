@@ -24,9 +24,11 @@ class ChatController extends BaseController {
   @override
   Future<void> onInit() async {
     final arguments = Get.arguments as Map;
+
     invoiceId = arguments[CommonConstants.INVOICE_ID];
     channel = arguments[CommonConstants.CHANNEL];
     user = arguments[CommonConstants.CHAT_USER];
+
     isNotCall = arguments[CommonConstants.IS_NOT_CALL] ?? true;
 
     await channel.watch();
