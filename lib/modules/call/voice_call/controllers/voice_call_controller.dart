@@ -123,6 +123,9 @@ class VoiceCallController extends BaseController {
                   'joinChannelSuccess ${connection.channelId} ${connection.localUid} $elapsed');
 
           isJoined.value = true;
+
+          _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
+          _engine?.enableLocalAudio(false);
         },
         onLeaveChannel: (connection, stats) {
           printError(info: 'leaveChannel ${stats.toJson()}');
@@ -135,7 +138,7 @@ class VoiceCallController extends BaseController {
           printInfo(info: 'userJoined $remoteUid $elapsed');
           _timerAutoEncall?.cancel();
 
-          // _engine?.enableLocalAudio(true);
+          _engine?.enableLocalAudio(true);
           _engine?.enableAudio();
           _engine?.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
           _engine?.setAudioProfile(
