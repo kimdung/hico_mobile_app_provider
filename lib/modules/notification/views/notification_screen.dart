@@ -35,7 +35,7 @@ class NotificationScreen extends GetView<NotificationController> {
       body: Obx(() => controller.notificationList.isEmpty
           ? buildEmptyPage()
           : Container(
-              padding: const EdgeInsets.only(top: 16),
+              // padding: const EdgeInsets.only(top: 16),
               child: ListView.builder(
                   itemCount: controller.notificationList.length,
                   shrinkWrap: true,
