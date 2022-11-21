@@ -157,10 +157,6 @@ class VideoCallController extends BaseController {
   }
 
   Future<void> _joinChannel() async {
-    // if (Platform.isAndroid) {
-    //   await [Permission.microphone, Permission.camera].request();
-    // }
-
     await engine
         .joinChannel(
             token: token,

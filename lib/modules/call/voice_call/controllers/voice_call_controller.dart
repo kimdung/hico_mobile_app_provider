@@ -19,7 +19,7 @@ class VoiceCallController extends BaseController {
 
   final _uiRepository = Get.find<HicoUIRepository>();
 
-  RtcEngine? _engine;
+  late final RtcEngine _engine;
   StreamSubscription? _callStreamSubscription;
 
   RxBool isJoined = RxBool(false);
@@ -61,8 +61,8 @@ class VoiceCallController extends BaseController {
 
     _callEndCall();
 
-    _engine?.leaveChannel();
-    _engine?.release();
+    _engine.leaveChannel();
+    _engine.release();
 
     _callStreamSubscription?.cancel();
 
@@ -99,15 +99,13 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _initAgoraEngine() async {
-    // _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
-
     _engine = createAgoraRtcEngine();
-    await _engine?.initialize(RtcEngineContext(
+    await _engine.initialize(RtcEngineContext(
       appId: appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
     ));
 
-    await _engine?.setParameters('{"che.audio.opensl":true}');
+    await _engine.setParameters('{"che.audio.opensl":true}');
 
     await _addListeners();
 
@@ -115,7 +113,7 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _addListeners() async {
-    _engine?.registerEventHandler(
+    _engine.registerEventHandler(
       RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
           printInfo(
@@ -124,8 +122,8 @@ class VoiceCallController extends BaseController {
 
           isJoined.value = true;
 
-          _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
-          _engine?.enableLocalAudio(false);
+          _engine.setEnableSpeakerphone(enableSpeakerphone.value);
+          _engine.enableLocalAudio(false);
         },
         onLeaveChannel: (connection, stats) {
           printError(info: 'leaveChannel ${stats.toJson()}');
@@ -138,10 +136,10 @@ class VoiceCallController extends BaseController {
           printInfo(info: 'userJoined $remoteUid $elapsed');
           _timerAutoEncall?.cancel();
 
-          _engine?.enableLocalAudio(true);
-          _engine?.enableAudio();
-          _engine?.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-          _engine?.setAudioProfile(
+          _engine.enableLocalAudio(true);
+          _engine.enableAudio();
+          _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+          _engine.setAudioProfile(
             profile: AudioProfileType.audioProfileDefault,
             scenario: AudioScenarioType.audioScenarioGameStreaming,
           );
@@ -162,15 +160,15 @@ class VoiceCallController extends BaseController {
       ),
     );
 
-    // await _engine?.enableAudio();
-    // await _engine?.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    // await _engine?.setAudioProfile(
+    // await _engine.enableAudio();
+    // await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    // await _engine.setAudioProfile(
     //   profile: AudioProfileType.audioProfileDefault,
     //   scenario: AudioScenarioType.audioScenarioGameStreaming,
     // );
 
-    // await _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
-    // await _engine?.enableLocalAudio(false);
+    // await _engine.setEnableSpeakerphone(enableSpeakerphone.value);
+    // await _engine.enableLocalAudio(false);
   }
 
   Future<void> _joinChannel() async {
@@ -178,7 +176,7 @@ class VoiceCallController extends BaseController {
       await Permission.microphone.request();
     }
     await _engine
-        ?.joinChannel(
+        .joinChannel(
             token: token,
             channelId: call.channelId ?? '',
             uid: call.getId() ?? 0,
@@ -204,7 +202,7 @@ class VoiceCallController extends BaseController {
 
   Future<void> switchMicrophone() async {
     // await _engine.muteLocalAudioStream(!openMicrophone);
-    await _engine?.enableLocalAudio(!openMicrophone.value).then((value) {
+    await _engine.enableLocalAudio(!openMicrophone.value).then((value) {
       openMicrophone.value = !openMicrophone.value;
     }).catchError((err) {
       printError(info: 'enableLocalAudio $err');
@@ -212,7 +210,7 @@ class VoiceCallController extends BaseController {
   }
 
   void switchSpeakerphone() {
-    _engine?.setEnableSpeakerphone(!enableSpeakerphone.value).then((value) {
+    _engine.setEnableSpeakerphone(!enableSpeakerphone.value).then((value) {
       enableSpeakerphone.value = !enableSpeakerphone.value;
     }).catchError((err) {
       printError(info: 'setEnableSpeakerphone $err');
