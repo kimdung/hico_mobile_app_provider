@@ -94,7 +94,6 @@ class ProfileUpDateController extends BaseController {
     _loadData();
   }
 
-
   Future _loadData() async {
     try {
       await EasyLoading.show();
@@ -159,13 +158,14 @@ class ProfileUpDateController extends BaseController {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
 
-       final imageTemporary = File(image.path);
-       //call api
+      final imageTemporary = File(image.path);
+      //call api
       await updateAvatar(imageTemporary);
     } on PlatformException catch (e) {
       print(e);
     }
   }
+
   Future updateAvatar(File image) async {
     try {
       await EasyLoading.show();
@@ -216,10 +216,12 @@ class ProfileUpDateController extends BaseController {
       print(e);
     }
   }
+
   /* Choose gender */
   Future selectGender(int value) async {
     genderId.value = value;
   }
+
   /* End choose gender */
   /* Choose birthday */
   Future<void> showDate(BuildContext context) async {
@@ -232,6 +234,7 @@ class ProfileUpDateController extends BaseController {
       currentTime: DateTime.now(),
     );
   }
+
   /* End choose birthday */
   Future<void> loadAddress(String keyword) async {
     try {
@@ -251,7 +254,8 @@ class ProfileUpDateController extends BaseController {
     } catch (e) {
       await EasyLoading.dismiss();
     }
-  }  
+  }
+
   Future<void> selectAddress(AddressModel item) async {
     try {
       zipCode.text = item.code!;
@@ -308,7 +312,9 @@ class ProfileUpDateController extends BaseController {
           width: double.infinity,
           height: Get.height / 1.7,
           child: DataFormWidget(
-            dataList: numberYearJapanDataList.where((p0) => p0.experienceCode != 0).toList(),
+            dataList: numberYearJapanDataList
+                .where((p0) => p0.experienceCode != 0)
+                .toList(),
             title: 'profile.update.number_years_in_japan'.tr,
             currentSelected: isNumberYearsInJapan.value,
           ),
@@ -327,7 +333,9 @@ class ProfileUpDateController extends BaseController {
           width: double.infinity,
           height: Get.height / 1.7,
           child: DataFormWidget(
-            dataList: translationExperienceDataList.where((p0) => p0.experienceCode != 0).toList(),
+            dataList: translationExperienceDataList
+                .where((p0) => p0.experienceCode != 0)
+                .toList(),
             title: 'profile.update.translation_experience'.tr,
             currentSelected: isTranslatationExperience.value,
           ),
@@ -341,12 +349,14 @@ class ProfileUpDateController extends BaseController {
   }
 
   Future<void> getInterpretationExperience(BuildContext context) async {
-   await ShowBottomSheet().showBottomSheet(
+    await ShowBottomSheet().showBottomSheet(
         child: Container(
           width: double.infinity,
           height: Get.height / 1.7,
           child: DataFormWidget(
-            dataList: interpretationExperienceDataList.where((p0) => p0.experienceCode != 0).toList(),
+            dataList: interpretationExperienceDataList
+                .where((p0) => p0.experienceCode != 0)
+                .toList(),
             title: 'profile.update.interpreting_experience'.tr,
             currentSelected: isInterpretationExperience.value,
           ),
@@ -360,13 +370,15 @@ class ProfileUpDateController extends BaseController {
   }
 
   Future<void> updated() async {
-      try {
+    try {
       //await EasyLoading.show();
       if (updateForm.currentState?.validate() ?? false) {
         var msg = '';
-        if (info.value.documentFrontSide.isEmpty && documentFrontSide.value.path == '') {
+        if (info.value.documentFrontSide.isEmpty &&
+            documentFrontSide.value.path == '') {
           msg = 'profile.update.front_side_required'.tr;
-        } else if (info.value.documentBackSide.isEmpty && documentBackSide.value.path == '') {
+        } else if (info.value.documentBackSide.isEmpty &&
+            documentBackSide.value.path == '') {
           msg = 'profile.update.back_side_required'.tr;
         } else if (isNumberYearsInJapan.value == 0) {
           msg = 'profile.update.number_years_in_japan_required'.tr;
@@ -404,8 +416,12 @@ class ProfileUpDateController extends BaseController {
           addressId,
           address.text,
           station.text,
-          documentFrontSide.value.path.isNotEmpty ? documentFrontSide.value : null,
-          documentBackSide.value.path.isNotEmpty ? documentBackSide.value : null,
+          documentFrontSide.value.path.isNotEmpty
+              ? documentFrontSide.value
+              : null,
+          documentBackSide.value.path.isNotEmpty
+              ? documentBackSide.value
+              : null,
           education.text,
           level.text,
           experience.text,
@@ -418,8 +434,14 @@ class ProfileUpDateController extends BaseController {
           interpretingExperienceDetail.text.isNotEmpty
               ? interpretingExperienceDetail.text
               : '',
-          removeCurriculumVitaeFiles.toString().replaceAll('[', '').replaceAll(']', ''),
-          removeWorkExperienceFiles.toString().replaceAll('[', '').replaceAll(']', ''),
+          removeCurriculumVitaeFiles
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
+          removeWorkExperienceFiles
+              .toString()
+              .replaceAll('[', '')
+              .replaceAll(']', ''),
           removeDocumentsCertificate,
         )
             .then((response) {
@@ -450,15 +472,15 @@ class ProfileUpDateController extends BaseController {
     } catch (e) {
       await EasyLoading.dismiss();
       await DialogUtil.showPopup(
-            dialogSize: DialogSize.Popup,
-            barrierDismissible: false,
-            backgroundColor: Colors.transparent,
-            child: NormalWidget(
-              icon: IconConstants.icFail,
-              title: 'notif.error'.tr,
-            ),
-            onVaLue: (value) {},
-          );
+        dialogSize: DialogSize.Popup,
+        barrierDismissible: false,
+        backgroundColor: Colors.transparent,
+        child: NormalWidget(
+          icon: IconConstants.icFail,
+          title: 'notif.error'.tr,
+        ),
+        onVaLue: (value) {},
+      );
     }
   }
 
@@ -496,31 +518,28 @@ class ProfileUpDateController extends BaseController {
       await _uiRepository.uploadFile(file, type).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
-              if(type == CommonConstants.curriculumVitaeFiles){
-                info.value.curriculumVitaeFiles!.add(response.data!);
-              }else{
-                info.value.workExperienceFiles!.add(response.data!);
-              }
-              info.refresh();
-              AppDataGlobal.userInfo = info.value;
-            }else{
-              DialogUtil.showPopup(
-                dialogSize: DialogSize.Popup,
-                barrierDismissible: false,
-                backgroundColor: Colors.transparent,
-                child: NormalWidget(
-                  icon: response.status == CommonConstants.statusOk
-                      ? IconConstants.icSuccess
-                      : IconConstants.icFail,
-                  title: response.message,
-                ),
-                onVaLue: (value) {
-                  
-                },
-              );
-              return;
-            }
-        
+          if (type == CommonConstants.curriculumVitaeFiles) {
+            info.value.curriculumVitaeFiles!.add(response.data!);
+          } else {
+            info.value.workExperienceFiles!.add(response.data!);
+          }
+          info.refresh();
+          AppDataGlobal.userInfo = info.value;
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: response.status == CommonConstants.statusOk
+                  ? IconConstants.icSuccess
+                  : IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {},
+          );
+          return;
+        }
       });
     } catch (e) {
       await EasyLoading.dismiss();
@@ -529,10 +548,10 @@ class ProfileUpDateController extends BaseController {
 
   Future<void> onRemoveFile(int index, int type) async {
     try {
-      if(type == CommonConstants.curriculumVitaeFiles){
+      if (type == CommonConstants.curriculumVitaeFiles) {
         removeCurriculumVitaeFiles.add(info.value.curriculumVitaeFiles![index]);
         info.value.curriculumVitaeFiles!.removeAt(index);
-      }else{
+      } else {
         removeWorkExperienceFiles.add(info.value.workExperienceFiles![index]);
         info.value.workExperienceFiles!.removeAt(index);
       }
@@ -558,6 +577,7 @@ class ProfileUpDateController extends BaseController {
       log(e.message.toString());
     }
   }
+
   Future pickCetificateFile() async {
     try {
       final result = await FilePicker.platform.pickFiles();
@@ -576,27 +596,24 @@ class ProfileUpDateController extends BaseController {
       await _uiRepository.uploadCetificateFile(file, type).then((response) {
         EasyLoading.dismiss();
         if (response.status == CommonConstants.statusOk) {
-              info.value.documentsCertificate.add(response.data!);
-              info.refresh();
-              AppDataGlobal.userInfo = info.value;
-            }else{
-              DialogUtil.showPopup(
-                dialogSize: DialogSize.Popup,
-                barrierDismissible: false,
-                backgroundColor: Colors.transparent,
-                child: NormalWidget(
-                  icon: response.status == CommonConstants.statusOk
-                      ? IconConstants.icSuccess
-                      : IconConstants.icFail,
-                  title: response.message,
-                ),
-                onVaLue: (value) {
-                  
-                },
-              );
-              return;
-            }
-        
+          info.value.documentsCertificate.add(response.data!);
+          info.refresh();
+          AppDataGlobal.userInfo = info.value;
+        } else {
+          DialogUtil.showPopup(
+            dialogSize: DialogSize.Popup,
+            barrierDismissible: false,
+            backgroundColor: Colors.transparent,
+            child: NormalWidget(
+              icon: response.status == CommonConstants.statusOk
+                  ? IconConstants.icSuccess
+                  : IconConstants.icFail,
+              title: response.message,
+            ),
+            onVaLue: (value) {},
+          );
+          return;
+        }
       });
     } catch (e) {
       await EasyLoading.dismiss();
@@ -605,7 +622,8 @@ class ProfileUpDateController extends BaseController {
 
   Future<void> onRemoveCetificateFile(int index) async {
     try {
-      removeDocumentsCertificate.add(info.value.documentsCertificate[index].id!);
+      removeDocumentsCertificate
+          .add(info.value.documentsCertificate[index].id!);
       info.value.documentsCertificate.removeAt(index);
       info.refresh();
     } catch (e) {

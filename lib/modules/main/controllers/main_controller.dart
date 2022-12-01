@@ -11,6 +11,7 @@ import '../../../base/base_controller.dart';
 import '../../../data/app_data_global.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared/constants/common.dart';
+import '../../../shared/services/firebase_cloud_messaging.dart';
 import '../../account/controllers/account_controller.dart';
 import '../../account/views/account_screen.dart';
 import '../../news/controllers/news_controller.dart';

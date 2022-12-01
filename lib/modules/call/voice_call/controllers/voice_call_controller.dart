@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:agora_rtc_engine/rtc_engine.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
@@ -19,7 +19,7 @@ class VoiceCallController extends BaseController {
 
   final _uiRepository = Get.find<HicoUIRepository>();
 
-  RtcEngine? _engine;
+  late final RtcEngine _engine;
   StreamSubscription? _callStreamSubscription;
 
   RxBool isJoined = RxBool(false);
@@ -61,8 +61,8 @@ class VoiceCallController extends BaseController {
 
     _callEndCall();
 
-    _engine?.leaveChannel();
-    _engine?.destroy();
+    _engine.leaveChannel();
+    _engine.release();
 
     _callStreamSubscription?.cancel();
 
@@ -74,7 +74,7 @@ class VoiceCallController extends BaseController {
   }
 
   void _addPostFrameCallback() {
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       if (AppDataGlobal.userInfo?.id == null) {
         return;
       }
@@ -99,8 +99,13 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _initAgoraEngine() async {
-    _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
-    await _engine?.setParameters('{"che.audio.opensl":true}');
+    _engine = createAgoraRtcEngine();
+    await _engine.initialize(RtcEngineContext(
+      appId: appId,
+      channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+    ));
+
+    await _engine.setParameters('{"che.audio.opensl":true}');
 
     await _addListeners();
 
@@ -108,47 +113,62 @@ class VoiceCallController extends BaseController {
   }
 
   Future<void> _addListeners() async {
-    _engine?.setEventHandler(RtcEngineEventHandler(
-      error: (errorCode) {
-        printError(info: 'error $errorCode');
-      },
-      joinChannelSuccess: (channel, uid, elapsed) {
-        printInfo(info: 'joinChannelSuccess $channel $uid $elapsed');
+    _engine.registerEventHandler(
+      RtcEngineEventHandler(
+        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+          printInfo(
+              info:
+                  'joinChannelSuccess ${connection.channelId} ${connection.localUid} $elapsed');
 
-        isJoined.value = true;
-      },
-      leaveChannel: (stats) {
-        printError(info: 'leaveChannel ${stats.toJson()}');
+          isJoined.value = true;
 
-        _endRingtone();
+          _engine.setEnableSpeakerphone(enableSpeakerphone.value);
+          _engine.enableLocalAudio(false);
+        },
+        onLeaveChannel: (connection, stats) {
+          printError(info: 'leaveChannel ${stats.toJson()}');
 
-        isJoined.value = false;
-      },
-      userJoined: (uid, elapsed) {
-        printInfo(info: 'userJoined $uid $elapsed');
-        _timerAutoEncall?.cancel();
+          _endRingtone();
 
-        _engine?.enableLocalAudio(true);
+          isJoined.value = false;
+        },
+        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
+          printInfo(info: 'userJoined $remoteUid $elapsed');
+          _timerAutoEncall?.cancel();
 
-        _endRingtone();
+          _engine.enableLocalAudio(true);
+          _engine.enableAudio();
+          _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+          _engine.setAudioProfile(
+            profile: AudioProfileType.audioProfileDefault,
+            scenario: AudioScenarioType.audioScenarioGameStreaming,
+          );
 
-        isCalling.value = true;
+          _endRingtone();
 
-        _callBeginCall();
-      },
-      userOffline: (int uid, UserOfflineReason reason) {
-        printInfo(info: 'userOffline $uid left channel');
+          isCalling.value = true;
 
-        onEndCall();
-      },
-    ));
+          _callBeginCall();
+        },
+        onUserOffline: (RtcConnection connection, int remoteUid,
+            UserOfflineReasonType reason) {
+          printInfo(info: 'userOffline $remoteUid left channel');
 
-    await _engine?.enableAudio();
-    await _engine?.setChannelProfile(ChannelProfile.LiveBroadcasting);
-    await _engine?.setClientRole(ClientRole.Broadcaster);
+          onEndCall();
+        },
+        onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {},
+      ),
+    );
 
-    await _engine?.setEnableSpeakerphone(enableSpeakerphone.value);
-    await _engine?.enableLocalAudio(false);
+    // await _engine.enableAudio();
+    // await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+    // await _engine.setAudioProfile(
+    //   profile: AudioProfileType.audioProfileDefault,
+    //   scenario: AudioScenarioType.audioScenarioGameStreaming,
+    // );
+
+    // await _engine.setEnableSpeakerphone(enableSpeakerphone.value);
+    // await _engine.enableLocalAudio(false);
   }
 
   Future<void> _joinChannel() async {
@@ -156,7 +176,14 @@ class VoiceCallController extends BaseController {
       await Permission.microphone.request();
     }
     await _engine
-        ?.joinChannel(token, call.channelId ?? '', null, call.getId() ?? 0)
+        .joinChannel(
+            token: token,
+            channelId: call.channelId ?? '',
+            uid: call.getId() ?? 0,
+            options: const ChannelMediaOptions(
+              channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+              clientRoleType: ClientRoleType.clientRoleBroadcaster,
+            ))
         .then((value) async {
       if (isCaller) {
         _startRingtone();
@@ -175,7 +202,7 @@ class VoiceCallController extends BaseController {
 
   Future<void> switchMicrophone() async {
     // await _engine.muteLocalAudioStream(!openMicrophone);
-    await _engine?.enableLocalAudio(!openMicrophone.value).then((value) {
+    await _engine.enableLocalAudio(!openMicrophone.value).then((value) {
       openMicrophone.value = !openMicrophone.value;
     }).catchError((err) {
       printError(info: 'enableLocalAudio $err');
@@ -183,7 +210,7 @@ class VoiceCallController extends BaseController {
   }
 
   void switchSpeakerphone() {
-    _engine?.setEnableSpeakerphone(!enableSpeakerphone.value).then((value) {
+    _engine.setEnableSpeakerphone(!enableSpeakerphone.value).then((value) {
       enableSpeakerphone.value = !enableSpeakerphone.value;
     }).catchError((err) {
       printError(info: 'setEnableSpeakerphone $err');
@@ -211,15 +238,11 @@ class VoiceCallController extends BaseController {
       );
     } else {
       FlutterRingtonePlayer.play(
-        fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
-        looping: false,
-      );
+          fromAsset: 'lib/resource/assets_resources/bell/bell.mp3');
       _timerRingwait = Timer.periodic(const Duration(seconds: 4), (timer) {
         printInfo(info: 'playRingtone');
         FlutterRingtonePlayer.play(
-          fromAsset: 'lib/resource/assets_resources/bell/bell.mp3',
-          looping: false,
-        );
+            fromAsset: 'lib/resource/assets_resources/bell/bell.mp3');
       });
     }
   }
