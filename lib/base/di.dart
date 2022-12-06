@@ -15,8 +15,6 @@ import 'package:ui_api/repository/hico_ui_repository.dart';
 import 'package:ui_api/repository/impl/hico_ui_repository_impl.dart';
 
 import '../data/app_data_global.dart';
-import '../data/hive_database/dao/image_cache_dao.dart';
-import '../data/hive_database/hive_database.dart';
 import '../routes/app_pages.dart';
 import '../shared/constants/common.dart';
 import '../shared/services/config_service.dart';
@@ -63,13 +61,7 @@ class DependencyInjection {
     }
     final uiAPI = HicoUIAPI(_dioUIAPI);
     final HicoUIRepository uiRepo = HicoUIRepositoryImpl(uiAPI);
-    Get.put(uiRepo, permanent: true);
-
-    //For cahe Image
-    final dir = await getApplicationDocumentsDirectory();
-    final _hive = HiveDatabase(dir.path);
-    await _hive.init();
-    Get.put(ImageCacheDAO(_hive.imageCacheBox), permanent: true);
+    Get.put(uiRepo, permanent: true); 
   }
 }
 
